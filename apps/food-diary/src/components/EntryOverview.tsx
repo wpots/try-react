@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { fetchDiaryEntries, DiaryEntry } from "@/app/actions";
-import { EntryCard } from "@repo/ui";
+import { OverviewCard } from "@repo/ui";
 
 const EntryOverview = () => {
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
@@ -33,12 +33,11 @@ const EntryOverview = () => {
         <section key={date} className="space-y-2">
           <h3 className="text-lg font-medium">{date}</h3>
           {entries.map(entry => (
-            <EntryCard
+            <OverviewCard
               key={entry.id}
-              foodEaten={entry.foodEaten}
+              title={entry.foodEaten}
+              subtitle={`${entry.entryType} - ${entry.time}`}
               description={entry.description}
-              time={entry.time}
-              entryType={entry.entryType}
             />
           ))}
         </section>

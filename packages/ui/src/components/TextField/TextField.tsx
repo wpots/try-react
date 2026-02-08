@@ -1,23 +1,26 @@
 "use client";
 
-import React, { useId, useRef } from "react";
+import type { InputHTMLAttributes } from "react";
+import { useId, useRef } from "react";
 import { useLabel } from "@react-aria/label";
 import { useTextField } from "@react-aria/textfield";
-import classNames from "classnames";
 
 import type { TextFieldProps } from "./index";
+import { cn } from "../../lib/utils";
 
-export const TextField = ({
+export function TextField({
   label,
   description,
   errorMessage,
-  className,
+  containerClassName,
+  labelClassName,
+  inputClassName,
   id,
   ...props
-}: TextFieldProps) => {
+}: TextFieldProps) {
   const generatedId = useId();
   const inputId = id ?? generatedId;
-  const inputRef = useRef<HTMLInputElement>(null);
+  const localRef = useRef<HTMLInputElement>(null);
 
   const { labelProps } = useLabel({ label });
   const textFieldProps = {
@@ -30,22 +33,24 @@ export const TextField = ({
 
   const { inputProps, descriptionProps, errorMessageProps, isInvalid } = useTextField(
     textFieldProps,
-    inputRef,
+    localRef,
   );
-  const inputElementProps = inputProps as React.InputHTMLAttributes<HTMLInputElement>;
+  const inputElementProps = inputProps as InputHTMLAttributes<HTMLInputElement>;
 
   return (
-    <div className={classNames("flex w-full flex-col gap-2", className)}>
-      <label {...labelProps} className="text-sm font-medium text-text-700">
+    <div className={cn("grid w-full items-start gap-2", containerClassName)}>
+      <label {...labelProps} className={cn("text-sm font-medium text-text-700", labelClassName)}>
         {label}
       </label>
       <input
         {...inputElementProps}
-        ref={inputRef}
-        className={classNames(
-          "w-full rounded-md border border-border-300 bg-surface-50 px-3 py-2 text-base text-text-900 outline-none transition-colors",
-          "focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20",
-          isInvalid && "border-danger-500 focus:border-danger-500 focus:ring-danger-500/20",
+        ref={localRef}
+        className={cn(
+          "flex h-10 w-full rounded-md border border-border-300 bg-surface-50 px-3 py-2 text-sm text-text-900 transition-colors",
+          "placeholder:text-text-700/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/20",
+          "disabled:cursor-not-allowed disabled:opacity-50",
+          isInvalid && "border-danger-500 focus-visible:ring-danger-500/20",
+          inputClassName,
         )}
       />
       {description ? (
@@ -60,4 +65,4 @@ export const TextField = ({
       ) : null}
     </div>
   );
-};
+}

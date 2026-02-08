@@ -1,6 +1,12 @@
+"use client";
+
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { useFormState } from "react-dom";
+import { saveDiaryEntry } from "@/app/actions";
+import Button from "@mui/material/Button";
+import { ChangeEvent } from "react";
 
 const EntryForm = () => {
   const [foodEaten, setFoodEaten] = useState("");
@@ -8,14 +14,10 @@ const EntryForm = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Form submitted:", { foodEaten, description, date, time }); // Basic submit handling
-    // ... (Saving data to Firestore will be in the next user story)
-  };
+  const [state, formAction] = useFormState(saveDiaryEntry, null);
 
   return (
-    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+    <Box component="form" action={formAction} noValidate sx={{ mt: 1 }}>
       <TextField
         margin="normal"
         required
@@ -24,7 +26,7 @@ const EntryForm = () => {
         label="Food Eaten"
         name="foodEaten"
         value={foodEaten}
-        onChange={e => setFoodEaten(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setFoodEaten(e.target.value)}
       />
       <TextField
         margin="normal"
@@ -57,6 +59,11 @@ const EntryForm = () => {
         value={time}
         onChange={e => setTime(e.target.value)}
       />
+      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        Save Entry
+      </Button>
+      {state?.error && <p style={{ color: "red" }}>{state.error}</p>}
+      {state?.success && <p style={{ color: "green" }}>Entry saved successfully!</p>}
     </Box>
   );
 };

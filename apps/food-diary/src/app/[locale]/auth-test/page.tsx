@@ -3,9 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import type { User } from "firebase/auth";
 import { signOut } from "firebase/auth";
+import { useTranslations } from "next-intl";
 import { auth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@/lib/firebase";
 
 const AuthTestPage = () => {
+  const t = useTranslations("auth");
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -47,8 +49,8 @@ const AuthTestPage = () => {
 
   return (
     <main style={{ padding: "2rem", maxWidth: "40rem" }}>
-      <h1>Auth Test</h1>
-      <p>Use this page to validate Firebase Google login.</p>
+      <h1>{t("title")}</h1>
+      <p>{t("subtitle")}</p>
 
       {user ? (
         <div>

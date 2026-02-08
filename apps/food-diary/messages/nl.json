@@ -1,0 +1,27 @@
+{
+  "common": {
+    "appName": "Voedingsdagboek",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "language": "Taal"
+  },
+  "home": {
+    "welcome": "Welkom bij {appName}",
+    "sharedButton": "Gedeelde UI-knop",
+    "entriesOverviewTitle": "Overzicht dagboekitems"
+  },
+  "createEntry": {
+    "title": "Nieuwe invoer maken"
+  },
+  "auth": {
+    "title": "Authenticatie test",
+    "subtitle": "Gebruik deze pagina om Firebase Google login te controleren."
+  },
+  "nav": {
+    "home": "Home",
+    "createEntry": "Nieuwe invoer",
+    "authTest": "Auth test"
+  }
+}

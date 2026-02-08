@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { fetchDiaryEntries, DiaryEntry } from "@/app/actions";
 import { OverviewCard } from "@repo/ui";
 
 const EntryOverview = () => {
+  const t = useTranslations("home");
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const EntryOverview = () => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-semibold">Diary Entries Overview</h2>
+      <h2 className="text-2xl font-semibold">{t("entriesOverviewTitle")}</h2>
       {Object.entries(groupedEntries).map(([date, entries]) => (
         <section key={date} className="space-y-2">
           <h3 className="text-lg font-medium">{date}</h3>

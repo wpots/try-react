@@ -1,0 +1,27 @@
+{
+  "common": {
+    "appName": "Food Diary",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "language": "Language"
+  },
+  "home": {
+    "welcome": "Welcome to {appName}",
+    "sharedButton": "Shared UI Button",
+    "entriesOverviewTitle": "Diary Entries Overview"
+  },
+  "createEntry": {
+    "title": "Create New Entry"
+  },
+  "auth": {
+    "title": "Auth Test",
+    "subtitle": "Use this page to validate Firebase Google login."
+  },
+  "nav": {
+    "home": "Home",
+    "createEntry": "Create Entry",
+    "authTest": "Auth Test"
+  }
+}

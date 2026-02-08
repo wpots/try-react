@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { User, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import firebaseApp from "./firebase";
-import { signInGuestUser, onAuthStateChanged, auth } from "./firebase";
+import firebaseApp from "@/lib/firebase";
+import { signInGuestUser, onAuthStateChanged, auth } from "@/lib/firebase";
 import { Button } from "@repo/ui";
 import "./App.css";
 

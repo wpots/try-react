@@ -6,7 +6,7 @@ Configure Firebase Authentication and Firestore in the food-diary application.
 
 ## 2. Goal
 
-To set up Firebase Authentication (Google, Facebook, Anonymous) and Firestore database in the food-diary Next.js application, enabling user authentication and data persistence.
+To set up Firebase Authentication (Google) and Firestore database in the food-diary Next.js application, enabling user authentication and data persistence.
 
 ## 3. Description
 
@@ -14,7 +14,7 @@ As a developer, I need to configure Firebase services in the food-diary applicat
 
 ## 4. Technical Details
 
-- **Firebase Services:** Authentication (Google, Facebook, Anonymous) and Firestore
+- **Firebase Services:** Authentication (Google) and Firestore
 - **Location:** `apps/food-diary/src/lib/firebase.ts` (or `apps/food-diary/src/firebase.ts`)
 - **Environment Variables:** Firebase config values stored in `.env.local` and Vercel
 - **SDK:** Firebase v10+ (modular SDK)
@@ -67,8 +67,6 @@ As a developer, I need to configure Firebase services in the food-diary applicat
 6. **Configure Firebase Project:**
    - In Firebase Console, enable Authentication providers:
      - Google (enable and configure)
-     - Facebook (enable and configure OAuth app)
-     - Anonymous (enable)
    - In Firestore, create database (start in test mode for development)
    - Set up Firestore security rules (basic rules for development)
 
@@ -89,8 +87,6 @@ As a developer, I need to configure Firebase services in the food-diary applicat
 - `.env.local` file created with all required Firebase environment variables
 - Firebase project configured in Firebase Console:
   - Google Authentication enabled
-  - Facebook Authentication enabled
-  - Anonymous Authentication enabled
   - Firestore database created
 - Firebase initialization works without errors
 - Environment variables are accessible in the application

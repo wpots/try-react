@@ -6,10 +6,7 @@ import { Button, Card, Text } from "@repo/ui";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously } from "@/lib/auth";
-
-interface AuthButtonsProps {
-  redirectPath?: string;
-}
+import type { AuthButtonsProps } from "./index";
 
 export default function AuthButtons({ redirectPath = "/" }: AuthButtonsProps) {
   const t = useTranslations("auth");

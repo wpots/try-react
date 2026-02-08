@@ -6,11 +6,7 @@ import { Button, TextField } from "@repo/ui";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "@/i18n/navigation";
 import { saveDiaryEntry } from "@/lib/diaryEntries";
-
-interface SaveState {
-  success: boolean;
-  error: string | null;
-}
+import type { SaveState } from "./index";
 
 const EntryForm = () => {
   const { user } = useAuth();

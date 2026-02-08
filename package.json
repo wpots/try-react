@@ -9,7 +9,9 @@
   ],
   "scripts": {
     "dev": "turbo dev",
+    "dev:storybook": "turbo dev --filter=@repo/storybook",
     "build": "turbo build",
+    "build:storybook": "turbo build --filter=@repo/storybook",
     "lint": "turbo lint",
     "test": "turbo test"
   },

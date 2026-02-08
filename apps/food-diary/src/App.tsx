@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import { User, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import firebaseApp from "./firebase";
 import { signInGuestUser, onAuthStateChanged, auth } from "./firebase";
-import Button from "@mui/material/Button";
+import { Button } from "@repo/ui";
 import "./App.css";
 
 console.log("Firebase initialized:", firebaseApp);
@@ -55,9 +55,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-      <Button variant="contained" color="primary">
-        Hello MUI
-      </Button>
+      <Button type="button">Hello Shared UI</Button>
       {user ? (
         <p>
           Signed in as user: {user.uid} (Guest: {user.isAnonymous ? "Yes" : "No"})
@@ -65,8 +63,7 @@ function App() {
       ) : (
         <>
           <Button
-            variant="contained"
-            color="primary"
+            type="button"
             onClick={async () => {
               try {
                 await signInGuestUser();
@@ -77,7 +74,7 @@ function App() {
           >
             Continue as Guest
           </Button>
-          <Button variant="contained" color="primary" onClick={handleGoogleLogin}>
+          <Button type="button" onClick={handleGoogleLogin}>
             Login with Google
           </Button>
         </>

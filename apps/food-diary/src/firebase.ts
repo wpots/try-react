@@ -8,7 +8,6 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { FirebaseError } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB8-zyjKwH64jJ2EZ5l0Umiy41bC09_cTY",

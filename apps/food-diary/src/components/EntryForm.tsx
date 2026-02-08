@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import { useFormState } from "react-dom";
 import { saveDiaryEntry } from "@/app/actions";
-import Button from "@mui/material/Button";
 import { ChangeEvent } from "react";
+import { Button, TextField } from "@repo/ui";
 
 const EntryForm = () => {
   const [foodEaten, setFoodEaten] = useState("");
@@ -17,54 +15,44 @@ const EntryForm = () => {
   const [state, formAction] = useFormState(saveDiaryEntry, null);
 
   return (
-    <Box component="form" action={formAction} noValidate sx={{ mt: 1 }}>
+    <form action={formAction} noValidate className="mt-4 flex flex-col gap-4">
       <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="foodEaten"
         label="Food Eaten"
+        required
+        id="foodEaten"
         name="foodEaten"
         value={foodEaten}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setFoodEaten(e.target.value)}
       />
       <TextField
-        margin="normal"
-        fullWidth
-        id="description"
         label="Description"
+        id="description"
         name="description"
-        multiline
-        rows={4}
         value={description}
         onChange={e => setDescription(e.target.value)}
       />
       <TextField
-        margin="normal"
-        fullWidth
-        id="date"
         label="Date"
+        id="date"
         name="date"
         type="date"
         value={date}
         onChange={e => setDate(e.target.value)}
       />
       <TextField
-        margin="normal"
-        fullWidth
-        id="time"
         label="Time"
+        id="time"
         name="time"
-        type="text"
+        type="time"
         value={time}
         onChange={e => setTime(e.target.value)}
       />
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      <Button type="submit" className="mt-2 w-full">
         Save Entry
       </Button>
       {state?.error && <p style={{ color: "red" }}>{state.error}</p>}
       {state?.success && <p style={{ color: "green" }}>Entry saved successfully!</p>}
-    </Box>
+    </form>
   );
 };
 

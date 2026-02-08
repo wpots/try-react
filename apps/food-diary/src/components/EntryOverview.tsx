@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import EntryCard from "./EntryCard";
 import { fetchDiaryEntries, DiaryEntry } from "@/app/actions";
-import { Typography, Box } from "@mui/material";
+import { EntryCard } from "@repo/ui";
 
 const EntryOverview = () => {
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
@@ -28,13 +27,11 @@ const EntryOverview = () => {
   }, {});
 
   return (
-    <div>
-      <h2>Diary Entries Overview</h2>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-semibold">Diary Entries Overview</h2>
       {Object.entries(groupedEntries).map(([date, entries]) => (
-        <Box key={date} sx={{ mb: 2 }}>
-          <Typography variant="h6" component="h3">
-            {date}
-          </Typography>
+        <section key={date} className="space-y-2">
+          <h3 className="text-lg font-medium">{date}</h3>
           {entries.map(entry => (
             <EntryCard
               key={entry.id}
@@ -44,7 +41,7 @@ const EntryOverview = () => {
               entryType={entry.entryType}
             />
           ))}
-        </Box>
+        </section>
       ))}
     </div>
   );

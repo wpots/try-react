@@ -1,0 +1,31 @@
+{
+  "name": "@repo/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo \"@repo/ui build placeholder\"",
+    "lint": "echo \"@repo/ui lint placeholder\"",
+    "test": "echo \"@repo/ui test placeholder\""
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./src/components/*": "./src/components/*/index.ts"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@react-aria/button": "^3.14.2",
+    "@react-aria/label": "^3.7.18",
+    "@react-aria/textfield": "^3.17.0",
+    "classnames": "^2.5.1",
+    "tailwindcss": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.3"
+  }
+}

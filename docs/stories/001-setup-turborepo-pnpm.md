@@ -66,14 +66,14 @@ As a developer, I need to convert the existing single-application project into a
 
 ## 6. Acceptance Criteria
 
-- Root `package.json` exists with Turborepo dependency
-- `pnpm-workspace.yaml` defines `apps/*` and `packages/*` workspaces
-- `turbo.json` configured with pipelines for dev, build, lint, test
-- Existing `food-diary` application moved to `apps/food-diary/`
-- `apps/food-diary/package.json` updated with correct package name
-- `pnpm install` runs successfully from root
-- `pnpm dev` starts the food-diary application
-- Turborepo caching is working (check `.turbo` directory)
+- [x] Root `package.json` exists with Turborepo dependency
+- [x] `pnpm-workspace.yaml` defines `apps/*` and `packages/*` workspaces
+- [x] `turbo.json` configured with pipelines for dev, build, lint, test
+- [x] Existing `food-diary` application moved to `apps/food-diary/`
+- [x] `apps/food-diary/package.json` updated with correct package name
+- [x] `pnpm install` runs successfully from root
+- [x] `pnpm dev` starts the food-diary application
+- [x] Turborepo caching is working (check `.turbo` directory)
 
 ## 7. Notes
 

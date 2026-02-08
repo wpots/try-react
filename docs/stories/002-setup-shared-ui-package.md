@@ -89,17 +89,17 @@ As a developer, I need to create a shared UI package that provides accessible, s
 
 ## 6. Acceptance Criteria
 
-- `packages/ui/` directory structure created
-- `packages/ui/package.json` configured with correct name and dependencies
-- `packages/ui/tsconfig.json` configured for TypeScript compilation
-- Tailwind CSS 4 configured with `@theme` design tokens in `globals.css`
-- `Button` component created using React Aria `useButton` hook
-- `TextField` component created using React Aria `useTextField` and `useLabel` hooks
-- Both components follow project structure rules (types in `index.ts`, extend `React.ComponentProps`)
-- Components styled with Tailwind using design tokens (no hardcoded colors/spacing)
-- `packages/ui/src/index.ts` exports all components and types
-- Package can be imported in `apps/food-diary` as `@repo/ui`
-- `pnpm install` runs successfully
+- [x] `packages/ui/` directory structure created
+- [x] `packages/ui/package.json` configured with correct name and dependencies
+- [x] `packages/ui/tsconfig.json` configured for TypeScript compilation
+- [x] Tailwind CSS 4 configured with `@theme` design tokens in `globals.css`
+- [x] `Button` component created using React Aria `useButton` hook
+- [x] `TextField` component created using React Aria `useTextField` and `useLabel` hooks
+- [x] Both components follow project structure rules (types in `index.ts`, extend `React.ComponentProps`)
+- [x] Components styled with Tailwind using design tokens (no hardcoded colors/spacing)
+- [x] `packages/ui/src/index.ts` exports all components and types
+- [x] Package can be imported in `apps/food-diary` as `@repo/ui`
+- [x] `pnpm install` runs successfully
 
 ## 7. Notes
 

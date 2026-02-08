@@ -3,6 +3,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { locales } from "@/i18n/config";
 import { Link } from "@/i18n/navigation";
 
@@ -33,26 +34,29 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
-      <main style={{ padding: "2rem", maxWidth: "56rem", margin: "0 auto" }}>
-        <header
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: "1.5rem",
-            gap: "1rem",
-            flexWrap: "wrap",
-          }}
-        >
-          <nav style={{ display: "flex", gap: "1rem" }}>
-            <Link href="/">{t("home")}</Link>
-            <Link href="/entry/create">{t("createEntry")}</Link>
-            <Link href="/auth-test">{t("authTest")}</Link>
-          </nav>
-          <LanguageSwitcher />
-        </header>
-        {children}
-      </main>
+      <AuthProvider>
+        <main style={{ padding: "2rem", maxWidth: "56rem", margin: "0 auto" }}>
+          <header
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "1.5rem",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <nav style={{ display: "flex", gap: "1rem" }}>
+              <Link href="/">{t("home")}</Link>
+              <Link href="/entry/create">{t("createEntry")}</Link>
+              <Link href="/auth/login">{t("login")}</Link>
+              <Link href="/auth-test">{t("authTest")}</Link>
+            </nav>
+            <LanguageSwitcher />
+          </header>
+          {children}
+        </main>
+      </AuthProvider>
     </NextIntlClientProvider>
   );
 }

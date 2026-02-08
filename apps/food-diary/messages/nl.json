@@ -17,11 +17,19 @@
   },
   "auth": {
     "title": "Authenticatie test",
-    "subtitle": "Gebruik deze pagina om Firebase Google login te controleren."
+    "subtitle": "Gebruik deze pagina om Firebase Google login te controleren.",
+    "loginTitle": "Inloggen",
+    "loginSubtitle": "Ga verder als gast om direct items toe te voegen.",
+    "continueAsGuest": "Ga verder als gast",
+    "guestLoginLoading": "Bezig met inloggen...",
+    "guestLoginUnknownError": "Inloggen als gast mislukt.",
+    "signedInGuest": "Ingelogd als gastgebruiker.",
+    "signedInUser": "Ingelogd als gebruiker: {uid}"
   },
   "nav": {
     "home": "Home",
     "createEntry": "Nieuwe invoer",
+    "login": "Inloggen",
     "authTest": "Auth test"
   }
 }

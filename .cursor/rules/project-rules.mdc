@@ -68,6 +68,8 @@ src/
 - Utilities: `camelCase.ts` (formatDate.ts).
 - Hooks: `useCamelCase.ts` (useAuth.ts).
 - Server Actions: `camelCaseAction.ts` (createUserAction.ts).
+- For component/context modules, keep public type definitions and exports in
+  `index.ts` as the single import entry point.
 
 ## Naming & Formatting
 

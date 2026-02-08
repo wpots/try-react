@@ -21,8 +21,8 @@ export interface DiaryEntry {
   updatedAt: string;
 }
 
-export const fetchDiaryEntries = async () => {
-  const userId = auth.currentUser?.uid;
+export const fetchDiaryEntries = async (userIdFromClient?: string) => {
+  const userId = auth.currentUser?.uid ?? userIdFromClient;
   if (!userId) {
     return [];
   }
@@ -51,7 +51,9 @@ export const fetchDiaryEntries = async () => {
 };
 
 export const saveDiaryEntry = async (prevState: unknown, formData: FormData) => {
-  const userId = auth.currentUser?.uid;
+  const formUserId = formData.get("userId");
+  const userIdFromForm = typeof formUserId === "string" ? formUserId : null;
+  const userId = auth.currentUser?.uid ?? userIdFromForm;
 
   if (!userId) {
     console.error("User not authenticated.");

@@ -2,21 +2,28 @@
 
 import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { fetchDiaryEntries, DiaryEntry } from "@/app/actions";
+import { fetchDiaryEntries, type DiaryEntry } from "@/lib/diaryEntries";
 import { OverviewCard } from "@repo/ui";
+import { useAuth } from "@/contexts/AuthContext";
 
 const EntryOverview = () => {
   const t = useTranslations("home");
+  const { user } = useAuth();
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
 
   useEffect(() => {
     const loadEntries = async () => {
-      const entries = await fetchDiaryEntries();
+      if (!user) {
+        setDiaryEntries([]);
+        return;
+      }
+
+      const entries = await fetchDiaryEntries(user.uid);
       setDiaryEntries(entries);
     };
 
-    loadEntries();
-  }, []);
+    void loadEntries();
+  }, [user]);
 
   // Group entries by date
   const groupedEntries = diaryEntries.reduce((acc: { [key: string]: DiaryEntry[] }, entry) => {

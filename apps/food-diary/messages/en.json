@@ -17,11 +17,19 @@
   },
   "auth": {
     "title": "Auth Test",
-    "subtitle": "Use this page to validate Firebase Google login."
+    "subtitle": "Use this page to validate Firebase Google login.",
+    "loginTitle": "Sign in",
+    "loginSubtitle": "Continue as a guest to start creating entries right away.",
+    "continueAsGuest": "Continue as Guest",
+    "guestLoginLoading": "Signing in...",
+    "guestLoginUnknownError": "Guest login failed.",
+    "signedInGuest": "Signed in as guest user.",
+    "signedInUser": "Signed in as user: {uid}"
   },
   "nav": {
     "home": "Home",
     "createEntry": "Create Entry",
+    "login": "Login",
     "authTest": "Auth Test"
   }
 }

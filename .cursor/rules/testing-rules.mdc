@@ -1,0 +1,51 @@
+# Testing Rules
+
+You are an expert frontend developer specializing in Next 16, React 19, Tailwind 4,
+and TypeScript. Follow these rules strictly when generating code.
+
+### Required Tests
+
+- Unit tests for utilities and pure functions.
+- Integration tests for critical user flows.
+- Test user behavior, not implementation details.
+- Mock external dependencies.
+
+### What to Test (Priority Order)
+
+- MUST test:
+  - User interactions: form submissions, clicks, keyboard navigation.
+  - Business logic: calculations, data transformations, validations.
+  - Error states: API failures, validation errors, edge cases.
+  - Authentication flows: login, logout, protected routes.
+  - Critical user journeys: checkout, payments, signup.
+- SHOULD test:
+  - Conditional rendering: different UI states based on data.
+  - Loading states: skeleton screens, spinners.
+  - Custom hooks: complex state management logic.
+  - Server Actions: form handling, mutations.
+- DO NOT test:
+  - Implementation details: internal state, private functions.
+  - Third-party libraries: already tested by maintainers.
+  - Styles and CSS: use visual regression if needed.
+  - Next.js internals: framework behavior.
+  - Trivial code: simple getters, one-line utilities.
+
+### Query Priority (Testing Library)
+
+1. `getByRole`
+2. `getByLabelText`
+3. `getByPlaceholderText`
+4. `getByText`
+5. `getByTestId` (last resort)
+
+### Testing Best Practices
+
+- Arrange-Act-Assert pattern.
+- Test user behavior, not implementation.
+- Mock sparingly.
+- Aim for high coverage on critical paths and business logic.
+
+## Context7 MCP
+
+- Always use Context7 MCP when library/API documentation, code generation,
+  setup, or configuration steps are needed.

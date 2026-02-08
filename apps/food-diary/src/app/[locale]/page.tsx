@@ -9,7 +9,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <div style={{ marginBottom: "1rem" }}>
+      <div className="mb-4">
         <LanguageSwitcher />
       </div>
       <h1>{t("welcome", { appName: common("appName") })}</h1>

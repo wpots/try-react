@@ -1,0 +1,93 @@
+# Styling Rules
+
+## Styling with Tailwind
+
+### Design System First
+
+- Always define a design system with design tokens in `globals.css` before writing component styles.
+- Tailwind 4 uses CSS-first configuration - customization happens in CSS via `@theme`.
+- Use semantic naming for colors, spacing, typography, etc.
+- Never use arbitrary values or raw Tailwind colors.
+
+### Class Ordering
+
+1. Layout (flex, grid, display, position)
+2. Sizing (w-, h-, p-, m-)
+3. Typography (text-, font-)
+4. Visual (bg-, border-, shadow-)
+5. Interactive (hover:, focus:, active:)
+
+### Tailwind 4 Rules
+
+- Only use design tokens.
+- Never use raw Tailwind colors (`bg-blue-600` ❌).
+- Use semantic tokens (`bg-primary`, `text-foreground`, `border-default`).
+- Mobile-first responsive design (base -> sm: -> md: -> lg: -> xl:).
+- Extract repeated patterns to components, not `@apply`.
+- Avoid arbitrary values (`[#fff]`, `[20px]`) - define in `@theme` instead.
+- Group related classes with line breaks for readability.
+- Do not create a `tailwind.config.ts`; customize via `@theme` in CSS.
+
+## Forbidden Patterns
+
+### Never Do This
+
+- Use `any` type.
+- Use `as` type assertions without justification.
+- Create client components unnecessarily.
+- Use inline styles instead of Tailwind.
+- Use raw Tailwind colors (`bg-blue-600`).
+- Use arbitrary Tailwind values (`[#fff]`, `[20px]`).
+- Create a `tailwind.config.ts` file.
+- Use `useEffect` for data fetching in Server Components.
+- Create components over 200 lines.
+
+## Documentation
+
+- Use JSDoc for public APIs.
+- Include examples where helpful.
+- Keep docs concise, correct punctuation, headings, lists, and links.
+
+## Context7 MCP
+
+- Always use Context7 MCP when library/API documentation, code generation,
+  setup, or configuration steps are needed.
+
+## Tailwind 4 Specifics
+
+- Use `@theme` directive for design tokens instead of config files.
+- Leverage CSS variables for dynamic theming (`--color-ds-*`, `--spacing-ds-*`).
+- Use `@variant` for custom variants instead of plugin API.
+- Prefer `@layer` directives (`base`, `components`, `utilities`) for cascade.
+- Use container queries with `@container` where appropriate.
+
+## Figma Export Workflow
+
+1. Extract design tokens first.
+2. Match Figma component hierarchy in code.
+3. Map responsive behavior to breakpoints and container queries.
+
+## MCP Integration
+
+- When MCP tools are available for design tokens, fetch live data.
+- Use MCP file system access to read design token JSON/CSS files.
+- Validate component props against design system schema via MCP.
+
+## Style Mapping Priority
+
+1. Design system component -> use existing component.
+2. Design tokens -> map to `@theme` variables.
+3. Spacing/sizing -> Tailwind scale or custom token scale.
+4. Colors -> reference `--color-*` variables, never raw hex in classes.
+5. Typography -> use design system size/weight/line-height.
+6. Shadows/borders -> map to design system utilities.
+
+## Anti-Patterns to Avoid
+
+- Hardcoding colors (`bg-[#3B82F6]`) -> use tokens.
+- Arbitrary values without design system basis.
+- Mixing Tailwind v3 config patterns in v4 projects.
+- Ignoring Figma constraints (min/max widths, fixed dimensions).
+
+- Keep styling consistent with the project design tokens and utility classes.
+- Inline styles are not allowed; use Tailwind utility classes.

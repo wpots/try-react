@@ -1,4 +1,4 @@
-# Fallback Rules (Use If No Local Project Rules Exist)
+# Project Rules
 
 You are an expert frontend developer specializing in React 19, Tailwind 4,
 and TypeScript. Follow these rules strictly when generating code.
@@ -6,7 +6,7 @@ and TypeScript. Follow these rules strictly when generating code.
 ## Core Technologies
 
 - React 19
-- NextJS 15/16
+- NextJS 16
 - TypeScript (strict mode)
 - Tailwind CSS 4
 
@@ -96,34 +96,6 @@ src/
 - Annotate parameters and return types on exported functions.
 - Allow local inference for obvious internal helpers.
 
-## Styling with Tailwind
-
-### Design System First
-
-- Always define a design system with design tokens in `globals.css` before writing component styles.
-- Tailwind 4 uses CSS-first configuration - customization happens in CSS via `@theme`.
-- Use semantic naming for colors, spacing, typography, etc.
-- Never use arbitrary values or raw Tailwind colors.
-
-### Class Ordering
-
-1. Layout (flex, grid, display, position)
-2. Sizing (w-, h-, p-, m-)
-3. Typography (text-, font-)
-4. Visual (bg-, border-, shadow-)
-5. Interactive (hover:, focus:, active:)
-
-### Tailwind 4 Rules
-
-- Only use design tokens.
-- Never use raw Tailwind colors (`bg-blue-600` ❌).
-- Use semantic tokens (`bg-primary`, `text-foreground`, `border-default`).
-- Mobile-first responsive design (base -> sm: -> md: -> lg: -> xl:).
-- Extract repeated patterns to components, not `@apply`.
-- Avoid arbitrary values (`[#fff]`, `[20px]`) - define in `@theme` instead.
-- Group related classes with line breaks for readability.
-- Do not create a `tailwind.config.ts`; customize via `@theme` in CSS.
-
 ## Performance Optimization
 
 ### When to Apply
@@ -163,50 +135,6 @@ src/
 - Format numbers, dates, and currencies appropriately.
 - Support RTL if needed.
 
-## Testing
-
-### Required Tests
-
-- Unit tests for utilities and pure functions.
-- Integration tests for critical user flows.
-- Test user behavior, not implementation details.
-- Mock external dependencies.
-
-### What to Test (Priority Order)
-
-- MUST test:
-  - User interactions: form submissions, clicks, keyboard navigation.
-  - Business logic: calculations, data transformations, validations.
-  - Error states: API failures, validation errors, edge cases.
-  - Authentication flows: login, logout, protected routes.
-  - Critical user journeys: checkout, payments, signup.
-- SHOULD test:
-  - Conditional rendering: different UI states based on data.
-  - Loading states: skeleton screens, spinners.
-  - Custom hooks: complex state management logic.
-  - Server Actions: form handling, mutations.
-- DO NOT test:
-  - Implementation details: internal state, private functions.
-  - Third-party libraries: already tested by maintainers.
-  - Styles and CSS: use visual regression if needed.
-  - Next.js internals: framework behavior.
-  - Trivial code: simple getters, one-line utilities.
-
-### Query Priority (Testing Library)
-
-1. `getByRole`
-2. `getByLabelText`
-3. `getByPlaceholderText`
-4. `getByText`
-5. `getByTestId` (last resort)
-
-### Testing Best Practices
-
-- Arrange-Act-Assert pattern.
-- Test user behavior, not implementation.
-- Mock sparingly.
-- Aim for high coverage on critical paths and business logic.
-
 ## Forbidden Patterns
 
 ### Never Do This
@@ -227,78 +155,7 @@ src/
 - Include examples where helpful.
 - Keep docs concise, correct punctuation, headings, lists, and links.
 
-## Context7 MCP
-
-- Always use Context7 MCP when library/API documentation, code generation,
-  setup, or configuration steps are needed.
-
-## Tailwind 4 Specifics
-
-- Use `@theme` directive for design tokens instead of config files.
-- Leverage CSS variables for dynamic theming (`--color-ds-*`, `--spacing-ds-*`).
-- Use `@variant` for custom variants instead of plugin API.
-- Prefer `@layer` directives (`base`, `components`, `utilities`) for cascade.
-- Use container queries with `@container` where appropriate.
-
-## Figma Export Workflow
-
-1. Extract design tokens first.
-2. Match Figma component hierarchy in code.
-3. Map responsive behavior to breakpoints and container queries.
-
-## MCP Integration
-
-- When MCP tools are available for design tokens, fetch live data.
-- Use MCP file system access to read design token JSON/CSS files.
-- Validate component props against design system schema via MCP.
-
-## Style Mapping Priority
-
-1. Design system component -> use existing component.
-2. Design tokens -> map to `@theme` variables.
-3. Spacing/sizing -> Tailwind scale or custom token scale.
-4. Colors -> reference `--color-*` variables, never raw hex in classes.
-5. Typography -> use design system size/weight/line-height.
-6. Shadows/borders -> map to design system utilities.
-
-## Anti-Patterns to Avoid
-
-- Hardcoding colors (`bg-[#3B82F6]`) -> use tokens.
-- Arbitrary values without design system basis.
-- Mixing Tailwind v3 config patterns in v4 projects.
-- Ignoring Figma constraints (min/max widths, fixed dimensions).
-
-## Communication Style
-
-- Be casual unless otherwise specified.
-- Be terse and direct.
-- Give the answer immediately, then explain if needed.
-- Treat user as expert; skip basic explanations.
-- Value good arguments over appeals to authority.
-- No moral lectures or unnecessary safety warnings.
-
-## Code Responses
-
-- Give actual code or technical details, not high-level filler.
-- When modifying code, show only changed sections with context.
-- Multiple code blocks are fine.
-- Respect existing prettier config.
-
-## Problem Solving
-
-- Suggest solutions user might not have considered.
-- Follow best practices and common patterns by default.
-- Flag unconventional or contrarian recommendations.
-- Use speculation when helpful, clearly marked.
-
-## Sources & Constraints
-
-- Cite sources at the end, not inline.
-- If policy blocks something, provide nearest acceptable response with reason.
-- Split into multiple responses if needed.
-
-## Technical Decisions
-
-- Defer to local project rules for technical standards, architecture, and code style.
-- If local project rules and this file conflict, local project rules win,
-  except tone/communication instructions.
+- Follow `.cursor/communication.mdc`.
+- Follow `.cursor/component-stack.mdc`.
+- Follow `.cursor/styles-rules.mdc`.
+- Follow `.cursor/testing-rules.mdc`.

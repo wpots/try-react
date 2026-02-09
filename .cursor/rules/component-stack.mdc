@@ -5,13 +5,16 @@ alwaysApply: true
 
 Use this component policy for the whole project:
 
-- Always build UI with shadcn or react-aria-components components and Tailwind CSS.
+- Always build UI with react-aria-components and shadcn components and Tailwind CSS.
 - For accessibility and behavior primitives, use React Aria hooks/components.
 - Use React 19 conventions for refs: do not use `forwardRef` in new components.
 - Export components with `export function ComponentName(...)` instead of `export const`.
 - Reuse components from `@repo/ui` first before creating new ones.
 - Do not introduce Material UI (`@mui/*`), Chakra UI, Ant Design, or other UI frameworks.
 - If a required component does not exist yet, create it in shared UI using Tailwind + React Aria patterns.
+- Organize Server Actions with one action per folder under `src/app/actions/`.
+- Keep each action's public function and related types in that folder's `index.ts`.
+- Maintain `src/app/actions/index.ts` as the single export surface that re-exports all actions and action types.
 
 When updating existing code:
 

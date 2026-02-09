@@ -48,6 +48,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           >
             <nav style={{ display: "flex", gap: "1rem" }}>
               <Link href="/">{t("home")}</Link>
+              <Link href="/dashboard">{t("dashboard")}</Link>
               <Link href="/entry/create">{t("createEntry")}</Link>
               <Link href="/auth/login">{t("login")}</Link>
               <Link href="/auth-test">{t("authTest")}</Link>

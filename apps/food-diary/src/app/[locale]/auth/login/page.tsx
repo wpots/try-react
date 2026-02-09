@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import AuthButtons from "@/components/AuthButtons";
+import { AuthButtons } from "@/components/AuthButtons";
 
 export default function LoginPage() {
   const t = useTranslations("auth");
@@ -10,7 +10,7 @@ export default function LoginPage() {
         <h1>{t("loginTitle")}</h1>
         <p>{t("loginSubtitle")}</p>
       </div>
-      <AuthButtons redirectPath="/entry/create" />
+      <AuthButtons redirectPath="/dashboard" />
     </section>
   );
 }

@@ -2,4 +2,4 @@ export interface AuthButtonsProps {
   redirectPath?: string;
 }
 
-export { default } from "./AuthButtons";
+export { AuthButtons } from "./AuthButtons";

@@ -13,7 +13,22 @@
     "entriesOverviewTitle": "Overzicht dagboekitems"
   },
   "createEntry": {
-    "title": "Nieuwe invoer maken"
+    "title": "Nieuwe invoer maken",
+    "fields": {
+      "foodEaten": "Gegeten voeding",
+      "description": "Beschrijving",
+      "date": "Datum",
+      "time": "Tijd"
+    },
+    "saveEntry": "Invoer opslaan",
+    "saving": "Bezig met opslaan...",
+    "saveSuccess": "Invoer succesvol opgeslagen!",
+    "authRequired": "Log eerst in.",
+    "goToLogin": "Ga naar inloggen",
+    "errors": {
+      "notAuthenticated": "Gebruiker niet geauthenticeerd",
+      "saveFailed": "Opslaan van invoer mislukt"
+    }
   },
   "auth": {
     "title": "Authenticatie test",
@@ -26,8 +41,15 @@
     "signedInGuest": "Ingelogd als gastgebruiker.",
     "signedInUser": "Ingelogd als gebruiker: {uid}"
   },
+  "dashboard": {
+    "title": "Dashboard",
+    "addEntry": "Invoer toevoegen",
+    "loading": "Dashboard laden...",
+    "authRequired": "Log in om je overzicht te bekijken."
+  },
   "nav": {
     "home": "Home",
+    "dashboard": "Dashboard",
     "createEntry": "Nieuwe invoer",
     "login": "Inloggen",
     "authTest": "Auth test"

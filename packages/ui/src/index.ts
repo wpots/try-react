@@ -12,3 +12,6 @@ export type { TextProps } from "./components/Text";
 
 export { Card } from "./components/Card";
 export type { CardProps } from "./components/Card";
+
+export { Form } from "./components/Form";
+export type { FormProps } from "./components/Form";

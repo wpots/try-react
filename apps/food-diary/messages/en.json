@@ -13,7 +13,22 @@
     "entriesOverviewTitle": "Diary Entries Overview"
   },
   "createEntry": {
-    "title": "Create New Entry"
+    "title": "Create New Entry",
+    "fields": {
+      "foodEaten": "Food Eaten",
+      "description": "Description",
+      "date": "Date",
+      "time": "Time"
+    },
+    "saveEntry": "Save Entry",
+    "saving": "Saving...",
+    "saveSuccess": "Entry saved successfully!",
+    "authRequired": "Sign in first.",
+    "goToLogin": "Go to login",
+    "errors": {
+      "notAuthenticated": "User not authenticated",
+      "saveFailed": "Failed to save entry"
+    }
   },
   "auth": {
     "title": "Auth Test",
@@ -26,8 +41,15 @@
     "signedInGuest": "Signed in as guest user.",
     "signedInUser": "Signed in as user: {uid}"
   },
+  "dashboard": {
+    "title": "Dashboard",
+    "addEntry": "Add entry",
+    "loading": "Loading dashboard...",
+    "authRequired": "Sign in to view your overview."
+  },
   "nav": {
     "home": "Home",
+    "dashboard": "Dashboard",
     "createEntry": "Create Entry",
     "login": "Login",
     "authTest": "Auth Test"

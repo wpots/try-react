@@ -8,7 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously } from "@/lib/auth";
 import type { AuthButtonsProps } from "./index";
 
-export default function AuthButtons({ redirectPath = "/" }: AuthButtonsProps) {
+export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps) {
   const t = useTranslations("auth");
   const router = useRouter();
   const { isGuest, loading, user } = useAuth();

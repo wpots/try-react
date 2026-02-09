@@ -1,22 +1,42 @@
-import { useTranslations } from "next-intl";
-import { Button } from "@repo/ui";
-import EntryOverview from "@/components/EntryOverview";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { aboutContent, translateAbout } from "@/lib/aboutContent";
+import type { AppLocale } from "@/i18n/config";
+import { HomeAuthRedirect } from "@/components/HomeAuthRedirect";
 
-const HomePage = () => {
-  const t = useTranslations("home");
-  const common = useTranslations("common");
-
-  return (
-    <div>
-      <div className="mb-4">
-        <LanguageSwitcher />
-      </div>
-      <h1>{t("welcome", { appName: common("appName") })}</h1>
-      <Button type="button">{t("sharedButton")}</Button>
-      <EntryOverview />
-    </div>
-  );
+type HomePageProps = {
+  params: Promise<{ locale: string }>;
 };
 
-export default HomePage;
+export default async function HomePage({
+  params,
+}: HomePageProps): Promise<React.JSX.Element> {
+  const { locale } = await params;
+  const appLocale: AppLocale = locale === "en" ? "en" : "nl";
+
+  return (
+    <section className="grid gap-10 pb-24">
+      <HomeAuthRedirect />
+      {aboutContent.map((chapter) => {
+        const title = translateAbout(chapter.title, appLocale);
+        const intro = translateAbout(chapter.intro, appLocale);
+
+        return (
+          <article key={title} className="grid gap-4">
+            <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+            {intro ? <p className="leading-7">{intro}</p> : null}
+            {chapter.articles?.map((content) => {
+              const heading = translateAbout(content.heading, appLocale);
+              const body = translateAbout(content.body, appLocale);
+
+              return (
+                <p key={heading} className="leading-7">
+                  <strong>{heading} </strong>
+                  {body}
+                </p>
+              );
+            })}
+          </article>
+        );
+      })}
+    </section>
+  );
+}

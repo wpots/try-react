@@ -2,12 +2,11 @@ import {
   addDoc,
   collection,
   getDocs,
-  orderBy,
   query,
   serverTimestamp,
   where,
 } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 
 export interface DiaryEntry {
   id: string;
@@ -35,21 +34,13 @@ export interface SaveDiaryEntryInput {
 }
 
 export async function fetchDiaryEntries(userId: string): Promise<DiaryEntry[]> {
-  const currentUserId = auth.currentUser?.uid;
-
-  if (!currentUserId || currentUserId !== userId) {
-    return [];
-  }
-
   const entriesQuery = query(
     collection(db, "diaryEntries"),
     where("userId", "==", userId),
-    orderBy("date", "desc"),
   );
 
   const querySnapshot = await getDocs(entriesQuery);
-
-  return querySnapshot.docs.map((docSnapshot) => {
+  const entries = querySnapshot.docs.map((docSnapshot) => {
     const data = docSnapshot.data();
 
     return {
@@ -73,15 +64,19 @@ export async function fetchDiaryEntries(userId: string): Promise<DiaryEntry[]> {
       updatedAt: "",
     };
   });
+
+  return entries.sort((a, b) => {
+    const dateComparison = b.date.localeCompare(a.date);
+
+    if (dateComparison !== 0) {
+      return dateComparison;
+    }
+
+    return b.time.localeCompare(a.time);
+  });
 }
 
 export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> {
-  const currentUserId = auth.currentUser?.uid;
-
-  if (!currentUserId || currentUserId !== input.userId) {
-    throw new Error("User not authenticated");
-  }
-
   await addDoc(collection(db, "diaryEntries"), {
     userId: input.userId,
     foodEaten: input.foodEaten,

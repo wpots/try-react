@@ -14,7 +14,7 @@ export function AuthSessionControls(): React.JSX.Element | null {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  if (loading || !user) {
+  if (loading || !user || isGuest) {
     return null;
   }
 
@@ -34,9 +34,7 @@ export function AuthSessionControls(): React.JSX.Element | null {
 
   return (
     <div className="grid justify-items-end gap-2">
-      <Text className="text-xs">
-        {isGuest ? t("signedInGuest") : t("signedInUser", { uid: user.uid })}
-      </Text>
+      <Text className="text-xs">{t("signedInUser", { uid: user.uid })}</Text>
       <Button type="button" onClick={handleSignOut} disabled={isSubmitting}>
         {isSubmitting ? t("signingOut") : t("signOut")}
       </Button>

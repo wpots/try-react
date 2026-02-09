@@ -41,6 +41,7 @@
     "googleLoginLoading": "Signing in with Google...",
     "guestLoginUnknownError": "Guest login failed.",
     "googleLoginUnknownError": "Google login failed.",
+    "mergeUnknownError": "Could not merge guest entries into this account.",
     "signedInGuest": "Signed in as guest user.",
     "signedInUser": "Signed in as user: {uid}",
     "signOut": "Sign out",

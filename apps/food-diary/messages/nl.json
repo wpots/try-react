@@ -41,6 +41,7 @@
     "googleLoginLoading": "Inloggen met Google...",
     "guestLoginUnknownError": "Inloggen als gast mislukt.",
     "googleLoginUnknownError": "Inloggen met Google mislukt.",
+    "mergeUnknownError": "Gastgegevens konden niet aan dit account worden gekoppeld.",
     "signedInGuest": "Ingelogd als gastgebruiker.",
     "signedInUser": "Ingelogd als gebruiker: {uid}",
     "signOut": "Uitloggen",

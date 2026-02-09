@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button, Card, Text } from "@repo/ui";
+import { mergeGuestEntries } from "@/app/actions";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
@@ -11,7 +12,7 @@ import type { AuthButtonsProps } from "./index";
 export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps) {
   const t = useTranslations("auth");
   const router = useRouter();
-  const { isGuest, loading, markGuestForMerge, user } = useAuth();
+  const { isGuest, loading, user } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [submittingMethod, setSubmittingMethod] = useState<
     "guest" | "google" | null
@@ -38,10 +39,16 @@ export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps) {
     setSubmittingMethod("google");
 
     try {
-      if (user?.isAnonymous) {
-        markGuestForMerge(user.uid);
+      const result = await signInWithGoogle(user);
+      if (result.mergedFromGuestId) {
+        const mergeResult = await mergeGuestEntries(
+          result.mergedFromGuestId,
+          result.user.uid,
+        );
+        if (!mergeResult.success) {
+          throw new Error(mergeResult.error ?? t("mergeUnknownError"));
+        }
       }
-      await signInWithGoogle();
       router.push(redirectPath);
     } catch (err) {
       const message =

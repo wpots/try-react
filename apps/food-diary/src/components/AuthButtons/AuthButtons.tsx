@@ -5,19 +5,21 @@ import { useTranslations } from "next-intl";
 import { Button, Card, Text } from "@repo/ui";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { signInAnonymously } from "@/lib/auth";
+import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
 import type { AuthButtonsProps } from "./index";
 
 export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps) {
   const t = useTranslations("auth");
   const router = useRouter();
-  const { isGuest, loading, user } = useAuth();
+  const { isGuest, loading, markGuestForMerge, user } = useAuth();
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittingMethod, setSubmittingMethod] = useState<
+    "guest" | "google" | null
+  >(null);
 
   const handleGuestLogin = async () => {
     setError(null);
-    setIsSubmitting(true);
+    setSubmittingMethod("guest");
 
     try {
       await signInAnonymously();
@@ -27,11 +29,32 @@ export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps) {
         err instanceof Error ? err.message : t("guestLoginUnknownError");
       setError(message);
     } finally {
-      setIsSubmitting(false);
+      setSubmittingMethod(null);
     }
   };
 
-  const isBusy = loading || isSubmitting;
+  const handleGoogleLogin = async () => {
+    setError(null);
+    setSubmittingMethod("google");
+
+    try {
+      if (user?.isAnonymous) {
+        markGuestForMerge(user.uid);
+      }
+      await signInWithGoogle();
+      router.push(redirectPath);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : t("googleLoginUnknownError");
+      setError(message);
+    } finally {
+      setSubmittingMethod(null);
+    }
+  };
+
+  const isBusy = loading || submittingMethod !== null;
+  const isGoogleDisabled = isBusy || Boolean(user && !isGuest);
+  const isGuestDisabled = isBusy || Boolean(user);
 
   return (
     <Card className="grid max-w-md gap-3">
@@ -44,9 +67,21 @@ export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps) {
       <Button
         type="button"
         onClick={handleGuestLogin}
-        disabled={Boolean(user) || isBusy}
+        disabled={isGuestDisabled}
       >
-        {isBusy ? t("guestLoginLoading") : t("continueAsGuest")}
+        {submittingMethod === "guest"
+          ? t("guestLoginLoading")
+          : t("continueAsGuest")}
+      </Button>
+
+      <Button
+        type="button"
+        onClick={handleGoogleLogin}
+        disabled={isGoogleDisabled}
+      >
+        {submittingMethod === "google"
+          ? t("googleLoginLoading")
+          : t("continueWithGoogle")}
       </Button>
 
       {error ? <Text tone="danger">{error}</Text> : null}

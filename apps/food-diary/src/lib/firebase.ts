@@ -1,6 +1,5 @@
 import { getApp, getApps, initializeApp, type FirebaseOptions } from "firebase/app";
 import {
-  FacebookAuthProvider,
   GoogleAuthProvider,
   getAuth,
   onAuthStateChanged,
@@ -31,7 +30,7 @@ const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export { FacebookAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInAnonymously, signInWithPopup };
+export { GoogleAuthProvider, onAuthStateChanged, signInAnonymously, signInWithPopup };
 
 export const getCurrentUser = () => auth.currentUser;
 

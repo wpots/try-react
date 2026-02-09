@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { AuthSessionControls } from "@/components/AuthSessionControls";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { locales } from "@/i18n/config";
@@ -53,7 +54,10 @@ export default async function LocaleLayout({ children, params }: Props) {
               <Link href="/auth/login">{t("login")}</Link>
               <Link href="/auth-test">{t("authTest")}</Link>
             </nav>
-            <LanguageSwitcher />
+            <div className="flex items-center gap-3">
+              <AuthSessionControls />
+              <LanguageSwitcher />
+            </div>
           </header>
           {children}
         </main>

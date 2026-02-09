@@ -73,7 +73,7 @@ try-react/
 - `EntryForm.tsx`: Component for creating and editing food diary entries using shared UI components
 - `EntryCard.tsx`: Component to display a single diary entry in the overview screen
 - `EntryOverview.tsx`: Component to display all diary entries, grouped by day, using `EntryCard` components
-- `AuthButtons.tsx`: Component for Google and Facebook login buttons, and guest login option
+- `AuthButtons.tsx`: Component for Google login buttons, and guest login option
 - `LanguageSwitcher.tsx`: Component to switch between Dutch and English
 - `ImageUploader.tsx`: Component for uploading food photos with preview and AI analysis trigger
 
@@ -109,10 +109,9 @@ Server Actions are defined in `apps/food-diary/src/app/actions.ts` or within com
 
 #### Firebase Authentication
 
-  - Used for user authentication:
-    - Google Login
-    - Facebook Login
-  - Guest Authentication (anonymous auth)
+- Used for user authentication:
+  - Google Login
+- Guest Authentication (anonymous auth)
 - Client-side implementation using Firebase SDK
 
 #### Google Firestore
@@ -122,15 +121,19 @@ NoSQL document database for storing application data.
 **Collections:**
 
 1. **Users Collection:**
-      ```
-      /users/{userId}
-      ```
+
+   ```
+   /users/{userId}
+   ```
+
    - `userId` (String): Firebase Authentication UID
 
 2. **Diary Entries Collection:**
-      ```
-      /diaryEntries/{entryId}
-      ```
+
+   ```
+   /diaryEntries/{entryId}
+   ```
+
    - `userId` (String): User ID (Firebase UID or Guest User ID)
    - `entryType` (String): "breakfast", "lunch", "dinner", "snack", "moment", "thought"
    - `foodEaten` (String)
@@ -148,9 +151,11 @@ NoSQL document database for storing application data.
    - `updatedAt` (Timestamp): Firestore Timestamp (auto-updated)
 
 3. **User Analysis Quota Collection:**
+
    ```
    /userAnalysisQuota/{userId}
    ```
+
    - `date` (String): "YYYY-MM-DD" format
    - `count` (Number): 0-3, number of AI analyses used today
    - `lastReset` (Timestamp): Last time quota was reset (for daily reset logic)
@@ -236,6 +241,7 @@ sequenceDiagram
 Set in Vercel project settings:
 
 **Firebase:**
+
 - `NEXT_PUBLIC_FIREBASE_API_KEY`
 - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
 - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
@@ -244,14 +250,17 @@ Set in Vercel project settings:
 - `NEXT_PUBLIC_FIREBASE_APP_ID`
 
 **Cloudinary:**
+
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
 - `CLOUDINARY_API_KEY`
 - `CLOUDINARY_API_SECRET`
 
 **Google Gemini:**
+
 - `GEMINI_API_KEY`
 
 **next-intl:**
+
 - `NEXT_PUBLIC_DEFAULT_LOCALE` (default: "nl")
 
 #### Deployment Process
@@ -266,7 +275,7 @@ Set in Vercel project settings:
 
 - For guest users, Firebase Anonymous Authentication generates a unique UID
 - Guest UID stored in Firebase Auth and used as `userId` in Firestore `diaryEntries` collection
-- Upon user registration (Google/Facebook login), guest entries are merged with the user's account:
+- Upon user registration (Google login), guest entries are merged with the user's account:
   - Server Action `mergeGuestEntries(guestId, userId)` updates all guest entries with new authenticated userId
   - Guest account can be deleted or kept for reference
 

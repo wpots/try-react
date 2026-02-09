@@ -34,12 +34,18 @@
     "title": "Auth Test",
     "subtitle": "Use this page to validate Firebase Google login.",
     "loginTitle": "Sign in",
-    "loginSubtitle": "Continue as a guest to start creating entries right away.",
+    "loginSubtitle": "Continue as a guest or sign in with Google to keep your data.",
     "continueAsGuest": "Continue as Guest",
+    "continueWithGoogle": "Continue with Google",
     "guestLoginLoading": "Signing in...",
+    "googleLoginLoading": "Signing in with Google...",
     "guestLoginUnknownError": "Guest login failed.",
+    "googleLoginUnknownError": "Google login failed.",
     "signedInGuest": "Signed in as guest user.",
-    "signedInUser": "Signed in as user: {uid}"
+    "signedInUser": "Signed in as user: {uid}",
+    "signOut": "Sign out",
+    "signingOut": "Signing out...",
+    "signOutError": "Sign out failed."
   },
   "dashboard": {
     "title": "Dashboard",

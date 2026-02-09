@@ -26,7 +26,7 @@ Individuals who are interested in:
   - **AI-Powered Food Analysis:** Users can upload a food photo and receive AI-generated analysis (food identification, meal type suggestions, description) using Google Gemini Flash. Limited to 3 analyses per user per day to manage API costs.
 - **Internationalization (i18n):** The application supports both Dutch (default) and English languages. All user-facing text is translatable via JSON translation files.
 - **Guest User Access:** Users can start using the diary without creating an account, allowing for immediate access and trial.
-- **Optional User Accounts:** Users have the option to create persistent accounts using Google or Facebook login via Firebase Authentication.
+- **Optional User Accounts:** Users have the option to create persistent accounts using Google login via Firebase Authentication.
 - **Data Persistence:** All diary entries, whether from guest users or registered users, are securely stored in Google Firestore. Guest user data will be merged upon account creation.
 - **Diary Entry Overview:** A clear and organized overview screen displays all recorded entries, grouped by day and presented as cards for easy review. Entries with images display thumbnails.
 - **Deployment on Vercel:** The application will be deployed on Vercel for easy access and scalability.

@@ -85,7 +85,7 @@ As a developer, I need to deploy the React Food Diary application to Vercel. Thi
    - Once deployment completes, Vercel provides a URL (e.g., `https://food-diary-app.vercel.app`)
    - Open URL in browser to access deployed application
    - Test core functionality:
-     - User authentication (guest, Google, Facebook)
+     - User authentication (guest, Google)
      - Create diary entry
      - Upload image
      - AI analysis (if quota available)

@@ -70,8 +70,8 @@ export const aboutContent: AboutChapter[] = [
           nl: "Altijd en overal:",
         },
         body: {
-          en: "You can create an account with your Facebook or Google account if you want to access your data from anywhere.",
-          nl: "Je kunt meteen beginnen met het bijhouden van je dagboek. Als je je gegevens altijd bij je wilt hebben, kun je eenvoudig een account aanmaken met je Facebook- of Google-account.",
+          en: "You can create an account with Google if you want to access your data from anywhere.",
+          nl: "Je kunt meteen beginnen met het bijhouden van je dagboek. Als je je gegevens altijd bij je wilt hebben, kun je eenvoudig een account aanmaken met Google.",
         },
       },
       {

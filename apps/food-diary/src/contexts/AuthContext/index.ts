@@ -5,6 +5,7 @@ export interface AuthContextValue {
   user: User | null;
   loading: boolean;
   isGuest: boolean;
+  markGuestForMerge: (guestId: string) => void;
 }
 
 export interface AuthProviderProps {

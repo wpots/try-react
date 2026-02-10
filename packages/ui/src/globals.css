@@ -3,9 +3,11 @@
 @theme {
   /* Primitive palette */
   --color-primitive-sage-500: #93b19a;
+  --color-primitive-sky-300: #b5e0f7;
   --color-primitive-sky-500: #5fa9d1;
   --color-primitive-slate-500: #788c90;
   --color-primitive-teal-700: #3e6168;
+  --color-primitive-navy-900: #091c40;
   --color-primitive-lime-500: #9fdf1e;
   --color-primitive-lime-700: #79b00b;
   --color-primitive-sand-400: #c8ab90;
@@ -19,8 +21,10 @@
   /* Brand aliases */
   --color-brand-primary: var(--color-primitive-sky-500);
   --color-brand-primary-strong: var(--color-primitive-teal-700);
+  --color-brand-primary-soft: var(--color-primitive-sky-300);
   --color-brand-support: var(--color-primitive-sage-500);
   --color-brand-neutral: var(--color-primitive-slate-500);
+  --color-brand-ink: var(--color-primitive-navy-900);
   --color-brand-zen: var(--color-primitive-sand-400);
 
   /* Semantic tokens */
@@ -28,6 +32,7 @@
   --color-surface: var(--color-primitive-neutral-0);
   --color-surface-muted: var(--color-brand-support);
   --color-foreground: var(--color-primitive-neutral-900);
+  --color-foreground-strong: var(--color-brand-ink);
   --color-foreground-muted: var(--color-brand-primary-strong);
   --color-border: var(--color-brand-neutral);
   --color-interactive: var(--color-brand-primary);
@@ -41,6 +46,10 @@
   --color-danger-hover: var(--color-primitive-red-500);
   --color-on-interactive: var(--color-primitive-neutral-0);
   --color-on-danger: var(--color-primitive-neutral-0);
+  --color-panel-account-start: var(--color-brand-primary-soft);
+  --color-panel-account-end: var(--color-brand-primary);
+  --color-panel-guest-start: var(--color-brand-support);
+  --color-panel-guest-end: var(--color-brand-primary-strong);
 
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;

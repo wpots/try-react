@@ -10,7 +10,27 @@
   "home": {
     "welcome": "Welkom bij {appName}",
     "sharedButton": "Gedeelde UI-knop",
-    "entriesOverviewTitle": "Overzicht dagboekitems"
+    "entriesOverviewTitle": "Overzicht dagboekitems",
+    "splash": {
+      "title": "Welkom bij",
+      "appName": "The Real You app",
+      "subtitle": "Je kunt gelijk beginnen met het bijhouden van je eetdagboek.",
+      "accountTitle": "Account aanmaken",
+      "guestTitle": "Verder zonder account",
+      "googleCta": "Ga verder met Google",
+      "guestCta": "Verder zonder account",
+      "googleLoading": "Inloggen met Google...",
+      "guestLoading": "Bezig met starten...",
+      "accountFeatureDevice": "Vanaf elk device beschikbaar.",
+      "accountFeaturePrivacy": "Wij posten nooit iets namens jou op je Google-profiel.",
+      "guestFeatureLocal": "Alleen lokaal in deze browser beschikbaar.",
+      "guestFeatureWarning": "Niet aan te raden op een gedeelde computer.",
+      "footerPrefix": "Deze site gebruikt functionele cookies voor de kernfunctionaliteit.",
+      "footerLink": "Bekijk het privacybeleid",
+      "guestError": "Verder gaan zonder account is mislukt.",
+      "googleError": "Inloggen met Google is mislukt.",
+      "mergeError": "Gastgegevens konden niet gekoppeld worden aan dit account."
+    }
   },
   "createEntry": {
     "title": "Nieuwe invoer maken",

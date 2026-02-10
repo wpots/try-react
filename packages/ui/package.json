@@ -10,6 +10,7 @@
   },
   "exports": {
     ".": "./src/index.ts",
+    "./globals.css": "./src/globals.css",
     "./src/components/*": "./src/components/*/index.ts"
   },
   "peerDependencies": {

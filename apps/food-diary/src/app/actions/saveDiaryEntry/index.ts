@@ -1,7 +1,8 @@
 "use server";
 
-import { auth, db } from "@/lib/firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { auth } from "@/lib/firebase";
+import { createDiaryEntrySchema } from "@/lib/firestore/schemas";
+import { createDiaryEntry } from "@/lib/firestore/helpers";
 
 export interface SaveDiaryEntryResult {
   success?: boolean;
@@ -22,15 +23,25 @@ export async function saveDiaryEntry(
   }
 
   try {
-    await addDoc(collection(db, "diaryEntries"), {
+    const parsed = createDiaryEntrySchema.parse({
       userId,
-      foodEaten: formData.get("foodEaten"),
-      description: formData.get("description"),
-      date: formData.get("date"),
-      time: formData.get("time"),
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      entryType: "moment",
+      foodEaten:
+        typeof formData.get("foodEaten") === "string"
+          ? formData.get("foodEaten")
+          : "",
+      description:
+        typeof formData.get("description") === "string"
+          ? formData.get("description")
+          : "",
+      date:
+        typeof formData.get("date") === "string"
+          ? formData.get("date")
+          : new Date().toISOString().slice(0, 10),
+      time:
+        typeof formData.get("time") === "string" ? formData.get("time") : "00:00",
     });
+    await createDiaryEntry(parsed);
 
     return { success: true };
   } catch (error) {

@@ -1,7 +1,8 @@
 "use server";
 
-import { auth, db } from "@/lib/firebase";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { auth } from "@/lib/firebase";
+import { getDiaryEntriesByUser } from "@/lib/firestore/helpers";
+import type { DiaryEntry as FirestoreDiaryEntry } from "@/lib/firestore/types";
 
 export interface DiaryEntry {
   id: string;
@@ -28,32 +29,26 @@ export async function fetchDiaryEntries(
     return [];
   }
 
-  const entriesQuery = query(
-    collection(db, "diaryEntries"),
-    where("userId", "==", userId),
-    orderBy("date", "desc"),
-  );
+  const entries = await getDiaryEntriesByUser(userId);
 
-  const querySnapshot = await getDocs(entriesQuery);
+  return entries.map((entry) => mapToActionDiaryEntry(entry));
+}
 
-  return querySnapshot.docs.map((doc) => {
-    const data = doc.data();
-
-    return {
-      id: doc.id,
-      userId,
-      entryType: data.entryType || "",
-      foodEaten: data.foodEaten || "",
-      emotions: data.emotions || [],
-      location: data.location || "",
-      company: data.company || "",
-      description: data.description || "",
-      behavior: data.behavior || [],
-      skippedMeal: data.skippedMeal || false,
-      date: data.date || "",
-      time: data.time || "",
-      createdAt: data.createdAt || "",
-      updatedAt: data.updatedAt || "",
-    };
-  });
+function mapToActionDiaryEntry(entry: FirestoreDiaryEntry): DiaryEntry {
+  return {
+    id: entry.entryId,
+    userId: entry.userId,
+    entryType: entry.entryType,
+    foodEaten: entry.foodEaten,
+    emotions: entry.emotions,
+    location: entry.location,
+    company: entry.company,
+    description: entry.description,
+    behavior: entry.behavior,
+    skippedMeal: entry.skippedMeal,
+    date: entry.date.toDate().toISOString().slice(0, 10),
+    time: entry.time,
+    createdAt: entry.createdAt.toDate().toISOString(),
+    updatedAt: entry.updatedAt.toDate().toISOString(),
+  };
 }

@@ -1,12 +1,8 @@
 import {
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  serverTimestamp,
-  where,
-} from "firebase/firestore";
-import { db } from "@/lib/firebase";
+  createDiaryEntry,
+  getDiaryEntriesByUser,
+} from "@/lib/firestore/helpers";
+import type { CreateDiaryEntryInput } from "@/lib/firestore/types";
 
 export interface DiaryEntry {
   id: string;
@@ -23,6 +19,8 @@ export interface DiaryEntry {
   time: string;
   createdAt: string;
   updatedAt: string;
+  imageUrl?: string;
+  imagePublicId?: string;
 }
 
 export interface SaveDiaryEntryInput {
@@ -33,57 +31,41 @@ export interface SaveDiaryEntryInput {
   time: string;
 }
 
+function toClientEntry(entry: Awaited<ReturnType<typeof getDiaryEntriesByUser>>[number]) {
+  return {
+    id: entry.entryId,
+    userId: entry.userId,
+    entryType: entry.entryType,
+    foodEaten: entry.foodEaten,
+    emotions: entry.emotions,
+    location: entry.location,
+    company: entry.company,
+    description: entry.description,
+    behavior: entry.behavior,
+    skippedMeal: entry.skippedMeal,
+    date: entry.date.toDate().toISOString().slice(0, 10),
+    time: entry.time,
+    createdAt: entry.createdAt.toDate().toISOString(),
+    updatedAt: entry.updatedAt.toDate().toISOString(),
+    imageUrl: entry.imageUrl,
+    imagePublicId: entry.imagePublicId,
+  };
+}
+
 export async function fetchDiaryEntries(userId: string): Promise<DiaryEntry[]> {
-  const entriesQuery = query(
-    collection(db, "diaryEntries"),
-    where("userId", "==", userId),
-  );
-
-  const querySnapshot = await getDocs(entriesQuery);
-  const entries = querySnapshot.docs.map((docSnapshot) => {
-    const data = docSnapshot.data();
-
-    return {
-      id: docSnapshot.id,
-      userId,
-      entryType: typeof data.entryType === "string" ? data.entryType : "",
-      foodEaten: typeof data.foodEaten === "string" ? data.foodEaten : "",
-      emotions: Array.isArray(data.emotions)
-        ? data.emotions.filter((emotion) => typeof emotion === "string")
-        : [],
-      location: typeof data.location === "string" ? data.location : "",
-      company: typeof data.company === "string" ? data.company : "",
-      description: typeof data.description === "string" ? data.description : "",
-      behavior: Array.isArray(data.behavior)
-        ? data.behavior.filter((item) => typeof item === "string")
-        : [],
-      skippedMeal: typeof data.skippedMeal === "boolean" ? data.skippedMeal : false,
-      date: typeof data.date === "string" ? data.date : "",
-      time: typeof data.time === "string" ? data.time : "",
-      createdAt: "",
-      updatedAt: "",
-    };
-  });
-
-  return entries.sort((a, b) => {
-    const dateComparison = b.date.localeCompare(a.date);
-
-    if (dateComparison !== 0) {
-      return dateComparison;
-    }
-
-    return b.time.localeCompare(a.time);
-  });
+  const entries = await getDiaryEntriesByUser(userId);
+  return entries.map((entry) => toClientEntry(entry));
 }
 
 export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> {
-  await addDoc(collection(db, "diaryEntries"), {
+  const createInput: CreateDiaryEntryInput = {
     userId: input.userId,
     foodEaten: input.foodEaten,
     description: input.description,
     date: input.date,
     time: input.time,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
+    entryType: "moment",
+  };
+
+  await createDiaryEntry(createInput);
 }

@@ -1,7 +1,6 @@
 "use server";
 
-import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { migrateGuestEntries } from "@/lib/firestore/helpers";
 
 export interface MergeGuestEntriesResult {
   success: boolean;
@@ -29,24 +28,11 @@ export async function mergeGuestEntries(
   }
 
   try {
-    const entriesReference = collection(db, "diaryEntries");
-    const guestEntriesQuery = query(
-      entriesReference,
-      where("userId", "==", guestId),
-    );
-    const querySnapshot = await getDocs(guestEntriesQuery);
-
-    const updatePromises = querySnapshot.docs.map((snapshot) =>
-      updateDoc(doc(db, "diaryEntries", snapshot.id), {
-        userId,
-      }),
-    );
-
-    await Promise.all(updatePromises);
+    const mergedCount = await migrateGuestEntries(guestId, userId);
 
     return {
       success: true,
-      mergedCount: querySnapshot.docs.length,
+      mergedCount,
     };
   } catch (err) {
     console.error("Error merging guest entries:", err);

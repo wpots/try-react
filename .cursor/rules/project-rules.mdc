@@ -48,6 +48,9 @@ and TypeScript. Follow these rules strictly when generating code.
 - Use discriminated unions for conditional props.
 - Define components using the `function` keyword.
 - Avoid unnecessary client components; wrap client components in Suspense with a fallback.
+- Build and style React Aria primitives inside `@repo/ui` components.
+- In app packages (for example `apps/food-diary`), use `@repo/ui` components and
+  do not import `react-aria-components` directly unless explicitly approved.
 
 ## File Naming & Organization
 
@@ -70,6 +73,17 @@ src/
 - Server Actions: `camelCaseAction.ts` (createUserAction.ts).
 - For component/context modules, keep public type definitions and exports in
   `index.ts` as the single import entry point.
+- Every component module must use a folder with an `index.ts` barrel.
+- Public prop/type interfaces for a component module must be declared in that
+  module's `index.ts` and imported from there.
+- Required component module structure:
+  `src/components/ComponentName/ComponentName.tsx`
+  `src/components/ComponentName/index.ts`
+- Keep component stories and view/helper files inside the same component folder.
+- If a component file contains multiple internal UI pieces (cards/items/panels),
+  extract each piece into `partials/`:
+  `src/components/ComponentName/partials/PartName.tsx`.
+- Keep the main component/view file focused on composition and wiring only.
 
 ## Naming & Formatting
 

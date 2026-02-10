@@ -1,18 +1,15 @@
-"use client";
-
 import { useEffect } from "react";
-import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "@/i18n/navigation";
+import { shouldRedirectToDashboard } from "./helpers";
 
-export function HomeAuthRedirect(): null {
+export function useHomeAuthRedirect(): void {
   const router = useRouter();
   const { loading, user } = useAuth();
 
   useEffect(() => {
-    if (!loading && user) {
+    if (shouldRedirectToDashboard(loading, Boolean(user))) {
       router.replace("/dashboard");
     }
   }, [loading, router, user]);
-
-  return null;
 }

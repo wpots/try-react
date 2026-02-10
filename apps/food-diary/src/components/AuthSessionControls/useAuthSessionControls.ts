@@ -1,26 +1,28 @@
-"use client";
-
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Button, Text } from "@repo/ui";
-import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "@/i18n/navigation";
 import { signOut } from "@/lib/auth";
 
-export function AuthSessionControls(): React.JSX.Element | null {
+export interface UseAuthSessionControlsResult {
+  canRender: boolean;
+  error: string | null;
+  isSubmitting: boolean;
+  onSignOut: () => Promise<void>;
+  userUid: string;
+}
+
+export function useAuthSessionControls(): UseAuthSessionControlsResult {
   const t = useTranslations("auth");
   const router = useRouter();
   const { isGuest, loading, user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  if (loading || !user || isGuest) {
-    return null;
-  }
-
-  const handleSignOut = async () => {
+  const handleSignOut = async (): Promise<void> => {
     setError(null);
     setIsSubmitting(true);
+
     try {
       await signOut();
       router.push("/auth/login");
@@ -32,13 +34,11 @@ export function AuthSessionControls(): React.JSX.Element | null {
     }
   };
 
-  return (
-    <div className="grid justify-items-end gap-2">
-      <Text className="text-xs">{t("signedInUser", { uid: user.uid })}</Text>
-      <Button type="button" onClick={handleSignOut} disabled={isSubmitting}>
-        {isSubmitting ? t("signingOut") : t("signOut")}
-      </Button>
-      {error ? <Text tone="danger">{error}</Text> : null}
-    </div>
-  );
+  return {
+    canRender: !loading && Boolean(user) && !isGuest,
+    error,
+    isSubmitting,
+    onSignOut: handleSignOut,
+    userUid: user?.uid ?? "",
+  };
 }

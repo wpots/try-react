@@ -1,86 +1,48 @@
 "use client";
 
-import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button, Card, Form, Text, TextField } from "@repo/ui";
-import { useAuth } from "@/contexts/AuthContext";
-import { signInAnonymously } from "@/lib/auth";
-import { saveDiaryEntry } from "@/lib/diaryEntries";
-import type { SaveState } from "./index";
+import { useEntryForm } from "./useEntryForm";
 
-function EntryForm() {
+function EntryForm(): React.JSX.Element {
   const t = useTranslations("createEntry");
-  const { user } = useAuth();
-  const [foodEaten, setFoodEaten] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
-  const [saveState, setSaveState] = useState<SaveState>({
-    success: false,
-    error: null,
-  });
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    setIsSaving(true);
-    setSaveState({ success: false, error: null });
-
-    try {
-      const activeUser = user ?? (await signInAnonymously());
-
-      await saveDiaryEntry({
-        userId: activeUser.uid,
-        foodEaten,
-        description,
-        date,
-        time,
-      });
-      setSaveState({ success: true, error: null });
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : t("errors.saveFailed");
-      setSaveState({ success: false, error: message });
-    } finally {
-      setIsSaving(false);
-    }
-  };
+  const { formValues, isSaving, onFieldChange, onSubmit, saveState } =
+    useEntryForm();
 
   return (
     <Card>
-      <Form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-4">
+      <Form className="mt-4 flex flex-col gap-4" onSubmit={onSubmit}>
         <TextField
-          label={t("fields.foodEaten")}
-          required
           id="foodEaten"
+          label={t("fields.foodEaten")}
           name="foodEaten"
-          value={foodEaten}
-          onChange={setFoodEaten}
+          onChange={(value) => onFieldChange("foodEaten", value)}
+          required
+          value={formValues.foodEaten}
         />
         <TextField
-          label={t("fields.description")}
           id="description"
+          label={t("fields.description")}
           name="description"
-          value={description}
-          onChange={setDescription}
+          onChange={(value) => onFieldChange("description", value)}
+          value={formValues.description}
         />
         <TextField
-          label={t("fields.date")}
           id="date"
+          label={t("fields.date")}
           name="date"
+          onChange={(value) => onFieldChange("date", value)}
           type="date"
-          value={date}
-          onChange={setDate}
+          value={formValues.date}
         />
         <TextField
-          label={t("fields.time")}
           id="time"
+          label={t("fields.time")}
+          onChange={(value) => onFieldChange("time", value)}
           type="time"
-          value={time}
-          onChange={setTime}
+          value={formValues.time}
         />
-        <Button type="submit" className="mt-2 w-full" disabled={isSaving}>
+        <Button className="mt-2 w-full" disabled={isSaving} type="submit">
           {isSaving ? t("saving") : t("saveEntry")}
         </Button>
         {saveState.error ? <Text tone="danger">{saveState.error}</Text> : null}

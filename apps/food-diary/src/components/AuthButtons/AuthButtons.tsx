@@ -1,80 +1,37 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button, Card, Text } from "@repo/ui";
-import { mergeGuestEntries } from "@/app/actions";
-import { useRouter } from "@/i18n/navigation";
-import { useAuth } from "@/contexts/AuthContext";
-import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
 import type { AuthButtonsProps } from "./index";
+import { useAuthButtons } from "./useAuthButtons";
 
-export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps) {
+export function AuthButtons({
+  redirectPath = "/dashboard",
+}: AuthButtonsProps): React.JSX.Element {
   const t = useTranslations("auth");
-  const router = useRouter();
-  const { isGuest, loading, user } = useAuth();
-  const [error, setError] = useState<string | null>(null);
-  const [submittingMethod, setSubmittingMethod] = useState<
-    "guest" | "google" | null
-  >(null);
-
-  const handleGuestLogin = async () => {
-    setError(null);
-    setSubmittingMethod("guest");
-
-    try {
-      await signInAnonymously();
-      router.push(redirectPath);
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : t("guestLoginUnknownError");
-      setError(message);
-    } finally {
-      setSubmittingMethod(null);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    setError(null);
-    setSubmittingMethod("google");
-
-    try {
-      const result = await signInWithGoogle(user);
-      if (result.mergedFromGuestId) {
-        const mergeResult = await mergeGuestEntries(
-          result.mergedFromGuestId,
-          result.user.uid,
-        );
-        if (!mergeResult.success) {
-          throw new Error(mergeResult.error ?? t("mergeUnknownError"));
-        }
-      }
-      router.push(redirectPath);
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : t("googleLoginUnknownError");
-      setError(message);
-    } finally {
-      setSubmittingMethod(null);
-    }
-  };
-
-  const isBusy = loading || submittingMethod !== null;
-  const isGoogleDisabled = isBusy || Boolean(user && !isGuest);
-  const isGuestDisabled = isBusy || Boolean(user);
+  const {
+    error,
+    isGuest,
+    isGoogleDisabled,
+    isGuestDisabled,
+    onGuestLogin,
+    onGoogleLogin,
+    submittingMethod,
+    userUid,
+  } = useAuthButtons({ redirectPath });
 
   return (
     <Card className="grid max-w-md gap-3">
-      {user ? (
+      {userUid ? (
         <Text>
-          {isGuest ? t("signedInGuest") : t("signedInUser", { uid: user.uid })}
+          {isGuest ? t("signedInGuest") : t("signedInUser", { uid: userUid })}
         </Text>
       ) : null}
 
       <Button
-        type="button"
-        onClick={handleGuestLogin}
         disabled={isGuestDisabled}
+        onClick={onGuestLogin}
+        type="button"
       >
         {submittingMethod === "guest"
           ? t("guestLoginLoading")
@@ -82,9 +39,9 @@ export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps) {
       </Button>
 
       <Button
-        type="button"
-        onClick={handleGoogleLogin}
         disabled={isGoogleDisabled}
+        onClick={onGoogleLogin}
+        type="button"
       >
         {submittingMethod === "google"
           ? t("googleLoginLoading")

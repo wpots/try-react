@@ -19,7 +19,9 @@ As a developer, I need to implement image upload functionality that allows users
 - **Max Size:** 400px width/height, optimized for web
 - **Storage:** Cloudinary free tier (25GB storage, 25GB bandwidth/month)
 - **Component:** `ImageUploader.tsx` in `apps/food-diary/src/components/`
-- **Server Action:** `uploadImageToCloudinary(file)` in `apps/food-diary/src/app/actions.ts`
+- **Upload Primitive:** Use RAC `FileTrigger` as default; `DropZone` is optional enhancement
+- **Server Action:** `uploadImageToCloudinary(file)` under `apps/food-diary/src/app/actions/`
+- **Data Layer Handoff:** Persist image metadata through `apps/food-diary/src/lib/firestore/*` modules
 
 ## 5. Steps to Implement
 
@@ -40,7 +42,8 @@ As a developer, I need to implement image upload functionality that allows users
    - Create Cloudinary account and get credentials
 
 3. **Create Image Upload Server Action:**
-   - In `apps/food-diary/src/app/actions.ts`, create:
+   - Create an action folder, e.g. `apps/food-diary/src/app/actions/upload-image/index.ts`
+   - Export `uploadImageToCloudinary(file)` from that folder:
      ```typescript
      "use server";
      
@@ -85,7 +88,8 @@ As a developer, I need to implement image upload functionality that allows users
    - Create `apps/food-diary/src/components/ImageUploader.tsx`
    - Add `"use client"` directive
    - Use `useState` for image preview and upload state
-   - Implement file input with image capture support
+   - Implement image picking with RAC `FileTrigger` (camera/gallery support on mobile)
+   - Optionally add RAC `DropZone` for drag-and-drop desktop UX
    - Add image preview display
 
 5. **Implement Client-Side Image Resizing:**
@@ -108,9 +112,11 @@ As a developer, I need to implement image upload functionality that allows users
    - Add state for `imageUrl` and `imagePublicId`
    - Handle image upload on form submission
    - Display image preview in form
+   - Ensure final payload is validated in server action with Zod schema from `apps/food-diary/src/lib/firestore/schemas.ts`
 
 7. **Add Image Upload UI:**
-   - Add file input button (camera icon for mobile)
+   - Add `FileTrigger` button (camera icon for mobile)
+   - Add optional `DropZone` area for desktop
    - Show image preview after selection
    - Add remove image button
    - Show upload progress/loading state
@@ -134,8 +140,14 @@ As a developer, I need to implement image upload functionality that allows users
    - Clear image preview and state
    - Optionally delete from Cloudinary (or leave for now)
 
-10. **Test Image Upload:**
+10. **Connect to Firestore Save Flow:**
+    - Ensure uploaded `imageUrl` and `imagePublicId` flow into diary entry payload
+    - Persist diary entry through Firestore helpers/converters under `apps/food-diary/src/lib/firestore/`
+
+11. **Test Image Upload:**
     - Test file selection from device
+    - Test RAC `FileTrigger` flow and keyboard accessibility
+    - If implemented, test drag-and-drop `DropZone`
     - Test camera capture on mobile
     - Verify image is resized before upload
     - Verify upload to Cloudinary works
@@ -147,10 +159,12 @@ As a developer, I need to implement image upload functionality that allows users
 - `cloudinary` and `browser-image-compression` packages installed
 - Cloudinary environment variables configured
 - `uploadImageToCloudinary` server action created and functional
-- `ImageUploader` component created with file input and preview
+- `ImageUploader` component created with RAC `FileTrigger` and preview
+- `DropZone` support documented as optional enhancement
 - Client-side image resizing implemented (max 400px)
 - Image upload works correctly to Cloudinary
 - Image URL and public_id are returned from server action
+- Image metadata handoff to Firestore save flow is documented via `src/lib/firestore/*`
 - Image preview displays in form
 - Image can be removed from form
 - Translations added for image upload UI
@@ -162,6 +176,6 @@ As a developer, I need to implement image upload functionality that allows users
 - Image resizing happens client-side to reduce upload size and stay within free tier
 - Cloudinary free tier allows 25GB storage and 25GB bandwidth per month
 - Consider adding image optimization settings in Cloudinary upload options
-- Mobile devices should support camera capture via file input
+- Mobile devices should support camera capture via RAC `FileTrigger`
 - Image deletion from Cloudinary can be implemented later if needed
 - Store both `imageUrl` and `imagePublicId` for potential future image management

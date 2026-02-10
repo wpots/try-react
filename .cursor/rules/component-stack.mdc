@@ -5,7 +5,7 @@ alwaysApply: true
 
 Use this component policy for the whole project:
 
-- Always build UI with react-aria-components and shadcn components and Tailwind CSS.
+- Always build UI with react-aria-components first or shadcn components if needed and always use Tailwind 4 CSS.
 - For accessibility and behavior primitives, use React Aria hooks/components.
 - Use React 19 conventions for refs: do not use `forwardRef` in new components.
 - Export components with `export function ComponentName(...)` instead of `export const`.
@@ -20,3 +20,4 @@ When updating existing code:
 
 - Replace legacy non-compliant UI components with shadcn/Tailwind + React Aria equivalents.
 - Refactor components that use `forwardRef` to React 19 ref patterns when touched.
+- Never use inline style in component.

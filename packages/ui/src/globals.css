@@ -1,19 +1,46 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #93b19a;
-  --color-primary-2: #5fa9d1;
-  --color-accent: #788c90;
-  --color-accent-2: #3e6168;
-  --color-success: #9fdf1e;
-  --color-success-2: #79b00b;
-  --color-zen: #c8ab90;
-  --color-warning: #ffd193;
-  --color-warning-2: #fea228;
-  --color-error: #ff6e6e;
-  --color-error-2: #ff4b4b;
-  --color-text: rgba(#000000, 0.7);
-  --color-text-invert: #fff;
+  /* Primitive palette */
+  --color-primitive-sage-500: #93b19a;
+  --color-primitive-sky-500: #5fa9d1;
+  --color-primitive-slate-500: #788c90;
+  --color-primitive-teal-700: #3e6168;
+  --color-primitive-lime-500: #9fdf1e;
+  --color-primitive-lime-700: #79b00b;
+  --color-primitive-sand-400: #c8ab90;
+  --color-primitive-amber-300: #ffd193;
+  --color-primitive-amber-500: #fea228;
+  --color-primitive-red-400: #ff6e6e;
+  --color-primitive-red-500: #ff4b4b;
+  --color-primitive-neutral-900: rgb(0 0 0 / 70%);
+  --color-primitive-neutral-0: #ffffff;
+
+  /* Brand aliases */
+  --color-brand-primary: var(--color-primitive-sky-500);
+  --color-brand-primary-strong: var(--color-primitive-teal-700);
+  --color-brand-support: var(--color-primitive-sage-500);
+  --color-brand-neutral: var(--color-primitive-slate-500);
+  --color-brand-zen: var(--color-primitive-sand-400);
+
+  /* Semantic tokens */
+  --color-background: var(--color-primitive-neutral-0);
+  --color-surface: var(--color-primitive-neutral-0);
+  --color-surface-muted: var(--color-brand-support);
+  --color-foreground: var(--color-primitive-neutral-900);
+  --color-foreground-muted: var(--color-brand-primary-strong);
+  --color-border: var(--color-brand-neutral);
+  --color-interactive: var(--color-brand-primary);
+  --color-interactive-hover: var(--color-brand-primary-strong);
+  --color-focus-ring: var(--color-brand-primary);
+  --color-success: var(--color-primitive-lime-500);
+  --color-success-strong: var(--color-primitive-lime-700);
+  --color-warning: var(--color-primitive-amber-300);
+  --color-warning-strong: var(--color-primitive-amber-500);
+  --color-danger: var(--color-primitive-red-400);
+  --color-danger-hover: var(--color-primitive-red-500);
+  --color-on-interactive: var(--color-primitive-neutral-0);
+  --color-on-danger: var(--color-primitive-neutral-0);
 
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;

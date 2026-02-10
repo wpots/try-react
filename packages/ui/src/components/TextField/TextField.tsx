@@ -39,27 +39,30 @@ export function TextField({
 
   return (
     <div className={cn("grid w-full items-start gap-2", containerClassName)}>
-      <label {...labelProps} className={cn("text-sm font-medium text-text-700", labelClassName)}>
+      <label
+        {...labelProps}
+        className={cn("text-sm font-medium text-foreground-muted", labelClassName)}
+      >
         {label}
       </label>
       <input
         {...inputElementProps}
         ref={localRef}
         className={cn(
-          "flex h-10 w-full rounded-md border border-border-300 bg-surface-50 px-3 py-2 text-sm text-text-900 transition-colors",
-          "placeholder:text-text-700/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/20",
+          "flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-foreground transition-colors",
+          "placeholder:text-foreground-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring/20",
           "disabled:cursor-not-allowed disabled:opacity-50",
-          isInvalid && "border-danger-500 focus-visible:ring-danger-500/20",
+          isInvalid && "border-danger focus-visible:ring-danger/20",
           inputClassName,
         )}
       />
       {description ? (
-        <p {...descriptionProps} className="text-sm text-text-700">
+        <p {...descriptionProps} className="text-sm text-foreground-muted">
           {description}
         </p>
       ) : null}
       {errorMessage ? (
-        <p {...errorMessageProps} className="text-sm text-danger-500">
+        <p {...errorMessageProps} className="text-sm text-danger">
           {errorMessage}
         </p>
       ) : null}

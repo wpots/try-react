@@ -11,7 +11,7 @@ export function HomeSplash(): React.JSX.Element {
     <HomeSplashView
       {...viewProps}
       footerLink={
-        <Link className="text-foreground-muted underline" href="/auth/login">
+        <Link className="text-ds-text-muted underline" href="/auth/login">
           {footerLinkLabel}
         </Link>
       }

@@ -10,8 +10,8 @@ export function LandingSection({
 }: LandingSectionProps): React.JSX.Element {
   const variantClasses = {
     default: "",
-    callout: "bg-surface-muted/20 rounded-lg",
-    muted: "bg-surface-muted/30 rounded-lg",
+    callout: "bg-ds-surface-muted/20 rounded-ds-lg",
+    muted: "bg-ds-surface-muted/30 rounded-ds-lg",
   };
 
   const widthClasses = {

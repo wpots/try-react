@@ -1,0 +1,30 @@
+/* stylelint-disable custom-property-pattern -- Foundation tokens use numeric suffixes (radius-0, radius-4) to preserve design system scale conventions */
+:root {
+  /* ============================================
+     Foundation Tokens (Internal - Prefixed with --__)
+     These are the primitive border radius values from the design system
+     ============================================ */
+
+  --__radius-0: 0;
+  --__radius-2: 0.125rem;
+  --__radius-4: 0.25rem;
+  --__radius-6: 0.375rem;
+  --__radius-8: 0.5rem;
+  --__radius-12: 0.75rem;
+  --__radius-16: 1rem;
+  --__radius-20: 1.25rem;
+  --__radius-24: 1.5rem;
+  --__radius-full: 9999px;
+
+  /* ============================================
+     Semantic Tokens (Public API - Tier 2)
+     ============================================ */
+
+  --radius-ds-none: var(--__radius-0);
+  --radius-ds-sm: var(--__radius-6);
+  --radius-ds-md: var(--__radius-8);
+  --radius-ds-lg: var(--__radius-12);
+  --radius-ds-xl: var(--__radius-16);
+  --radius-ds-2xl: var(--__radius-24);
+  --radius-ds-full: var(--__radius-full);
+}

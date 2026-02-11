@@ -28,7 +28,7 @@ export function LandingNav({
         className={classnames(
           "fixed left-4 top-4 z-50",
           "flex items-center gap-2",
-          "text-foreground-strong no-underline",
+          "text-ds-text-strong no-underline",
           "transition-transform duration-300",
           isScrolled ? "scale-75" : "scale-100",
           className
@@ -50,26 +50,26 @@ export function LandingNav({
           "fixed right-0 top-0 z-40",
           "flex items-center gap-6 px-8 py-6",
           "transition-colors duration-300",
-          isScrolled ? "bg-surface/95 shadow-md backdrop-blur-sm" : "",
+          isScrolled ? "bg-ds-surface/95 shadow-ds-md backdrop-blur-sm" : "",
           className
         )}
         {...props}
       >
         <Link
           href="#introduction"
-          className="hidden text-foreground-strong no-underline hover:text-interactive md:block"
+          className="hidden text-ds-text-strong no-underline hover:text-ds-interactive md:block"
         >
           meer informatie
         </Link>
         <Link
           href="#cta"
-          className="text-foreground-strong no-underline hover:text-interactive"
+          className="text-ds-text-strong no-underline hover:text-ds-interactive"
         >
           aan de slag
         </Link>
         <Link
           href="#feedback"
-          className="hidden text-foreground-strong no-underline hover:text-interactive md:block"
+          className="hidden text-ds-text-strong no-underline hover:text-ds-interactive md:block"
         >
           feedback
         </Link>

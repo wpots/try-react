@@ -6,8 +6,8 @@ html {
 }
 
 body {
-  color: var(--color-foreground);
-  background: var(--color-background);
+  color: var(--color-ds-on-surface);
+  background: var(--color-ds-surface);
   font-family: var(--font-body), "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

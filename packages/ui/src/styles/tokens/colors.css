@@ -5,104 +5,147 @@
      ============================================ */
 
   /* Brand Colors */
+  --__colors-sage-500: #93b19a;
+  --__colors-sky-300: #b5e0f7;
+  --__colors-sky-500: #5fa9d1;
+  --__colors-slate-500: #788c90;
+  --__colors-teal-700: #3e6168;
+  --__colors-navy-900: #091c40;
 
   /* Accent Colors */
+  --__colors-lime-500: #9fdf1e;
+  --__colors-lime-700: #79b00b;
+  --__colors-sand-400: #c8ab90;
+  --__colors-amber-300: #ffd193;
+  --__colors-amber-500: #fea228;
+  --__colors-red-400: #ff6e6e;
+  --__colors-red-500: #ff4b4b;
 
   /* Neutral Scale */
+  --__colors-neutral-0: #ffffff;
   --__colors-neutral-50: #fafafa;
   --__colors-neutral-100: #f5f5f5;
   --__colors-neutral-200: #e5e5e5;
   --__colors-neutral-300: #d4d4d4;
   --__colors-neutral-500: #737373;
   --__colors-neutral-700: #404040;
-  --__colors-neutral-900: #171717;
+  --__colors-neutral-900: rgb(0 0 0 / 70%);
+  --__colors-neutral-1000: #000000;
 
   /* ============================================
      Internal Semantic Tokens (Tier 1)
      ============================================ */
 
-  /* Primary / Brand */
-  --__colors-brand-primary-base: var(--__colors-brand-primary);
-  --__colors-brand-primary-dark: var(--__colors-brand-secondary);
-  --__colors-brand-on-primary: #ffffff;
+  /* Brand Aliases */
+  --__colors-brand-primary: var(--__colors-sky-500);
+  --__colors-brand-primary-strong: var(--__colors-teal-700);
+  --__colors-brand-primary-soft: var(--__colors-sky-300);
+  --__colors-brand-support: var(--__colors-sage-500);
+  --__colors-brand-neutral: var(--__colors-slate-500);
+  --__colors-brand-ink: var(--__colors-navy-900);
+  --__colors-brand-zen: var(--__colors-sand-400);
 
   /* Surfaces */
-  --__colors-surface-default: #ffffff;
-  --__colors-surface-elevated: #ffffff;
-  --__colors-surface-subtle: var(--__colors-neutral-100);
+  --__colors-surface-default: var(--__colors-neutral-0);
+  --__colors-surface-elevated: var(--__colors-neutral-0);
+  --__colors-surface-subtle: var(--__colors-brand-support);
+  --__colors-surface-muted: var(--__colors-neutral-100);
+
+  /* On-Surface (content on surfaces) */
+  --__colors-on-surface: var(--__colors-neutral-900);
+  --__colors-on-surface-strong: var(--__colors-brand-ink);
+  --__colors-on-surface-muted: var(--__colors-brand-primary-strong);
+  --__colors-on-surface-secondary: var(--__colors-neutral-700);
 
   /* Borders */
-  --__colors-border-default: var(--__colors-neutral-200);
-  --__colors-border-subtle: var(--__colors-neutral-100);
+  --__colors-border-default: var(--__colors-brand-neutral);
+  --__colors-border-subtle: var(--__colors-neutral-200);
   --__colors-border-emphasis: var(--__colors-neutral-300);
-  --__colors-border-surface: var(--__colors-neutral-200);
-  --__colors-border-surface-elevated: var(--__colors-neutral-200);
 
-  /* Text */
-  --__colors-text-primary: var(--__colors-neutral-900);
-  --__colors-text-secondary: var(--__colors-neutral-700);
-  --__colors-text-muted: var(--__colors-neutral-500);
-  --__colors-text-inverse: #ffffff;
-
-  /* Neutral */
-  --__colors-neutral-default: var(--__colors-neutral-200);
-  --__colors-neutral-emphasis: var(--__colors-neutral-300);
+  /* Primary / Interactive */
+  --__colors-primary: var(--__colors-brand-primary);
+  --__colors-primary-hover: var(--__colors-brand-primary-strong);
+  --__colors-on-primary: var(--__colors-neutral-0);
 
   /* States */
-  --__colors-state-success: var(--__colors-lime-10);
-  --__colors-state-success-dark: var(--__colors-lime-200);
-  --__colors-state-error: var(--__colors-coral-10);
-  --__colors-state-error-dark: var(--__colors-coral-200);
+  --__colors-success: var(--__colors-lime-500);
+  --__colors-success-strong: var(--__colors-lime-700);
+  --__colors-on-success: var(--__colors-neutral-1000);
+  --__colors-warning: var(--__colors-amber-300);
+  --__colors-warning-strong: var(--__colors-amber-500);
+  --__colors-on-warning: var(--__colors-neutral-1000);
+  --__colors-danger: var(--__colors-red-400);
+  --__colors-danger-hover: var(--__colors-red-500);
+  --__colors-on-danger: var(--__colors-neutral-0);
 
-  /* Accents (data viz) */
-  --__colors-accent-secondary: var(--__colors-brand-secondary);
-  --__colors-accent-tertiary: var(--__colors-sun-10);
-  --__colors-accent-subtle: var(--__colors-zen-10);
-  --__colors-accent-default: var(--__colors-coral-10);
-  --__colors-accent-emphasis: var(--__colors-sun-200);
+  /* Surface Gradients */
+  --__colors-surface-primary-start: var(--__colors-brand-primary-soft);
+  --__colors-surface-primary-end: var(--__colors-brand-primary);
+  --__colors-surface-zen-start: var(--__colors-brand-support);
+  --__colors-surface-zen-end: var(--__colors-brand-primary-strong);
 
   /* ============================================
      Semantic Tokens (Public API - Tier 2)
      ============================================ */
 
-  /* Primary / Brand */
-  --color-ds-primary: var(--__colors-brand-primary-base);
-  --color-ds-primary-subtle: var(--__colors-brand-primary);
-  --color-ds-primary-emphasis: var(--__colors-brand-secondary);
-  --color-ds-on-primary: var(--__colors-brand-on-primary);
+  /* Brand */
+  --color-ds-brand-primary: var(--__colors-brand-primary);
+  --color-ds-brand-primary-strong: var(--__colors-brand-primary-strong);
+  --color-ds-brand-primary-soft: var(--__colors-brand-primary-soft);
+  --color-ds-brand-support: var(--__colors-brand-support);
+  --color-ds-brand-ink: var(--__colors-brand-ink);
 
   /* Surfaces */
-  --color-ds-background: var(--__colors-surface-background);
   --color-ds-surface: var(--__colors-surface-default);
   --color-ds-surface-elevated: var(--__colors-surface-elevated);
   --color-ds-surface-subtle: var(--__colors-surface-subtle);
+  --color-ds-surface-muted: var(--__colors-surface-muted);
+
+  /* On-Surface (content on surfaces) */
+  --color-ds-on-surface: var(--__colors-on-surface);
+  --color-ds-on-surface-strong: var(--__colors-on-surface-strong);
+  --color-ds-on-surface-muted: var(--__colors-on-surface-muted);
+  --color-ds-on-surface-secondary: var(--__colors-on-surface-secondary);
 
   /* Borders */
   --color-ds-border: var(--__colors-border-default);
   --color-ds-border-subtle: var(--__colors-border-subtle);
   --color-ds-border-emphasis: var(--__colors-border-emphasis);
-  --color-ds-border-surface: var(--__colors-border-surface);
-  --color-ds-border-surface-elevated: var(--__colors-border-surface-elevated);
 
-  /* Text */
-  --color-ds-text-primary: var(--__colors-text-primary);
-  --color-ds-text-secondary: var(--__colors-text-secondary);
-  --color-ds-text-muted: var(--__colors-text-muted);
-  --color-ds-text-inverse: var(--__colors-text-inverse);
-
-  /* Neutral */
-  --color-ds-neutral: var(--__colors-neutral-default);
-  --color-ds-neutral-emphasis: var(--__colors-neutral-emphasis);
+  /* Primary / Interactive */
+  --color-ds-primary: var(--__colors-primary);
+  --color-ds-primary-hover: var(--__colors-primary-hover);
+  --color-ds-on-primary: var(--__colors-on-primary);
+  --color-ds-focus-ring: var(--__colors-brand-primary);
 
   /* States */
-  --color-ds-success: var(--__colors-state-success);
+  --color-ds-success: var(--__colors-success);
+  --color-ds-success-strong: var(--__colors-success-strong);
+  --color-ds-on-success: var(--__colors-on-success);
+  --color-ds-warning: var(--__colors-warning);
+  --color-ds-warning-strong: var(--__colors-warning-strong);
+  --color-ds-on-warning: var(--__colors-on-warning);
+  --color-ds-danger: var(--__colors-danger);
+  --color-ds-danger-hover: var(--__colors-danger-hover);
+  --color-ds-on-danger: var(--__colors-on-danger);
 
-  --color-ds-error: var(--__colors-state-error);
+  /* Surface Gradients */
+  --color-ds-surface-primary-start: var(--__colors-surface-primary-start);
+  --color-ds-surface-primary-end: var(--__colors-surface-primary-end);
+  --color-ds-surface-zen-start: var(--__colors-surface-zen-start);
+  --color-ds-surface-zen-end: var(--__colors-surface-zen-end);
 
-  /* Accents (data viz) */
-  --color-ds-secondary: var(--__colors-accent-secondary);
-  --color-ds-tertiary: var(--__colors-accent-tertiary);
-  --color-ds-subtle: var(--__colors-accent-subtle);
-  --color-ds-accent: var(--__colors-accent-default);
-  --color-ds-emphasis: var(--__colors-accent-emphasis);
+  /* ============================================
+     Backward Compatibility Aliases
+     These map old token names to new "on-*" pattern
+     ============================================ */
+
+  --color-ds-text: var(--color-ds-on-surface);
+  --color-ds-text-strong: var(--color-ds-on-surface-strong);
+  --color-ds-text-muted: var(--color-ds-on-surface-muted);
+  --color-ds-text-secondary: var(--color-ds-on-surface-secondary);
+  --color-ds-text-inverse: var(--color-ds-on-primary);
+  --color-ds-interactive: var(--color-ds-primary);
+  --color-ds-interactive-hover: var(--color-ds-primary-hover);
+  --color-ds-on-interactive: var(--color-ds-on-primary);
 }

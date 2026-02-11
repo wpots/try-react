@@ -41,7 +41,7 @@ export function TextField({
     <div className={cn("grid w-full items-start gap-2", containerClassName)}>
       <label
         {...labelProps}
-        className={cn("text-sm font-medium text-foreground-muted", labelClassName)}
+        className={cn("text-sm font-medium text-ds-text-muted", labelClassName)}
       >
         {label}
       </label>
@@ -49,15 +49,15 @@ export function TextField({
         {...inputElementProps}
         ref={localRef}
         className={cn(
-          "flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-foreground transition-colors",
-          "placeholder:text-foreground-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring/20",
+          "flex h-10 w-full rounded-md border border-ds-border bg-ds-surface px-3 py-2 text-sm text-ds-text transition-colors",
+          "placeholder:text-ds-text-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20",
           "disabled:cursor-not-allowed disabled:opacity-50",
           isInvalid && "border-danger focus-visible:ring-danger/20",
           inputClassName,
         )}
       />
       {description ? (
-        <p {...descriptionProps} className="text-sm text-foreground-muted">
+        <p {...descriptionProps} className="text-sm text-ds-text-muted">
           {description}
         </p>
       ) : null}

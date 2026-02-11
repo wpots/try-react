@@ -11,45 +11,68 @@
 @import "./utilities/typography.css";
 
 @theme {
-  /* Primitive palette */
-  --color-primitive-sage-500: #93b19a;
-  --color-primitive-sky-300: #b5e0f7;
-  --color-primitive-sky-500: #5fa9d1;
-  --color-primitive-slate-500: #788c90;
-  --color-primitive-teal-700: #3e6168;
-  --color-primitive-navy-900: #091c40;
-  --color-primitive-lime-500: #9fdf1e;
-  --color-primitive-lime-700: #79b00b;
-  --color-primitive-sand-400: #c8ab90;
-  --color-primitive-amber-300: #ffd193;
-  --color-primitive-amber-500: #fea228;
-  --color-primitive-red-400: #ff6e6e;
-  --color-primitive-red-500: #ff4b4b;
-  --color-primitive-neutral-900: rgb(0 0 0 / 70%);
-  --color-primitive-neutral-0: #ffffff;
+  /* ============================================
+     Tailwind Theme Configuration
+     Maps design system tokens to Tailwind utilities with ds prefix
+     Usage: bg-ds-surface, text-ds-on-surface, border-ds-border, etc.
+     ============================================ */
+
+  /* Brand Colors */
+  --color-ds-brand-primary: var(--color-ds-brand-primary);
+  --color-ds-brand-primary-strong: var(--color-ds-brand-primary-strong);
+  --color-ds-brand-primary-soft: var(--color-ds-brand-primary-soft);
+  --color-ds-brand-support: var(--color-ds-brand-support);
+  --color-ds-brand-ink: var(--color-ds-brand-ink);
 
   /* Surfaces */
-  --color-ds-background: var(--color-ds-background);
   --color-ds-surface: var(--color-ds-surface);
   --color-ds-surface-elevated: var(--color-ds-surface-elevated);
   --color-ds-surface-subtle: var(--color-ds-surface-subtle);
+  --color-ds-surface-muted: var(--color-ds-surface-muted);
+
+  /* On-Surface (content on surfaces) */
+  --color-ds-on-surface: var(--color-ds-on-surface);
+  --color-ds-on-surface-strong: var(--color-ds-on-surface-strong);
+  --color-ds-on-surface-muted: var(--color-ds-on-surface-muted);
+  --color-ds-on-surface-secondary: var(--color-ds-on-surface-secondary);
 
   /* Borders */
   --color-ds-border: var(--color-ds-border);
   --color-ds-border-subtle: var(--color-ds-border-subtle);
   --color-ds-border-emphasis: var(--color-ds-border-emphasis);
-  --color-ds-border-surface: var(--color-ds-border-surface);
-  --color-ds-border-surface-elevated: var(--color-ds-border-surface-elevated);
 
-  /* Text */
-  --color-ds-text-primary: var(--color-ds-text-primary);
-  --color-ds-text-secondary: var(--color-ds-text-secondary);
-  --color-ds-text-muted: var(--color-ds-text-muted);
-  --color-ds-text-inverse: var(--color-ds-text-inverse);
+  /* Primary / Interactive */
+  --color-ds-primary: var(--color-ds-primary);
+  --color-ds-primary-hover: var(--color-ds-primary-hover);
+  --color-ds-on-primary: var(--color-ds-on-primary);
+  --color-ds-focus-ring: var(--color-ds-focus-ring);
 
-  /* Neutral */
-  --color-ds-neutral: var(--color-ds-neutral);
-  --color-ds-neutral-emphasis: var(--color-ds-neutral-emphasis);
+  /* States */
+  --color-ds-success: var(--color-ds-success);
+  --color-ds-success-strong: var(--color-ds-success-strong);
+  --color-ds-on-success: var(--color-ds-on-success);
+  --color-ds-warning: var(--color-ds-warning);
+  --color-ds-warning-strong: var(--color-ds-warning-strong);
+  --color-ds-on-warning: var(--color-ds-on-warning);
+  --color-ds-danger: var(--color-ds-danger);
+  --color-ds-danger-hover: var(--color-ds-danger-hover);
+  --color-ds-on-danger: var(--color-ds-on-danger);
+
+  /* Surface Gradients */
+  --color-ds-surface-primary-start: var(--color-ds-surface-primary-start);
+  --color-ds-surface-primary-end: var(--color-ds-surface-primary-end);
+  --color-ds-surface-zen-start: var(--color-ds-surface-zen-start);
+  --color-ds-surface-zen-end: var(--color-ds-surface-zen-end);
+
+  /* Backward Compatibility Aliases */
+  --color-ds-text: var(--color-ds-on-surface);
+  --color-ds-text-strong: var(--color-ds-on-surface-strong);
+  --color-ds-text-muted: var(--color-ds-on-surface-muted);
+  --color-ds-text-secondary: var(--color-ds-on-surface-secondary);
+  --color-ds-text-inverse: var(--color-ds-on-primary);
+  --color-ds-interactive: var(--color-ds-primary);
+  --color-ds-interactive-hover: var(--color-ds-primary-hover);
+  --color-ds-on-interactive: var(--color-ds-on-primary);
 
   /* Spacing */
   --spacing-ds-xxs: var(--spacing-ds-xxs);

@@ -13,7 +13,7 @@ export function LandingHero({
       id="home"
       className={classnames(
         "relative flex min-h-[60vh] items-center justify-center overflow-hidden",
-        "bg-gradient-to-br from-brand-primary-soft to-brand-primary",
+        "bg-gradient-to-br from-ds-brand-primary-soft to-ds-brand-primary",
         className
       )}
       {...props}
@@ -28,7 +28,7 @@ export function LandingHero({
       ) : null}
 
       <div className="relative z-10 px-6 py-24 text-center">
-        <p className="m-0 text-4xl leading-relaxed text-surface md:text-5xl">
+        <p className="m-0 text-4xl leading-relaxed text-ds-surface md:text-5xl">
           De <strong className="font-bold">{title}</strong>
           <br />
           {subtitle}

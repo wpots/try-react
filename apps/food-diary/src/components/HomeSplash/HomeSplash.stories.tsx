@@ -20,7 +20,7 @@ const meta = {
     guestCta: "Continue without account",
     footerPrefix:
       "This site uses functional cookies required for core functionality.",
-    footerLink: <a className="text-foreground-muted underline">View privacy policy</a>,
+    footerLink: <a className="text-ds-text-muted underline">View privacy policy</a>,
     onGoogleClick: () => undefined,
     onGuestClick: () => undefined,
   },

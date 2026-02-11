@@ -25,7 +25,7 @@ export const Default: Story = {};
 
 export const WithContent: Story = {
   args: {
-    children: <p className="text-sm text-foreground-muted">Calories: 1,840 kcal</p>,
+    children: <p className="text-sm text-ds-text-muted">Calories: 1,840 kcal</p>,
     footer: <Button size="sm">View details</Button>,
   },
 };

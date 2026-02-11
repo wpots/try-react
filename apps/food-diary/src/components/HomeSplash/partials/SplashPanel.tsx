@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 interface SplashPanelProps {
   title: string;
   cta: ReactNode;
-  tone: "account" | "guest";
+  tone: "primary" | "zen";
   children: ReactNode;
 }
 
@@ -14,9 +14,9 @@ export function SplashPanel({
   children,
 }: SplashPanelProps): React.JSX.Element {
   const toneClasses =
-    tone === "account"
-      ? "bg-gradient-to-br from-panel-account-start to-panel-account-end"
-      : "bg-gradient-to-br from-panel-guest-start to-panel-guest-end";
+    tone === "primary"
+      ? "bg-gradient-to-br from-ds-surface-primary-start to-ds-surface-primary-end"
+      : "bg-gradient-to-br from-ds-surface-zen-start to-ds-surface-zen-end";
 
   return (
     <article
@@ -25,13 +25,13 @@ export function SplashPanel({
         toneClasses
       }
     >
-      <h2 className="px-4 pt-4 text-center text-2xl font-semibold text-surface/60">
+      <h2 className="px-4 pt-4 text-center text-2xl font-semibold text-ds-surface/60">
         {title}
       </h2>
       <div className="grid min-h-44 grow place-items-end px-3 py-3 sm:place-items-center">
         {cta}
       </div>
-      <ul className="m-0 list-none bg-surface p-0">{children}</ul>
+      <ul className="m-0 list-none bg-ds-surface p-0">{children}</ul>
     </article>
   );
 }

@@ -4,7 +4,7 @@ import type { TextProps } from "./index";
 import { cn } from "../../lib/utils";
 
 const toneClasses: Record<NonNullable<TextProps["tone"]>, string> = {
-  default: "text-foreground",
+  default: "text-ds-text",
   danger: "text-danger",
 };
 

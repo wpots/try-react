@@ -13,8 +13,8 @@ export function LandingFooter({
   return (
     <footer
       className={classnames(
-        "bg-gradient-to-br from-brand-primary-strong to-brand-ink",
-        "px-6 py-16 text-surface",
+        "bg-gradient-to-br from-ds-brand-primary-strong to-ds-brand-ink",
+        "px-6 py-16 text-ds-surface",
         className
       )}
       {...props}

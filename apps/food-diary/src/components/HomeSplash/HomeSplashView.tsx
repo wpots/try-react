@@ -26,15 +26,15 @@ export function HomeSplashView({
 }: HomeSplashViewProps): React.JSX.Element {
   return (
     <section className="grid pb-16 pt-4 sm:pb-8 sm:pt-2">
-      <div className="mx-auto w-full max-w-4xl rounded-lg border border-border/35 bg-surface shadow-2xl">
+      <div className="mx-auto w-full max-w-4xl rounded-lg border border-ds-border/35 bg-ds-surface shadow-2xl">
         <header className="px-6 pt-6 text-center sm:px-4 sm:pt-4">
-          <h1 className="m-0 text-4xl leading-none font-light text-foreground-strong sm:text-3xl">
+          <h1 className="m-0 text-4xl leading-none font-light text-ds-text-strong sm:text-3xl">
             {title}{" "}
-            <strong className="font-display font-semibold text-foreground-muted">
+            <strong className="font-display font-semibold text-ds-text-muted">
               {appName}
             </strong>
           </h1>
-          <p className="mb-6 mt-3 text-xl text-foreground-strong/85 sm:mb-4 sm:text-base">
+          <p className="mb-6 mt-3 text-xl text-ds-text-strong/85 sm:mb-4 sm:text-base">
             {subtitle}
           </p>
         </header>
@@ -52,7 +52,7 @@ export function HomeSplashView({
               </Button>
             }
             title={accountTitle}
-            tone="account"
+            tone="primary"
           >
             <FeatureItem icon="A" text={accountFeatureDevice} />
             <FeatureItem icon="S" text={accountFeaturePrivacy} />
@@ -71,7 +71,7 @@ export function HomeSplashView({
               </Button>
             }
             title={guestTitle}
-            tone="guest"
+            tone="zen"
           >
             <FeatureItem icon="L" text={guestFeatureLocal} />
             <FeatureItem icon="W" text={guestFeatureWarning} />
@@ -84,7 +84,7 @@ export function HomeSplashView({
           </Text>
         ) : null}
 
-        <footer className="px-4 py-4 text-center text-xs leading-5 text-foreground-strong/82">
+        <footer className="px-4 py-4 text-center text-xs leading-5 text-ds-text-strong/82">
           {footerPrefix}{" "}
           {footerLink}
         </footer>

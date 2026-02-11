@@ -9,9 +9,9 @@ import { cn } from "../../lib/utils";
 const variantClasses: Record<NonNullable<ButtonProps["variant"]>, string> = {
   default: "bg-interactive text-on-interactive hover:bg-interactive-hover",
   solid: "bg-interactive text-on-interactive hover:bg-interactive-hover",
-  outline: "border border-border bg-surface text-foreground hover:bg-surface-muted",
-  secondary: "bg-surface-muted text-foreground hover:bg-interactive hover:text-on-interactive",
-  ghost: "text-foreground hover:bg-surface-muted",
+  outline: "border border-ds-border bg-ds-surface text-ds-text hover:bg-ds-surface-muted",
+  secondary: "bg-ds-surface-muted text-ds-text hover:bg-ds-interactive hover:text-ds-on-interactive",
+  ghost: "text-ds-text hover:bg-ds-surface-muted",
   destructive: "bg-danger text-on-danger hover:bg-danger-hover",
 };
 

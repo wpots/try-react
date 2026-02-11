@@ -34,3 +34,9 @@ export type { NavigationItem } from "./components/Navigation";
 
 export { HamburgerMenu } from "./components/HamburgerMenu";
 export type { HamburgerMenuProps } from "./components/HamburgerMenu";
+
+export { Link } from "./components/Link";
+export type { LinkProps, NextLinkLikeProps } from "./components/Link";
+
+export { Image } from "./components/Image";
+export type { ImageProps, NextImageLikeProps } from "./components/Image";

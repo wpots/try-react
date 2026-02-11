@@ -71,7 +71,9 @@ const isStorybookRuntime =
 
 const isDevWithoutConfig =
   missingVars.length > 0 &&
-  (runtimeEnv.NODE_ENV === "development" || process.env.NODE_ENV === "development");
+  (runtimeEnv.NODE_ENV === "development" ||
+    (typeof process !== "undefined" &&
+      process.env.NODE_ENV === "development"));
 
 if (missingVars.length > 0 && !isStorybookRuntime && !isDevWithoutConfig) {
   throw new Error(`Missing Firebase environment variables: ${missingVars.join(", ")}`);

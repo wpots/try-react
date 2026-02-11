@@ -1,0 +1,1 @@
+export { shouldRedirectToDashboard } from "./shouldRedirectToDashboard";

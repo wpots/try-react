@@ -4,7 +4,7 @@ import { mergeGuestEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
-import { getHomeSplashDisabledState } from "./helpers";
+import { getHomeSplashDisabledState } from "./utils";
 
 export interface UseHomeSplashResult {
   accountCta: string;

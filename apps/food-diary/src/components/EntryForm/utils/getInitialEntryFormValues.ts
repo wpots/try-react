@@ -1,5 +1,3 @@
-import type { SaveState } from "./index";
-
 export interface EntryFormValues {
   foodEaten: string;
   description: string;
@@ -13,12 +11,5 @@ export function getInitialEntryFormValues(): EntryFormValues {
     description: "",
     date: "",
     time: "",
-  };
-}
-
-export function getInitialSaveState(): SaveState {
-  return {
-    success: false,
-    error: null,
   };
 }

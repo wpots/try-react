@@ -1,4 +1,4 @@
-import type { EntryOverviewItem } from "./index";
+import type { EntryOverviewItem } from "../index";
 
 export interface EntryGroup {
   date: string;

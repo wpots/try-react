@@ -12,7 +12,7 @@ import {
 } from "react-aria-components";
 import { Text } from "@repo/ui";
 import { defaultLocale, locales, type AppLocale } from "@/i18n/config";
-import { isLocale } from "./helpers";
+import { isLocale } from "./utils";
 import type { LanguageSwitcherViewProps } from "./index";
 
 const DEFAULT_LABELS: Record<AppLocale, string> = {

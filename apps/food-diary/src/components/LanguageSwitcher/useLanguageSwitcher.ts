@@ -2,7 +2,7 @@ import { useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import type { AppLocale } from "@/i18n/config";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { toAppLocale } from "./helpers";
+import { toAppLocale } from "./utils";
 
 export interface UseLanguageSwitcherResult {
   isPending: boolean;

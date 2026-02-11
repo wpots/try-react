@@ -4,7 +4,7 @@ import { mergeGuestEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
-import { getAuthButtonsDisabledState } from "./helpers";
+import { getAuthButtonsDisabledState } from "./utils";
 
 interface UseAuthButtonsInput {
   redirectPath: string;

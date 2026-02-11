@@ -1,8 +1,8 @@
 "use client";
 
 import { OverviewCard } from "@repo/ui";
-import { groupEntriesByDate } from "./helpers";
 import type { EntryOverviewViewProps } from "./index";
+import { groupEntriesByDate } from "./utils";
 
 export function EntryOverviewView({
   title,

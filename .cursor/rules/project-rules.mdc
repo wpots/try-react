@@ -80,6 +80,16 @@ src/
   `src/components/ComponentName/ComponentName.tsx`
   `src/components/ComponentName/index.ts`
 - Keep component stories and view/helper files inside the same component folder.
+- Local utility functions for a component must live in:
+  `src/components/ComponentName/utils/`.
+- Local hooks for a component must live in:
+  `src/components/ComponentName/useFunctionName.ts`.
+- If a utility or hook is reused by a second component, move it out of the
+  component folder to a shared location at `src/` level (same level as `lib`):
+  `src/utils/functionName.ts` or `src/hooks/useFunctionName.ts`.
+- Reusable server actions across components must live in
+  `src/app/actions/` and be re-exported through
+  `src/app/actions/index.ts`.
 - If a component file contains multiple internal UI pieces (cards/items/panels),
   extract each piece into `partials/`:
   `src/components/ComponentName/partials/PartName.tsx`.
@@ -95,6 +105,9 @@ src/
 - Event handlers start with `handle*`.
 - Boolean vars start with verbs (`isLoading`, `hasError`, `canSubmit`).
 - Custom hooks start with `use*`.
+- Hooks/utilities/actions must contain a single exported function per file.
+- File names for hooks/utilities/actions must match the function name exactly
+  (`useAuthButtons.ts`, `getInitialSaveState.ts`, `mergeGuestEntries.ts`).
 - Prefer full words.
 - Allowed short forms: `err`, `req`, `res`, `props`, `ref`.
 

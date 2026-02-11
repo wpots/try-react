@@ -7,7 +7,7 @@ import {
   getInitialEntryFormValues,
   getInitialSaveState,
   type EntryFormValues,
-} from "./helpers";
+} from "./utils";
 import type { SaveState } from "./index";
 
 export interface UseEntryFormResult {

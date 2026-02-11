@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import { shouldRedirectToDashboard } from "./helpers";
+import { shouldRedirectToDashboard } from "./utils";
 
 export function useHomeAuthRedirect(): void {
   const router = useRouter();

@@ -1,0 +1,81 @@
+{
+  "common": {
+    "skipToContent": "Skip to main content"
+  },
+  "hero": {
+    "title": "Food diary app that helps you build a healthier relationship with food.",
+    "subtitle": "Track moments, feelings and patterns without pressure."
+  },
+  "nav": {
+    "moreInfo": "More info",
+    "gettingStarted": "Getting started",
+    "feedback": "Feedback",
+    "login": "Login",
+    "menuButtonLabel": "Open menu"
+  },
+  "cta": {
+    "primary": {
+      "title": "You can start right away",
+      "description": "The app is always available as a website. No download required. Add it to your home screen and begin today.",
+      "button": "Open The Real You app"
+    },
+    "feedback": {
+      "title": "Our focus",
+      "description": "We keep improving this app together with professionals and lived-experience experts. Your feedback helps us support recovery better.",
+      "button": "Share your feedback"
+    }
+  },
+  "usp": {
+    "simple": {
+      "title": "Simple",
+      "description": "One overview, one input form and one export flow. Minimal fields, clear structure and practical support."
+    },
+    "accessible": {
+      "title": "Accessible",
+      "description": "Use it on the web across your devices. With an account your diary stays available wherever you sign in."
+    },
+    "safe": {
+      "title": "Safe",
+      "description": "Your data is stored with privacy and security in mind, so your diary remains personal."
+    }
+  },
+  "features": {
+    "heading": "Product features",
+    "items": {
+      "moments": {
+        "title": "(Food) moments",
+        "description": "Track breakfast, lunch, dinner or a single moment with your thoughts and feelings."
+      },
+      "withoutTriggers": {
+        "title": "Without triggers",
+        "description": "No calorie counting, no strict rules and no judgment. Focus on awareness instead."
+      },
+      "feelings": {
+        "title": "Feelings",
+        "description": "Capture emotions quickly and add context in your own words."
+      },
+      "behaviors": {
+        "title": "Behaviors",
+        "description": "Log behaviors like skipping meals or binge moments to recognize patterns."
+      },
+      "export": {
+        "title": "Export",
+        "description": "Select a date range and export a clear PDF to discuss with your care provider."
+      },
+      "saved": {
+        "title": "Saved moments",
+        "description": "Mark important entries and filter them later in your overview or export."
+      }
+    }
+  },
+  "brand": {
+    "logoAlt": "The Real You logo",
+    "wordmark": "The Real You"
+  },
+  "footer": {
+    "description": "The Real You started during my own recovery process. Recovery is trial and error, while continuing to discover what works for you.",
+    "quote": "Success is not final, failure is not fatal. Courage to continue is what counts.",
+    "tagline": "The Real You",
+    "copyright": "Copyright 2019 Petticode"
+  }
+}

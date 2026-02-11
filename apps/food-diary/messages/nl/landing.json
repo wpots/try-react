@@ -1,0 +1,81 @@
+{
+  "common": {
+    "skipToContent": "Ga naar hoofdinhoud"
+  },
+  "hero": {
+    "title": "Eetdagboek app die je helpt richting een gezondere relatie met eten.",
+    "subtitle": "Houd momenten, gevoelens en patronen bij zonder druk."
+  },
+  "nav": {
+    "moreInfo": "Meer info",
+    "gettingStarted": "Aan de slag",
+    "feedback": "Feedback",
+    "login": "Inloggen",
+    "menuButtonLabel": "Open menu"
+  },
+  "cta": {
+    "primary": {
+      "title": "Je kunt direct beginnen",
+      "description": "De app is altijd beschikbaar als website. Niets downloaden. Voeg hem toe aan je homescreen en start meteen.",
+      "button": "Open The Real You app"
+    },
+    "feedback": {
+      "title": "Onze focus",
+      "description": "We ontwikkelen deze app samen met hulpverleners en ervaringsdeskundigen. Jouw feedback helpt ons beter ondersteunen.",
+      "button": "Geef jouw feedback"
+    }
+  },
+  "usp": {
+    "simple": {
+      "title": "Eenvoudig",
+      "description": "Een overzicht, een invoerformulier en een exportfunctie. Minimale velden, heldere structuur en praktische ondersteuning."
+    },
+    "accessible": {
+      "title": "Toegankelijk",
+      "description": "Gebruik de app op het web, op al je apparaten. Met account blijft je dagboek overal beschikbaar."
+    },
+    "safe": {
+      "title": "Veilig",
+      "description": "Je gegevens worden verwerkt met privacy en beveiliging als uitgangspunt, zodat je dagboek persoonlijk blijft."
+    }
+  },
+  "features": {
+    "heading": "Productfeatures",
+    "items": {
+      "moments": {
+        "title": "(Eet)momenten",
+        "description": "Registreer ontbijt, lunch, avondeten of een los moment met alleen gedachten en gevoelens."
+      },
+      "withoutTriggers": {
+        "title": "Zonder triggers",
+        "description": "Geen calorieen, geen strikte regels en geen oordeel. De focus ligt op bewustwording."
+      },
+      "feelings": {
+        "title": "Gevoelens",
+        "description": "Leg emoties snel vast en voeg context toe in je eigen woorden."
+      },
+      "behaviors": {
+        "title": "Gedragingen",
+        "description": "Houd gedrag bij zoals maaltijden overslaan of eetbuien om patronen te herkennen."
+      },
+      "export": {
+        "title": "Export",
+        "description": "Selecteer een datumbereik en exporteer een duidelijk PDF-overzicht voor je zorgverlener."
+      },
+      "saved": {
+        "title": "Bewaarde momenten",
+        "description": "Markeer belangrijke invoer en filter later in je overzicht of export."
+      }
+    }
+  },
+  "brand": {
+    "logoAlt": "The Real You logo",
+    "wordmark": "The Real You"
+  },
+  "footer": {
+    "description": "The Real You is ontstaan tijdens mijn eigen herstelproces. Herstel is vallen en opstaan, en blijven zoeken naar wat voor jou werkt.",
+    "quote": "Succes is niet definitief, falen is niet fataal. Het gaat om de moed om door te gaan.",
+    "tagline": "The Real You",
+    "copyright": "Copyright 2019 Petticode"
+  }
+}

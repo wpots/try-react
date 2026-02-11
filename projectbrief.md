@@ -49,7 +49,7 @@ The project is organized as a monorepo:
 ```
 try-react/
 ├── apps/
-│   └── food-diary/          # Next.js 15 application
+│   └── food-diary/          # Next.js 16 application
 ├── packages/
 │   └── ui/                  # Shared React Aria + Tailwind component library
 ├── turbo.json               # Turborepo configuration

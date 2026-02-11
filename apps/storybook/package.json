@@ -4,8 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "CI=1 storybook dev -p 6006 --no-open",
-    "build": "CI=1 storybook build"
+    "dev": "STORYBOOK_DISABLE_TELEMETRY=1 storybook dev --port 6006",
+    "build": "CI=1 STORYBOOK_DISABLE_TELEMETRY=1 storybook build"
+  },
+  "engines": {
+    "node": ">=20 <24"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",

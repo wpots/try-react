@@ -29,6 +29,15 @@ const config: StorybookConfig = {
       resolve(configDir, "../../../packages/ui"),
       resolve(configDir, "../../../apps/food-diary"),
     ];
+    viteConfig.server.watch ??= {};
+    viteConfig.server.watch.ignored = [
+      "**/.git/**",
+      "**/.turbo/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/storybook-static/**",
+      "**/node_modules/**",
+    ];
 
     viteConfig.resolve ??= {};
     viteConfig.resolve.alias ??= {};

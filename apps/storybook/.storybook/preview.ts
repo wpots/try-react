@@ -1,6 +1,11 @@
 import type { Preview } from "@storybook/react";
+import * as React from "react";
 
 import "../../../packages/ui/src/globals.css";
+
+if (typeof globalThis.React === "undefined") {
+  Reflect.set(globalThis, "React", React);
+}
 
 const preview: Preview = {
   parameters: {

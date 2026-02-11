@@ -38,6 +38,17 @@ const config: StorybookConfig = {
       "**/storybook-static/**",
       "**/node_modules/**",
     ];
+    viteConfig.esbuild ??= {};
+
+    if (!Array.isArray(viteConfig.esbuild)) {
+      viteConfig.esbuild.jsx = "automatic";
+      viteConfig.esbuild.jsxImportSource = "react";
+    }
+
+    viteConfig.optimizeDeps ??= {};
+    viteConfig.optimizeDeps.esbuildOptions ??= {};
+    viteConfig.optimizeDeps.esbuildOptions.jsx = "automatic";
+    viteConfig.optimizeDeps.esbuildOptions.jsxImportSource = "react";
 
     viteConfig.resolve ??= {};
     viteConfig.resolve.alias ??= {};

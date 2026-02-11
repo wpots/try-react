@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { AuthSessionControls } from "@/components/AuthSessionControls";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+
 import { AuthProvider } from "@/contexts/AuthContext";
 import { locales } from "@/i18n/config";
-import { Link } from "@/i18n/navigation";
+
+import { SkipLink } from "@repo/ui";
+import { PageFooter } from "@/components/PageFooter";
+import { PageHeader } from "@/components/PageHeader";
 
 export const metadata: Metadata = {
   title: "Food Diary",
@@ -30,37 +32,17 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
 
   setRequestLocale(locale);
-  const t = await getTranslations("nav");
+  const tCommon = await getTranslations({ locale, namespace: "common" });
   const messages = await getMessages();
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <AuthProvider>
-        <main style={{ padding: "2rem", maxWidth: "56rem", margin: "0 auto" }}>
-          <header
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "1.5rem",
-              gap: "1rem",
-              flexWrap: "wrap",
-            }}
-          >
-            <nav style={{ display: "flex", gap: "1rem" }}>
-              <Link href="/">{t("home")}</Link>
-              <Link href="/dashboard">{t("dashboard")}</Link>
-              <Link href="/entry/create">{t("createEntry")}</Link>
-              <Link href="/auth/login">{t("login")}</Link>
-              <Link href="/auth-test">{t("authTest")}</Link>
-            </nav>
-            <div className="flex items-center gap-3">
-              <AuthSessionControls />
-              <LanguageSwitcher />
-            </div>
-          </header>
-          {children}
-        </main>
+        <SkipLink>{tCommon("skipToContent")}</SkipLink>
+        <PageHeader />
+
+        {children}
+        <PageFooter />
       </AuthProvider>
     </NextIntlClientProvider>
   );

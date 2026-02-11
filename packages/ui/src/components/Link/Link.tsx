@@ -1,13 +1,10 @@
-import { Link as ReactAriaLink } from "react-aria-components";
+"use client";
 
 import type { LinkProps } from "./index";
 
 function isExternalHref(href: string): boolean {
   return (
-    href.startsWith("http://") ||
-    href.startsWith("https://") ||
-    href.startsWith("mailto:") ||
-    href.startsWith("tel:")
+    href.startsWith("http://") || href.startsWith("https://") || href.startsWith("mailto:") || href.startsWith("tel:")
   );
 }
 
@@ -25,11 +22,8 @@ export function Link({
   ...props
 }: LinkProps): React.JSX.Element {
   const external = isExternal ?? isExternalHref(href);
-  const internal = isInternalHref(href);
-  const safeRel =
-    target === "_blank"
-      ? [rel, "noopener", "noreferrer"].filter(Boolean).join(" ")
-      : rel;
+  const internal = !external && isInternalHref(href);
+  const safeRel = target === "_blank" ? [rel, "noopener", "noreferrer"].filter(Boolean).join(" ") : rel;
 
   if (internal && NextLinkComponent) {
     return (
@@ -40,14 +34,8 @@ export function Link({
   }
 
   return (
-    <ReactAriaLink
-      href={href}
-      isExternal={external}
-      target={target}
-      rel={safeRel}
-      {...props}
-    >
+    <a href={href} target={target} rel={safeRel} {...props}>
       {children}
-    </ReactAriaLink>
+    </a>
   );
 }

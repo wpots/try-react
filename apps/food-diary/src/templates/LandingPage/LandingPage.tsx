@@ -1,23 +1,18 @@
-import { SkipLink } from "@repo/ui";
 import { useTranslations } from "next-intl";
 import type { LandingPageProps } from "./index";
 
 import { CallToAction } from "@/components/CallToAction";
 import { PageFooter } from "@/components/PageFooter";
-import { PageHeader } from "@/components/PageHeader";
 import { PageHero } from "@/components/PageHero";
 import { ProductFeatures } from "@/components/ProductFeatures";
 import { USPSection } from "@/components/USPSection";
 
-export function LandingPage({ id = "landing-page", ...props }: LandingPageProps): React.JSX.Element {
+export function LandingPage({ id = "main-content", ...props }: LandingPageProps): React.JSX.Element {
   const t = useTranslations("landing");
 
   return (
-    <div data-component-type="LandingPage" id={id} {...props}>
-      <SkipLink>{t("common.skipToContent")}</SkipLink>
-      <PageHeader />
-
-      <main data-component-type="LandingMain" id="main-content">
+    <>
+      <main data-component-type="LandingPage" id={id} {...props}>
         <PageHero backgroundImage="/img/hero_bg.jpg" />
 
         <CallToAction
@@ -97,8 +92,6 @@ export function LandingPage({ id = "landing-page", ...props }: LandingPageProps)
           ]}
         />
       </main>
-
-      <PageFooter />
-    </div>
+    </>
   );
 }

@@ -16,10 +16,10 @@ export function FeatureCard({
       <div className="mb-4 flex h-24 w-24 items-center justify-center">
         <img src={icon} alt="" className="h-full w-full" />
       </div>
-      <h3 className="mb-3 text-2xl font-semibold text-ds-text-strong">
+      <h3 className="mb-4 text-2xl font-bold text-ds-on-surface-strong">
         {title}
       </h3>
-      <p className="text-base leading-relaxed text-ds-text">{description}</p>
+      <p className="text-lg leading-relaxed text-ds-on-surface">{description}</p>
     </article>
   );
 }

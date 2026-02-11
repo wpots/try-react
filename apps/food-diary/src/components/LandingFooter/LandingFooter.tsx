@@ -27,11 +27,11 @@ export function LandingFooter({
 
           <div className="flex flex-col items-center text-center">
             <img
-              src="/img/icons/favicon-96x96.png"
+              src="/img/pebblesblue.png"
               alt={appName}
-              className="mb-4 h-24 w-24 brightness-0 invert"
+              className="mb-4 h-24 w-24 opacity-90"
             />
-            <h2 className="mb-2 font-display text-3xl font-normal">Try</h2>
+            <h2 className="mb-2 text-3xl font-normal" style={{ fontFamily: "var(--font-display)" }}>Try</h2>
             <p className="mb-4 text-sm leading-relaxed opacity-90">{quote}</p>
             <h5 className="text-base font-semibold">{tagline}</h5>
           </div>

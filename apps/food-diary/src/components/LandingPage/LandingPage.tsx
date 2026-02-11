@@ -15,14 +15,14 @@ export function LandingPage({
     <div {...props}>
       <LandingNav />
 
-      <LandingHero />
+      <LandingHero backgroundImage="/img/hero_bg.jpg" />
 
-      <main>
+      <main className="bg-ds-surface">
         <LandingSection id="introduction" variant="callout">
-          <h2 className="mb-4 text-3xl font-semibold text-ds-text-strong">
+          <h2 className="mb-6 text-4xl font-semibold text-ds-on-surface-strong md:text-5xl">
             The Real You biedt jou een makkelijke en veilige manier.
           </h2>
-          <p className="text-lg leading-relaxed text-ds-text">
+          <p className="text-xl leading-relaxed text-ds-on-surface md:text-2xl">
             Dat het bijhouden van een eetdagboek moeilijk kan zijn, weten wij. Maar
             het is belangrijk dat je je meer bewust wordt van wat je eet. Je krijgt
             inzicht in je gedachten en gedragingen met betrekking tot eten en zo kun
@@ -34,13 +34,13 @@ export function LandingPage({
         </LandingSection>
 
         <LandingSection id="features" maxWidth="full">
-          <div className="grid gap-8 md:grid-cols-2">
-            <div className="space-y-8">
+          <div className="grid gap-12 md:grid-cols-2">
+            <div className="space-y-10">
               <article>
-                <h5 className="mb-2 text-xl font-semibold text-ds-text-strong">
+                <h5 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                   (Eet)momenten
                 </h5>
-                <p className="text-base leading-relaxed text-ds-text">
+                <p className="text-lg leading-relaxed text-ds-on-surface">
                   Misschien vind je het bijhouden van een eetdagboek erg
                   confronterend. De app is bedoeld je ontbijt, lunch, avondeten en
                   tussendoortjes te registreren, maar je kunt ook gewoon even een
@@ -49,10 +49,10 @@ export function LandingPage({
               </article>
 
               <article>
-                <h5 className="mb-2 text-xl font-semibold text-ds-text-strong">
+                <h5 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                   Zonder triggers
                 </h5>
-                <p className="text-base leading-relaxed text-ds-text">
+                <p className="text-lg leading-relaxed text-ds-on-surface">
                   Anders dan de meeste apps waarmee je je voeding kunt bijhouden,
                   worden er in <strong>The Real You app</strong> geen calorieen
                   bijgehouden. Zo kun je zonder regels of oordeel je eten bijhouden.
@@ -60,30 +60,30 @@ export function LandingPage({
               </article>
 
               <article>
-                <h5 className="mb-2 text-xl font-semibold text-ds-text-strong">
+                <h5 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                   Gevoelens
                 </h5>
-                <p className="text-base leading-relaxed text-ds-text">
+                <p className="text-lg leading-relaxed text-ds-on-surface">
                   Simpel een paar emoticons aanvinken, kun je aanvullen met het
                   opschrijven van wat er op dat moment door je heen ging.
                 </p>
               </article>
 
               <article>
-                <h5 className="mb-2 text-xl font-semibold text-ds-text-strong">
+                <h5 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                   Gedragingen
                 </h5>
-                <p className="text-base leading-relaxed text-ds-text">
+                <p className="text-lg leading-relaxed text-ds-on-surface">
                   Heb je je maaltijd overgeslagen? Of was het een vreetbui. Heb je
                   expres te weinig gegeten.
                 </p>
               </article>
 
               <article>
-                <h5 className="mb-2 text-xl font-semibold text-ds-text-strong">
+                <h5 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                   Export
                 </h5>
-                <p className="text-base leading-relaxed text-ds-text">
+                <p className="text-lg leading-relaxed text-ds-on-surface">
                   Je kunt makkelijk via de export een datum bereik selecteren en
                   exporteren in een overzichtelijk PDF bestand. Zo kun je er makkelijk
                   met je zorgverlener over praten.
@@ -91,10 +91,10 @@ export function LandingPage({
               </article>
 
               <article>
-                <h5 className="mb-2 text-xl font-semibold text-ds-text-strong">
+                <h5 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                   Bewaarde momenten
                 </h5>
-                <p className="text-base leading-relaxed text-ds-text">
+                <p className="text-lg leading-relaxed text-ds-on-surface">
                   Met een vinkje kun je momenten bewaren voor later. Misschien is er
                   een moment dat je specifiek wilt bespreken. In het overzicht of in de
                   export functie kun je deze makkelijk op bewaarde momenten filteren.
@@ -102,30 +102,37 @@ export function LandingPage({
               </article>
             </div>
 
-            <figure className="flex items-center justify-center">
-              <div className="relative">
+            <figure className="flex items-center justify-center sticky top-24 self-start">
+              <div className="relative w-full max-w-sm">
                 <img
-                  src="/img/icons/favicon-192x192.png"
+                  src="/img/phone_mockup.png"
                   alt="App preview"
-                  className="h-auto w-full max-w-md rounded-lg shadow-2xl"
+                  className="h-auto w-full drop-shadow-2xl"
                 />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <img
+                    src="/img/slide_moment.png"
+                    alt="App screen"
+                    className="h-[85%] w-auto"
+                  />
+                </div>
               </div>
             </figure>
           </div>
         </LandingSection>
 
         <LandingSection id="cta" variant="callout">
-          <h2 className="mb-4 text-3xl font-semibold text-ds-text-strong">
+          <h2 className="mb-6 text-4xl font-semibold text-ds-on-surface-strong md:text-5xl">
             Je kunt gelijk beginnen
           </h2>
-          <p className="mb-6 text-lg leading-relaxed text-ds-text">
+          <p className="mb-8 text-xl leading-relaxed text-ds-on-surface md:text-2xl">
             <strong>The Real You app</strong> is als website altijd beschikbaar. Je
             hoeft niets te downloaden. Voor een echt 'app' gevoel, kun je hem
             eenvoudig toevoegen aan je homescreen op je smartphone of tablet. Ga naar
             The Real You App en je kunt gelijk aan de slag.
           </p>
           <Button
-            className="bg-ds-interactive px-8 py-3 text-lg text-ds-on-interactive hover:bg-ds-interactive-hover"
+            className="bg-ds-primary px-10 py-4 text-xl font-semibold text-ds-on-primary hover:bg-ds-primary-hover"
             onClick={() => (window.location.href = "/auth/login")}
           >
             The Real You App
@@ -153,10 +160,10 @@ export function LandingPage({
         </LandingSection>
 
         <LandingSection id="feedback" variant="muted">
-          <h2 className="mb-4 text-3xl font-semibold text-ds-text-strong">
+          <h2 className="mb-6 text-4xl font-semibold text-ds-on-surface-strong md:text-5xl">
             Onze Focus
           </h2>
-          <p className="mb-6 text-lg leading-relaxed text-ds-text">
+          <p className="mb-8 text-xl leading-relaxed text-ds-on-surface md:text-2xl">
             Deze app blijft volop in ontwikkeling. Wij zijn zelf ervaringsdeskundige en
             hebben nog wensen. En omdat wij graag samenwerken met hulpverleners die ons
             precies kunnen vertellen wat ze nodig hebben van The Real You om jouw
@@ -165,7 +172,7 @@ export function LandingPage({
           </p>
           <Button
             variant="secondary"
-            className="px-8 py-3 text-lg"
+            className="px-10 py-4 text-xl font-semibold"
             onClick={() => (window.location.href = "/feedback")}
           >
             Laat jouw feedback achter
@@ -173,15 +180,15 @@ export function LandingPage({
         </LandingSection>
 
         <LandingSection id="future" maxWidth="full">
-          <h2 className="mb-8 text-center text-3xl font-semibold text-ds-text-strong">
+          <h2 className="mb-12 text-center text-4xl font-semibold text-ds-on-surface-strong md:text-5xl">
             Binnenkort verwacht....
           </h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             <article>
-              <h3 className="mb-2 text-xl font-semibold text-ds-text-strong">
+              <h3 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                 Offline beschikbaar
               </h3>
-              <p className="text-base leading-relaxed text-ds-text">
+              <p className="text-lg leading-relaxed text-ds-on-surface">
                 Als je een wifi zone uitloopt en nog niet hebt opgeslagen? De laatste
                 dagen van de maand en je data bundel is op? Wij werken aan het offline
                 beschikbaar maken van de app.
@@ -189,10 +196,10 @@ export function LandingPage({
             </article>
 
             <article>
-              <h3 className="mb-2 text-xl font-semibold text-ds-text-strong">
+              <h3 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                 Persoonlijke Inzichten
               </h3>
-              <p className="text-base leading-relaxed text-ds-text">
+              <p className="text-lg leading-relaxed text-ds-on-surface">
                 Je zult gaandeweg wellicht wat mantra's hebben die je helpen. Deze
                 kunnen opslaan in de app en dan regelmatig voorbij zien komen, maakt de
                 app straks nog persoonlijker.
@@ -200,20 +207,20 @@ export function LandingPage({
             </article>
 
             <article>
-              <h3 className="mb-2 text-xl font-semibold text-ds-text-strong">
+              <h3 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                 Motivatie en Tips
               </h3>
-              <p className="text-base leading-relaxed text-ds-text">
+              <p className="text-lg leading-relaxed text-ds-on-surface">
                 Iedereen heeft lastige momenten of een kleine terugval. Wij willen je
                 tips en/of meditatietool een handvat geven als je even vast zit.
               </p>
             </article>
 
             <article>
-              <h3 className="mb-2 text-xl font-semibold text-ds-text-strong">
+              <h3 className="mb-3 text-2xl font-semibold text-ds-on-surface-strong">
                 Koppeling met Zorgverlener
               </h3>
-              <p className="text-base leading-relaxed text-ds-text">
+              <p className="text-lg leading-relaxed text-ds-on-surface">
                 Een online portal waar een zorgverlener of buddy kan inloggen en meteen
                 kan meekijken, berichten achterlaten om zo directer contact te hebben en
                 makkelijker te kunnen bijsturen.

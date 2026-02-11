@@ -10,8 +10,10 @@
   "scripts": {
     "dev": "turbo dev",
     "dev:storybook": "turbo dev --filter=@repo/storybook",
+    "dev:food-diary": "turbo dev --filter=@repo/food-diary",
     "build": "turbo build",
     "build:storybook": "turbo build --filter=@repo/storybook",
+    "build:food-diary": "turbo build --filter=@repo/food-diary",
     "lint": "turbo lint",
     "test": "turbo test"
   },

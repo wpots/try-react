@@ -26,22 +26,22 @@ export function LandingNav({
       <Link
         href="#home"
         className={classnames(
-          "fixed left-4 top-4 z-50",
-          "flex items-center gap-2",
-          "text-ds-text-strong no-underline",
-          "transition-transform duration-300",
-          isScrolled ? "scale-75" : "scale-100",
+          "fixed left-6 top-6 z-50",
+          "flex items-center gap-3",
+          "text-ds-on-surface-strong no-underline",
+          "transition-all duration-300",
+          isScrolled ? "scale-90" : "scale-100",
           className
         )}
       >
         <img
-          src="/img/icons/favicon-96x96.png"
+          src="/img/pebblesblue.png"
           alt={appName}
           className="h-12 w-12"
         />
-        <h1 className="m-0 font-display text-2xl font-normal">
-          T<span className="text-sm">he</span> r<span className="text-sm">eal</span> y
-          <span className="text-sm">ou</span>
+        <h1 className="m-0 text-3xl font-normal" style={{ fontFamily: "var(--font-display)" }}>
+          T<span className="text-base">he</span> r<span className="text-base">eal</span> y
+          <span className="text-base">ou</span>
         </h1>
       </Link>
 
@@ -57,19 +57,19 @@ export function LandingNav({
       >
         <Link
           href="#introduction"
-          className="hidden text-ds-text-strong no-underline hover:text-ds-interactive md:block"
+          className="hidden text-base font-medium text-ds-on-surface-strong no-underline transition-colors hover:text-ds-primary md:block"
         >
           meer informatie
         </Link>
         <Link
           href="#cta"
-          className="text-ds-text-strong no-underline hover:text-ds-interactive"
+          className="text-base font-medium text-ds-on-surface-strong no-underline transition-colors hover:text-ds-primary"
         >
           aan de slag
         </Link>
         <Link
           href="#feedback"
-          className="hidden text-ds-text-strong no-underline hover:text-ds-interactive md:block"
+          className="hidden text-base font-medium text-ds-on-surface-strong no-underline transition-colors hover:text-ds-primary md:block"
         >
           feedback
         </Link>

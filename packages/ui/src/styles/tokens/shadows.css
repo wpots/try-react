@@ -1,0 +1,38 @@
+:root {
+  /* ============================================
+     Foundation Tokens (Internal - Prefixed with --__)
+     These are the primitive shadow values from the design system
+     ============================================ */
+
+  /* Base shadows */
+  --__shadows-none: none;
+  --__shadows-small: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --__shadows-medium: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --__shadows-large: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --__shadows-extra-large: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Elevation shadows */
+  --__shadows-elevation-0: none;
+  --__shadows-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --__shadows-elevation-2: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --__shadows-elevation-3: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --__shadows-elevation-4: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* ============================================
+     Semantic Tokens (Public API - Tier 2)
+     ============================================ */
+
+  /* Base shadows */
+  --shadow-ds-none: var(--__shadows-none);
+  --shadow-ds-sm: var(--__shadows-small);
+  --shadow-ds-md: var(--__shadows-medium);
+  --shadow-ds-lg: var(--__shadows-large);
+  --shadow-ds-xl: var(--__shadows-extra-large);
+
+  /* Elevation shadows */
+  --shadow-ds-elevation-0: var(--__shadows-elevation-0);
+  --shadow-ds-elevation-1: var(--__shadows-elevation-1);
+  --shadow-ds-elevation-2: var(--__shadows-elevation-2);
+  --shadow-ds-elevation-3: var(--__shadows-elevation-3);
+  --shadow-ds-elevation-4: var(--__shadows-elevation-4);
+}

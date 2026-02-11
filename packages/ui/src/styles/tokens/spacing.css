@@ -1,0 +1,39 @@
+/* stylelint-disable custom-property-pattern -- Foundation tokens use numeric suffixes (size-0, size-2) to preserve design system scale conventions */
+:root {
+  /* ============================================
+     Foundation Tokens (Internal - Prefixed with --__)
+     These are the primitive spacing values from the design system
+     ============================================ */
+
+  --__size-scale-size-0: 0;
+  --__size-scale-size-2: 0.125rem;
+  --__size-scale-size-4: 0.25rem;
+  --__size-scale-size-8: 0.5rem;
+  --__size-scale-size-12: 0.75rem;
+  --__size-scale-size-16: 1rem;
+  --__size-scale-size-20: 1.25rem;
+  --__size-scale-size-24: 1.5rem;
+  --__size-scale-size-32: 2rem;
+  --__size-scale-size-40: 2.5rem;
+  --__size-scale-size-48: 3rem;
+  --__size-scale-size-64: 4rem;
+  --__size-scale-size-80: 5rem;
+  --__size-scale-size-96: 6rem;
+  --__size-scale-size-120: 7.5rem;
+  --__size-scale-size-160: 10rem;
+
+  /* ============================================
+     Semantic Tokens (Public API - Tier 2)
+     ============================================ */
+
+  --spacing-ds-xxs: var(--__size-scale-size-2);
+  --spacing-ds-xs: var(--__size-scale-size-4);
+  --spacing-ds-s: var(--__size-scale-size-8);
+  --spacing-ds-m: var(--__size-scale-size-12);
+  --spacing-ds-l: var(--__size-scale-size-16);
+  --spacing-ds-xl: var(--__size-scale-size-24);
+  --spacing-ds-xxl: var(--__size-scale-size-32);
+  --spacing-ds-3xl: var(--__size-scale-size-40);
+  --spacing-ds-4xl: var(--__size-scale-size-64);
+  --spacing-ds-5xl: var(--__size-scale-size-80);
+}

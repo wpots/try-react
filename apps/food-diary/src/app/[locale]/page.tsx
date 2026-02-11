@@ -1,11 +1,11 @@
 import { HomeAuthRedirect } from "@/components/HomeAuthRedirect";
-import { HomeSplash } from "@/components/HomeSplash";
+import { LandingPage } from "@/components/LandingPage";
 
 export default function HomePage(): React.JSX.Element {
   return (
-    <section>
+    <>
       <HomeAuthRedirect />
-      <HomeSplash />
-    </section>
+      <LandingPage />
+    </>
   );
 }

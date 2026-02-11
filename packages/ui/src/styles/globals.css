@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* Import all token files (CSS variables in :root) */
+@import "./tokens/colors.css";
+@import "./tokens/spacing.css";
+@import "./tokens/typography.css";
+@import "./tokens/radius.css";
+@import "./tokens/shadows.css";
+
+/* Import utility files */
+@import "./utilities/typography.css";
+
+@theme {
+  /* Primitive palette */
+  --color-primitive-sage-500: #93b19a;
+  --color-primitive-sky-300: #b5e0f7;
+  --color-primitive-sky-500: #5fa9d1;
+  --color-primitive-slate-500: #788c90;
+  --color-primitive-teal-700: #3e6168;
+  --color-primitive-navy-900: #091c40;
+  --color-primitive-lime-500: #9fdf1e;
+  --color-primitive-lime-700: #79b00b;
+  --color-primitive-sand-400: #c8ab90;
+  --color-primitive-amber-300: #ffd193;
+  --color-primitive-amber-500: #fea228;
+  --color-primitive-red-400: #ff6e6e;
+  --color-primitive-red-500: #ff4b4b;
+  --color-primitive-neutral-900: rgb(0 0 0 / 70%);
+  --color-primitive-neutral-0: #ffffff;
+
+  /* Surfaces */
+  --color-ds-background: var(--color-ds-background);
+  --color-ds-surface: var(--color-ds-surface);
+  --color-ds-surface-elevated: var(--color-ds-surface-elevated);
+  --color-ds-surface-subtle: var(--color-ds-surface-subtle);
+
+  /* Borders */
+  --color-ds-border: var(--color-ds-border);
+  --color-ds-border-subtle: var(--color-ds-border-subtle);
+  --color-ds-border-emphasis: var(--color-ds-border-emphasis);
+  --color-ds-border-surface: var(--color-ds-border-surface);
+  --color-ds-border-surface-elevated: var(--color-ds-border-surface-elevated);
+
+  /* Text */
+  --color-ds-text-primary: var(--color-ds-text-primary);
+  --color-ds-text-secondary: var(--color-ds-text-secondary);
+  --color-ds-text-muted: var(--color-ds-text-muted);
+  --color-ds-text-inverse: var(--color-ds-text-inverse);
+
+  /* Neutral */
+  --color-ds-neutral: var(--color-ds-neutral);
+  --color-ds-neutral-emphasis: var(--color-ds-neutral-emphasis);
+
+  /* Spacing */
+  --spacing-ds-xxs: var(--spacing-ds-xxs);
+  --spacing-ds-xs: var(--spacing-ds-xs);
+  --spacing-ds-s: var(--spacing-ds-s);
+  --spacing-ds-m: var(--spacing-ds-m);
+  --spacing-ds-l: var(--spacing-ds-l);
+  --spacing-ds-xl: var(--spacing-ds-xl);
+  --spacing-ds-xxl: var(--spacing-ds-xxl);
+  --spacing-ds-3xl: var(--spacing-ds-3xl);
+  --spacing-ds-4xl: var(--spacing-ds-4xl);
+  --spacing-ds-5xl: var(--spacing-ds-5xl);
+
+  /* Radius */
+  --radius-ds-none: var(--radius-ds-none);
+  --radius-ds-sm: var(--radius-ds-sm);
+  --radius-ds-md: var(--radius-ds-md);
+  --radius-ds-lg: var(--radius-ds-lg);
+  --radius-ds-xl: var(--radius-ds-xl);
+  --radius-ds-2xl: var(--radius-ds-2xl);
+  --radius-ds-full: var(--radius-ds-full);
+
+  /* Shadows */
+  --shadow-ds-none: var(--shadow-ds-none);
+  --shadow-ds-sm: var(--shadow-ds-sm);
+  --shadow-ds-md: var(--shadow-ds-md);
+  --shadow-ds-lg: var(--shadow-ds-lg);
+  --shadow-ds-xl: var(--shadow-ds-xl);
+
+  /* Elevation */
+  --shadow-ds-elevation-0: var(--shadow-ds-elevation-0);
+  --shadow-ds-elevation-1: var(--shadow-ds-elevation-1);
+  --shadow-ds-elevation-2: var(--shadow-ds-elevation-2);
+  --shadow-ds-elevation-3: var(--shadow-ds-elevation-3);
+  --shadow-ds-elevation-4: var(--shadow-ds-elevation-4);
+}

@@ -1,0 +1,107 @@
+/* ============================================
+   Typography Utilities
+   ============================================ */
+
+/* Body Typography Utilities */
+@utility font-ds-body-xs {
+  font-size: var(--font-size-ds-xs);
+  line-height: var(--line-height-ds-normal);
+  color: currentcolor;
+}
+
+@utility font-ds-body-sm {
+  font-size: var(--font-size-ds-sm);
+  line-height: var(--line-height-ds-normal);
+  color: currentcolor;
+}
+
+@utility font-ds-body-base {
+  font-size: var(--font-size-ds-base);
+  line-height: var(--line-height-ds-normal);
+  color: currentcolor;
+}
+
+@utility font-ds-body-lg {
+  font-size: var(--font-size-ds-lg);
+  line-height: var(--line-height-ds-relaxed);
+  color: currentcolor;
+}
+
+/* Heading Typography Utilities */
+@utility font-ds-heading-xs {
+  font-size: var(--font-size-ds-xs);
+  line-height: var(--line-height-ds-tight);
+  font-weight: var(--font-weight-ds-semibold);
+  color: currentcolor;
+}
+
+@utility font-ds-heading-sm {
+  font-size: var(--font-size-ds-sm);
+  line-height: var(--line-height-ds-tight);
+  font-weight: var(--font-weight-ds-semibold);
+  color: currentcolor;
+}
+
+@utility font-ds-heading-base {
+  font-size: var(--font-size-ds-base);
+  line-height: var(--line-height-ds-tight);
+  font-weight: var(--font-weight-ds-semibold);
+  color: currentcolor;
+}
+
+@utility font-ds-heading-lg {
+  font-size: var(--font-size-ds-lg);
+  line-height: var(--line-height-ds-tight);
+  font-weight: var(--font-weight-ds-semibold);
+  color: currentcolor;
+}
+
+@utility font-ds-heading-xl {
+  font-size: var(--font-size-ds-xl);
+  line-height: var(--line-height-ds-tight);
+  font-weight: var(--font-weight-ds-bold);
+  color: currentcolor;
+}
+
+@utility font-ds-heading-2xl {
+  font-size: var(--font-size-ds-2xl);
+  line-height: var(--line-height-ds-tight);
+  font-weight: var(--font-weight-ds-bold);
+  color: currentcolor;
+}
+
+@utility font-ds-heading-3xl {
+  font-size: var(--font-size-ds-3xl);
+  line-height: var(--line-height-ds-tight);
+  font-weight: var(--font-weight-ds-bold);
+  color: currentcolor;
+}
+
+@utility font-ds-heading-4xl {
+  font-size: var(--font-size-ds-4xl);
+  line-height: var(--line-height-ds-tight);
+  font-weight: var(--font-weight-ds-bold);
+  color: currentcolor;
+}
+
+/* Label Typography Utilities */
+@utility font-ds-label-xs {
+  font-size: var(--font-size-ds-xs);
+  line-height: var(--line-height-ds-normal);
+  font-weight: var(--font-weight-ds-medium);
+  color: currentcolor;
+}
+
+@utility font-ds-label-sm {
+  font-size: var(--font-size-ds-sm);
+  line-height: var(--line-height-ds-normal);
+  font-weight: var(--font-weight-ds-medium);
+  color: currentcolor;
+}
+
+@utility font-ds-label-base {
+  font-size: var(--font-size-ds-base);
+  line-height: var(--line-height-ds-normal);
+  font-weight: var(--font-weight-ds-medium);
+  color: currentcolor;
+}

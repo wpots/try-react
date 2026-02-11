@@ -1,0 +1,100 @@
+/* stylelint-disable custom-property-pattern -- Foundation tokens use numeric scale suffixes (font-size-50, line-height-100) to preserve design system conventions */
+:root {
+  /* ============================================
+     Foundation Tokens (Internal - Prefixed with --__)
+     These are the primitive typography values from the design system
+     ============================================ */
+
+  /* Font Family */
+
+  /* Font Size Scale (Figma design system) */
+  --__typography-font-scale-font-size-50: 0.75rem; /* 12px */
+  --__typography-font-scale-font-size-60: 0.875rem; /* 14px */
+  --__typography-font-scale-font-size-70: 1rem; /* 16px */
+  --__typography-font-scale-font-size-80: 1.125rem; /* 18px */
+  --__typography-font-scale-font-size-90: 1.25rem; /* 20px */
+  --__typography-font-scale-font-size-100: 1.5rem; /* 24px */
+  --__typography-font-scale-font-size-200: 1.75rem; /* 28px */
+  --__typography-font-scale-font-size-300: 2rem; /* 32px */
+  --__typography-font-scale-font-size-400: 2.25rem; /* 36px */
+  --__typography-font-scale-font-size-500: 2.625rem; /* 42px */
+  --__typography-font-scale-font-size-600: 3rem; /* 48px */
+  --__typography-font-scale-font-size-700: 3.375rem; /* 54px */
+  --__typography-font-scale-font-size-800: 3.75rem; /* 60px */
+  --__typography-font-scale-font-size-900: 4.25rem; /* 68px */
+  --__typography-font-scale-font-size-1000: 4.75rem; /* 76px */
+  --__typography-font-scale-font-size-1100: 5.25rem; /* 84px */
+  --__typography-font-scale-font-size-1200: 5.75rem; /* 92px */
+
+  /* Line Height Scale (Figma design system) */
+  --__typography-font-scale-line-height-50: 1rem; /* 16px */
+  --__typography-font-scale-line-height-60: 1.125rem; /* 18px */
+  --__typography-font-scale-line-height-70: 1.25rem; /* 20px */
+  --__typography-font-scale-line-height-80: 1.4375rem; /* 23px */
+  --__typography-font-scale-line-height-90: 1.5625rem; /* 25px */
+  --__typography-font-scale-line-height-100: 1.6875rem; /* 27px */
+  --__typography-font-scale-line-height-200: 1.875rem; /* 30px */
+  --__typography-font-scale-line-height-300: 2rem; /* 32px */
+  --__typography-font-scale-line-height-400: 2.25rem; /* 36px */
+  --__typography-font-scale-line-height-500: 2.9375rem; /* 47px */
+  --__typography-font-scale-line-height-600: 3.8125rem; /* 61px */
+  --__typography-font-scale-line-height-700: 4.8125rem; /* 77px */
+  --__typography-font-scale-line-height-800: 5.9375rem; /* 95px */
+
+  /* ============================================
+     Semantic Tokens (Public API - Tier 2)
+     Body text: 12px-20px maximum
+     ============================================ */
+
+  /* Font Family */
+  --font-family-ds-base: var(--__typography-font-family-montserrat);
+
+  /* Body Typography - Font Sizes */
+  --font-size-ds-xs: var(--__typography-font-scale-font-size-50);
+  --font-size-ds-sm: var(--__typography-font-scale-font-size-60);
+  --font-size-ds-base: var(--__typography-font-scale-font-size-70);
+  --font-size-ds-lg: var(--__typography-font-scale-font-size-80);
+  --font-size-ds-xl: var(--__typography-font-scale-font-size-90);
+  --font-size-ds-xxl: var(--__typography-font-scale-font-size-100);
+
+  /* Body Typography - Line Heights */
+  --line-height-ds-xs: var(--__typography-font-scale-line-height-50);
+  --line-height-ds-sm: var(--__typography-font-scale-line-height-60);
+  --line-height-ds-base: var(--__typography-font-scale-line-height-70);
+  --line-height-ds-lg: var(--__typography-font-scale-line-height-80);
+  --line-height-ds-xl: var(--__typography-font-scale-line-height-90);
+  --line-height-ds-xxl: var(--__typography-font-scale-line-height-100);
+
+  /* ============================================
+     Semantic Tokens (Public API - Tier 2)
+     Headings: 24px and above
+     ============================================ */
+
+  /* Heading Typography - Font Sizes */
+  --font-size-ds-heading-xxs: var(--__typography-font-scale-font-size-70);
+  --font-size-ds-heading-xs: var(--__typography-font-scale-font-size-90);
+  --font-size-ds-heading-sm: var(--__typography-font-scale-font-size-100);
+  --font-size-ds-heading-base: var(--__typography-font-scale-font-size-200);
+  --font-size-ds-heading-md: var(--__typography-font-scale-font-size-300);
+  --font-size-ds-heading-lg: var(--__typography-font-scale-font-size-400);
+  --font-size-ds-heading-xl: var(--__typography-font-scale-font-size-600);
+  --font-size-ds-heading-2xl: var(--__typography-font-scale-font-size-800);
+
+  /* Heading Typography - Line Heights */
+  --line-height-ds-heading-xxs: var(--__typography-font-scale-line-height-70);
+  --line-height-ds-heading-xs: var(--__typography-font-scale-line-height-90);
+  --line-height-ds-heading-sm: var(--__typography-font-scale-line-height-100);
+  --line-height-ds-heading-base: var(--__typography-font-scale-line-height-200);
+  --line-height-ds-heading-md: var(--__typography-font-scale-line-height-300);
+  --line-height-ds-heading-lg: var(--__typography-font-scale-line-height-400);
+  --line-height-ds-heading-xl: var(--__typography-font-scale-line-height-600);
+  --line-height-ds-heading-2xl: var(--__typography-font-scale-line-height-800);
+
+  @media (width >= 768px) {
+    /* Overwrite  for larger screens */
+  }
+
+  @media (width >= 1024px) {
+    /* Overwrite  for largest screens */
+  }
+}

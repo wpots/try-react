@@ -1,5 +1,9 @@
 import "./globals.css";
-import { Lato, Rajdhani } from "next/font/google";
+import {
+  Dawning_of_a_New_Day,
+  Lato,
+  Rajdhani,
+} from "next/font/google";
 import { getLocale } from "next-intl/server";
 
 const lato = Lato({
@@ -14,6 +18,12 @@ const rajdhani = Rajdhani({
   variable: "--font-display",
 });
 
+const dawningOfANewDay = Dawning_of_a_New_Day({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-script",
+});
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -22,8 +32,13 @@ export default async function RootLayout({
   const locale = await getLocale();
 
   return (
-    <html lang={locale}>
-      <body className={`${lato.variable} ${rajdhani.variable}`}>{children}</body>
+    <html lang={locale} suppressHydrationWarning>
+      <body
+        suppressHydrationWarning
+        className={`${lato.variable} ${rajdhani.variable} ${dawningOfANewDay.variable}`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

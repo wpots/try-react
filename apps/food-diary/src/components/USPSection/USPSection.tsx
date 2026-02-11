@@ -1,4 +1,6 @@
+import NextImage from "next/image";
 import { Container, Section, Typography } from "@repo/ui";
+import { Image } from "@repo/ui";
 
 import type { USPSectionProps } from "./index";
 
@@ -25,10 +27,13 @@ export function USPSection({
               key={item.id}
               className="rounded-ds-lg border border-ds-border bg-ds-surface-elevated p-ds-l"
             >
-              <img
+              <Image
                 src={item.iconSrc}
                 alt=""
                 aria-hidden
+                width={48}
+                height={48}
+                nextImageComponent={NextImage}
                 className="h-12 w-12"
               />
               <Typography

@@ -1,4 +1,6 @@
+import NextImage from "next/image";
 import { Container, Section, Typography } from "@repo/ui";
+import { Image } from "@repo/ui";
 
 import type { ProductFeaturesProps } from "./index";
 
@@ -55,16 +57,22 @@ export function ProductFeatures({
 
           <figure className="sticky top-24 self-start">
             <div className="relative mx-auto w-full max-w-sm">
-              <img
+              <Image
                 src="/img/phone_mockup.png"
                 alt=""
                 aria-hidden
+                width={420}
+                height={860}
+                nextImageComponent={NextImage}
                 className="h-auto w-full drop-shadow-2xl"
               />
-              <img
+              <Image
                 src="/img/slide_moment.png"
                 alt=""
                 aria-hidden
+                width={260}
+                height={560}
+                nextImageComponent={NextImage}
                 className="absolute left-1/2 top-1/2 w-3/4 -translate-x-1/2 -translate-y-1/2"
               />
             </div>

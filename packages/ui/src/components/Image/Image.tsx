@@ -27,6 +27,7 @@ export function Image({
         priority={priority}
         quality={quality}
         style={style}
+        {...props}
       />
     );
   }

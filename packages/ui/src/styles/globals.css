@@ -108,4 +108,9 @@
   --shadow-ds-elevation-2: var(--shadow-ds-elevation-2);
   --shadow-ds-elevation-3: var(--shadow-ds-elevation-3);
   --shadow-ds-elevation-4: var(--shadow-ds-elevation-4);
+
+  /* Font Families */
+  --font-ds-body: var(--font-body);
+  --font-ds-display: var(--font-display);
+  --font-ds-script: var(--font-script);
 }

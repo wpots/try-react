@@ -1,4 +1,6 @@
+import NextImage from "next/image";
 import { Typography } from "@repo/ui";
+import { Image } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
 import type { PageHeroProps } from "./index";
@@ -23,11 +25,13 @@ export function PageHero({
       )}
       {...props}
     >
-      <img
+      <Image
         id="home"
         src={backgroundImage}
         alt=""
-        aria-hidden
+        fill
+        sizes="100vw"
+        nextImageComponent={NextImage}
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-ds-brand-ink/40" />

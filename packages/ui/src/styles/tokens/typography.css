@@ -47,7 +47,14 @@
      ============================================ */
 
   /* Font Family */
-  --font-family-ds-base: var(--__typography-font-family-montserrat);
+  --font-family-ds-base: var(--font-body), "Segoe UI", sans-serif;
+  --font-family-ds-heading: var(--font-display), "Segoe UI", sans-serif;
+  --font-family-ds-script: var(--font-script), "Segoe Script", cursive;
+
+  /* Font Weight */
+  --font-weight-ds-medium: 500;
+  --font-weight-ds-semibold: 600;
+  --font-weight-ds-bold: 700;
 
   /* Body Typography - Font Sizes */
   --font-size-ds-xs: var(--__typography-font-scale-font-size-50);
@@ -64,6 +71,9 @@
   --line-height-ds-lg: var(--__typography-font-scale-line-height-80);
   --line-height-ds-xl: var(--__typography-font-scale-line-height-90);
   --line-height-ds-xxl: var(--__typography-font-scale-line-height-100);
+  --line-height-ds-tight: var(--line-height-ds-sm);
+  --line-height-ds-normal: var(--line-height-ds-base);
+  --line-height-ds-relaxed: var(--line-height-ds-lg);
 
   /* ============================================
      Semantic Tokens (Public API - Tier 2)

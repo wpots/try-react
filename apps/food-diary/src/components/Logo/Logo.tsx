@@ -1,4 +1,6 @@
+import NextImage from "next/image";
 import { useTranslations } from "next-intl";
+import { Image } from "@repo/ui";
 
 import type { LogoProps } from "./index";
 
@@ -37,9 +39,12 @@ export function Logo({
       )}
       {...props}
     >
-      <img
+      <Image
         src="/img/pebblesblue.png"
         alt={t("logoAlt")}
+        width={48}
+        height={48}
+        nextImageComponent={NextImage}
         className={IMAGE_SIZE_CLASSNAMES[size]}
       />
       {showText ? (

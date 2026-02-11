@@ -2,9 +2,9 @@
 
 import { isValidElement, useMemo } from "react";
 
-import type { ResponsiveSize, TypographyProps } from "./index.ts";
+import type { ResponsiveSize, TypographyProps } from "./index";
 
-import classnames from "@/utils/classnames/classnames.ts";
+import { cn } from "../../lib/utils";
 
 const TYPOGRAPHY_CLASSES: Record<string, Record<string, string>> = {
   body: {
@@ -155,7 +155,7 @@ export function Typography({ tag, variant, size = "base", className, children, .
 
   const typographyClass = getTypographyClasses(variant, size);
 
-  const classes = classnames(typographyClass, className);
+  const classes = cn(typographyClass, className);
 
   // Only validate when children change
   useMemo(() => {

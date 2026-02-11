@@ -28,3 +28,7 @@ a {
 .font-display {
   font-family: var(--font-display), "Segoe UI", sans-serif;
 }
+
+.font-script {
+  font-family: var(--font-script), "Segoe Script", cursive;
+}

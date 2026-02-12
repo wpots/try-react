@@ -5,7 +5,7 @@
   "hero": {
     "eyebrow": "Eetdagboek voor herstel",
     "title": "Helpt jou op weg richting een gezondere relatie met eten.",
-    "subtitle": "Een veilige triggervrije plek om je eetmomenten, gevoelens en gedachten bij te houden. Zonder oordeel. Gewoon jij.",
+    "subtitle": "Een veilige plek om je eetmomenten, gevoelens en gedachten bij te houden. Zonder triggers. Zonder oordeel. Gewoon jij.",
     "primaryCta": "Begin nu",
     "secondaryCta": "Meer informatie"
   },
@@ -43,8 +43,9 @@
     }
   },
   "features": {
-    "heading": "The Real You App biedt jou een makkelijke en veilige manier.",
-    "description": "Dat het bijhouden van een eetdagboek moeilijk kan zijn, weten wij. Maar het is belangrijk dat je je meer bewust wordt van wat je eet. Je krijgt inzicht in je gedachten en gedragingen met betrekking tot eten en zo kun je verstandigere keuzes maken voor jezelf. Daarom wordt er aan mensen met een eetprobleem vaak gevraagd een eetdagboek bij te houden. De theorie is simpel en je doel is helder. The Real You app wil jou helpen met de uitvoering.",
+    "eyebrow": "The Real You",
+    "heading": "Grip op je eetpatroon",
+    "description": "We begrijpen dat het bijhouden van een eetdagboek niet altijd makkelijk is. Toch is het een belangrijke stap om meer bewust te worden van wat je eet. Door je eetmomenten, gedachten en gevoelens vast te leggen, krijg je inzicht in je patronen. Dat helpt je om beter te begrijpen waarom je bepaalde keuzes maakt — en om stap voor stap gezondere, bewustere keuzes te leren maken. \n Daarom wordt het bijhouden van een eetdagboek vaak aangeraden aan mensen met een eetprobleem. De theorie is duidelijk en het doel is helder. De uitdaging zit in de uitvoering. De Real You App ondersteunt je daarbij, zodat je dit proces op een toegankelijke en veilige manier kunt volhouden.",
     "items": {
       "moments": {
         "title": "(Eet)momenten",

@@ -12,7 +12,43 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
   return (
     <>
       <main data-component-type="LandingPage" id={id} {...props}>
-        <PageHero className="md:pt-ds-4xl" />
+        <PageHero className="md:pt-ds-5xl" />
+        <ProductFeatures
+          heading={t("features.heading")}
+          description={t("features.description")}
+          items={[
+            {
+              id: "feature-moments",
+              title: t("features.items.moments.title"),
+              description: t("features.items.moments.description"),
+            },
+            {
+              id: "feature-without-triggers",
+              title: t("features.items.withoutTriggers.title"),
+              description: t("features.items.withoutTriggers.description"),
+            },
+            {
+              id: "feature-feelings",
+              title: t("features.items.feelings.title"),
+              description: t("features.items.feelings.description"),
+            },
+            {
+              id: "feature-behaviors",
+              title: t("features.items.behaviors.title"),
+              description: t("features.items.behaviors.description"),
+            },
+            {
+              id: "feature-export",
+              title: t("features.items.export.title"),
+              description: t("features.items.export.description"),
+            },
+            {
+              id: "feature-saved",
+              title: t("features.items.saved.title"),
+              description: t("features.items.saved.description"),
+            },
+          ]}
+        />
 
         <CallToAction
           id="cta-primary"
@@ -53,42 +89,6 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
           description={t("cta.feedback.description")}
           buttonLabel={t("cta.feedback.button")}
           buttonHref="/feedback"
-        />
-
-        <ProductFeatures
-          heading={t("features.heading")}
-          items={[
-            {
-              id: "feature-moments",
-              title: t("features.items.moments.title"),
-              description: t("features.items.moments.description"),
-            },
-            {
-              id: "feature-without-triggers",
-              title: t("features.items.withoutTriggers.title"),
-              description: t("features.items.withoutTriggers.description"),
-            },
-            {
-              id: "feature-feelings",
-              title: t("features.items.feelings.title"),
-              description: t("features.items.feelings.description"),
-            },
-            {
-              id: "feature-behaviors",
-              title: t("features.items.behaviors.title"),
-              description: t("features.items.behaviors.description"),
-            },
-            {
-              id: "feature-export",
-              title: t("features.items.export.title"),
-              description: t("features.items.export.description"),
-            },
-            {
-              id: "feature-saved",
-              title: t("features.items.saved.title"),
-              description: t("features.items.saved.description"),
-            },
-          ]}
         />
       </main>
     </>

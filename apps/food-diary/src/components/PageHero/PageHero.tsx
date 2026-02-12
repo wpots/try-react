@@ -29,11 +29,36 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
           </Typography>
 
           <div className="mt-8 flex flex-col gap-ds-m sm:flex-row">
-            {ctaButtons.map(button => (
-              <Link key={button.href} href={button.href} variant={button.variant}>
-                {button.children}
-              </Link>
-            ))}
+            {ctaButtons.map((button, index) => {
+              const isPrimary = button.variant === "default";
+              return (
+                <Link
+                  key={button.href}
+                  href={button.href}
+                  variant={button.variant}
+                  className={isPrimary ? "group" : undefined}
+                >
+                  {button.children}
+                  {isPrimary && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                      className="shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </Link>
+              );
+            })}
           </div>
         </div>
         {/* Visual column - animated brand logo */}

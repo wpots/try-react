@@ -6,6 +6,7 @@ export interface ProductFeatureItem {
 
 export interface ProductFeaturesProps extends React.ComponentProps<"section"> {
   heading: string;
+  description: string;
   items: ProductFeatureItem[];
 }
 

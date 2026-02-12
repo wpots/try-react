@@ -49,7 +49,7 @@
   --__colors-surface-default: var(--__colors-neutral-0);
   --__colors-surface-interactive: var(--__colors-brand-primary);
   --__colors-surface-elevated: var(--__colors-neutral-0);
-  --__colors-surface-subtle: var(--__colors-brand-support);
+  --__colors-surface-subtle: var(--__colors-neutral-100);
   --__colors-surface-muted: var(--__colors-neutral-100);
 
   /* On-Surface (content on surfaces) */

@@ -1,5 +1,5 @@
 export interface PageHeroProps extends React.ComponentProps<"section"> {
-  backgroundImage: string;
+  backgroundImage?: string;
 }
 
 export { PageHero } from "./PageHero";

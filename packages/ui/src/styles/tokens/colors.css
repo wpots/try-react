@@ -47,12 +47,13 @@
 
   /* Surfaces */
   --__colors-surface-default: var(--__colors-neutral-0);
+  --__colors-surface-interactive: var(--__colors-brand-primary);
   --__colors-surface-elevated: var(--__colors-neutral-0);
   --__colors-surface-subtle: var(--__colors-brand-support);
   --__colors-surface-muted: var(--__colors-neutral-100);
 
   /* On-Surface (content on surfaces) */
-  --__colors-on-surface: var(--__colors-neutral-900);
+  --__colors-on-surface: var(--__colors-brand-ink);
   --__colors-on-surface-strong: var(--__colors-brand-ink);
   --__colors-on-surface-muted: var(--__colors-brand-primary-strong);
   --__colors-on-surface-secondary: var(--__colors-neutral-700);
@@ -97,6 +98,7 @@
 
   /* Surfaces */
   --color-ds-surface: var(--__colors-surface-default);
+  --color-ds-surface-interactive: var(--__colors-surface-interactive);
   --color-ds-surface-elevated: var(--__colors-surface-elevated);
   --color-ds-surface-subtle: var(--__colors-surface-subtle);
   --color-ds-surface-muted: var(--__colors-surface-muted);

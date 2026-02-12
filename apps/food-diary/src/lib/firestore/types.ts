@@ -27,7 +27,12 @@ export const diaryEntryCompany = [
   "partner",
 ] as const;
 
-export const diaryEntryBehavior = ["restricted", "binged", "threw up"] as const;
+export const diaryEntryBehavior = [
+  "restricted",
+  "binged",
+  "overate",
+  "threw up",
+] as const;
 
 export type DiaryEntryType = (typeof diaryEntryTypes)[number];
 export type DiaryEntryLocation = (typeof diaryEntryLocations)[number];

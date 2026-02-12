@@ -6,6 +6,9 @@
      ============================================ */
 
   /* Font Family */
+  --__typography-font-family-base: var(--font-body), "Segoe UI", sans-serif;
+  --__typography-font-family-heading: var(--font-display), "Segoe UI", sans-serif;
+  --__typography-font-family-script: var(--font-script), "Segoe Script", cursive;
 
   /* Font Size Scale (Figma design system) */
   --__typography-font-scale-font-size-50: 0.75rem; /* 12px */
@@ -47,9 +50,9 @@
      ============================================ */
 
   /* Font Family */
-  --font-family-ds-base: var(--font-body), "Segoe UI", sans-serif;
-  --font-family-ds-heading: var(--font-display), "Segoe UI", sans-serif;
-  --font-family-ds-script: var(--font-script), "Segoe Script", cursive;
+  --font-family-ds-base: "nunito", sans-serif;
+  --font-family-ds-heading: "fraunces", serif;
+  --font-family-ds-script: "dawning-of-a-new-day", cursive;
 
   /* Font Weight */
   --font-weight-ds-medium: 500;
@@ -97,8 +100,8 @@
   --line-height-ds-heading-base: var(--__typography-font-scale-line-height-200);
   --line-height-ds-heading-md: var(--__typography-font-scale-line-height-300);
   --line-height-ds-heading-lg: var(--__typography-font-scale-line-height-400);
-  --line-height-ds-heading-xl: var(--__typography-font-scale-line-height-600);
-  --line-height-ds-heading-2xl: var(--__typography-font-scale-line-height-800);
+  --line-height-ds-heading-xl: var(--__typography-font-scale-line-height-500);
+  --line-height-ds-heading-2xl: var(--__typography-font-scale-line-height-600);
 
   @media (width >= 768px) {
     /* Overwrite  for larger screens */

@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 import type { LandingPageProps } from "./index";
 
 import { CallToAction } from "@/components/CallToAction";
-import { PageFooter } from "@/components/PageFooter";
 import { PageHero } from "@/components/PageHero";
 import { ProductFeatures } from "@/components/ProductFeatures";
 import { USPSection } from "@/components/USPSection";
@@ -13,7 +12,7 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
   return (
     <>
       <main data-component-type="LandingPage" id={id} {...props}>
-        <PageHero backgroundImage="/img/hero_bg.jpg" />
+        <PageHero className="md:pt-ds-4xl" />
 
         <CallToAction
           id="cta-primary"

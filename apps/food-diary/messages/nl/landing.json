@@ -3,8 +3,11 @@
     "skipToContent": "Ga naar hoofdinhoud"
   },
   "hero": {
-    "title": "Eetdagboek app die je helpt richting een gezondere relatie met eten.",
-    "subtitle": "Houd momenten, gevoelens en patronen bij zonder druk."
+    "eyebrow": "Eetdagboek voor herstel",
+    "title": "Helpt jou op weg richting een gezondere relatie met eten.",
+    "subtitle": "Een veilige triggervrije plek om je eetmomenten, gevoelens en gedachten bij te houden. Zonder oordeel. Gewoon jij.",
+    "primaryCta": "Begin nu",
+    "secondaryCta": "Meer informatie"
   },
   "nav": {
     "moreInfo": "Meer info",
@@ -16,12 +19,12 @@
   "cta": {
     "primary": {
       "title": "Je kunt direct beginnen",
-      "description": "De app is altijd beschikbaar als website. Niets downloaden. Voeg hem toe aan je homescreen en start meteen.",
-      "button": "Open The Real You app"
+      "description": "The Real You app is als website altijd beschikbaar. Je hoeft niets te downloaden. Voor een echt 'app' gevoel, kun je hem eenvoudig toevoegen aan je homescreen op je smartphone of tablet. Ga naar The Real You App en je kunt gelijk aan de slag.",
+      "button": "The Real You"
     },
     "feedback": {
       "title": "Onze focus",
-      "description": "We ontwikkelen deze app samen met hulpverleners en ervaringsdeskundigen. Jouw feedback helpt ons beter ondersteunen.",
+      "description": "Deze app blijft volop in ontwikkeling. Wij zijn zelf ervaringsdeskundige en hebben nog wensen. En omdat wij graag samenwerken met hulpverleners die ons precies kunnen vertellen wat ze nodig hebben van The Real You om jouw behandeling goed te kunnen ondersteunen. We willen ook van onze gebruikers graag horen wat jullie ervaring is met de app.",
       "button": "Geef jouw feedback"
     }
   },
@@ -40,42 +43,43 @@
     }
   },
   "features": {
-    "heading": "Productfeatures",
+    "heading": "The Real You App biedt jou een makkelijke en veilige manier.",
+    "description": "Dat het bijhouden van een eetdagboek moeilijk kan zijn, weten wij. Maar het is belangrijk dat je je meer bewust wordt van wat je eet. Je krijgt inzicht in je gedachten en gedragingen met betrekking tot eten en zo kun je verstandigere keuzes maken voor jezelf. Daarom wordt er aan mensen met een eetprobleem vaak gevraagd een eetdagboek bij te houden. De theorie is simpel en je doel is helder. The Real You app wil jou helpen met de uitvoering.",
     "items": {
       "moments": {
         "title": "(Eet)momenten",
-        "description": "Registreer ontbijt, lunch, avondeten of een los moment met alleen gedachten en gevoelens."
+        "description": "Vind je het bijhouden van een eetdagboek confronterend? De app is niet alleen bedoeld je ontbijt, lunch, avondeten en tussendoortjes te registreren; Je kunt ook gewoon even een 'momentje' bijhouden met alleen je gevoelens en gedachten."
       },
       "withoutTriggers": {
         "title": "Zonder triggers",
-        "description": "Geen calorieen, geen strikte regels en geen oordeel. De focus ligt op bewustwording."
+        "description": "Anders dan de meeste apps waarmee je je voeding kunt bijhouden, worden er in The Real You app geen calorieen bijgehouden. Zo kun je zonder regels of oordeel je eten bijhouden."
       },
       "feelings": {
         "title": "Gevoelens",
-        "description": "Leg emoties snel vast en voeg context toe in je eigen woorden."
+        "description": "Simpel een paar emoticons aanvinken, kun je aanvullen met het opschrijven van wat er op dat moment door je heen ging."
       },
       "behaviors": {
         "title": "Gedragingen",
-        "description": "Houd gedrag bij zoals maaltijden overslaan of eetbuien om patronen te herkennen."
+        "description": "Heb je je maaltijd overgeslagen? Of was het een vreetbui. Heb je expres te weinig gegeten? Dat kun je ook registreren. Zo krijg je een volledig beeld van je eetpatroon."
       },
       "export": {
         "title": "Export",
-        "description": "Selecteer een datumbereik en exporteer een duidelijk PDF-overzicht voor je zorgverlener."
+        "description": "Je kunt makkelijk via de export een datum bereik selecteren en exporteren in een overzichtelijk PDF bestand. Zo kun je er makkelijk met je zorgverlener over praten."
       },
       "saved": {
         "title": "Bewaarde momenten",
-        "description": "Markeer belangrijke invoer en filter later in je overzicht of export."
+        "description": "Met een vinkje kun je momenten bewaren voor later. Misschien is er een moment dat je specifiek wilt bespreken. In het overzicht of in de export functie kun je deze makkelijk op bewaarde momenten filteren."
       }
     }
   },
   "brand": {
     "logoAlt": "The Real You logo",
-    "wordmark": "The Real You"
+    "wordmark": "TRY"
   },
   "footer": {
-    "description": "The Real You is ontstaan tijdens mijn eigen herstelproces. Herstel is vallen en opstaan, en blijven zoeken naar wat voor jou werkt.",
+    "description": "The Real You is ontstaan toen ik bezig was met mijn eigen herstel. Het was en is vallen en opstaan en vooral blijven proberen en kijken wat werkt voor jou. Als je inziet dat jouw eetprobleem niet iets is wat je bent, maar iets is wat je hebt en dus ook afstand van kunt nemen, onstaat er ruimte je echte zelf te vinden.",
     "quote": "Succes is niet definitief, falen is niet fataal. Het gaat om de moed om door te gaan.",
     "tagline": "The Real You",
-    "copyright": "Copyright 2019 Petticode"
+    "copyright": "Copyright 2026 Petticode"
   }
 }

@@ -1,6 +1,5 @@
-@import "tailwindcss";
-
 /* Import all token files (CSS variables in :root) */
+@import "tailwindcss";
 @import "./tokens/colors.css";
 @import "./tokens/spacing.css";
 @import "./tokens/typography.css";
@@ -26,6 +25,7 @@
 
   /* Surfaces */
   --color-ds-surface: var(--color-ds-surface);
+  --color-ds-surface-interactive: var(--color-ds-surface-interactive);
   --color-ds-surface-elevated: var(--color-ds-surface-elevated);
   --color-ds-surface-subtle: var(--color-ds-surface-subtle);
   --color-ds-surface-muted: var(--color-ds-surface-muted);
@@ -110,7 +110,42 @@
   --shadow-ds-elevation-4: var(--shadow-ds-elevation-4);
 
   /* Font Families */
-  --font-ds-body: var(--font-body);
-  --font-ds-display: var(--font-display);
-  --font-ds-script: var(--font-script);
+  --font-family-ds-base: var(--font-family-ds-base);
+  --font-family-ds-heading: var(--font-family-ds-heading);
+  --font-family-ds-script: var(--font-family-ds-script);
+}
+
+@layer base {
+  @import "./base/elements.css";
+}
+
+@layer utilities {
+  /* Utility styles are for small, single-purpose classes */
+  @import "./utilities/animations.css";
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .font-display {
+    font-family: var(--font-display), "Segoe UI", sans-serif;
+  }
+
+  .font-script {
+    font-family: var(--font-script), "Segoe Script", cursive;
+  }
+
+  /* Chat scrollbar */
+  .chat-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .chat-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .chat-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-ds-on-surface-secondary);
+    border-radius: 9999px;
+  }
 }

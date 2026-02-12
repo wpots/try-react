@@ -1,142 +1,150 @@
 /* ============================================
-   Typography Utilities
+   Typography Utilities (plain CSS so they are always included when package is imported)
    ============================================ */
 
-/* Body Typography Utilities */
-@utility font-ds-body-xs {
-  font-family: var(--font-family-ds-base);
-  font-size: var(--font-size-ds-xs);
-  line-height: var(--line-height-ds-normal);
-  color: currentcolor;
-}
+@layer utilities {
+  /* Body */
+  .font-ds-body-xs {
+    font-family: var(--font-family-ds-base);
+    font-size: var(--font-size-ds-xs);
+    line-height: var(--line-height-ds-normal);
+    color: currentcolor;
+  }
 
-@utility font-ds-body-sm {
-  font-family: var(--font-family-ds-base);
-  font-size: var(--font-size-ds-sm);
-  line-height: var(--line-height-ds-normal);
-  color: currentcolor;
-}
+  .font-ds-body-sm {
+    font-family: var(--font-family-ds-base);
+    font-size: var(--font-size-ds-sm);
+    line-height: var(--line-height-ds-normal);
+    color: currentcolor;
+  }
 
-@utility font-ds-body-base {
-  font-family: var(--font-family-ds-base);
-  font-size: var(--font-size-ds-base);
-  line-height: var(--line-height-ds-normal);
-  color: currentcolor;
-}
+  .font-ds-body-base {
+    font-family: var(--font-family-ds-base);
+    font-size: var(--font-size-ds-base);
+    line-height: var(--line-height-ds-normal);
+    color: currentcolor;
+  }
 
-@utility font-ds-body-lg {
-  font-family: var(--font-family-ds-base);
-  font-size: var(--font-size-ds-lg);
-  line-height: var(--line-height-ds-relaxed);
-  color: currentcolor;
-}
+  .font-ds-body-lg {
+    font-family: var(--font-family-ds-base);
+    font-size: var(--font-size-ds-lg);
+    line-height: var(--line-height-ds-relaxed);
+    color: currentcolor;
+  }
 
-@utility font-ds-body-xl {
-  font-family: var(--font-family-ds-base);
-  font-size: var(--font-size-ds-xl);
-  line-height: var(--line-height-ds-xl);
-  color: currentcolor;
-}
+  .font-ds-body-xl {
+    font-family: var(--font-family-ds-base);
+    font-size: var(--font-size-ds-xl);
+    line-height: var(--line-height-ds-xl);
+    color: currentcolor;
+  }
 
-@utility font-ds-body-xxl {
-  font-family: var(--font-family-ds-base);
-  font-size: var(--font-size-ds-xxl);
-  line-height: var(--line-height-ds-xxl);
-  color: currentcolor;
-}
+  .font-ds-body-xxl {
+    font-family: var(--font-family-ds-base);
+    font-size: var(--font-size-ds-xxl);
+    line-height: var(--line-height-ds-xxl);
+    color: currentcolor;
+  }
 
-/* Heading Typography Utilities */
-@utility font-ds-heading-xxs {
-  font-family: var(--font-family-ds-heading);
-  font-size: var(--font-size-ds-heading-xxs);
-  line-height: var(--line-height-ds-heading-xxs);
-  font-weight: var(--font-weight-ds-semibold);
-  color: currentcolor;
-}
+  /* Heading */
+  .font-ds-heading-xxs {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-heading-xxs);
+    line-height: var(--line-height-ds-heading-xxs);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+  }
 
-@utility font-ds-heading-xs {
-  font-family: var(--font-family-ds-heading);
-  font-size: var(--font-size-ds-heading-xs);
-  line-height: var(--line-height-ds-heading-xs);
-  font-weight: var(--font-weight-ds-semibold);
-  color: currentcolor;
-}
+  .font-ds-heading-xs {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-heading-xs);
+    line-height: var(--line-height-ds-heading-xs);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+  }
 
-@utility font-ds-heading-sm {
-  font-family: var(--font-family-ds-heading);
-  font-size: var(--font-size-ds-heading-sm);
-  line-height: var(--line-height-ds-heading-sm);
-  font-weight: var(--font-weight-ds-semibold);
-  color: currentcolor;
-}
+  .font-ds-heading-sm {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-heading-sm);
+    line-height: var(--line-height-ds-heading-sm);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+  }
 
-@utility font-ds-heading-base {
-  font-family: var(--font-family-ds-heading);
-  font-size: var(--font-size-ds-heading-base);
-  line-height: var(--line-height-ds-heading-base);
-  font-weight: var(--font-weight-ds-semibold);
-  color: currentcolor;
-}
+  .font-ds-heading-base {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-heading-base);
+    line-height: var(--line-height-ds-heading-base);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+  }
 
-@utility font-ds-heading-md {
-  font-family: var(--font-family-ds-heading);
-  font-size: var(--font-size-ds-heading-md);
-  line-height: var(--line-height-ds-heading-md);
-  font-weight: var(--font-weight-ds-semibold);
-  color: currentcolor;
-}
+  .font-ds-heading-md {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-heading-md);
+    line-height: var(--line-height-ds-heading-md);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+  }
 
-@utility font-ds-heading-lg {
-  font-family: var(--font-family-ds-heading);
-  font-size: var(--font-size-ds-heading-lg);
-  line-height: var(--line-height-ds-heading-lg);
-  font-weight: var(--font-weight-ds-semibold);
-  color: currentcolor;
-}
+  .font-ds-heading-lg {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-heading-lg);
+    line-height: var(--line-height-ds-heading-lg);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
 
-@utility font-ds-heading-xl {
-  font-family: var(--font-family-ds-heading);
-  font-size: var(--font-size-ds-heading-xl);
-  line-height: var(--line-height-ds-heading-xl);
-  font-weight: var(--font-weight-ds-bold);
-  color: currentcolor;
-}
+  .font-ds-heading-xl {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-heading-xl);
+    line-height: var(--line-height-ds-heading-xl);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
 
-@utility font-ds-heading-2xl {
-  font-family: var(--font-family-ds-heading);
-  font-size: var(--font-size-ds-heading-2xl);
-  line-height: var(--line-height-ds-heading-2xl);
-  font-weight: var(--font-weight-ds-bold);
-  color: currentcolor;
-}
+  .font-ds-heading-2xl {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-heading-2xl);
+    line-height: var(--line-height-ds-heading-2xl);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
 
-/* Label Typography Utilities */
-@utility font-ds-label-xs {
-  font-size: var(--font-size-ds-xs);
-  line-height: var(--line-height-ds-normal);
-  font-weight: var(--font-weight-ds-medium);
-  color: currentcolor;
-}
+  /* Label */
+  .font-ds-label-xs {
+    font-size: var(--font-size-ds-xs);
+    line-height: var(--line-height-ds-normal);
+    font-weight: var(--font-weight-ds-medium);
+    color: currentcolor;
+  }
 
-@utility font-ds-label-sm {
-  font-size: var(--font-size-ds-sm);
-  line-height: var(--line-height-ds-normal);
-  font-weight: var(--font-weight-ds-medium);
-  color: currentcolor;
-}
+  .font-ds-label-sm {
+    font-size: var(--font-size-ds-sm);
+    line-height: var(--line-height-ds-normal);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+  }
 
-@utility font-ds-label-base {
-  font-size: var(--font-size-ds-base);
-  line-height: var(--line-height-ds-normal);
-  font-weight: var(--font-weight-ds-medium);
-  color: currentcolor;
-}
+  .font-ds-label-base {
+    font-size: var(--font-size-ds-base);
+    line-height: var(--line-height-ds-normal);
+    font-weight: var(--font-weight-ds-semibold);
+    color: currentcolor;
+  }
 
-/* Script Typography Utilities */
-@utility font-ds-script-base {
-  font-family: var(--font-family-ds-script);
-  font-size: var(--font-size-ds-heading-base);
-  line-height: var(--line-height-ds-heading-base);
-  font-weight: var(--font-weight-ds-medium);
-  color: currentcolor;
+  /* Script */
+  .font-ds-script-base {
+    font-family: var(--font-family-ds-script);
+    font-size: var(--font-size-ds-heading-base);
+    line-height: var(--line-height-ds-heading-base);
+    font-weight: var(--font-weight-ds-medium);
+    color: currentcolor;
+  }
 }

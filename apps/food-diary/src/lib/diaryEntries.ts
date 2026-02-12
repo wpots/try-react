@@ -2,7 +2,13 @@ import {
   createDiaryEntry,
   getDiaryEntriesByUser,
 } from "@/lib/firestore/helpers";
-import type { CreateDiaryEntryInput } from "@/lib/firestore/types";
+import type {
+  CreateDiaryEntryInput,
+  DiaryEntryBehavior,
+  DiaryEntryCompany,
+  DiaryEntryLocation,
+  DiaryEntryType,
+} from "@/lib/firestore/types";
 
 export interface DiaryEntry {
   id: string;
@@ -25,10 +31,18 @@ export interface DiaryEntry {
 
 export interface SaveDiaryEntryInput {
   userId: string;
+  entryType?: DiaryEntryType;
   foodEaten: string;
-  description: string;
+  description?: string;
+  emotions?: string[];
+  location?: DiaryEntryLocation;
+  company?: DiaryEntryCompany;
+  behavior?: DiaryEntryBehavior[];
+  skippedMeal?: boolean;
   date: string;
   time: string;
+  imageUrl?: string;
+  imagePublicId?: string;
 }
 
 function toClientEntry(entry: Awaited<ReturnType<typeof getDiaryEntriesByUser>>[number]) {
@@ -60,11 +74,18 @@ export async function fetchDiaryEntries(userId: string): Promise<DiaryEntry[]> {
 export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> {
   const createInput: CreateDiaryEntryInput = {
     userId: input.userId,
+    entryType: input.entryType ?? "moment",
     foodEaten: input.foodEaten,
-    description: input.description,
+    emotions: input.emotions,
+    location: input.location,
+    company: input.company,
+    description: input.description ?? "",
+    behavior: input.behavior,
+    skippedMeal: input.skippedMeal ?? false,
     date: input.date,
     time: input.time,
-    entryType: "moment",
+    imageUrl: input.imageUrl,
+    imagePublicId: input.imagePublicId,
   };
 
   await createDiaryEntry(createInput);

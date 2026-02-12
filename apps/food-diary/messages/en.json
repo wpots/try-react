@@ -33,12 +33,91 @@
     }
   },
   "createEntry": {
-    "title": "Create New Entry",
+    "title": "Capture a new moment",
+    "subtitle": "Your coach will guide you through this moment step by step.",
     "fields": {
-      "foodEaten": "Food Eaten",
+      "foodEaten": "Food eaten",
       "description": "Description",
       "date": "Date",
-      "time": "Time"
+      "time": "Time",
+      "type": "Type of moment",
+      "datetime": "Moment"
+    },
+    "coach": {
+      "entryType": "Hi! What kind of moment would you like to capture?",
+      "datetime": "When did this happen?",
+      "skippedMeal": "Did you skip this meal?",
+      "location": "Where were you?",
+      "company": "Who were you with?",
+      "foodEaten": "What did you eat or drink?",
+      "emotions": "How did you feel?",
+      "description": "Is there anything you want to write about this moment?",
+      "behavior": "Was there anything special about this moment?",
+      "confirm": "Here is a summary of your moment. Does everything look right?",
+      "complete": "Well done! Your moment has been saved."
+    },
+    "entryTypes": {
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snack",
+      "moment": "Moment"
+    },
+    "locations": {
+      "home": "At home",
+      "work": "At work",
+      "restaurant": "Restaurant",
+      "friends": "At friends",
+      "onTheRoad": "On the road",
+      "familyEvent": "Family event"
+    },
+    "company": {
+      "alone": "Alone",
+      "partner": "Partner",
+      "family": "Family",
+      "friends": "Friends",
+      "colleagues": "Colleagues",
+      "kids": "Kids"
+    },
+    "emotions": {
+      "happy": "Happy",
+      "sad": "Sad",
+      "angry": "Angry",
+      "anxious": "Anxious",
+      "guilty": "Guilty",
+      "calm": "Calm",
+      "tense": "Tense",
+      "proud": "Proud",
+      "lonely": "Lonely",
+      "tired": "Tired",
+      "ashamed": "Ashamed",
+      "relieved": "Relieved"
+    },
+    "behaviors": {
+      "restricted": "Ate too little",
+      "binged": "Binge",
+      "overate": "Ate too much",
+      "threwUp": "Threw up"
+    },
+    "form": {
+      "switchToForm": "Prefer to fill it in yourself?",
+      "switchToChat": "Fill in with coach",
+      "back": "Previous step",
+      "confirm": "Confirm",
+      "skip": "Skip",
+      "submit": "Save moment",
+      "edit": "Edit",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "placeholders": {
+      "foodEaten": "E.g. sandwich with cheese, coffee...",
+      "foodEatenAi": "You can later add a photo and have it analysed with AI.",
+      "description": "Write your thoughts here..."
+    },
+    "hints": {
+      "behavior": "You don't have to fill this in.",
+      "behaviorNone": "Nothing special."
     },
     "saveEntry": "Save Entry",
     "saving": "Saving...",

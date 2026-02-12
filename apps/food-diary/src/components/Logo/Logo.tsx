@@ -33,10 +33,7 @@ export function Logo({
       data-component-type="Logo"
       id={id}
       href={href}
-      className={classnames(
-        "inline-flex items-center gap-ds-s text-inherit no-underline",
-        className,
-      )}
+      className={classnames("inline-flex items-center gap-ds-s text-inherit no-underline", className)}
       {...props}
     >
       <Image
@@ -48,9 +45,7 @@ export function Logo({
         className={IMAGE_SIZE_CLASSNAMES[size]}
       />
       {showText ? (
-        <span className={classnames("font-display", TEXT_SIZE_CLASSNAMES[size])}>
-          {t("wordmark")}
-        </span>
+        <span className={classnames("font-display", TEXT_SIZE_CLASSNAMES[size])}>{t("wordmark")}</span>
       ) : null}
     </a>
   );

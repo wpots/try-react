@@ -6,45 +6,45 @@ import { useButton } from "@react-aria/button";
 import type { ButtonProps } from "./index";
 import { cn } from "../../lib/utils";
 
-const variantClasses: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  default: "bg-interactive text-on-interactive hover:bg-interactive-hover",
-  solid: "bg-interactive text-on-interactive hover:bg-interactive-hover",
-  outline: "border border-ds-border bg-ds-surface text-ds-text hover:bg-ds-surface-muted",
+export type ButtonVariantClassKey = NonNullable<ButtonProps["variant"]> | "link";
+export const buttonBaseClasses =
+  "group inline-flex items-center justify-center gap-ds-s whitespace-nowrap rounded-ds-md font-ds-label-base";
+export const buttonFocusClasses =
+  "ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
+export const buttonDisabledClasses = "disabled:pointer-events-none disabled:opacity-50";
+export const buttonTransitionClasses = "transition-colors";
+export const buttonIconClasses = "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0";
+
+export const buttonVariantClasses: Record<ButtonVariantClassKey, string> = {
+  default: "bg-ds-surface-interactive !text-ds-on-interactive hover:bg-ds-interactive-hover",
   secondary: "bg-ds-surface-muted text-ds-text hover:bg-ds-interactive hover:text-ds-on-interactive",
-  ghost: "text-ds-text hover:bg-ds-surface-muted",
+  outline: "border border-1 border-ds-border bg-ds-surface text-ds-text hover:bg-ds-surface-muted",
   destructive: "bg-danger text-on-danger hover:bg-danger-hover",
+  link: "bg-transparent text-ds-interactive underline-offset-4 hover:underline",
 };
 
-const sizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
-  default: "h-10 px-4 py-2",
-  sm: "h-9 rounded-md px-3",
-  lg: "h-11 rounded-md px-8",
+export const buttonSizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
+  default: "px-ds-xxl py-ds-l",
+  lg: "px-8 border-2",
   icon: "h-10 w-10",
 };
 
-export function Button({
-  children,
-  className,
-  variant = "default",
-  size = "default",
-  ...props
-}: ButtonProps) {
+export function Button({ children, className, variant = "default", size = "default", ...props }: ButtonProps) {
   const localRef = useRef<HTMLButtonElement>(null);
-  const { buttonProps, isPressed } = useButton(
-    props as Parameters<typeof useButton>[0],
-    localRef,
-  );
+  const { buttonProps, isPressed } = useButton(props as Parameters<typeof useButton>[0], localRef);
 
   return (
     <button
       {...buttonProps}
       ref={localRef}
       className={cn(
-        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2",
-        "disabled:pointer-events-none disabled:opacity-50",
-        sizeClasses[size],
-        variantClasses[variant],
+        buttonBaseClasses,
+        buttonFocusClasses,
+        buttonDisabledClasses,
+        buttonTransitionClasses,
+        buttonIconClasses,
+        buttonSizeClasses[size],
+        buttonVariantClasses[variant],
         isPressed && "scale-[0.99]",
         className,
       )}

@@ -43,6 +43,8 @@ and TypeScript. Follow these rules strictly when generating code.
 - Components should have a single responsibility.
 - Use composition over prop drilling (max 3 levels).
 - Prefer compound components for complex UI patterns.
+- For nav/list UIs (e.g. Navigation), use item subcomponents as children and pass
+  `className` on each item; avoid `itemClassName` (or similar) on the parent.
 - Extract repeated logic into custom hooks.
 - Props must have explicit TypeScript interfaces.
 - Use discriminated unions for conditional props.

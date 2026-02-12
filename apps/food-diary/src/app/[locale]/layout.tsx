@@ -39,10 +39,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <NextIntlClientProvider messages={messages} locale={locale}>
       <AuthProvider>
         <SkipLink>{tCommon("skipToContent")}</SkipLink>
-        <PageHeader />
-
         {children}
-        <PageFooter />
       </AuthProvider>
     </NextIntlClientProvider>
   );

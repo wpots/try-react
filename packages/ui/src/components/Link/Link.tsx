@@ -1,40 +1,59 @@
 "use client";
 
 import type { LinkProps } from "./index";
-
-function isExternalHref(href: string): boolean {
-  return (
-    href.startsWith("http://") || href.startsWith("https://") || href.startsWith("mailto:") || href.startsWith("tel:")
-  );
-}
-
-function isInternalHref(href: string): boolean {
-  return href.startsWith("/") || href.startsWith("#");
-}
+import {
+  buttonBaseClasses,
+  buttonDisabledClasses,
+  buttonFocusClasses,
+  buttonIconClasses,
+  buttonSizeClasses,
+  buttonTransitionClasses,
+  buttonVariantClasses,
+} from "../Button/Button";
+import { cn } from "../../lib/utils";
+import { isExternalHref } from "./utils/isExternalHref";
+import { isHashHref } from "./utils/isHashHref";
+import { isInternalHref } from "./utils/isInternalHref";
 
 export function Link({
   href,
   children,
-  nextLinkComponent: NextLinkComponent,
+  as: LinkComponent,
   isExternal,
   target,
   rel,
+  variant = "link",
+  size = "default",
+  className,
   ...props
 }: LinkProps): React.JSX.Element {
   const external = isExternal ?? isExternalHref(href);
-  const internal = !external && isInternalHref(href);
+  const hashLink = isHashHref(href);
+  const internal = !external && isInternalHref(href) && !hashLink;
   const safeRel = target === "_blank" ? [rel, "noopener", "noreferrer"].filter(Boolean).join(" ") : rel;
 
-  if (internal && NextLinkComponent) {
+  const baseClasses = cn(
+    buttonBaseClasses,
+    buttonFocusClasses,
+    buttonDisabledClasses,
+    buttonTransitionClasses,
+    buttonIconClasses,
+    buttonSizeClasses[size],
+    buttonVariantClasses[variant],
+    className,
+  );
+
+  if (internal && LinkComponent) {
     return (
-      <NextLinkComponent href={href} target={target} rel={safeRel} {...props}>
+      <LinkComponent href={href} target={target} rel={safeRel} className={baseClasses} {...props}>
         {children}
-      </NextLinkComponent>
+      </LinkComponent>
     );
   }
 
+  /* Hash links: always use native <a> so #section resolves on current page. */
   return (
-    <a href={href} target={target} rel={safeRel} {...props}>
+    <a href={href} target={target} rel={safeRel} className={baseClasses} {...props}>
       {children}
     </a>
   );

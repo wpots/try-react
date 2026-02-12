@@ -3,3 +3,4 @@ node_modules
 .pnpm-store
 .turbo
 storybook-static
+/apps/v0

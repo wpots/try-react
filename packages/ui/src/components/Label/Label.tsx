@@ -2,12 +2,12 @@ import type { LabelProps } from "./index";
 
 import { cn } from "../../lib/utils";
 import { Typography } from "../Typography";
-const labelBaseClasses = "inline-flex items-center";
+const labelBaseClasses = "inline-flex items-center font-medium";
 const labelVariantClasses: Record<NonNullable<LabelProps["variant"]>, string> = {
-  default: "text-ds-on-surface-secondary",
+  default: "text-ds-primary uppercase tracking-wider",
   pill: [
-    "rounded-ds-full px-ds-m py-ds-xs text-sm",
-    "font-medium text-ds-on-surface-strong",
+    "rounded-ds-full px-ds-m py-ds-xs",
+    "text-ds-on-surface-strong",
     "bg-ds-brand-primary/40 ring-1 ring-ds-brand-primary/70",
   ].join(" "),
 };

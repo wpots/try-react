@@ -8,42 +8,36 @@
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-xs);
     line-height: var(--line-height-ds-normal);
-    color: currentcolor;
   }
 
   .font-ds-body-sm {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-sm);
     line-height: var(--line-height-ds-normal);
-    color: currentcolor;
   }
 
   .font-ds-body-base {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-base);
     line-height: var(--line-height-ds-normal);
-    color: currentcolor;
   }
 
   .font-ds-body-lg {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-lg);
     line-height: var(--line-height-ds-relaxed);
-    color: currentcolor;
   }
 
   .font-ds-body-xl {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-xl);
     line-height: var(--line-height-ds-xl);
-    color: currentcolor;
   }
 
   .font-ds-body-xxl {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-xxl);
     line-height: var(--line-height-ds-xxl);
-    color: currentcolor;
   }
 
   /* Heading */
@@ -52,7 +46,6 @@
     font-size: var(--font-size-ds-heading-xxs);
     line-height: var(--line-height-ds-heading-xxs);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
   }
 
   .font-ds-heading-xs {
@@ -60,7 +53,6 @@
     font-size: var(--font-size-ds-heading-xs);
     line-height: var(--line-height-ds-heading-xs);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
   }
 
   .font-ds-heading-sm {
@@ -68,7 +60,6 @@
     font-size: var(--font-size-ds-heading-sm);
     line-height: var(--line-height-ds-heading-sm);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
   }
 
   .font-ds-heading-base {
@@ -76,7 +67,6 @@
     font-size: var(--font-size-ds-heading-base);
     line-height: var(--line-height-ds-heading-base);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
   }
 
   .font-ds-heading-md {
@@ -84,7 +74,6 @@
     font-size: var(--font-size-ds-heading-md);
     line-height: var(--line-height-ds-heading-md);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
   }
 
   .font-ds-heading-lg {
@@ -92,7 +81,6 @@
     font-size: var(--font-size-ds-heading-lg);
     line-height: var(--line-height-ds-heading-lg);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
     letter-spacing: -0.025em;
     text-wrap: balance;
   }
@@ -102,7 +90,6 @@
     font-size: var(--font-size-ds-heading-xl);
     line-height: var(--line-height-ds-heading-xl);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
     letter-spacing: -0.025em;
     text-wrap: balance;
   }
@@ -112,7 +99,6 @@
     font-size: var(--font-size-ds-heading-2xl);
     line-height: var(--line-height-ds-heading-2xl);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
     letter-spacing: -0.025em;
     text-wrap: balance;
   }
@@ -122,21 +108,18 @@
     font-size: var(--font-size-ds-xs);
     line-height: var(--line-height-ds-normal);
     font-weight: var(--font-weight-ds-medium);
-    color: currentcolor;
   }
 
   .font-ds-label-sm {
     font-size: var(--font-size-ds-sm);
     line-height: var(--line-height-ds-normal);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
   }
 
   .font-ds-label-base {
     font-size: var(--font-size-ds-base);
     line-height: var(--line-height-ds-normal);
     font-weight: var(--font-weight-ds-semibold);
-    color: currentcolor;
   }
 
   /* Script */
@@ -145,6 +128,5 @@
     font-size: var(--font-size-ds-heading-base);
     line-height: var(--line-height-ds-heading-base);
     font-weight: var(--font-weight-ds-medium);
-    color: currentcolor;
   }
 }

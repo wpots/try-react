@@ -54,7 +54,7 @@
 
   /* On-Surface (content on surfaces) */
   --__colors-on-surface: var(--__colors-brand-ink);
-  --__colors-on-surface-strong: var(--__colors-brand-ink);
+  --__colors-on-surface-accent: var(--__colors-brand-primary);
   --__colors-on-surface-muted: var(--__colors-brand-primary-strong);
   --__colors-on-surface-secondary: var(--__colors-neutral-700);
 

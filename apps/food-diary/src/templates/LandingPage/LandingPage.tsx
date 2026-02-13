@@ -58,8 +58,8 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
           variant="default"
           title={t("cta.primary.title")}
           description={t("cta.primary.description")}
-          buttonLabel={t("cta.primary.button")}
-          buttonHref="/auth/login"
+          linkLabel={t("cta.primary.button")}
+          linkHref="/auth/login"
         />
 
         <USPSection
@@ -90,8 +90,8 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
           variant="strong"
           title={t("cta.feedback.title")}
           description={t("cta.feedback.description")}
-          buttonLabel={t("cta.feedback.button")}
-          buttonHref="/feedback"
+          linkLabel={t("cta.feedback.button")}
+          linkHref="/feedback"
         />
       </main>
     </>

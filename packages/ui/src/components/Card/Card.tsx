@@ -1,29 +1,25 @@
 import type { CardProps } from "./index";
 import { cn } from "../../lib/utils";
 
-const cardBaseClasses =
-  "rounded-ds-xl border p-ds-m transition-all duration-300 md:p-ds-xxl";
+const cardBaseClasses = "relative rounded-ds-xl border p-ds-m transition-all duration-300 md:p-ds-xxl";
 
 const cardVariantClasses: Record<NonNullable<CardProps["variant"]>, string> = {
   default: "border-ds-border-subtle bg-ds-surface",
   soft: "border-ds-border-subtle bg-ds-surface-subtle",
   strong: "border-transparent bg-ds-brand-primary-soft",
-  knockout: "border-transparent bg-ds-brand-ink text-ds-on-primary",
+  knockout: "border-transparent bg-gradient-to-br from-ds-surface-primary-start/35 to-ds-surface-primary-end/25",
 };
 
-export function Card({
-  className,
-  variant = "default",
-  ...props
-}: CardProps): React.JSX.Element {
+export function Card({ className, variant = "default", children, ...props }: CardProps): React.JSX.Element {
   return (
-    <div
-      className={cn(
-        cardBaseClasses,
-        cardVariantClasses[variant],
-        className,
+    <div className={cn(cardBaseClasses, cardVariantClasses[variant], className)} {...props}>
+      {variant === "knockout" && (
+        <>
+          <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 translate-x-1/3 -translate-y-1/3 rounded-full bg-ds-brand-support/30 blur-3xl" />
+          <div className="pointer-events-none absolute bottom-0 left-0 h-48 w-48 -translate-x-1/3 translate-y-1/3 rounded-full bg-ds-brand-primary/20 blur-3xl" />
+        </>
       )}
-      {...props}
-    />
+      {children}
+    </div>
   );
 }

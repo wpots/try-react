@@ -1,11 +1,12 @@
 "use client";
 
-import { Button, Card, CardActions, CardHeader, Container, Section, Typography } from "@repo/ui";
+import { Card, CardActions, CardHeader, Container, IconTile, Link, Section, Typography } from "@repo/ui";
 
 import type { CallToActionProps } from "./index";
 
-import { useRouter } from "@/i18n/navigation";
+import { Link as I18nLink } from "@/i18n/navigation";
 import classnames from "@/utils/classnames/classnames";
+import { ArrowRight, Icon, Info } from "lucide-react";
 
 const SECTION_VARIANTS: Record<NonNullable<CallToActionProps["variant"]>, string> = {
   default: "bg-ds-surface",
@@ -17,14 +18,12 @@ export function CallToAction({
   variant = "default",
   title,
   description,
-  buttonLabel,
-  buttonHref,
+  linkLabel,
+  linkHref,
   className,
   id = "cta-section",
   ...props
 }: CallToActionProps): React.JSX.Element {
-  const router = useRouter();
-
   return (
     <Section
       data-component-type="CallToAction"
@@ -34,8 +33,9 @@ export function CallToAction({
       {...props}
     >
       <Container size="default">
-        <Card variant="knockout">
-          <CardHeader>
+        <Card variant="knockout" className="flex flex-col gap-ds-xl items-center">
+          <CardHeader className="flex flex-col gap-ds-xl items-center text-center">
+            <IconTile icon={Info} size="md" className="text-ds-brand-primary" />
             <Typography tag="h2" variant="heading" size={{ base: "md", md: "xl" }}>
               {title}
             </Typography>
@@ -43,10 +43,11 @@ export function CallToAction({
               {description}
             </Typography>
           </CardHeader>
-
-          <Button variant="secondary" size="lg" onClick={() => router.push(buttonHref)}>
-            {buttonLabel}
-          </Button>
+          <CardActions>
+            <Link as={I18nLink} href={linkHref} variant="secondary" size="lg">
+              {linkLabel} <ArrowRight />
+            </Link>
+          </CardActions>
         </Card>
       </Container>
     </Section>

@@ -1,6 +1,7 @@
 import { AnimatedLogo, Container, Label, Typography, Section } from "@repo/ui";
 import { Link, type LinkProps } from "@repo/ui";
 
+import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { PageHeroProps } from "./index";
@@ -15,7 +16,7 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
   ];
   return (
     <Section data-component-type="PageHero" id={id} className={classnames("relative overflow-hidden", className)}>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-surface-primary-start via-ds-surface to-ds-surface" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-surface-primary-start/50 via-ds-surface to-ds-surface" />
       <Container size="wide" className="relative z-1 flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
         {/* Visual column - animated brand logo */}
         <div className="flex flex-1 items-center justify-center lg:justify-end lg:order-1">
@@ -43,23 +44,7 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
                   className={isPrimary ? "group" : undefined}
                 >
                   {button.children}
-                  {isPrimary && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden
-                      className="shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1"
-                    >
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  )}
+                  {isPrimary && <ArrowRight />}
                 </Link>
               );
             })}

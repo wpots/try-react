@@ -17,7 +17,8 @@ export const buttonIconClasses = "[&_svg]:pointer-events-none [&_svg]:size-4 [&_
 
 export const buttonVariantClasses: Record<ButtonVariantClassKey, string> = {
   default: "bg-ds-surface-interactive !text-ds-on-interactive hover:bg-ds-interactive-hover",
-  secondary: "bg-ds-surface-muted text-ds-text hover:bg-ds-interactive hover:text-ds-on-interactive",
+  secondary:
+    "bg-ds-surface-strong text-ds-on-surface-strong border-ds-surface-strong hover:bg-ds-interactive hover:text-ds-on-interactive",
   outline: "border border-1 border-ds-border bg-ds-surface text-ds-text hover:bg-ds-surface-muted",
   destructive: "bg-danger text-on-danger hover:bg-danger-hover",
   link: "bg-transparent text-ds-interactive underline-offset-4 hover:underline",
@@ -25,7 +26,7 @@ export const buttonVariantClasses: Record<ButtonVariantClassKey, string> = {
 
 export const buttonSizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
   default: "px-ds-xxl py-ds-l",
-  lg: "px-8 border-2",
+  lg: "px-ds-xxl py-ds-l border-2",
   icon: "h-10 w-10",
 };
 

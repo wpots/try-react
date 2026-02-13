@@ -29,7 +29,7 @@ const PEBBLES: PebbleConfig[] = [
     id: "pebble-2",
     tx: 400,
     ty: -300,
-    baseScale: 1.1,
+    baseScale: 1.01,
     fillClass: "fill-ds-brand-support/40",
     speed: 0.9,
     phase: 2.1,
@@ -38,7 +38,7 @@ const PEBBLES: PebbleConfig[] = [
     id: "pebble-3",
     tx: 0,
     ty: 0,
-    baseScale: 1.2,
+    baseScale: 1.02,
     fillClass: "fill-ds-brand-support/40",
     speed: 0.55,
     phase: 4.3,
@@ -71,7 +71,7 @@ export function AnimatedLogo(): React.JSX.Element {
 
         const rotate = Math.sin(t * 0.3) * 2 + Math.cos(t * 0.5) * 1;
 
-        const breathe = 1 + Math.sin(t * 0.25) * 0.015;
+        const breathe = 1 + Math.sin(t * 0.25) * 0.025;
         const scale = p.baseScale * breathe;
 
         const tx = p.tx + floatX;

@@ -22,6 +22,7 @@
     "@react-aria/label": "^3.7.18",
     "@react-aria/textfield": "^3.17.0",
     "classnames": "^2.5.1",
+    "lucide-react": "^0.468.0",
     "react-aria-components": "^1.15.1",
     "tailwindcss": "^4.1.12"
   },

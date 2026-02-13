@@ -5,13 +5,22 @@ import { useTranslations } from "next-intl";
 
 import { Button, Card, ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 
+import type { TraditionalFormProps } from "./index";
 import { FormSection } from "./FormSection";
-import type { WizardEntry } from "./types";
+import {
+  behaviorOptions,
+  companyOptions,
+  locationOptions,
+} from "./utils/options";
 
-export interface TraditionalFormProps {
-  initialEntry: WizardEntry;
-  onSwitchToChat: () => void;
-  onComplete: (entry: WizardEntry) => void;
+function toOptions(
+  options: { value: string; labelKey: string }[],
+  translate: (key: string) => string,
+): { value: string; label: string }[] {
+  return options.map((option) => ({
+    value: option.value,
+    label: translate(option.labelKey),
+  }));
 }
 
 export function TraditionalForm({
@@ -20,7 +29,7 @@ export function TraditionalForm({
   onComplete,
 }: TraditionalFormProps): React.JSX.Element {
   const t = useTranslations("createEntry");
-  const [entry, setEntry] = useState<WizardEntry>(initialEntry);
+  const [entry, setEntry] = useState(initialEntry);
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
@@ -38,9 +47,7 @@ export function TraditionalForm({
       <div className="flex h-full flex-col items-center justify-center px-ds-l">
         <div className="text-center">
           <div className="mx-auto mb-ds-m flex h-14 w-14 items-center justify-center rounded-ds-full bg-ds-success/20">
-            <span className="text-2xl" aria-hidden="true">
-              ✓
-            </span>
+            <span className="text-2xl" aria-hidden="true">✓</span>
           </div>
           <p className="font-ds-heading-md text-ds-on-surface-strong">
             {t("coach.complete")}
@@ -53,9 +60,7 @@ export function TraditionalForm({
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between border-b border-ds-border-subtle bg-ds-surface/80 px-ds-l py-ds-m">
-        <p className="font-ds-heading-sm text-ds-on-surface-strong">
-          {t("title")}
-        </p>
+        <p className="font-ds-heading-sm text-ds-on-surface-strong">{t("title")}</p>
         <button
           type="button"
           onClick={onSwitchToChat}
@@ -67,21 +72,9 @@ export function TraditionalForm({
 
       <div className="flex-1 overflow-y-auto px-ds-l py-ds-xl">
         <Card className="mx-auto max-w-2xl">
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-ds-l"
-          >
-            <FormSection
-              label={t("coach.foodEaten")}
-              required
-            >
-              <TextArea
-                value={entry.foodEaten}
-                onChange={(event) =>
-                  setEntry({ ...entry, foodEaten: event.target.value })
-                }
-                placeholder={t("placeholders.foodEaten")}
-              />
+          <form onSubmit={handleSubmit} className="flex flex-col gap-ds-l">
+            <FormSection label={t("coach.foodEaten")} required>
+              <TextArea value={entry.foodEaten} onChange={(event) => setEntry({ ...entry, foodEaten: event.target.value })} placeholder={t("placeholders.foodEaten")} />
             </FormSection>
 
             <FormSection label={t("coach.datetime")}>
@@ -89,17 +82,13 @@ export function TraditionalForm({
                 <input
                   type="date"
                   value={entry.date}
-                  onChange={(event) =>
-                    setEntry({ ...entry, date: event.target.value })
-                  }
+                  onChange={(event) => setEntry({ ...entry, date: event.target.value })}
                   className="flex-1 rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
                 />
                 <input
                   type="time"
                   value={entry.time}
-                  onChange={(event) =>
-                    setEntry({ ...entry, time: event.target.value })
-                  }
+                  onChange={(event) => setEntry({ ...entry, time: event.target.value })}
                   className="w-36 rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
                 />
               </div>
@@ -107,17 +96,8 @@ export function TraditionalForm({
 
             <FormSection label={t("coach.location")}>
               <ChipSelector
-                options={[
-                  { value: "home", label: t("locations.home") },
-                  { value: "work", label: t("locations.work") },
-                  { value: "restaurant", label: t("locations.restaurant") },
-                  { value: "friend's house", label: t("locations.friends") },
-                  { value: "on the road", label: t("locations.onTheRoad") },
-                  { value: "family event", label: t("locations.familyEvent") },
-                ]}
-                selectedValues={
-                  entry.location ? [entry.location] : []
-                }
+                options={toOptions(locationOptions, t)}
+                selectedValues={entry.location ? [entry.location] : []}
                 onSelectedValuesChange={(values) =>
                   setEntry({ ...entry, location: values[0] ?? null })
                 }
@@ -127,17 +107,8 @@ export function TraditionalForm({
 
             <FormSection label={t("coach.company")}>
               <ChipSelector
-                options={[
-                  { value: "alone", label: t("company.alone") },
-                  { value: "partner", label: t("company.partner") },
-                  { value: "family", label: t("company.family") },
-                  { value: "friends", label: t("company.friends") },
-                  { value: "colleagues", label: t("company.colleagues") },
-                  { value: "kids", label: t("company.kids") },
-                ]}
-                selectedValues={
-                  entry.company ? [entry.company] : []
-                }
+                options={toOptions(companyOptions, t)}
+                selectedValues={entry.company ? [entry.company] : []}
                 onSelectedValuesChange={(values) =>
                   setEntry({ ...entry, company: values[0] ?? null })
                 }
@@ -148,23 +119,12 @@ export function TraditionalForm({
             <FormSection label={t("coach.emotions")}>
               <EmotionPicker
                 selectedKeys={entry.emotions}
-                onSelectedKeysChange={(keys) =>
-                  setEntry({ ...entry, emotions: keys })
-                }
+                onSelectedKeysChange={(keys) => setEntry({ ...entry, emotions: keys })}
               />
             </FormSection>
 
-            <FormSection
-              label={t("coach.description")}
-              optional
-            >
-              <TextArea
-                value={entry.description}
-                onChange={(event) =>
-                  setEntry({ ...entry, description: event.target.value })
-                }
-                placeholder={t("placeholders.description")}
-              />
+            <FormSection label={t("coach.description")} optional>
+              <TextArea value={entry.description} onChange={(event) => setEntry({ ...entry, description: event.target.value })} placeholder={t("placeholders.description")} />
             </FormSection>
 
             <FormSection
@@ -173,24 +133,7 @@ export function TraditionalForm({
               hint={t("hints.behavior")}
             >
               <ChipSelector
-                options={[
-                  {
-                    value: "restricted",
-                    label: t("behaviors.restricted"),
-                  },
-                  {
-                    value: "binged",
-                    label: t("behaviors.binged"),
-                  },
-                  {
-                    value: "overate",
-                    label: t("behaviors.overate"),
-                  },
-                  {
-                    value: "threw up",
-                    label: t("behaviors.threwUp"),
-                  },
-                ]}
+                options={toOptions(behaviorOptions, t)}
                 selectedValues={entry.behavior}
                 onSelectedValuesChange={(values) =>
                   setEntry({ ...entry, behavior: values })
@@ -201,10 +144,7 @@ export function TraditionalForm({
             </FormSection>
 
             <div className="flex justify-end">
-              <Button
-                type="submit"
-                variant="solid"
-              >
+              <Button type="submit" variant="solid">
                 {t("form.submit")}
               </Button>
             </div>
@@ -214,4 +154,3 @@ export function TraditionalForm({
     </div>
   );
 }
-

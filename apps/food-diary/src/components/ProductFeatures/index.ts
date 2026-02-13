@@ -5,6 +5,8 @@ export interface ProductFeatureItem {
 }
 
 export interface ProductFeaturesProps extends React.ComponentProps<"section"> {
+  /** Optional label above the heading (e.g. "The Real You") */
+  eyebrow?: string;
   heading: string;
   description: string;
   items: ProductFeatureItem[];

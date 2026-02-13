@@ -107,11 +107,7 @@ export function ProductFeatures({
             const option = getFeatureOption(item.id);
             const Preview = option.Preview;
             return (
-              <div
-                key={item.id}
-                ref={!isLg ? setRef(idx) : undefined}
-                className="rounded-ds-2xl border border-ds-border/50 bg-ds-surface p-ds-m"
-              >
+              <Card key={item.id} ref={!isLg ? setRef(idx) : undefined}>
                 <FeatureItemContent item={item} option={option} variant="mobile" />
                 {Preview ? (
                   <div className="mt-ds-m">
@@ -120,7 +116,7 @@ export function ProductFeatures({
                     </MobilePhoneFrame>
                   </div>
                 ) : null}
-              </div>
+              </Card>
             );
           })}
         </div>

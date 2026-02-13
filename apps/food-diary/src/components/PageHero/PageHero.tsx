@@ -17,14 +17,18 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
     <Section data-component-type="PageHero" id={id} className={classnames("relative overflow-hidden", className)}>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-surface-primary-start via-ds-surface to-ds-surface" />
       <Container size="wide" className="relative z-1 flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+        {/* Visual column - animated brand logo */}
+        <div className="flex flex-1 items-center justify-center lg:justify-end lg:order-1">
+          <AnimatedLogo />
+        </div>
         <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left gap-ds-l">
           <Label variant="pill">{t("eyebrow")}</Label>
 
-          <Typography tag="h1" variant="heading" size={{ base: "xl", sm: "2xl" }}>
+          <Typography tag="h1" variant="heading" size={{ base: "lg", sm: "2xl" }}>
             {t("title")}
           </Typography>
 
-          <Typography tag="p" variant="body" size={{ base: "lg", md: "xl" }} className="!text-ds-on-surface-muted">
+          <Typography tag="p" variant="body" size={{ base: "base", md: "xl" }} className="!text-ds-on-surface-muted">
             {t("subtitle")}
           </Typography>
 
@@ -60,10 +64,6 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
               );
             })}
           </div>
-        </div>
-        {/* Visual column - animated brand logo */}
-        <div className="flex flex-1 items-center justify-center lg:justify-end">
-          <AnimatedLogo />
         </div>
       </Container>
     </Section>

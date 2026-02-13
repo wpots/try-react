@@ -1,4 +1,4 @@
-import { Typography } from "@repo/ui";
+import { IconTile, Typography } from "@repo/ui";
 
 import type { ProductFeatureItem } from "../index";
 import type { FeatureOption } from "../utils/featureOptions";
@@ -24,14 +24,7 @@ export function FeatureItemContent({
   if (variant === "mobile") {
     return (
       <div className="flex items-start gap-ds-m">
-        <div
-          className={classnames(
-            "flex h-10 w-10 shrink-0 items-center justify-center rounded-ds-xl",
-            option.colorClass,
-          )}
-        >
-          <Icon className="h-5 w-5" />
-        </div>
+        <IconTile icon={Icon} className={option.colorClass} size="sm" />
         <div>
           <h3 className="font-ds-heading-sm text-ds-on-surface">{item.title}</h3>
           <p className="mt-ds-xs font-ds-body-sm text-ds-on-surface-muted leading-relaxed">
@@ -44,15 +37,14 @@ export function FeatureItemContent({
 
   return (
     <div className="flex items-start gap-ds-m">
-      <div
+      <IconTile
+        icon={Icon}
         className={classnames(
-          "flex h-12 w-12 shrink-0 items-center justify-center rounded-ds-xl transition-transform duration-300",
           option.colorClass,
-          isActive ? "scale-110" : "",
+          isActive ? "scale-110 transition-transform duration-300" : "",
         )}
-      >
-        <Icon className="h-5 w-5" />
-      </div>
+        size="md"
+      />
       <div>
         <Typography tag="h3" variant="heading" size={{ base: "md", md: "lg" }}>
           {item.title}

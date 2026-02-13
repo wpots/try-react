@@ -1,5 +1,20 @@
 import type React from "react";
 
-export type CardProps = React.ComponentProps<"div">;
+export type CardVariant = "default" | "soft" | "strong" | "knockout";
+
+export interface CardProps extends React.ComponentProps<"div"> {
+  variant?: CardVariant;
+}
+
+export interface CardHeaderProps extends React.ComponentProps<"div"> {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+}
+
+export interface CardActionsProps extends React.ComponentProps<"div"> {
+  align?: "start" | "end" | "between";
+}
 
 export { Card } from "./Card";
+export { CardActions } from "./partials/CardActions";
+export { CardHeader } from "./partials/CardHeader";

@@ -10,8 +10,13 @@ export type { OverviewCardProps } from "./components/OverviewCard";
 export { Text } from "./components/Text";
 export type { TextProps } from "./components/Text";
 
-export { Card } from "./components/Card";
-export type { CardProps } from "./components/Card";
+export { Card, CardActions, CardHeader } from "./components/Card";
+export type {
+  CardActionsProps,
+  CardHeaderProps,
+  CardProps,
+  CardVariant,
+} from "./components/Card";
 
 export { Form } from "./components/Form";
 export type { FormProps } from "./components/Form";
@@ -54,3 +59,6 @@ export type { AnimatedLogoProps } from "./components/AnimatedLogo";
 
 export { Label } from "./components/Label";
 export type { LabelProps } from "./components/Label";
+
+export { IconTile } from "./components/IconTile";
+export type { IconTileProps } from "./components/IconTile";

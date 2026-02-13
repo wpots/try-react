@@ -36,35 +36,40 @@
      Internal Semantic Tokens (Tier 1)
      ============================================ */
 
-  /* Brand Aliases */
-  --__colors-brand-primary: var(--__colors-sky-500);
-  --__colors-brand-primary-strong: var(--__colors-teal-700);
-  --__colors-brand-primary-soft: var(--__colors-sky-300);
-  --__colors-brand-support: var(--__colors-sage-500);
-  --__colors-brand-neutral: var(--__colors-slate-500);
-  --__colors-brand-ink: var(--__colors-navy-900);
-  --__colors-brand-zen: var(--__colors-sand-400);
+  /* Brand */
+  --color-ds-brand-primary: var(--__colors-sky-500);
+  --color-ds-brand-primary-strong: var(--__colors-teal-700);
+  --color-ds-brand-primary-soft: var(--__colors-sky-300);
+  --color-ds-brand-support: var(--__colors-sage-500);
+  --color-ds-brand-ink: var(--__colors-navy-900);
+  --color-ds-brand-zen: var(--__colors-sand-400);
+  --color-ds-brand-neutral: var(--__colors-slate-500);
 
   /* Surfaces */
-  --__colors-surface-default: var(--__colors-neutral-0);
-  --__colors-surface-primary: var(--__colors-brand-primary);
-  --__colors-surface-strong: var(--__colors-brand-primary-strong);
-  --__colors-surface-strong-hover: var(--__colors-brand-ink);
-  --__colors-surface-elevated: var(--__colors-neutral-0);
-  --__colors-surface-subtle: var(--__colors-neutral-100);
-  --__colors-surface-muted: var(--__colors-neutral-100);
 
-  /* On-Surface (content on surfaces) */
-  --__colors-on-surface: var(--__colors-brand-ink);
-  --__colors-on-surface-accent: var(--__colors-brand-primary);
-  --__colors-on-surface-strong: var(--__colors-neutral-0);
-  --__colors-on-surface-muted: var(--__colors-brand-primary-strong);
-  --__colors-on-surface-secondary: var(--__colors-neutral-700);
+  --color-ds-surface: var(--__colors-neutral-0);
+  --color-ds-on-surface: var(--color-ds-brand-ink);
+
+  --color-ds-surface-primary: var(--color-ds-brand-primary);
+  --color-ds-on-surface-primary: var(--__colors-neutral-0);
+
+  --color-ds-surface-strong: var(--color-ds-brand-primary-strong);
+  --color-ds-surface-strong-hover: var(--__colors-brand-ink);
+  --color-ds-on-surface-strong: var(--__colors-neutral-0);
+
+  --color-ds-surface-subtle: var(--color-ds-brand-zen);
+  --color-ds-on-surface-subtle: var(--color-ds-brand-primary-strong);
+
+  --color-ds-surface-muted: var(--__colors-neutral-100);
+  --color-ds-on-surface-muted: var(--color-ds-brand-primary-strong);
+
+  --color-ds-on-surface-secondary: var(--__colors-neutral-700);
+  --color-ds-surface-secondary: var(--color-ds-brand-ink);
 
   /* Primary / Interactive */
-  --__colors-primary: var(--__colors-brand-primary);
-  --__colors-primary-hover: var(--__colors-brand-primary-strong);
-  --__colors-on-primary: var(--__colors-neutral-0);
+  --color-ds-primary: var(--color-ds-brand-primary);
+  --color-ds-primary-hover: var(--color-ds-brand-primary-strong);
+  --color-ds-on-primary: var(--__colors-neutral-0);
 
   /* States */
   --__colors-success: var(--__colors-lime-500);
@@ -87,37 +92,11 @@
      Semantic Tokens (Public API - Tier 2)
      ============================================ */
 
-  /* Brand */
-  --color-ds-brand-primary: var(--__colors-brand-primary);
-  --color-ds-brand-primary-strong: var(--__colors-brand-primary-strong);
-  --color-ds-brand-primary-soft: var(--__colors-brand-primary-soft);
-  --color-ds-brand-support: var(--__colors-brand-support);
-  --color-ds-brand-ink: var(--__colors-brand-ink);
-
-  /* Surfaces */
-  --color-ds-surface: var(--__colors-surface-default);
-  --color-ds-surface-primary: var(--__colors-surface-primary);
-  --color-ds-surface-strong: var(--__colors-surface-strong);
-  --color-ds-surface-strong-hover: var(--__colors-surface-strong-hover);
-  --color-ds-surface-elevated: var(--__colors-surface-elevated);
-  --color-ds-surface-subtle: var(--__colors-surface-subtle);
-  --color-ds-surface-muted: var(--__colors-surface-muted);
-
-  /* On-Surface (content on surfaces) */
-  --color-ds-on-surface: var(--__colors-on-surface);
-  --color-ds-on-surface-strong: var(--__colors-on-surface-strong);
-  --color-ds-on-surface-muted: var(--__colors-on-surface-muted);
-  --color-ds-on-surface-secondary: var(--__colors-on-surface-secondary);
-
   /* Borders */
   --color-ds-border: var(--__colors-brand-primary-strong);
   --color-ds-border-subtle: var(--__colors-neutral-200);
   --color-ds-border-emphasis: var(--__colors-brand-ink);
 
-  /* Primary / Interactive */
-  --color-ds-primary: var(--__colors-primary);
-  --color-ds-primary-hover: var(--__colors-primary-hover);
-  --color-ds-on-primary: var(--__colors-on-primary);
   --color-ds-focus-ring: var(--__colors-brand-primary);
 
   /* States */

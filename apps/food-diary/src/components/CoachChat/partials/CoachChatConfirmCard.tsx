@@ -46,10 +46,10 @@ export function CoachChatConfirmCard({
       </ul>
       {saveError ? <p className="text-sm text-ds-danger">{saveError}</p> : null}
       <div className="mt-ds-m flex justify-end gap-ds-s">
-        <Button variant="outline" size="sm" onPress={onBack}>
+        <Button variant="outline" onClick={onBack}>
           {t("form.edit")}
         </Button>
-        <Button variant="solid" size="sm" onPress={onSubmit} isDisabled={isSaving}>
+        <Button variant="default" onClick={onSubmit} disabled={isSaving}>
           {isSaving ? t("saving") : t("form.submit")}
         </Button>
       </div>

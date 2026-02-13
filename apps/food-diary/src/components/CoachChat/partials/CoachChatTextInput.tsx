@@ -36,12 +36,7 @@ export function CoachChatTextInput({
         </p>
       ) : null}
       <div className="mt-ds-m flex justify-end">
-        <Button
-          variant="solid"
-          size="sm"
-          onPress={onSubmit}
-          isDisabled={isDisabled}
-        >
+        <Button variant="default" onClick={onSubmit} disabled={isDisabled}>
           {t(submitLabelKey)}
         </Button>
       </div>

@@ -3,8 +3,6 @@ import { IconTile, Typography } from "@repo/ui";
 import type { ProductFeatureItem } from "../index";
 import type { FeatureOption } from "../utils/featureOptions";
 
-import classnames from "@/utils/classnames/classnames";
-
 export interface FeatureItemContentProps {
   item: ProductFeatureItem;
   option: FeatureOption;
@@ -24,7 +22,7 @@ export function FeatureItemContent({
   if (variant === "mobile") {
     return (
       <div className="flex items-start gap-ds-m">
-        <IconTile icon={Icon} className={option.colorClass} size="sm" />
+        <IconTile icon={Icon} variant={option.variant} size="sm" />
         <div>
           <h3 className="font-ds-heading-sm text-ds-on-surface">{item.title}</h3>
           <p className="mt-ds-xs font-ds-body-sm text-ds-on-surface-muted leading-relaxed">
@@ -39,10 +37,8 @@ export function FeatureItemContent({
     <div className="flex items-start gap-ds-m">
       <IconTile
         icon={Icon}
-        className={classnames(
-          option.colorClass,
-          isActive ? "scale-110 transition-transform duration-300" : "",
-        )}
+        variant={option.variant}
+        className={isActive ? "scale-110 transition-transform duration-300" : undefined}
         size="md"
       />
       <div>

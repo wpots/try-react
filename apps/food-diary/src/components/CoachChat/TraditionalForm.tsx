@@ -8,8 +8,11 @@ import { Button, Card, ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 import type { TraditionalFormProps } from "./index";
 import { FormSection } from "./FormSection";
 import {
+  areEntryBehaviors,
   behaviorOptions,
   companyOptions,
+  isEntryCompany,
+  isEntryLocation,
   locationOptions,
 } from "./utils/options";
 
@@ -98,9 +101,12 @@ export function TraditionalForm({
               <ChipSelector
                 options={toOptions(locationOptions, t)}
                 selectedValues={entry.location ? [entry.location] : []}
-                onSelectedValuesChange={(values) =>
-                  setEntry({ ...entry, location: values[0] ?? null })
-                }
+                onSelectedValuesChange={(values) => {
+                  const selected = values[0];
+                  const location =
+                    selected && isEntryLocation(selected) ? selected : null;
+                  setEntry({ ...entry, location });
+                }}
                 selectionMode="single"
               />
             </FormSection>
@@ -109,9 +115,12 @@ export function TraditionalForm({
               <ChipSelector
                 options={toOptions(companyOptions, t)}
                 selectedValues={entry.company ? [entry.company] : []}
-                onSelectedValuesChange={(values) =>
-                  setEntry({ ...entry, company: values[0] ?? null })
-                }
+                onSelectedValuesChange={(values) => {
+                  const selected = values[0];
+                  const company =
+                    selected && isEntryCompany(selected) ? selected : null;
+                  setEntry({ ...entry, company });
+                }}
                 selectionMode="single"
               />
             </FormSection>
@@ -135,16 +144,17 @@ export function TraditionalForm({
               <ChipSelector
                 options={toOptions(behaviorOptions, t)}
                 selectedValues={entry.behavior}
-                onSelectedValuesChange={(values) =>
-                  setEntry({ ...entry, behavior: values })
-                }
+                onSelectedValuesChange={(values) => {
+                  const behavior = areEntryBehaviors(values) ? values : [];
+                  setEntry({ ...entry, behavior });
+                }}
                 selectionMode="multiple"
                 variant="gentle"
               />
             </FormSection>
 
             <div className="flex justify-end">
-              <Button type="submit" variant="solid">
+              <Button type="submit" variant="default">
                 {t("form.submit")}
               </Button>
             </div>

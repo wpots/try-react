@@ -2,20 +2,14 @@ import type { SectionProps } from "./index";
 
 import { cn } from "../../lib/utils";
 
-const VARIANT_CLASSNAMES: Record<
-  NonNullable<SectionProps["variant"]>,
-  string
-> = {
+const VARIANT_CLASSNAMES: Record<NonNullable<SectionProps["variant"]>, string> = {
   default: "bg-ds-surface text-ds-on-surface",
-  neutral: "bg-ds-surface-subtle text-ds-on-surface",
+  neutral: "bg-ds-surface-muted text-ds-on-surface",
   strong: "bg-ds-brand-primary-soft text-ds-on-surface-strong",
   knockout: "bg-ds-brand-ink text-ds-on-primary",
 };
 
-const SPACING_CLASSNAMES: Record<
-  NonNullable<SectionProps["spacing"]>,
-  string
-> = {
+const SPACING_CLASSNAMES: Record<NonNullable<SectionProps["spacing"]>, string> = {
   none: "",
   default: "py-ds-xl md:py-ds-4xl",
   "bottom-space": "pb-ds-xl md:pb-ds-4xl",
@@ -31,14 +25,7 @@ export function Section({
   ...props
 }: SectionProps): React.JSX.Element {
   return (
-    <Component
-      className={cn(
-        VARIANT_CLASSNAMES[variant],
-        SPACING_CLASSNAMES[spacing],
-        className,
-      )}
-      {...props}
-    >
+    <Component className={cn(VARIANT_CLASSNAMES[variant], SPACING_CLASSNAMES[spacing], className)} {...props}>
       {children}
     </Component>
   );

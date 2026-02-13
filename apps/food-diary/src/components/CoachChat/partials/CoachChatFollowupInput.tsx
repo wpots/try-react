@@ -78,25 +78,22 @@ export function CoachChatFollowupInput({
       {step.key === "skippedMeal" ? (
         <div className="flex items-center gap-ds-s">
           <Button
-            variant={inputSkippedMeal === false ? "solid" : "outline"}
-            size="sm"
-            onPress={() => setInputSkippedMeal(false)}
+            variant={inputSkippedMeal === false ? "default" : "outline"}
+            onClick={() => setInputSkippedMeal(false)}
           >
             {t("form.no")}
           </Button>
           <Button
-            variant={inputSkippedMeal === true ? "solid" : "outline"}
-            size="sm"
-            onPress={() => setInputSkippedMeal(true)}
+            variant={inputSkippedMeal === true ? "default" : "outline"}
+            onClick={() => setInputSkippedMeal(true)}
           >
             {t("form.yes")}
           </Button>
           <div className="flex-1" />
           <Button
-            variant="solid"
-            size="sm"
-            onPress={onSubmitSkippedMeal}
-            isDisabled={inputSkippedMeal == null}
+            variant="default"
+            onClick={onSubmitSkippedMeal}
+            disabled={inputSkippedMeal == null}
           >
             {t("form.confirm")}
           </Button>
@@ -112,10 +109,9 @@ export function CoachChatFollowupInput({
           />
           <div className="mt-ds-m flex justify-end">
             <Button
-              variant="solid"
-              size="sm"
-              onPress={onSubmitLocation}
-              isDisabled={inputChips.length === 0}
+              variant="default"
+              onClick={onSubmitLocation}
+              disabled={inputChips.length === 0}
             >
               {t("form.confirm")}
             </Button>
@@ -132,10 +128,9 @@ export function CoachChatFollowupInput({
           />
           <div className="mt-ds-m flex justify-end">
             <Button
-              variant="solid"
-              size="sm"
-              onPress={onSubmitCompany}
-              isDisabled={inputChips.length === 0}
+              variant="default"
+              onClick={onSubmitCompany}
+              disabled={inputChips.length === 0}
             >
               {t("form.confirm")}
             </Button>
@@ -160,10 +155,9 @@ export function CoachChatFollowupInput({
           />
           <div className="mt-ds-m flex justify-end">
             <Button
-              variant="solid"
-              size="sm"
-              onPress={onSubmitEmotions}
-              isDisabled={inputEmotions.length === 0}
+              variant="default"
+              onClick={onSubmitEmotions}
+              disabled={inputEmotions.length === 0}
             >
               {t("form.confirm")}
             </Button>
@@ -189,7 +183,7 @@ export function CoachChatFollowupInput({
             variant="gentle"
           />
           <div className="mt-ds-m flex justify-end">
-            <Button variant="solid" size="sm" onPress={onSubmitBehavior}>
+            <Button variant="default" onClick={onSubmitBehavior}>
               {t("form.confirm")}
             </Button>
           </div>

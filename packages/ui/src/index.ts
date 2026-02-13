@@ -61,6 +61,6 @@ export { Label } from "./components/Label";
 export type { LabelProps } from "./components/Label";
 
 export { IconTile } from "./components/IconTile";
-export type { IconTileProps } from "./components/IconTile";
+export type { IconTileProps, IconTileVariant } from "./components/IconTile";
 
 export { cn } from "./lib/utils";

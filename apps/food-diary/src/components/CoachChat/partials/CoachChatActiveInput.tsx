@@ -101,7 +101,7 @@ export function CoachChatActiveInput({
           selectionMode="single"
         />
         <div className="mt-ds-m flex justify-end">
-          <Button variant="solid" size="sm" onPress={handleSubmitEntryType}>
+          <Button variant="default" onClick={handleSubmitEntryType}>
             {t("form.confirm")}
           </Button>
         </div>
@@ -128,7 +128,7 @@ export function CoachChatActiveInput({
             />
           </div>
           <div className="flex justify-end">
-            <Button variant="solid" size="sm" onPress={handleSubmitDatetime}>
+            <Button variant="default" onClick={handleSubmitDatetime}>
               {t("form.confirm")}
             </Button>
           </div>

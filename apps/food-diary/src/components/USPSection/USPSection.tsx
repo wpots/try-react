@@ -3,17 +3,9 @@ import { Card, IconTile } from "@repo/ui";
 
 import type { USPSectionProps } from "./index";
 
-import classnames from "@/utils/classnames/classnames";
-
-export function USPSection({ items, className, id = "usp-section", ...props }: USPSectionProps): React.JSX.Element {
+export function USPSection({ items, className, id = "usp-section" }: USPSectionProps): React.JSX.Element {
   return (
-    <Section
-      data-component-type="USPSection"
-      id={id}
-      spacing="default"
-      className={classnames("bg-ds-surface", className)}
-      {...props}
-    >
+    <Section data-component-type="USPSection" id={id} className={className}>
       <Container size="default">
         <div className="grid gap-ds-xl md:grid-cols-3">
           {items.map(item => (

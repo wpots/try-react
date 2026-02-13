@@ -22,6 +22,8 @@
   --color-ds-brand-primary-soft: var(--color-ds-brand-primary-soft);
   --color-ds-brand-support: var(--color-ds-brand-support);
   --color-ds-brand-ink: var(--color-ds-brand-ink);
+  --color-ds-brand-neutral: var(--color-ds-brand-neutral);
+  --color-ds-brand-zen: var(--color-ds-brand-zen);
 
   /* Surfaces */
   --color-ds-surface: var(--color-ds-surface);
@@ -38,6 +40,7 @@
   --color-ds-on-surface-strong: var(--color-ds-on-surface-strong);
   --color-ds-on-surface-muted: var(--color-ds-on-surface-muted);
   --color-ds-on-surface-secondary: var(--color-ds-on-surface-secondary);
+  --color-ds-on-surface-subtle: var(--color-ds-on-surface-subtle);
 
   /* Borders */
   --color-ds-border: var(--color-ds-border);

@@ -6,17 +6,25 @@ const sizeClasses = {
   md: "h-12 w-12",
 } as const;
 
+const variantClasses = {
+  default: "bg-ds-surface-primary/30 text-ds-on-surface-subtle",
+  strong: "bg-ds-surface-strong/30 text-ds-on-surface",
+  subtle: "bg-ds-surface-subtle/30 text-ds-on-surface",
+} as const;
+
 export function IconTile({
   icon: Icon,
   className,
-  size = "sm",
+  size = "md",
+  variant = "default",
   ...props
 }: IconTileProps): React.JSX.Element {
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-ds-xl",
+        "flex shrink-0 items-center justify-center rounded-ds-lg",
         sizeClasses[size],
+        variantClasses[variant],
         className,
       )}
       {...props}

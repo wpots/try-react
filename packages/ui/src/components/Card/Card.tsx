@@ -5,8 +5,8 @@ const cardBaseClasses =
   "relative flex flex-col gap-ds-xl items-center rounded-ds-xl border p-ds-m transition-all duration-300 md:p-ds-xxl";
 
 const cardVariantClasses: Record<NonNullable<CardProps["variant"]>, string> = {
-  default: "border-ds-border-subtle bg-ds-surface",
-  soft: "border-ds-border-subtle bg-ds-surface-subtle",
+  default: "border-ds-surface-muted bg-ds-surface",
+  soft: "border-ds-border-subtle bg-ds-surface-muted",
   strong: "border-transparent bg-ds-brand-primary-soft",
   knockout: "border-transparent bg-gradient-to-br from-ds-surface-primary-start/35 to-ds-surface-primary-end/25",
 };

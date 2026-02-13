@@ -1,12 +1,13 @@
-import { Activity, Bookmark, FileDown, Heart, ShieldOff, UtensilsCrossed } from "lucide-react";
+import type { IconTileVariant } from "@repo/ui";
+import { Activity, Bookmark, FileDown, Heart, Shield, UtensilsCrossed } from "lucide-react";
 import { BookmarkPreview, EmotionsPreview, ExportPreview, FoodEntryPreview } from "../partials/FeaturePreviews";
 import { BehaviorsPreview, TriggerFreePreview } from "../partials/FeaturePreviews";
 
-/** Design-token icon background + text color classes for feature cards. */
+/** Feature option with icon and IconTile variant for background/icon color. */
 export interface FeatureOption {
   icon: React.ElementType;
-  /** Tailwind classes for the icon container (e.g. bg-ds-surface-subtle text-ds-primary). */
-  colorClass: string;
+  /** IconTile variant (on-surface background + contrasting icon). */
+  variant: IconTileVariant;
   /** Optional preview component for phone frame; when absent, no preview is shown. */
   Preview?: React.ComponentType;
 }
@@ -14,39 +15,39 @@ export interface FeatureOption {
 const OPTIONS: Record<string, FeatureOption> = {
   "feature-moments": {
     icon: UtensilsCrossed,
-    colorClass: "bg-ds-surface-subtle text-ds-primary",
+    variant: "default",
     Preview: FoodEntryPreview,
   },
   "feature-without-triggers": {
-    icon: ShieldOff,
-    colorClass: "bg-ds-surface-muted text-ds-on-surface-muted",
+    icon: Shield,
+    variant: "strong",
     Preview: TriggerFreePreview,
   },
   "feature-feelings": {
     icon: Heart,
-    colorClass: "bg-ds-surface-subtle text-ds-primary",
+    variant: "subtle",
     Preview: EmotionsPreview,
   },
   "feature-behaviors": {
     icon: Activity,
-    colorClass: "bg-ds-surface-subtle text-ds-primary",
+    variant: "default",
     Preview: BehaviorsPreview,
   },
   "feature-export": {
     icon: FileDown,
-    colorClass: "bg-ds-surface-muted text-ds-on-surface-muted",
+    variant: "strong",
     Preview: ExportPreview,
   },
   "feature-saved": {
     icon: Bookmark,
-    colorClass: "bg-ds-surface-subtle text-ds-primary",
+    variant: "subtle",
     Preview: BookmarkPreview,
   },
 };
 
 const DEFAULT_OPTION: FeatureOption = {
   icon: UtensilsCrossed,
-  colorClass: "bg-ds-surface-subtle text-ds-on-surface",
+  variant: "default",
 };
 
 /**

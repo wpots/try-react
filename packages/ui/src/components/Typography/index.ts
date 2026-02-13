@@ -1,5 +1,5 @@
 export type BodySize = "xs" | "sm" | "base" | "lg" | "xl" | "xxl";
-export type HeadingSize = "sm" | "base" | "md" | "lg" | "xl" | "2xl";
+export type HeadingSize = "xs" | "sm" | "base" | "md" | "lg" | "xl" | "2xl";
 export type BodyTag = "p" | "span" | "small";
 export type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 

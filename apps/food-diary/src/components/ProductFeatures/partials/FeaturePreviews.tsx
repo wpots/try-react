@@ -8,7 +8,7 @@ import { useEffect, useState, useCallback } from "react";
 
 function MiniAvatar() {
   return (
-    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ds-surface-subtle text-ds-primary">
+    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ds-surface-strong/60 text-ds-on-surface">
       <svg
         viewBox="0 0 24 24"
         className="h-3.5 w-3.5 text-foreground"
@@ -32,10 +32,10 @@ function MiniTyping() {
   return (
     <div className="flex items-end gap-1.5">
       <MiniAvatar />
-      <div className="flex gap-0.5 rounded-2xl rounded-bl-sm bg-muted px-3 py-2.5">
-        <span className="typing-dot inline-block h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-        <span className="typing-dot inline-block h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-        <span className="typing-dot inline-block h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+      <div className="flex gap-0.5 rounded-2xl rounded-bl-sm bg-ds-surface-muted px-3 py-2.5">
+        <span className="typing-dot inline-block h-1.5 w-1.5 rounded-full bg-ds-brand-neutral" />
+        <span className="typing-dot inline-block h-1.5 w-1.5 rounded-full bg-ds-brand-neutral" />
+        <span className="typing-dot inline-block h-1.5 w-1.5 rounded-full bg-ds-brand-neutral" />
       </div>
     </div>
   );
@@ -55,8 +55,8 @@ function MiniBubble({ text, visible }: { text: string; visible: boolean }) {
       }}
     >
       <MiniAvatar />
-      <div className="max-w-[75%] rounded-2xl rounded-bl-sm bg-muted px-3 py-2">
-        <p className="text-[11px] leading-snug text-foreground">{text}</p>
+      <div className="max-w-[75%] rounded-2xl rounded-bl-sm bg-ds-surface-muted px-3 py-2">
+        <p className="text-[11px] leading-snug ">{text}</p>
       </div>
     </div>
   );
@@ -75,8 +75,8 @@ function MiniUserBubble({ text, visible }: { text: string; visible: boolean }) {
         transform: visible ? "translateY(0)" : "translateY(8px)",
       }}
     >
-      <div className="max-w-[70%] rounded-2xl rounded-br-sm bg-primary/15 px-3 py-2">
-        <p className="text-[11px] leading-snug text-foreground">{text}</p>
+      <div className="max-w-[70%] rounded-2xl rounded-br-sm bg-ds-surface-primary/15 px-3 py-2">
+        <p className="text-[11px] leading-snug ">{text}</p>
       </div>
     </div>
   );
@@ -109,16 +109,16 @@ export function FoodEntryPreview() {
       <MiniBubble text="Wat heb je gegeten of gedronken?" visible={phase >= 0} />
       {phase >= 1 && phase < 3 && (
         <div className="mt-1 flex gap-1.5">
-          <div className="flex-1 rounded-xl border border-border bg-card px-3 py-2">
+          <div className="flex-1 rounded-xl border border-ds-border-subtle bg-ds-surface-muted px-3 py-2">
             <p className="text-[11px] text-foreground">
               {phase >= 2 ? "Boterham met kaas" : "Boterham m"}
               <span className="inline-block h-3 w-[1px] animate-pulse bg-foreground/60" />
             </p>
           </div>
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-ds-surface-primary !text-ds-on-surface-primary">
             <svg
               viewBox="0 0 24 24"
-              className="h-4 w-4 text-primary-foreground"
+              className="h-4 w-4 !text-ds-on-surface-primary"
               fill="none"
               stroke="currentColor"
               strokeWidth="2.5"
@@ -147,7 +147,7 @@ export function TriggerFreePreview() {
       {phase >= 1 && (
         <div className="mt-1 flex flex-col gap-2 transition-all duration-500" style={{ opacity: phase >= 1 ? 1 : 0 }}>
           <div className="flex items-center gap-2">
-            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-sage/50">
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-ds-surface-strong/30">
               <svg
                 viewBox="0 0 24 24"
                 className="h-3 w-3 text-teal"
@@ -161,7 +161,7 @@ export function TriggerFreePreview() {
             <span className="text-[10px] font-medium text-sage">Geen calorieen</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-sage/50">
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-ds-surface-strong/30">
               <svg
                 viewBox="0 0 24 24"
                 className="h-3 w-3 text-teal"
@@ -179,7 +179,7 @@ export function TriggerFreePreview() {
               className="flex items-center gap-2 transition-all duration-400"
               style={{ opacity: phase >= 2 ? 1 : 0 }}
             >
-              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-sage/50">
+              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-ds-surface-strong/30">
                 <svg
                   viewBox="0 0 24 24"
                   className="h-3 w-3 text-teal"
@@ -227,7 +227,7 @@ export function EmotionsPreview() {
               <div
                 key={em.label}
                 className={`flex flex-col items-center gap-1 rounded-xl px-1.5 py-2 transition-all duration-300 ${
-                  isActive ? "bg-primary/15 ring-1 ring-primary/40" : "bg-muted"
+                  isActive ? "bg-ds-surface-primary/15 ring-1 ring-ds-surface-primary/40" : "bg-ds-surface-muted"
                 }`}
               >
                 <svg
@@ -288,8 +288,8 @@ export function BehaviorsPreview() {
                 key={c}
                 className={`rounded-full px-2.5 py-1 text-[10px] font-medium transition-all duration-300 ${
                   selectedIdx.includes(i)
-                    ? "bg-secondary/40 text-foreground ring-1 ring-secondary"
-                    : "bg-muted text-muted-foreground"
+                    ? "bg-ds-surface-primary/15 border border-ds-border-subtle"
+                    : "bg-ds-surface-muted"
                 }`}
               >
                 {c}
@@ -324,23 +324,23 @@ export function ExportPreview() {
           opacity: phase >= 0 ? 1 : 0,
         }}
       >
-        <div className="h-28 w-20 rounded-xl border border-border bg-card shadow-sm">
+        <div className="h-28 w-20 rounded-xl border border-ds-border-subtle bg-ds-surface-muted shadow-sm">
           <div className="border-b border-border/50 px-2.5 py-2">
-            <div className="h-1.5 w-10 rounded-full bg-primary/40" />
-            <div className="mt-1.5 h-1 w-12 rounded-full bg-muted-foreground/20" />
+            <div className="h-1.5 w-10 rounded-full bg-ds-surface-primary/40" />
+            <div className="mt-1.5 h-1 w-12 rounded-full bg-ds-on-surface-muted/20" />
           </div>
           <div className="space-y-2 p-2.5">
-            <div className="h-1 w-full rounded-full bg-muted-foreground/15" />
-            <div className="h-1 w-12 rounded-full bg-muted-foreground/15" />
-            <div className="h-1 w-full rounded-full bg-muted-foreground/15" />
-            <div className="h-1 w-10 rounded-full bg-muted-foreground/15" />
+            <div className="h-1 w-full rounded-full bg-ds-on-surface-muted/15" />
+            <div className="h-1 w-12 rounded-full bg-ds-on-surface-muted/15" />
+            <div className="h-1 w-full rounded-full bg-ds-on-surface-muted/15" />
+            <div className="h-1 w-10 rounded-full bg-ds-on-surface-muted/15" />
             <div className="mt-2 grid grid-cols-2 gap-1.5">
               <div className="h-4 rounded bg-sage/20" />
               <div className="h-4 rounded bg-sky-light/30" />
             </div>
           </div>
         </div>
-        <div className="absolute -right-2 -top-2 rounded-lg bg-primary px-2 py-0.5 text-[8px] font-bold text-primary-foreground shadow-sm">
+        <div className="absolute -right-2 -top-2 rounded-lg bg-ds-surface-primary px-2 py-0.5 text-[8px] font-bold  shadow-sm">
           PDF
         </div>
       </div>
@@ -387,10 +387,12 @@ export function BookmarkPreview() {
       <MiniBubble text="Wil je dit moment bewaren?" visible={phase >= 0} />
       {phase >= 1 && (
         <div className="mt-1 flex items-center gap-2">
-          <span className="rounded-full bg-muted px-3 py-1 text-[10px] font-medium text-muted-foreground">Nee</span>
+          <span className="rounded-full bg-ds-surface-muted px-3 py-1 text-[10px] font-medium ">Nee</span>
           <span
             className={`rounded-full px-3 py-1 text-[10px] font-medium transition-all duration-300 ${
-              phase >= 2 ? "bg-primary/15 text-teal ring-1 ring-primary/40" : "bg-muted text-muted-foreground"
+              phase >= 2
+                ? "bg-ds-surface-primary/15 text-teal ring-1 ring-ds-surface-primary/40"
+                : "bg-ds-surface-muted text-muted-foreground"
             }`}
           >
             Ja, bewaren

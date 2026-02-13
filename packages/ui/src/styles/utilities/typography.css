@@ -60,6 +60,7 @@
     font-size: var(--font-size-ds-heading-sm);
     line-height: var(--line-height-ds-heading-sm);
     font-weight: var(--font-weight-ds-semibold);
+    color: var(--color-ds-on-surface);
   }
 
   .font-ds-heading-base {
@@ -67,6 +68,7 @@
     font-size: var(--font-size-ds-heading-base);
     line-height: var(--line-height-ds-heading-base);
     font-weight: var(--font-weight-ds-semibold);
+    color: var(--color-ds-on-surface);
   }
 
   .font-ds-heading-md {
@@ -74,6 +76,7 @@
     font-size: var(--font-size-ds-heading-md);
     line-height: var(--line-height-ds-heading-md);
     font-weight: var(--font-weight-ds-semibold);
+    color: var(--color-ds-on-surface);
   }
 
   .font-ds-heading-lg {
@@ -83,6 +86,7 @@
     font-weight: var(--font-weight-ds-semibold);
     letter-spacing: -0.025em;
     text-wrap: balance;
+    color: var(--color-ds-on-surface);
   }
 
   .font-ds-heading-xl {
@@ -92,6 +96,7 @@
     font-weight: var(--font-weight-ds-semibold);
     letter-spacing: -0.025em;
     text-wrap: balance;
+    color: var(--color-ds-on-surface);
   }
 
   .font-ds-heading-2xl {
@@ -101,6 +106,7 @@
     font-weight: var(--font-weight-ds-semibold);
     letter-spacing: -0.025em;
     text-wrap: balance;
+    color: var(--color-ds-on-surface);
   }
 
   /* Label */

@@ -44,7 +44,7 @@ export function CallToAction({
             </Typography>
           </CardHeader>
 
-          <Button variant={BUTTON_VARIANTS[variant]} size="lg" onClick={() => router.push(buttonHref)}>
+          <Button variant="secondary" size="lg" onClick={() => router.push(buttonHref)}>
             {buttonLabel}
           </Button>
         </Card>

@@ -1,9 +1,10 @@
 "use client";
 
-import { Card, Container, Label, Section, Typography } from "@repo/ui";
+import { Card, Container, Label, Section } from "@repo/ui";
 
 import type { ProductFeaturesProps } from "./index";
 import { PageIndicator } from "@/components/PageIndicator";
+import { SectionHeader } from "@/components/SectionHeader";
 import { ActivePreviewWrapper } from "./partials/ActivePreviewWrapper";
 import { FeatureItemContent } from "./partials/FeatureItemContent";
 import { DesktopPhoneFrame, MobilePhoneFrame } from "./partials/Phoneframe";
@@ -35,24 +36,11 @@ export function ProductFeatures({
       {...props}
     >
       <Container size="wide" className="flex flex-col gap-ds-4xl">
-        <div className="flex flex-col gap-ds-xl">
-          {eyebrow ? <Label className="mx-auto">{eyebrow}</Label> : null}
-          <Typography tag="h2" variant="heading" size={{ base: "lg", md: "xl" }} className="text-center">
-            {heading}
-          </Typography>
-          <Typography
-            tag="p"
-            variant="body"
-            size={{ base: "base", md: "lg" }}
-            className="mt-ds-s text-ds-on-surface-muted [&>span+span]:mt-ds-s"
-          >
-            {description.split("\n").map((line, i) => (
-              <span key={i} className="block">
-                {line}
-              </span>
-            ))}
-          </Typography>
-        </div>
+        <SectionHeader
+          eyebrow={<Label className="mx-auto">{eyebrow}</Label>}
+          heading={heading}
+          description={description}
+        />
 
         {/* Desktop: two-column scrollytelling when previews exist */}
         <div className="hidden lg:flex lg:gap-ds-xl">

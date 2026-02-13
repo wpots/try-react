@@ -1,6 +1,8 @@
 import { useTranslations } from "next-intl";
 import type { LandingPageProps } from "./index";
 
+import { Label } from "@repo/ui";
+
 import { CallToAction } from "@/components/CallToAction";
 import { PageHero } from "@/components/PageHero";
 import { ProductFeatures } from "@/components/ProductFeatures";
@@ -14,7 +16,7 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
       <main data-component-type="LandingPage" id={id} {...props}>
         <PageHero className="md:pt-ds-5xl" />
         <ProductFeatures
-          eyebrow={t("features.eyebrow")}
+          eyebrow={<Label>{t("features.eyebrow")}</Label>}
           heading={t("features.heading")}
           description={t("features.description")}
           items={[

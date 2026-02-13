@@ -1,12 +1,13 @@
 import { useTranslations } from "next-intl";
 import type { LandingPageProps } from "./index";
 
-import { Label } from "@repo/ui";
+import { IconTile, Label } from "@repo/ui";
 
 import { CallToAction } from "@/components/CallToAction";
 import { PageHero } from "@/components/PageHero";
 import { ProductFeatures } from "@/components/ProductFeatures";
 import { USPSection } from "@/components/USPSection";
+import { MessageSquareText, MonitorSmartphone } from "lucide-react";
 
 export function LandingPage({ id = "main-content", ...props }: LandingPageProps): React.JSX.Element {
   const t = useTranslations("landing");
@@ -55,11 +56,12 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
 
         <CallToAction
           id="cta-primary"
-          variant="default"
+          variant="knockout"
           title={t("cta.primary.title")}
           description={t("cta.primary.description")}
           linkLabel={t("cta.primary.button")}
           linkHref="/auth/login"
+          eyebrow={<IconTile icon={MonitorSmartphone} className="mx-auto" />}
         />
 
         <USPSection
@@ -87,12 +89,15 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
 
         <CallToAction
           id="cta-feedback"
-          variant="strong"
+          variant="default"
           title={t("cta.feedback.title")}
           description={t("cta.feedback.description")}
           linkLabel={t("cta.feedback.button")}
           linkHref="/feedback"
-        />
+          eyebrow={<Label>{t("cta.feedback.eyebrow")}</Label>}
+        >
+          <IconTile icon={MessageSquareText} />
+        </CallToAction>
       </main>
     </>
   );

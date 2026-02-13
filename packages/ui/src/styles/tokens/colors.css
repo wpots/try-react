@@ -47,8 +47,9 @@
 
   /* Surfaces */
   --__colors-surface-default: var(--__colors-neutral-0);
-  --__colors-surface-interactive: var(--__colors-brand-primary);
+  --__colors-surface-primary: var(--__colors-brand-primary);
   --__colors-surface-strong: var(--__colors-brand-primary-strong);
+  --__colors-surface-strong-hover: var(--__colors-brand-ink);
   --__colors-surface-elevated: var(--__colors-neutral-0);
   --__colors-surface-subtle: var(--__colors-neutral-100);
   --__colors-surface-muted: var(--__colors-neutral-100);
@@ -59,11 +60,6 @@
   --__colors-on-surface-strong: var(--__colors-neutral-0);
   --__colors-on-surface-muted: var(--__colors-brand-primary-strong);
   --__colors-on-surface-secondary: var(--__colors-neutral-700);
-
-  /* Borders */
-  --__colors-border-default: var(--__colors-brand-neutral);
-  --__colors-border-subtle: var(--__colors-neutral-200);
-  --__colors-border-emphasis: var(--__colors-neutral-300);
 
   /* Primary / Interactive */
   --__colors-primary: var(--__colors-brand-primary);
@@ -100,8 +96,9 @@
 
   /* Surfaces */
   --color-ds-surface: var(--__colors-surface-default);
-  --color-ds-surface-interactive: var(--__colors-surface-interactive);
+  --color-ds-surface-primary: var(--__colors-surface-primary);
   --color-ds-surface-strong: var(--__colors-surface-strong);
+  --color-ds-surface-strong-hover: var(--__colors-surface-strong-hover);
   --color-ds-surface-elevated: var(--__colors-surface-elevated);
   --color-ds-surface-subtle: var(--__colors-surface-subtle);
   --color-ds-surface-muted: var(--__colors-surface-muted);
@@ -113,9 +110,9 @@
   --color-ds-on-surface-secondary: var(--__colors-on-surface-secondary);
 
   /* Borders */
-  --color-ds-border: var(--__colors-border-default);
-  --color-ds-border-subtle: var(--__colors-border-subtle);
-  --color-ds-border-emphasis: var(--__colors-border-emphasis);
+  --color-ds-border: var(--__colors-brand-primary-strong);
+  --color-ds-border-subtle: var(--__colors-neutral-200);
+  --color-ds-border-emphasis: var(--__colors-brand-ink);
 
   /* Primary / Interactive */
   --color-ds-primary: var(--__colors-primary);
@@ -139,18 +136,4 @@
   --color-ds-surface-primary-end: var(--__colors-surface-primary-end);
   --color-ds-surface-zen-start: var(--__colors-surface-zen-start);
   --color-ds-surface-zen-end: var(--__colors-surface-zen-end);
-
-  /* ============================================
-     Backward Compatibility Aliases
-     These map old token names to new "on-*" pattern
-     ============================================ */
-
-  --color-ds-text: var(--color-ds-on-surface);
-  --color-ds-text-strong: var(--color-ds-on-surface-strong);
-  --color-ds-text-muted: var(--color-ds-on-surface-muted);
-  --color-ds-text-secondary: var(--color-ds-on-surface-secondary);
-  --color-ds-text-inverse: var(--color-ds-on-primary);
-  --color-ds-interactive: var(--color-ds-primary);
-  --color-ds-interactive-hover: var(--color-ds-primary-hover);
-  --color-ds-on-interactive: var(--color-ds-on-primary);
 }

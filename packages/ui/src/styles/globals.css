@@ -25,8 +25,9 @@
 
   /* Surfaces */
   --color-ds-surface: var(--color-ds-surface);
-  --color-ds-surface-interactive: var(--color-ds-surface-interactive);
+  --color-ds-surface-primary: var(--color-ds-surface-primary);
   --color-ds-surface-strong: var(--color-ds-surface-strong);
+  --color-ds-surface-strong-hover: var(--color-ds-surface-strong-hover);
   --color-ds-surface-elevated: var(--color-ds-surface-elevated);
   --color-ds-surface-subtle: var(--color-ds-surface-subtle);
   --color-ds-surface-muted: var(--color-ds-surface-muted);

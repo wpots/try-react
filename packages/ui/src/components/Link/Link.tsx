@@ -38,8 +38,8 @@ export function Link({
     buttonDisabledClasses,
     buttonTransitionClasses,
     buttonIconClasses,
-    buttonSizeClasses[size],
     buttonVariantClasses[variant],
+    buttonSizeClasses[size],
     className,
   );
 

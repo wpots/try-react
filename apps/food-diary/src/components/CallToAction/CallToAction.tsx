@@ -1,41 +1,38 @@
 "use client";
 
-import { Card, CardActions, CardHeader, Container, IconTile, Link, Section, Typography } from "@repo/ui";
+import { Card, CardActions, CardHeader, cn, Container, IconTile, Link, Section, Typography } from "@repo/ui";
 
 import type { CallToActionProps } from "./index";
 
 import { Link as I18nLink } from "@/i18n/navigation";
-import classnames from "@/utils/classnames/classnames";
-import { ArrowRight, Icon, Info } from "lucide-react";
 
-const SECTION_VARIANTS: Record<NonNullable<CallToActionProps["variant"]>, string> = {
-  default: "bg-ds-surface",
-  strong: "bg-ds-brand-primary-soft",
-  knockout: "bg-ds-brand-ink",
+import { ArrowRight } from "lucide-react";
+const ctaVariantNames = {
+  default: "flex-row gap-ds-5xl items-end",
+  knockout: "flex-col gap-ds-xl items-center text-center",
 };
-
 export function CallToAction({
   variant = "default",
+  children,
   title,
   description,
   linkLabel,
   linkHref,
   className,
+  eyebrow,
   id = "cta-section",
   ...props
 }: CallToActionProps): React.JSX.Element {
+  const isDefault = variant === "default";
   return (
-    <Section
-      data-component-type="CallToAction"
-      id={id}
-      spacing="default"
-      className={classnames(SECTION_VARIANTS[variant], className)}
-      {...props}
-    >
-      <Container size="default">
-        <Card variant="knockout" className="flex flex-col gap-ds-xl items-center">
-          <CardHeader className="flex flex-col gap-ds-xl items-center text-center">
-            <IconTile icon={Info} size="md" className="text-ds-brand-primary" />
+    <Section data-component-type="CallToAction" id={id}>
+      <Container>
+        <Card
+          variant={variant === "default" ? "soft" : "knockout"}
+          className={cn("flex", ctaVariantNames[variant], className)}
+        >
+          <CardHeader className="flex flex-col gap-ds-xl">
+            {eyebrow}
             <Typography tag="h2" variant="heading" size={{ base: "md", md: "xl" }}>
               {title}
             </Typography>
@@ -43,11 +40,18 @@ export function CallToAction({
               {description}
             </Typography>
           </CardHeader>
-          <CardActions>
-            <Link as={I18nLink} href={linkHref} variant="secondary" size="lg">
-              {linkLabel} <ArrowRight />
+          <div>
+            {children}
+            <Link
+              as={I18nLink}
+              href={linkHref}
+              variant={isDefault ? "strong" : "secondary"}
+              size={isDefault ? "lg" : undefined}
+            >
+              {linkLabel}
+              {!isDefault && <ArrowRight />}
             </Link>
-          </CardActions>
+          </div>
         </Card>
       </Container>
     </Section>

@@ -17,13 +17,15 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
   return (
     <Section data-component-type="PageHero" id={id} className={classnames("relative overflow-hidden", className)}>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-surface-primary-start/50 via-ds-surface to-ds-surface" />
-      <Container size="wide" className="relative z-1 flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+      <Container size="wide" className="relative z-1 flex flex-col items-center gap-ds-xl lg:flex-row lg:gap-ds-2xl">
         {/* Visual column - animated brand logo */}
         <div className="flex flex-1 items-center justify-center lg:justify-end lg:order-1">
           <AnimatedLogo />
         </div>
-        <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left gap-ds-l">
-          <Label variant="pill">{t("eyebrow")}</Label>
+        <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left gap-ds-3xl">
+          <Label variant="pill" className="-mb-ds-m">
+            {t("eyebrow")}
+          </Label>
 
           <Typography tag="h1" variant="heading" size={{ base: "lg", sm: "2xl" }}>
             {t("title")}

@@ -16,17 +16,18 @@ export const buttonTransitionClasses = "transition-colors";
 export const buttonIconClasses = "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0";
 
 export const buttonVariantClasses: Record<ButtonVariantClassKey, string> = {
-  default: "bg-ds-surface-interactive !text-ds-on-interactive hover:bg-ds-interactive-hover",
-  secondary:
-    "bg-ds-surface-strong text-ds-on-surface-strong border-ds-surface-strong hover:bg-ds-interactive hover:text-ds-on-interactive",
-  outline: "border border-1 border-ds-border bg-ds-surface text-ds-text hover:bg-ds-surface-muted",
+  default: "bg-ds-surface-primary !text-ds-on-primary hover:bg-ds-surface-strong",
+  secondary: "bg-ds-surface-strong text-ds-on-surface-strong border-ds-surface-strong hover:bg-ds-surface-strong-hover",
+  strong:
+    "bg-ds-surface hover:text-ds-on-surface-strong border-ds-border-emphasis border-inset hover:bg-ds-surface-strong border-2",
+  outline: "border border-1 border-ds-border-subtle bg-ds-surface text-ds-text hover:bg-ds-surface-muted",
   destructive: "bg-danger text-on-danger hover:bg-danger-hover",
   link: "bg-transparent text-ds-interactive underline-offset-4 hover:underline",
 };
 
 export const buttonSizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
   default: "px-ds-xxl py-ds-l",
-  lg: "px-ds-xxl py-ds-l border-2",
+  lg: "px-ds-xxl py-ds-l",
   icon: "h-10 w-10",
 };
 
@@ -44,8 +45,8 @@ export function Button({ children, className, variant = "default", size = "defau
         buttonDisabledClasses,
         buttonTransitionClasses,
         buttonIconClasses,
-        buttonSizeClasses[size],
         buttonVariantClasses[variant],
+        buttonSizeClasses[size],
         isPressed && "scale-[0.99]",
         className,
       )}

@@ -1,7 +1,8 @@
 import type { CardProps } from "./index";
 import { cn } from "../../lib/utils";
 
-const cardBaseClasses = "relative rounded-ds-xl border p-ds-m transition-all duration-300 md:p-ds-xxl";
+const cardBaseClasses =
+  "relative flex flex-col gap-ds-xl items-center rounded-ds-xl border p-ds-m transition-all duration-300 md:p-ds-xxl";
 
 const cardVariantClasses: Record<NonNullable<CardProps["variant"]>, string> = {
   default: "border-ds-border-subtle bg-ds-surface",

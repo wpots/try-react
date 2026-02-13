@@ -1,6 +1,6 @@
 export interface USPItem {
   id: string;
-  iconSrc: string;
+  icon: React.ElementType;
   title: string;
   description: string;
 }

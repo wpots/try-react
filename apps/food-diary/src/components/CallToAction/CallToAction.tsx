@@ -8,7 +8,7 @@ import { Link as I18nLink } from "@/i18n/navigation";
 
 import { ArrowRight } from "lucide-react";
 const ctaVariantNames = {
-  default: "flex-row gap-ds-5xl items-end",
+  default: "md:flex-row gap-ds-5xl md:items-end",
   knockout: "flex-col gap-ds-xl items-center text-center",
 };
 export function CallToAction({
@@ -27,11 +27,8 @@ export function CallToAction({
   return (
     <Section data-component-type="CallToAction" id={id}>
       <Container>
-        <Card
-          variant={variant === "default" ? "soft" : "knockout"}
-          className={cn("flex", ctaVariantNames[variant], className)}
-        >
-          <CardHeader className="flex flex-col gap-ds-xl">
+        <Card variant={variant === "default" ? "soft" : "knockout"} className={cn(ctaVariantNames[variant], className)}>
+          <CardHeader className="flex flex-col gap-ds-m">
             {eyebrow}
             <Typography tag="h2" variant="heading" size={{ base: "md", md: "xl" }}>
               {title}
@@ -40,7 +37,7 @@ export function CallToAction({
               {description}
             </Typography>
           </CardHeader>
-          <div>
+          <div className="flex flex-col gap-ds-xl">
             {children}
             <Link
               as={I18nLink}

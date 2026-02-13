@@ -7,7 +7,7 @@ import { CallToAction } from "@/components/CallToAction";
 import { PageHero } from "@/components/PageHero";
 import { ProductFeatures } from "@/components/ProductFeatures";
 import { USPSection } from "@/components/USPSection";
-import { MessageSquareText, MonitorSmartphone } from "lucide-react";
+import { MessageSquareText, MonitorSmartphone, ShieldCheck, Sparkles } from "lucide-react";
 
 export function LandingPage({ id = "main-content", ...props }: LandingPageProps): React.JSX.Element {
   const t = useTranslations("landing");
@@ -68,19 +68,19 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
           items={[
             {
               id: "usp-simple",
-              iconSrc: "/img/003-like.svg",
+              icon: Sparkles,
               title: t("usp.simple.title"),
               description: t("usp.simple.description"),
             },
             {
               id: "usp-accessible",
-              iconSrc: "/img/002-tablet.svg",
+              icon: MonitorSmartphone,
               title: t("usp.accessible.title"),
               description: t("usp.accessible.description"),
             },
             {
               id: "usp-safe",
-              iconSrc: "/img/001-shield.svg",
+              icon: ShieldCheck,
               title: t("usp.safe.title"),
               description: t("usp.safe.description"),
             },
@@ -96,7 +96,7 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
           linkHref="/feedback"
           eyebrow={<Label>{t("cta.feedback.eyebrow")}</Label>}
         >
-          <IconTile icon={MessageSquareText} />
+          <IconTile icon={MessageSquareText} className="mx-auto" />
         </CallToAction>
       </main>
     </>

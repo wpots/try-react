@@ -61,7 +61,7 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
           description={t("cta.primary.description")}
           linkLabel={t("cta.primary.button")}
           linkHref="/auth/login"
-          eyebrow={<IconTile icon={MonitorSmartphone} className="mx-auto" />}
+          eyebrow={<IconTile icon={MonitorSmartphone} className="mx-auto" variant="strong" />}
         />
 
         <USPSection
@@ -96,7 +96,7 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
           linkHref="/feedback"
           eyebrow={<Label>{t("cta.feedback.eyebrow")}</Label>}
         >
-          <IconTile icon={MessageSquareText} className="mx-auto" />
+          <IconTile icon={MessageSquareText} className="mx-auto" variant="strong" />
         </CallToAction>
       </main>
     </>

@@ -7,9 +7,9 @@ const sizeClasses = {
 } as const;
 
 const variantClasses = {
-  default: "bg-ds-surface-primary/30 text-ds-on-surface-subtle",
-  strong: "bg-ds-surface-strong/30 text-ds-on-surface",
-  subtle: "bg-ds-surface-subtle/30 text-ds-on-surface",
+  default: "bg-ds-surface-soft text-ds-on-surface-soft",
+  strong: "bg-ds-surface-strong/20 text-ds-on-surface-subtle",
+  subtle: "bg-ds-surface-subtle/20 text-ds-on-surface",
 } as const;
 
 export function IconTile({

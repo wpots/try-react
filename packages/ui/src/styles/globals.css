@@ -33,6 +33,7 @@
   --color-ds-surface-elevated: var(--color-ds-surface-elevated);
   --color-ds-surface-subtle: var(--color-ds-surface-subtle);
   --color-ds-surface-muted: var(--color-ds-surface-muted);
+  --color-ds-surface-soft: var(--color-ds-surface-soft);
 
   /* On-Surface (content on surfaces) */
   --color-ds-on-surface: var(--color-ds-on-surface);
@@ -41,6 +42,7 @@
   --color-ds-on-surface-muted: var(--color-ds-on-surface-muted);
   --color-ds-on-surface-secondary: var(--color-ds-on-surface-secondary);
   --color-ds-on-surface-subtle: var(--color-ds-on-surface-subtle);
+  --color-ds-on-surface-soft: var(--color-ds-on-surface-soft);
 
   /* Borders */
   --color-ds-border: var(--color-ds-border);

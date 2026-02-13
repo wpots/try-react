@@ -6,6 +6,7 @@
 
   /* Brand Colors */
   --__colors-sage-500: #93b19a;
+  --__colors-sky-100: #e1f3fc;
   --__colors-sky-300: #b5e0f7;
   --__colors-sky-500: #5fa9d1;
   --__colors-slate-500: #788c90;
@@ -33,13 +34,13 @@
   --__colors-neutral-1000: #000000;
 
   /* ============================================
-     Internal Semantic Tokens (Tier 1)
+     Semantic Tokens (Public API - Tier 2)
      ============================================ */
 
   /* Brand */
   --color-ds-brand-primary: var(--__colors-sky-500);
   --color-ds-brand-primary-strong: var(--__colors-teal-700);
-  --color-ds-brand-primary-soft: var(--__colors-sky-300);
+  --color-ds-brand-primary-soft: var(--__colors-sky-100);
   --color-ds-brand-support: var(--__colors-sage-500);
   --color-ds-brand-ink: var(--__colors-navy-900);
   --color-ds-brand-zen: var(--__colors-sand-400);
@@ -53,8 +54,11 @@
   --color-ds-surface-primary: var(--color-ds-brand-primary);
   --color-ds-on-surface-primary: var(--__colors-neutral-0);
 
+  --color-ds-surface-soft: var(--color-ds-brand-primary-soft);
+  --color-ds-on-surface-soft: var(--color-ds-brand-primary);
+
   --color-ds-surface-strong: var(--color-ds-brand-primary-strong);
-  --color-ds-surface-strong-hover: var(--__colors-brand-ink);
+  --color-ds-surface-strong-hover: var(--color-ds-brand-ink);
   --color-ds-on-surface-strong: var(--__colors-neutral-0);
 
   --color-ds-surface-subtle: var(--color-ds-brand-zen);
@@ -66,7 +70,6 @@
   --color-ds-on-surface-secondary: var(--__colors-neutral-700);
   --color-ds-surface-secondary: var(--color-ds-brand-ink);
 
-  /* Primary / Interactive */
   --color-ds-primary: var(--color-ds-brand-primary);
   --color-ds-primary-hover: var(--color-ds-brand-primary-strong);
   --color-ds-on-primary: var(--__colors-neutral-0);
@@ -82,20 +85,14 @@
   --__colors-danger-hover: var(--__colors-red-500);
   --__colors-on-danger: var(--__colors-neutral-0);
 
-  /* Surface Gradients */
-  --__colors-surface-primary-start: var(--__colors-brand-primary-soft);
-  --__colors-surface-primary-end: var(--__colors-brand-primary);
-  --__colors-surface-zen-start: var(--__colors-brand-support);
-  --__colors-surface-zen-end: var(--__colors-brand-primary-strong);
-
   /* ============================================
      Semantic Tokens (Public API - Tier 2)
      ============================================ */
 
   /* Borders */
-  --color-ds-border: var(--__colors-brand-primary-strong);
+  --color-ds-border: var(--color-ds-brand-primary-strong);
   --color-ds-border-subtle: var(--__colors-neutral-200);
-  --color-ds-border-emphasis: var(--__colors-brand-ink);
+  --color-ds-border-emphasis: var(--color-ds-brand-ink);
 
   --color-ds-focus-ring: var(--__colors-brand-primary);
 
@@ -109,10 +106,4 @@
   --color-ds-danger: var(--__colors-danger);
   --color-ds-danger-hover: var(--__colors-danger-hover);
   --color-ds-on-danger: var(--__colors-on-danger);
-
-  /* Surface Gradients */
-  --color-ds-surface-primary-start: var(--__colors-surface-primary-start);
-  --color-ds-surface-primary-end: var(--__colors-surface-primary-end);
-  --color-ds-surface-zen-start: var(--__colors-surface-zen-start);
-  --color-ds-surface-zen-end: var(--__colors-surface-zen-end);
 }

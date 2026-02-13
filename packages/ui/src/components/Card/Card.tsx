@@ -8,7 +8,7 @@ const cardVariantClasses: Record<NonNullable<CardProps["variant"]>, string> = {
   default: "border-ds-surface-muted bg-ds-surface",
   soft: "border-ds-border-subtle bg-ds-surface-muted",
   strong: "border-transparent bg-ds-brand-primary-soft",
-  knockout: "border-transparent bg-gradient-to-br from-ds-surface-primary-start/35 to-ds-surface-primary-end/25",
+  knockout: "border-transparent bg-gradient-to-br from-ds-surface-primary/15 to-ds-surface-primary/35",
 };
 
 export function Card({ className, variant = "default", children, ...props }: CardProps): React.JSX.Element {

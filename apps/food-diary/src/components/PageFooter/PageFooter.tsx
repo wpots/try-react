@@ -8,8 +8,7 @@ import { Quote } from "@/components/Quote";
 import { SectionHeader } from "@/components/SectionHeader";
 
 export function PageFooter({ className, id = "page-footer", children, ...props }: PageFooterProps): React.JSX.Element {
-  const t = useTranslations("landing.footer");
-
+  const t = useTranslations("common.footer");
   return (
     <Section
       as="footer"
@@ -27,17 +26,6 @@ export function PageFooter({ className, id = "page-footer", children, ...props }
       />
       <Container size="narrow" className="relative z-10 flex flex-col items-center gap-ds-xxl pt-ds-4xl text-center">
         {children}
-
-        <SectionHeader
-          id="footer-brand"
-          heading={t("tagline")}
-          description={t("description")}
-          headingVariant="script"
-          headingTag="h4"
-          className="items-center"
-        >
-          <Quote>{t("quote")}</Quote>
-        </SectionHeader>
 
         <hr className="w-[14rem] border-0 border-t border-ds-border" aria-hidden />
 

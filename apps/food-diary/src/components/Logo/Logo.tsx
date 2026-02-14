@@ -32,7 +32,7 @@ export function Logo({
   component: ImageComponent,
   ...props
 }: LogoProps): React.JSX.Element {
-  const t = useTranslations("landing.brand");
+  const t = useTranslations("common.brand");
   const progress = scrollProgress !== undefined ? easeOutCubic(scrollProgress) : undefined;
 
   const isAnimated = progress !== undefined;

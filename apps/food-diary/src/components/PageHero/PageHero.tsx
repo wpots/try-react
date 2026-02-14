@@ -18,7 +18,7 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
       <Container size="wide" className="relative z-1 flex flex-col items-center gap-ds-xl lg:flex-row lg:gap-ds-2xl">
         {/* Visual column - animated brand logo */}
         <div className="flex flex-1 items-center justify-center lg:justify-end lg:order-1">
-          <AnimatedLogo className="size-full" />
+          <AnimatedLogo className="size-full max-w-lg" />
         </div>
         <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left gap-ds-3xl">
           <Label variant="pill" className="-mb-ds-m">

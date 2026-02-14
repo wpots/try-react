@@ -143,7 +143,7 @@ export function AnimatedLogo({ className, ...rest }: AnimatedLogoProps): React.J
       </div>
       <span
         className="absolute inset-0 flex items-center justify-center pointer-events-none font-ds-script-2xl text-ds-on-surface/5"
-        style={{ fontSize: "25cqw" }}
+        style={{ fontSize: "20cqw" }}
         aria-hidden
       >
         Try

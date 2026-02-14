@@ -48,7 +48,7 @@ export function Logo({
         id={id}
         href={href}
         className={cn(
-          "relative inline-flex h-10 items-center text-inherit no-underline md:h-12",
+          "relative inline-flex h-ds-xl items-center  no-underline md:h-ds-3xl",
           "min-w-[theme(spacing.24)] shrink-0 overflow-visible transition-[min-width] duration-300 ease-out",
           className,
         )}
@@ -57,7 +57,7 @@ export function Logo({
       >
         {/* Expanded: large "The Real You" — shrinks and fades as user scrolls */}
         <span
-          className="absolute left-0 top-1/2 inline-block whitespace-nowrap font-ds-script-2xl -translate-y-1/2 origin-left will-change-transform"
+          className="absolute left-ds-xl top-ds-xxl inline-block whitespace-nowrap font-ds-script-2xl origin-top-left will-change-transform text-ds-on-surface"
           style={{
             transform: `scale(${expandedScale})`,
             opacity: expandedOpacity,
@@ -68,7 +68,7 @@ export function Logo({
         </span>
         {/* Collapsed: small pebble + "Try" — fades in and scales up */}
         <span
-          className="absolute left-0 top-1/2 flex -translate-y-1/2 origin-left items-center gap-ds-s will-change-transform"
+          className="absolute left-0 top-1/2 flex -translate-y-1/2 origin-top-left items-center gap-ds-s will-change-transform"
           style={{
             transform: `scale(${collapsedScale})`,
             opacity: collapsedOpacity,
@@ -78,13 +78,13 @@ export function Logo({
           <Image
             src="/img/pebblesgreen.png"
             alt=""
-            width={32}
-            height={32}
-            nextImageComponent={ImageComponent}
-            className="h-8 w-8 shrink-0 md:h-10 md:w-10"
+            width={48}
+            height={48}
+            component={ImageComponent}
+            className="h-8 w-8 shrink-0 md:size-ds-4xl"
             aria-hidden
           />
-          <span className="font-display text-lg font-medium md:text-xl">{t("wordmarkShort")}</span>
+          <span className="font-ds-script-base">{t("wordmarkShort")}</span>
         </span>
         {/* Accessible label: always the full brand name */}
         <span className="sr-only">{t("wordmark")}</span>
@@ -105,7 +105,7 @@ export function Logo({
         alt={t("logoAlt")}
         width={48}
         height={48}
-        nextImageComponent={ImageComponent}
+        component={ImageComponent}
         className={IMAGE_SIZE_CLASSNAMES[size]}
       />
       {showText ? <span className={cn("font-display", TEXT_SIZE_CLASSNAMES[size])}>{t("wordmark")}</span> : null}

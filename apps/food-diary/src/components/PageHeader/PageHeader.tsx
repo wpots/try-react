@@ -49,21 +49,17 @@ export function PageHeader({ className, id = "page-header", children, ...props }
       id={id}
       className={cn(
         "fixed inset-x-0 top-0 z-50 w-full border-b border-transparent transition-all duration-300",
-        "flex items-center justify-between gap-ds-l px-ds-l",
-        isScrolled ? "bg-ds-surface text-ds-on-surface-strong shadow-ds-sm" : "bg-transparent text-ds-on-primary",
+        "flex items-center justify-between gap-ds-l px-ds-l text-ds-on-surface",
+        isScrolled ? "bg-ds-surface shadow-ds-sm" : "bg-transparent",
         className,
       )}
       {...props}
     >
-      <Logo
-        id="page-header-logo"
-        scrollProgress={scrollProgress}
-        href="#home"
-        component={NextImage}
-        className={cn(isScrolled ? "text-ds-on-surface" : "text-ds-on-primary")}
-      />
+      <Logo id="page-header-logo" scrollProgress={scrollProgress} href="#home" component={NextImage} />
 
-      {headerChildren ? <div className="ml-auto flex items-center gap-ds-m">{headerChildren}</div> : null}
+      {headerChildren ? (
+        <div className="ml-auto flex items-center gap-ds-m text-ds-on-surface">{headerChildren}</div>
+      ) : null}
     </header>
   );
 }

@@ -1,7 +1,7 @@
 import type { ImageProps } from "./index";
 
 export function Image({
-  nextImageComponent: NextImageComponent,
+  component: ImageComponent,
   src,
   alt,
   width,
@@ -14,9 +14,9 @@ export function Image({
   style,
   ...props
 }: ImageProps): React.JSX.Element {
-  if (NextImageComponent) {
+  if (ImageComponent) {
     return (
-      <NextImageComponent
+      <ImageComponent
         src={src}
         alt={alt}
         width={width}

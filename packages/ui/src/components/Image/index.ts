@@ -17,7 +17,7 @@ export interface NextImageLikeProps {
 }
 
 export interface ImageProps extends React.ComponentProps<"img"> {
-  nextImageComponent?: React.ComponentType<NextImageLikeProps>;
+  component?: React.ComponentType<NextImageLikeProps>;
   fill?: boolean;
   priority?: boolean;
   sizes?: string;

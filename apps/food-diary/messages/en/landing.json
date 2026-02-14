@@ -14,7 +14,8 @@
     "gettingStarted": "Getting started",
     "feedback": "Feedback",
     "login": "Login",
-    "menuButtonLabel": "Open menu"
+    "menuButtonLabel": "Open menu",
+    "accountMenuLabel": "Open account menu"
   },
   "cta": {
     "primary": {

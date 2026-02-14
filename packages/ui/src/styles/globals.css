@@ -6,9 +6,6 @@
 @import "./tokens/radius.css";
 @import "./tokens/shadows.css";
 
-/* Import utility files */
-@import "./utilities/typography.css";
-
 @theme {
   /* ============================================
      Tailwind Theme Configuration
@@ -118,6 +115,7 @@
 }
 
 @layer utilities {
+  @import "./utilities/typography.css";
   /* Utility styles are for small, single-purpose classes */
   @import "./utilities/animations.css";
 

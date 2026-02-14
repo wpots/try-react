@@ -29,6 +29,7 @@ export const buttonSizeClasses: Record<NonNullable<ButtonProps["size"]>, string>
   default: "px-ds-xxl py-ds-l",
   lg: "px-ds-xxl py-ds-l",
   icon: "h-10 w-10",
+  link: "px-0 py-0",
 };
 
 export function Button({ children, className, variant = "default", size = "default", ...props }: ButtonProps) {

@@ -19,14 +19,20 @@ export function SectionHeader({
       {...props}
     >
       {eyebrow}
-      <Typography
-        tag={headingTag}
-        variant="heading"
-        size={{ base: "lg", md: "xl" }}
-        className={cn("text-center", headingVariant === "script" ? "font-ds-script-xl" : "")}
-      >
-        {heading}
-      </Typography>
+      {headingVariant === "script" ? (
+        <Typography tag={headingTag} variant="script" size="xl" className="text-center">
+          {heading}
+        </Typography>
+      ) : (
+        <Typography
+          tag={headingTag}
+          variant="heading"
+          size={{ base: "lg", md: "xl" }}
+          className="text-center"
+        >
+          {heading}
+        </Typography>
+      )}
       {description ? (
         <Typography
           tag="p"

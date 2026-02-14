@@ -38,9 +38,8 @@ export function Logo({
   const isAnimated = progress !== undefined;
 
   if (isAnimated) {
-    const expandedScale = 1 - progress * 0.85;
+    const expandedY = -progress * 150;
     const expandedOpacity = 1 - progress;
-    const collapsedScale = 0.4 + 0.6 * progress;
     const collapsedOpacity = progress;
 
     return (
@@ -49,7 +48,7 @@ export function Logo({
         id={id}
         href={href}
         className={cn(
-          "relative inline-flex h-ds-xl items-center  no-underline md:h-ds-3xl",
+          "relative inline-flex h-ds-xl items-center no-underline md:h-ds-3xl",
           "min-w-[theme(spacing.24)] shrink-0 overflow-visible transition-[min-width] duration-300 ease-out",
           className,
         )}
@@ -58,22 +57,19 @@ export function Logo({
       >
         {/* Expanded: large "The Real You" — shrinks and fades as user scrolls */}
         <span
-          className="absolute left-ds-lg top-ds-lg inline-block whitespace-nowrap font-ds-script-xl origin-top-left will-change-transform text-ds-on-surface"
+          className="absolute left-0 top-ds-lg inline-block whitespace-nowrap translate-y-0 font-ds-script-xl origin-top will-change-transform text-ds-on-surface"
           style={{
-            transform: `scale(${expandedScale})`,
+            transform: `translateY(${expandedY}px)`,
             opacity: expandedOpacity,
           }}
           aria-hidden={progress > 0.5}
         >
           {t("wordmark")}
         </span>
-        {/* Collapsed: small pebble + "Try" — fades in and scales up */}
+        {/* Collapsed: small pebble + "Try" — fades in place (no vertical movement) */}
         <span
-          className="absolute left-0 top-1/2 flex -translate-y-1/2 origin-top-center items-center gap-ds-s will-change-transform"
-          style={{
-            transform: `scale(${collapsedScale})`,
-            opacity: collapsedOpacity,
-          }}
+          className="absolute left-0 top-1/2 flex -translate-y-1/2 items-center gap-ds-s will-change-[opacity]"
+          style={{ opacity: collapsedOpacity }}
           aria-hidden={progress < 0.5}
         >
           <Image

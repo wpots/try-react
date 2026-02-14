@@ -1,7 +1,4 @@
 {
-  "common": {
-    "skipToContent": "Ga naar hoofdinhoud"
-  },
   "hero": {
     "eyebrow": "Eetdagboek voor herstel",
     "title": "Helpt jou op weg richting een gezondere relatie met eten.",
@@ -14,7 +11,8 @@
     "gettingStarted": "Aan de slag",
     "feedback": "Feedback",
     "login": "Inloggen",
-    "menuButtonLabel": "Open menu"
+    "menuButtonLabel": "Open menu",
+    "accountMenuLabel": "Accountmenu openen"
   },
   "cta": {
     "primary": {

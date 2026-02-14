@@ -11,11 +11,11 @@ export function Quote({
   return (
     <Typography
       tag="p"
-      variant="body"
+      variant="display"
       size="xl"
       data-component-type="Quote"
       id={id}
-      className={cn("font-display italic text-center", className)}
+      className={cn("italic text-center", className)}
       {...props}
     >
       <span aria-hidden="true">"</span>

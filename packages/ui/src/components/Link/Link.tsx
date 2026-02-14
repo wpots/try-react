@@ -33,7 +33,7 @@ export function Link({
   const safeRel = target === "_blank" ? [rel, "noopener", "noreferrer"].filter(Boolean).join(" ") : rel;
 
   const baseClasses = cn(
-    buttonBaseClasses,
+    variant === "link" ? "" : buttonBaseClasses,
     buttonFocusClasses,
     buttonDisabledClasses,
     buttonTransitionClasses,

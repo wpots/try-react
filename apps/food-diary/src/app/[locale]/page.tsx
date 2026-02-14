@@ -9,13 +9,27 @@ import { Quote } from "@/components/Quote";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useTranslations } from "next-intl";
 
+const NAV_ITEMS = [
+  { id: "more-info-link", href: "#cta-primary", labelKey: "moreInfo" },
+  { id: "getting-started-link", href: "#cta-primary", labelKey: "gettingStarted" },
+  { id: "feedback-link", href: "#cta-feedback", labelKey: "feedback" },
+];
+
 export default function HomePage(): React.JSX.Element {
   useHomeAuthRedirect();
   const t = useTranslations("common.brand");
+  const cms = {
+    headerNav: useTranslations("landing.nav"),
+  };
+  const navItems = NAV_ITEMS.map(item => ({
+    id: item.id,
+    href: item.href,
+    children: cms.headerNav(item.labelKey),
+  }));
   return (
     <>
       <PageHeader>
-        <HeaderNav />
+        <HeaderNav navItems={navItems} cms={cms.headerNav} />
       </PageHeader>
       <LandingPage />
       <PageFooter>

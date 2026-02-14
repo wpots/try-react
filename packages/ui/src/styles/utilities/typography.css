@@ -40,6 +40,43 @@
     line-height: var(--line-height-ds-xxl);
   }
 
+  /* Display (body scale + display/heading font – 20px = xl) */
+  .font-ds-display-xs {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-xs);
+    line-height: var(--line-height-ds-sm);
+  }
+
+  .font-ds-display-sm {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-sm);
+    line-height: var(--line-height-ds-xl);
+  }
+
+  .font-ds-display-base {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-base);
+    line-height: var(--line-height-ds-xl);
+  }
+
+  .font-ds-display-lg {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-lg);
+    line-height: var(--line-height-ds-xxl);
+  }
+
+  .font-ds-display-xl {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-xl);
+    line-height: var(--line-height-ds-xxl);
+  }
+
+  .font-ds-display-xxl {
+    font-family: var(--font-family-ds-heading);
+    font-size: var(--font-size-ds-xxl);
+    line-height: var(--line-height-ds-xxl);
+  }
+
   /* Heading */
   .font-ds-heading-xxs {
     font-family: var(--font-family-ds-heading);

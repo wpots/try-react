@@ -59,7 +59,7 @@ function getDisplayName(value: unknown): string | null {
   return typeof displayName === "string" ? displayName : null;
 }
 
-function hasVariant(value: unknown): value is { variant: "heading" | "body" } {
+function hasVariant(value: unknown): value is { variant: "heading" | "body" | "script" | "display" } {
   if (!value || typeof value !== "object") {
     return false;
   }
@@ -68,7 +68,12 @@ function hasVariant(value: unknown): value is { variant: "heading" | "body" } {
     return false;
   }
 
-  return value.variant === "heading" || value.variant === "body";
+  return (
+    value.variant === "heading" ||
+    value.variant === "body" ||
+    value.variant === "script" ||
+    value.variant === "display"
+  );
 }
 
 function getTypographyTagFromProps(childProps: unknown): string {
@@ -80,13 +85,15 @@ function getTypographyTagFromProps(childProps: unknown): string {
     return childProps.tag;
   }
 
-  return childProps.variant === "heading" ? "h3" : "p";
+  if (childProps.variant === "heading") return "h3";
+  if (childProps.variant === "script" || childProps.variant === "display") return "p";
+  return "p";
 }
 
 export function validateNesting(
   parentTag: string,
   children: React.ReactNode,
-  variant: "heading" | "body",
+  variant: "heading" | "body" | "script" | "display",
 ): void {
   // eslint-disable-next-line no-process-env -- NODE_ENV is a special build-time constant in Next.js
   if (process.env.NODE_ENV === "production") {
@@ -108,7 +115,7 @@ export function validateNesting(
         `⚠️ Typography: Invalid HTML nesting detected!\n` +
           `Block element <${childTag}> should not be nested inside <${parentTag}>.\n` +
           `This creates invalid HTML and may cause accessibility issues.\n\n` +
-          `Valid children for ${variant === "heading" ? "headings" : "paragraphs"}: ` +
+          `Valid children for ${variant === "heading" ? "headings" : variant === "script" || variant === "display" ? "script/display" : "paragraphs"}: ` +
           `<span>, <a>, <strong>, <em>, <code>, text, or inline elements.\n\n` +
           `Consider:\n` +
           `- Use <span> for inline styling\n` +

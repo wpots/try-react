@@ -19,6 +19,19 @@ const TYPOGRAPHY_CLASSES: Record<string, Record<string, string>> = {
     xl: "font-ds-heading-xl",
     "2xl": "font-ds-heading-2xl",
   },
+  script: {
+    base: "font-ds-script-base",
+    xl: "font-ds-script-xl",
+    "2xl": "font-ds-script-2xl",
+  },
+  display: {
+    xs: "font-ds-display-xs",
+    sm: "font-ds-display-sm",
+    base: "font-ds-display-base",
+    lg: "font-ds-display-lg",
+    xl: "font-ds-display-xl",
+    xxl: "font-ds-display-xxl",
+  },
 };
 
 const RESPONSIVE_TYPOGRAPHY_CLASSES: Record<
@@ -119,10 +132,79 @@ const RESPONSIVE_TYPOGRAPHY_CLASSES: Record<
       "2xl": "2xl:font-ds-heading-2xl",
     },
   },
+  script: {
+    sm: {
+      base: "sm:font-ds-script-base",
+      xl: "sm:font-ds-script-xl",
+      "2xl": "sm:font-ds-script-2xl",
+    },
+    md: {
+      base: "md:font-ds-script-base",
+      xl: "md:font-ds-script-xl",
+      "2xl": "md:font-ds-script-2xl",
+    },
+    lg: {
+      base: "lg:font-ds-script-base",
+      xl: "lg:font-ds-script-xl",
+      "2xl": "lg:font-ds-script-2xl",
+    },
+    xl: {
+      base: "xl:font-ds-script-base",
+      xl: "xl:font-ds-script-xl",
+      "2xl": "xl:font-ds-script-2xl",
+    },
+    "2xl": {
+      base: "2xl:font-ds-script-base",
+      xl: "2xl:font-ds-script-xl",
+      "2xl": "2xl:font-ds-script-2xl",
+    },
+  },
+  display: {
+    sm: {
+      xs: "sm:font-ds-display-xs",
+      sm: "sm:font-ds-display-sm",
+      base: "sm:font-ds-display-base",
+      lg: "sm:font-ds-display-lg",
+      xl: "sm:font-ds-display-xl",
+      xxl: "sm:font-ds-display-xxl",
+    },
+    md: {
+      xs: "md:font-ds-display-xs",
+      sm: "md:font-ds-display-sm",
+      base: "md:font-ds-display-base",
+      lg: "md:font-ds-display-lg",
+      xl: "md:font-ds-display-xl",
+      xxl: "md:font-ds-display-xxl",
+    },
+    lg: {
+      xs: "lg:font-ds-display-xs",
+      sm: "lg:font-ds-display-sm",
+      base: "lg:font-ds-display-base",
+      lg: "lg:font-ds-display-lg",
+      xl: "lg:font-ds-display-xl",
+      xxl: "lg:font-ds-display-xxl",
+    },
+    xl: {
+      xs: "xl:font-ds-display-xs",
+      sm: "xl:font-ds-display-sm",
+      base: "xl:font-ds-display-base",
+      lg: "xl:font-ds-display-lg",
+      xl: "xl:font-ds-display-xl",
+      xxl: "xl:font-ds-display-xxl",
+    },
+    "2xl": {
+      xs: "2xl:font-ds-display-xs",
+      sm: "2xl:font-ds-display-sm",
+      base: "2xl:font-ds-display-base",
+      lg: "2xl:font-ds-display-lg",
+      xl: "2xl:font-ds-display-xl",
+      xxl: "2xl:font-ds-display-xxl",
+    },
+  },
 };
 
 export function getTypographyClasses<T extends string>(
-  variant: "heading" | "body",
+  variant: "heading" | "body" | "script" | "display",
   size: ResponsiveSize<T> | undefined,
 ): string {
   if (!size) {

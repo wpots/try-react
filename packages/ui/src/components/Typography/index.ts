@@ -1,7 +1,10 @@
 export type BodySize = "xs" | "sm" | "base" | "lg" | "xl" | "xxl";
 export type HeadingSize = "xs" | "sm" | "base" | "md" | "lg" | "xl" | "2xl";
+export type ScriptSize = "base" | "xl" | "2xl";
+export type DisplaySize = BodySize;
 export type BodyTag = "p" | "span" | "small";
 export type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type ScriptTag = "p" | "span" | "small" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 /**
  * Responsive size configuration
@@ -35,7 +38,25 @@ type HeadingProps = React.ComponentProps<"h1"> & {
   tag?: HeadingTag;
 };
 
-export type TypographyProps = BodyProps | HeadingProps;
+/**
+ * Props for script variant (decorative/handwriting font)
+ */
+type ScriptProps = React.ComponentProps<"p"> & {
+  variant: "script";
+  size?: ResponsiveSize<ScriptSize>;
+  tag?: ScriptTag;
+};
+
+/**
+ * Props for display variant (body scale + display/heading font, e.g. 20px = xl)
+ */
+type DisplayProps = React.ComponentProps<"p"> & {
+  variant: "display";
+  size?: ResponsiveSize<DisplaySize>;
+  tag?: BodyTag;
+};
+
+export type TypographyProps = BodyProps | HeadingProps | ScriptProps | DisplayProps;
 
 /**
  * Valid inline elements that can be nested inside Typography

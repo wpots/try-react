@@ -1,4 +1,4 @@
-import type { ImageProps } from "./index";
+import type { ImageProps, NextImageLikeProps } from "./index";
 
 export function Image({
   component: ImageComponent,
@@ -15,21 +15,20 @@ export function Image({
   ...props
 }: ImageProps): React.JSX.Element {
   if (ImageComponent) {
-    return (
-      <ImageComponent
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        className={className}
-        fill={fill}
-        sizes={sizes}
-        priority={priority}
-        quality={quality}
-        style={style}
-        {...props}
-      />
-    );
+    const componentProps: NextImageLikeProps = {
+      src: src ?? "",
+      alt: alt ?? "",
+      width: typeof width === "number" ? width : undefined,
+      height: typeof height === "number" ? height : undefined,
+      fill,
+      className,
+      sizes,
+      priority,
+      quality,
+      style,
+      ...props,
+    };
+    return <ImageComponent {...componentProps} />;
   }
 
   return (

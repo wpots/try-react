@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Image, cn } from "@repo/ui";
+import NextImage from "next/image";
 
 import type { LogoProps } from "./index.ts";
 
@@ -57,7 +58,7 @@ export function Logo({
       >
         {/* Expanded: large "The Real You" — shrinks and fades as user scrolls */}
         <span
-          className="absolute left-ds-xl top-ds-xxl inline-block whitespace-nowrap font-ds-script-2xl origin-top-left will-change-transform text-ds-on-surface"
+          className="absolute left-ds-lg top-ds-lg inline-block whitespace-nowrap font-ds-script-xl origin-top-left will-change-transform text-ds-on-surface"
           style={{
             transform: `scale(${expandedScale})`,
             opacity: expandedOpacity,
@@ -68,7 +69,7 @@ export function Logo({
         </span>
         {/* Collapsed: small pebble + "Try" — fades in and scales up */}
         <span
-          className="absolute left-0 top-1/2 flex -translate-y-1/2 origin-top-left items-center gap-ds-s will-change-transform"
+          className="absolute left-0 top-1/2 flex -translate-y-1/2 origin-top-center items-center gap-ds-s will-change-transform"
           style={{
             transform: `scale(${collapsedScale})`,
             opacity: collapsedOpacity,
@@ -80,11 +81,11 @@ export function Logo({
             alt=""
             width={48}
             height={48}
-            component={ImageComponent}
+            component={NextImage}
             className="h-8 w-8 shrink-0 md:size-ds-4xl"
             aria-hidden
           />
-          <span className="font-ds-script-base">{t("wordmarkShort")}</span>
+          <span className="font-ds-script-xl">{t("wordmarkShort")}</span>
         </span>
         {/* Accessible label: always the full brand name */}
         <span className="sr-only">{t("wordmark")}</span>

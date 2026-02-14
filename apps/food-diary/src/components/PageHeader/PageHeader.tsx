@@ -1,42 +1,11 @@
 "use client";
 
-import NextImage from "next/image";
-import { useEffect, useState } from "react";
 import { cn } from "@repo/ui";
 
 import type { PageHeaderProps } from "./index";
+import { SCROLL_RANGE, useScrollProgress } from "./useScrollProgress";
 
 import { Logo } from "@/components/Logo";
-
-const SCROLL_RANGE = 120;
-
-function useScrollProgress(start = 0, end = SCROLL_RANGE): number {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const range = end - start;
-    if (range <= 0) return undefined;
-
-    let rafId: number | undefined;
-
-    function onScroll(): void {
-      rafId = requestAnimationFrame(() => {
-        rafId = undefined;
-        const y = window.scrollY;
-        setProgress(Math.min(1, Math.max(0, (y - start) / range)));
-      });
-    }
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (rafId !== undefined) cancelAnimationFrame(rafId);
-    };
-  }, [start, end]);
-
-  return progress;
-}
 
 export function PageHeader({ className, id = "page-header", children, ...props }: PageHeaderProps): React.JSX.Element {
   const scrollProgress = useScrollProgress(0, SCROLL_RANGE);
@@ -55,7 +24,7 @@ export function PageHeader({ className, id = "page-header", children, ...props }
       )}
       {...props}
     >
-      <Logo id="page-header-logo" scrollProgress={scrollProgress} href="#home" component={NextImage} />
+      <Logo id="page-header-logo" scrollProgress={scrollProgress} href="#home" />
 
       {headerChildren ? (
         <div className="ml-auto flex items-center gap-ds-m text-ds-on-surface">{headerChildren}</div>

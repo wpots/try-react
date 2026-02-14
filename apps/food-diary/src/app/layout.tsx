@@ -33,9 +33,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning className={fontVariables}>
-      <body suppressHydrationWarning>
-        {children}
-      </body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

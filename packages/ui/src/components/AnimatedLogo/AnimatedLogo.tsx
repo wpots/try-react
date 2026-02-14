@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { cn } from "../../lib/utils";
+import type { AnimatedLogoProps } from "./index";
 
 const PEBBLE_PATH =
   "M 407.507812 2930.03125 C -966.570312 1529.390625 2265.960938 -2091.140625 3740.929688 2590.960938 C 4477.929688 4930.476562 1159.339844 3696.390625 407.507812 2930.03125 Z";
@@ -45,7 +47,7 @@ const PEBBLES: PebbleConfig[] = [
   },
 ];
 
-export function AnimatedLogo(): React.JSX.Element {
+export function AnimatedLogo({ className, ...rest }: AnimatedLogoProps): React.JSX.Element {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -98,44 +100,54 @@ export function AnimatedLogo(): React.JSX.Element {
   }, []);
 
   return (
-    <div className="relative flex size-full items-center justify-center rotate-290 -skew-y-15" aria-hidden="true">
-      <svg
-        ref={svgRef}
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="-400 -800 5200 5600"
-        width="320"
-        height="320"
-        className="overflow-visible"
+    <div
+      className={cn("relative inline-flex items-center justify-center [container-type:inline-size]", className)}
+      {...rest}
+    >
+      <div className="relative flex size-full items-center justify-center rotate-290 -skew-y-15" aria-hidden="true">
+        <svg
+          ref={svgRef}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="-400 -800 5200 5600"
+          className="size-full overflow-visible"
+        >
+          <defs>
+            <filter id="pebble-blur" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="120" />
+            </filter>
+          </defs>
+
+          {PEBBLES.map(pebble => (
+            <g
+              key={`${pebble.id}-glow`}
+              id={`${pebble.id}-glow`}
+              opacity="0.08"
+              transform={`translate(${pebble.tx}, ${pebble.ty}) scale(${pebble.baseScale}) rotate(${pebble.rotate})`}
+              className="will-change-transform"
+            >
+              <path d={PEBBLE_PATH} className={pebble.fillClass} filter="url(#pebble-blur)" />
+            </g>
+          ))}
+
+          {PEBBLES.map(pebble => (
+            <g
+              key={pebble.id}
+              id={pebble.id}
+              transform={`translate(${pebble.tx}, ${pebble.ty}) scale(${pebble.baseScale}) rotate(${pebble.rotate})`}
+              className="will-change-transform"
+            >
+              <path d={PEBBLE_PATH} className={pebble.fillClass} fillRule="evenodd" />
+            </g>
+          ))}
+        </svg>
+      </div>
+      <span
+        className="absolute inset-0 flex items-center justify-center pointer-events-none font-ds-script-2xl text-ds-on-surface/5"
+        style={{ fontSize: "25cqw" }}
+        aria-hidden
       >
-        <defs>
-          <filter id="pebble-blur" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="120" />
-          </filter>
-        </defs>
-
-        {PEBBLES.map(pebble => (
-          <g
-            key={`${pebble.id}-glow`}
-            id={`${pebble.id}-glow`}
-            opacity="0.08"
-            transform={`translate(${pebble.tx}, ${pebble.ty}) scale(${pebble.baseScale}) rotate(${pebble.rotate})`}
-            className="will-change-transform"
-          >
-            <path d={PEBBLE_PATH} className={pebble.fillClass} filter="url(#pebble-blur)" />
-          </g>
-        ))}
-
-        {PEBBLES.map(pebble => (
-          <g
-            key={pebble.id}
-            id={pebble.id}
-            transform={`translate(${pebble.tx}, ${pebble.ty}) scale(${pebble.baseScale}) rotate(${pebble.rotate})`}
-            className="will-change-transform"
-          >
-            <path d={PEBBLE_PATH} className={pebble.fillClass} fillRule="evenodd" />
-          </g>
-        ))}
-      </svg>
+        Try
+      </span>
     </div>
   );
 }

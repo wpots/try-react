@@ -49,10 +49,10 @@
      Body text: 12px-20px maximum
      ============================================ */
 
-  /* Font Family */
-  --font-family-ds-base: "nunito", sans-serif;
-  --font-family-ds-heading: "fraunces", serif;
-  --font-family-ds-script: "dawning-of-a-new-day", cursive;
+  /* Font Family (use CSS vars from app when set, e.g. next/font) */
+  --font-family-ds-base: var(--font-body, "nunito", sans-serif);
+  --font-family-ds-heading: var(--font-display, "Merriweather", serif);
+  --font-family-ds-script: var(--font-script, "Allura", cursive);
 
   /* Font Weight */
   --font-weight-ds-medium: 500;
@@ -92,6 +92,8 @@
   --font-size-ds-heading-lg: var(--__typography-font-scale-font-size-400);
   --font-size-ds-heading-xl: var(--__typography-font-scale-font-size-600);
   --font-size-ds-heading-2xl: var(--__typography-font-scale-font-size-800);
+  --font-size-ds-script-xl: var(--__typography-font-scale-font-size-600);
+  --font-size-ds-script-2xl: var(--__typography-font-scale-font-size-1000);
 
   /* Heading Typography - Line Heights */
   --line-height-ds-heading-xxs: var(--__typography-font-scale-line-height-70);

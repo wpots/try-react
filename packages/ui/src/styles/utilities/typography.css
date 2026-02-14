@@ -128,11 +128,24 @@
     font-weight: var(--font-weight-ds-semibold);
   }
 
-  /* Script */
+  /* Script (use --font-script directly so next/font on body is applied) */
   .font-ds-script-base {
-    font-family: var(--font-family-ds-script);
+    font-family: var(--font-script, "Allura", cursive);
     font-size: var(--font-size-ds-heading-base);
     line-height: var(--line-height-ds-heading-base);
+    font-weight: var(--font-weight-ds-medium);
+  }
+
+  .font-ds-script-xl {
+    font-family: var(--font-script, "Allura", cursive);
+    font-size: var(--font-size-ds-script-xl);
+    line-height: var(--line-height-ds-heading-xl);
+    font-weight: var(--font-weight-ds-medium);
+  }
+  .font-ds-script-2xl {
+    font-family: var(--font-script, "Allura", cursive);
+    font-size: var(--font-size-ds-script-2xl);
+    line-height: var(--line-height-ds-heading-2xl);
     font-weight: var(--font-weight-ds-medium);
   }
 }

@@ -1,12 +1,13 @@
-import { Container, Section, Typography } from "@repo/ui";
+import { Container, Section, Typography, cn } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
 import type { PageFooterProps } from "./index";
 
-import { Brand } from "@/components/Brand";
-import classnames from "@/utils/classnames/classnames";
+import { AnimatedLogo } from "@repo/ui";
+import { Quote } from "@/components/Quote";
+import { SectionHeader } from "@/components/SectionHeader";
 
-export function PageFooter({ className, id = "page-footer", ...props }: PageFooterProps): React.JSX.Element {
+export function PageFooter({ className, id = "page-footer", children, ...props }: PageFooterProps): React.JSX.Element {
   const t = useTranslations("landing.footer");
 
   return (
@@ -14,24 +15,35 @@ export function PageFooter({ className, id = "page-footer", ...props }: PageFoot
       as="footer"
       data-component-type="PageFooter"
       id={id}
-      className={classnames("bg-gradient-to-br from-ds-brand-primary-strong to-ds-brand-ink py-ds-4xl", className)}
+      className={cn(
+        "relative bg-gradient-to-br from-ds-surface-muted to-ds-brand-neutral/20 border-t-1 border-ds-border",
+        className,
+      )}
       {...props}
     >
-      <Container size="wide">
-        <div className="grid gap-ds-xl md:grid-cols-3">
-          <aside className="md:col-span-2">
-            <Typography variant="body" size="base" className="text-ds-on-primary">
-              {t("description")}
-            </Typography>
-          </aside>
-          <Brand id="footer-brand" quote={t("quote")} tagline={t("tagline")} className="md:col-span-1" />
-        </div>
+      <AnimatedLogo
+        className="absolute left-1/2 top-ds-m z-0 w-32 h-32 -translate-x-1/2  pointer-events-none md:w-40 md:h-40"
+        aria-hidden
+      />
+      <Container size="narrow" className="relative z-10 flex flex-col items-center gap-ds-xxl pt-ds-4xl text-center">
+        {children}
 
-        <div className="mt-ds-xl text-right">
-          <Typography tag="small" variant="body" size="sm" className="text-ds-on-primary/80">
-            {t("copyright")}
-          </Typography>
-        </div>
+        <SectionHeader
+          id="footer-brand"
+          heading={t("tagline")}
+          description={t("description")}
+          headingVariant="script"
+          headingTag="h4"
+          className="items-center"
+        >
+          <Quote>{t("quote")}</Quote>
+        </SectionHeader>
+
+        <hr className="w-[14rem] border-0 border-t border-ds-border" aria-hidden />
+
+        <Typography tag="small" variant="body" size="sm" className="text-ds-on-surface-subtle">
+          {t("copyright")}
+        </Typography>
       </Container>
     </Section>
   );

@@ -1,12 +1,10 @@
-import { AnimatedLogo, Container, Label, Typography, Section } from "@repo/ui";
-import { Link, type LinkProps } from "@repo/ui";
+import { AnimatedLogo, Container, Label, Link, Section, Typography, cn } from "@repo/ui";
+import type { LinkProps } from "@repo/ui";
 
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { PageHeroProps } from "./index";
-
-import classnames from "@/utils/classnames/classnames";
 
 export function PageHero({ className, id = "hero-section", ...props }: PageHeroProps): React.JSX.Element {
   const t = useTranslations("landing.hero");
@@ -15,12 +13,12 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
     { href: "#features", children: t("secondaryCta"), variant: "outline" },
   ];
   return (
-    <Section data-component-type="PageHero" id={id} className={classnames("relative overflow-hidden", className)}>
+    <Section data-component-type="PageHero" id={id} className={cn("relative overflow-hidden", className)}>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-surface-primary-start/50 via-ds-surface to-ds-surface" />
       <Container size="wide" className="relative z-1 flex flex-col items-center gap-ds-xl lg:flex-row lg:gap-ds-2xl">
         {/* Visual column - animated brand logo */}
         <div className="flex flex-1 items-center justify-center lg:justify-end lg:order-1">
-          <AnimatedLogo />
+          <AnimatedLogo className="size-full" />
         </div>
         <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left gap-ds-3xl">
           <Label variant="pill" className="-mb-ds-m">

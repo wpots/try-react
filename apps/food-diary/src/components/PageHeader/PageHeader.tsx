@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { HamburgerMenu, Link, Navigation } from "@repo/ui";
+import { HamburgerMenu, Link, Navigation, cn } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
 import type { PageHeaderProps } from "./index";
@@ -9,7 +9,6 @@ import type { PageHeaderProps } from "./index";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Logo } from "@/components/Logo";
 import { Link as I18nLink } from "@/i18n/navigation";
-import classnames from "@/utils/classnames/classnames";
 
 function useScrollThreshold(threshold: number): boolean {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +31,7 @@ export function PageHeader({ className, id = "page-header", ...props }: PageHead
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isScrolled = useScrollThreshold(100);
 
-  const itemClassName = classnames("font-medium", isScrolled ? "text-ds-on-surface-strong" : "text-ds-on-primary");
+  const itemClassName = cn("font-medium", isScrolled ? "text-ds-on-surface-strong" : "text-ds-on-primary");
 
   const navItems = [
     { id: "more-info-link", href: "#cta-primary", labelKey: "moreInfo" as const },
@@ -44,7 +43,7 @@ export function PageHeader({ className, id = "page-header", ...props }: PageHead
     <header
       data-component-type="PageHeader"
       id={id}
-      className={classnames(
+      className={cn(
         "fixed inset-x-0 top-0 z-50 w-full border-b border-transparent transition-all duration-300",
         "flex items-center justify-between px-ds-l",
         isScrolled ? "bg-ds-surface text-ds-on-surface-strong shadow-ds-sm" : "bg-transparent text-ds-on-primary",
@@ -56,7 +55,7 @@ export function PageHeader({ className, id = "page-header", ...props }: PageHead
         id="page-header-logo"
         showText={isScrolled}
         href="#home"
-        className={classnames(isScrolled ? "text-ds-on-surface-strong" : "text-ds-on-primary")}
+        className={cn(isScrolled ? "text-ds-on-surface-strong" : "text-ds-on-primary")}
       />
 
       <Navigation className="hidden md:block">
@@ -71,7 +70,7 @@ export function PageHeader({ className, id = "page-header", ...props }: PageHead
         buttonLabel={t("menuButtonLabel")}
         isOpen={isMenuOpen}
         onToggle={() => setIsMenuOpen(prev => !prev)}
-        buttonClassName={classnames(
+        buttonClassName={cn(
           isScrolled ? "border-ds-border bg-ds-surface" : "border-ds-on-primary/40 bg-ds-on-primary/10",
         )}
       >

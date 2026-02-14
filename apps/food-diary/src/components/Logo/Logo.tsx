@@ -1,10 +1,8 @@
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
-import { Image } from "@repo/ui";
+import { Image, cn } from "@repo/ui";
 
 import type { LogoProps } from "./index";
-
-import classnames from "@/utils/classnames/classnames";
 
 const IMAGE_SIZE_CLASSNAMES: Record<NonNullable<LogoProps["size"]>, string> = {
   sm: "h-8 w-8",
@@ -33,7 +31,7 @@ export function Logo({
       data-component-type="Logo"
       id={id}
       href={href}
-      className={classnames("inline-flex items-center gap-ds-s text-inherit no-underline", className)}
+      className={cn("inline-flex items-center gap-ds-s text-inherit no-underline", className)}
       {...props}
     >
       <Image
@@ -45,7 +43,7 @@ export function Logo({
         className={IMAGE_SIZE_CLASSNAMES[size]}
       />
       {showText ? (
-        <span className={classnames("font-display", TEXT_SIZE_CLASSNAMES[size])}>{t("wordmark")}</span>
+        <span className={cn("font-display", TEXT_SIZE_CLASSNAMES[size])}>{t("wordmark")}</span>
       ) : null}
     </a>
   );

@@ -90,8 +90,9 @@
      ============================================ */
 
   /* Borders */
-  --color-ds-border: var(--color-ds-brand-primary-strong);
+  --color-ds-border: var(--__colors-neutral-300);
   --color-ds-border-subtle: var(--__colors-neutral-200);
+  --color-ds-border-strong: var(--color-ds-brand-primary-strong);
   --color-ds-border-emphasis: var(--color-ds-brand-ink);
 
   --color-ds-focus-ring: var(--__colors-brand-primary);

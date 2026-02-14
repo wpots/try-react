@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Container, Label, Section } from "@repo/ui";
+import { Card, Container, Label, Section, cn } from "@repo/ui";
 
 import type { ProductFeaturesProps } from "./index";
 import { PageIndicator } from "@/components/PageIndicator";
@@ -10,8 +10,6 @@ import { FeatureItemContent } from "./partials/FeatureItemContent";
 import { DesktopPhoneFrame, MobilePhoneFrame } from "./partials/Phoneframe";
 import { useActiveFeatureIndex } from "./hooks/useActiveFeatureIndex";
 import { getFeatureOption, hasAnyPreview } from "./utils/featureOptions";
-
-import classnames from "@/utils/classnames/classnames";
 
 export function ProductFeatures({
   eyebrow,
@@ -32,7 +30,7 @@ export function ProductFeatures({
       id={id}
       variant="neutral"
       spacing="default"
-      className={classnames(className)}
+      className={cn(className)}
       {...props}
     >
       <Container size="wide" className="flex flex-col gap-ds-4xl">
@@ -54,7 +52,7 @@ export function ProductFeatures({
                     return (
                       <div
                         key={item.id}
-                        className={classnames(
+                        className={cn(
                           "absolute inset-0 px-ds-m py-ds-m transition-opacity duration-500",
                           activeIdx === idx ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
                         )}
@@ -77,7 +75,7 @@ export function ProductFeatures({
                   <Card
                     key={item.id}
                     ref={isLg ? setRef(idx) : undefined}
-                    className={classnames(
+                    className={cn(
                       activeIdx === idx ? "shadow-ds-elevation-2 -translate-x-ds-xxs -translate-y-ds-xxs" : "",
                     )}
                   >

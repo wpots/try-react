@@ -7,31 +7,31 @@
   .font-ds-body-xs {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-xs);
-    line-height: var(--line-height-ds-normal);
+    line-height: var(--line-height-ds-sm);
   }
 
   .font-ds-body-sm {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-sm);
-    line-height: var(--line-height-ds-normal);
+    line-height: var(--line-height-ds-xl);
   }
 
   .font-ds-body-base {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-base);
-    line-height: var(--line-height-ds-normal);
+    line-height: var(--line-height-ds-xl);
   }
 
   .font-ds-body-lg {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-lg);
-    line-height: var(--line-height-ds-relaxed);
+    line-height: var(--line-height-ds-xxl);
   }
 
   .font-ds-body-xl {
     font-family: var(--font-family-ds-base);
     font-size: var(--font-size-ds-xl);
-    line-height: var(--line-height-ds-xl);
+    line-height: var(--line-height-ds-xxl);
   }
 
   .font-ds-body-xxl {
@@ -112,19 +112,19 @@
   /* Label */
   .font-ds-label-xs {
     font-size: var(--font-size-ds-xs);
-    line-height: var(--line-height-ds-normal);
+    line-height: var(--line-height-ds-relaxed);
     font-weight: var(--font-weight-ds-medium);
   }
 
   .font-ds-label-sm {
     font-size: var(--font-size-ds-sm);
-    line-height: var(--line-height-ds-normal);
+    line-height: var(--line-height-ds-relaxed);
     font-weight: var(--font-weight-ds-semibold);
   }
 
   .font-ds-label-base {
     font-size: var(--font-size-ds-base);
-    line-height: var(--line-height-ds-normal);
+    line-height: var(--line-height-ds-relaxed);
     font-weight: var(--font-weight-ds-semibold);
   }
 

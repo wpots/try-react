@@ -14,7 +14,7 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
   ];
   return (
     <Section data-component-type="PageHero" id={id} className={cn("relative overflow-hidden", className)}>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-surface-primary-start/50 via-ds-surface to-ds-surface" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-surface-primary/30 via-ds-surface to-ds-surface" />
       <Container size="wide" className="relative z-1 flex flex-col items-center gap-ds-xl lg:flex-row lg:gap-ds-2xl">
         {/* Visual column - animated brand logo */}
         <div className="flex flex-1 items-center justify-center lg:justify-end lg:order-1">

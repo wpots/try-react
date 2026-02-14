@@ -27,8 +27,11 @@ export function CallToAction({
   return (
     <Section data-component-type="CallToAction" id={id}>
       <Container>
-        <Card variant={variant === "default" ? "soft" : "knockout"} className={cn(ctaVariantNames[variant], className)}>
-          <CardHeader className="flex flex-col gap-ds-m">
+        <Card
+          variant={variant === "default" ? "soft" : "knockout"}
+          className={cn("justify-between", ctaVariantNames[variant], className)}
+        >
+          <CardHeader className="flex flex-col gap-ds-m max-w-xl">
             {eyebrow}
             <Typography tag="h2" variant="heading" size={{ base: "md", md: "xl" }}>
               {title}

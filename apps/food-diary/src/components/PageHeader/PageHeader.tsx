@@ -1,43 +1,47 @@
 "use client";
 
+import NextImage from "next/image";
 import { useEffect, useState } from "react";
-import { HamburgerMenu, Link, Navigation, cn } from "@repo/ui";
-import { useTranslations } from "next-intl";
+import { cn } from "@repo/ui";
 
 import type { PageHeaderProps } from "./index";
 
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Logo } from "@/components/Logo";
-import { Link as I18nLink } from "@/i18n/navigation";
 
-function useScrollThreshold(threshold: number): boolean {
-  const [isScrolled, setIsScrolled] = useState(false);
+const SCROLL_RANGE = 120;
+
+function useScrollProgress(start = 0, end = SCROLL_RANGE): number {
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    const range = end - start;
+    if (range <= 0) return undefined;
+
+    let rafId: number | undefined;
+
     function onScroll(): void {
-      setIsScrolled(window.scrollY >= threshold);
+      rafId = requestAnimationFrame(() => {
+        rafId = undefined;
+        const y = window.scrollY;
+        setProgress(Math.min(1, Math.max(0, (y - start) / range)));
+      });
     }
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [threshold]);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId !== undefined) cancelAnimationFrame(rafId);
+    };
+  }, [start, end]);
 
-  return isScrolled;
+  return progress;
 }
 
-export function PageHeader({ className, id = "page-header", ...props }: PageHeaderProps): React.JSX.Element {
-  const t = useTranslations("landing.nav");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isScrolled = useScrollThreshold(100);
-
-  const itemClassName = cn("font-medium", isScrolled ? "text-ds-on-surface-strong" : "text-ds-on-primary");
-
-  const navItems = [
-    { id: "more-info-link", href: "#cta-primary", labelKey: "moreInfo" as const },
-    { id: "getting-started-link", href: "#cta-primary", labelKey: "gettingStarted" as const },
-    { id: "feedback-link", href: "#cta-feedback", labelKey: "feedback" as const },
-  ];
+export function PageHeader({ className, id = "page-header", children, ...props }: PageHeaderProps): React.JSX.Element {
+  const scrollProgress = useScrollProgress(0, SCROLL_RANGE);
+  const isScrolled = scrollProgress >= 1;
+  const headerChildren = typeof children === "function" ? children({ isScrolled }) : children;
 
   return (
     <header
@@ -45,7 +49,7 @@ export function PageHeader({ className, id = "page-header", ...props }: PageHead
       id={id}
       className={cn(
         "fixed inset-x-0 top-0 z-50 w-full border-b border-transparent transition-all duration-300",
-        "flex items-center justify-between px-ds-l",
+        "flex items-center justify-between gap-ds-l px-ds-l",
         isScrolled ? "bg-ds-surface text-ds-on-surface-strong shadow-ds-sm" : "bg-transparent text-ds-on-primary",
         className,
       )}
@@ -53,54 +57,13 @@ export function PageHeader({ className, id = "page-header", ...props }: PageHead
     >
       <Logo
         id="page-header-logo"
-        showText={isScrolled}
+        scrollProgress={scrollProgress}
         href="#home"
-        className={cn(isScrolled ? "text-ds-on-surface-strong" : "text-ds-on-primary")}
+        component={NextImage}
+        className={cn(isScrolled ? "text-ds-on-surface" : "text-ds-on-primary")}
       />
 
-      <Navigation className="hidden md:block">
-        {navItems.map(item => (
-          <Navigation.Item key={item.id} id={item.id} href={item.href} className={itemClassName}>
-            {t(item.labelKey)}
-          </Navigation.Item>
-        ))}
-      </Navigation>
-
-      <HamburgerMenu
-        buttonLabel={t("menuButtonLabel")}
-        isOpen={isMenuOpen}
-        onToggle={() => setIsMenuOpen(prev => !prev)}
-        buttonClassName={cn(
-          isScrolled ? "border-ds-border bg-ds-surface" : "border-ds-on-primary/40 bg-ds-on-primary/10",
-        )}
-      >
-        <div className="grid gap-ds-s">
-          {navItems.map(item => (
-            <Link
-              key={item.id}
-              as={I18nLink}
-              href={item.href}
-              variant="link"
-              className="rounded-ds-sm px-ds-s py-ds-xs text-ds-on-surface hover:bg-ds-surface-subtle"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t(item.labelKey)}
-            </Link>
-          ))}
-          <Link
-            as={I18nLink}
-            href="/auth/login"
-            variant="link"
-            className="rounded-ds-sm px-ds-s py-ds-xs text-ds-on-surface hover:bg-ds-surface-subtle"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            {t("login")}
-          </Link>
-          <div className="px-ds-s py-ds-xs">
-            <LanguageSwitcher />
-          </div>
-        </div>
-      </HamburgerMenu>
+      {headerChildren ? <div className="ml-auto flex items-center gap-ds-m">{headerChildren}</div> : null}
     </header>
   );
 }

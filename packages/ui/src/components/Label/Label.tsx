@@ -5,11 +5,7 @@ import { Typography } from "../Typography";
 const labelBaseClasses = "inline-flex items-center font-medium";
 const labelVariantClasses: Record<NonNullable<LabelProps["variant"]>, string> = {
   default: "text-ds-primary uppercase tracking-wider",
-  pill: [
-    "rounded-ds-full px-ds-m py-ds-xs",
-    "text-ds-on-surface-accent",
-    "bg-ds-brand-primary/40 ring-1 ring-ds-brand-primary/70",
-  ].join(" "),
+  pill: "rounded-ds-full px-ds-l py-ds-s text-ds-on-surface-subtle bg-ds-surface-primary/30",
 };
 
 export function Label({ className, variant = "default", ...props }: LabelProps): React.JSX.Element {

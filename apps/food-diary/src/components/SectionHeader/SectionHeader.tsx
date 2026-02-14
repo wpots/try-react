@@ -13,7 +13,11 @@ export function SectionHeader({
   ...props
 }: SectionHeaderProps): React.JSX.Element {
   return (
-    <div className={cn("flex flex-col gap-ds-xl", className)} data-component-type="SectionHeader" {...props}>
+    <div
+      className={cn("flex flex-col gap-ds-xl max-w-2xl mx-auto", className)}
+      data-component-type="SectionHeader"
+      {...props}
+    >
       {eyebrow}
       <Typography
         tag={headingTag}

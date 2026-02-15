@@ -208,7 +208,6 @@ export function TraditionalForm({
                 setEntry({ ...entry, emotions: keys })
               }
               getLabel={(key) => t(`emotions.${key}`)}
-              getCategoryLabel={(category) => t(`emotionCategories.${category}`)}
             />
           </FormSection>
 

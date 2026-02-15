@@ -207,7 +207,6 @@ export function CoachChatFollowupInput({
           selectedKeys={inputEmotions}
           onSelectedKeysChange={setInputEmotions}
           getLabel={(key) => t(`emotions.${key}`)}
-          getCategoryLabel={(category) => t(`emotionCategories.${category}`)}
         />
         <CoachChatActions
           onBack={onStepBack}

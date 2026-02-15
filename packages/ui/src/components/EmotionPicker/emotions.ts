@@ -10,40 +10,49 @@ export interface EmotionDefinition {
 
 export const EMOTIONS_BY_CATEGORY: Record<EmotionCategory, EmotionDefinition[]> = {
   positive: [
-    { key: "blij", emoji: "😄", label: "blij" },
-    { key: "kalm", emoji: "😑", label: "kalm" },
-    { key: "opgelucht", emoji: "😌", label: "opgelucht" },
-    { key: "trots", emoji: "😅", label: "trots" },
-    { key: "zelfverzekerd", emoji: "😉", label: "zelfverzekerd" },
+    { key: "happy", emoji: "😄", label: "happy" },
+    { key: "hopeful", emoji: "😊", label: "hopeful" },
+    { key: "relieved", emoji: "😌", label: "relieved" },
+    { key: "joyful", emoji: "😁", label: "joyful" },
+    { key: "proud", emoji: "🥲", label: "proud" },
+    { key: "confident", emoji: "😎", label: "confident" },
   ],
-  optimistic: [{ key: "hoopvol", emoji: "😇", label: "hoopvol" }],
+  optimistic: [
+    { key: "calm", emoji: "😌", label: "calm" },
+    { key: "meh", emoji: "😐", label: "meh" },
+    { key: "fine", emoji: "🙂", label: "fine" },
+  ],
   neutral: [
-    { key: "moe", emoji: "😴", label: "moe" },
-    { key: "onzeker", emoji: "🤔", label: "onzeker" },
-    { key: "verveeld", emoji: "😶", label: "verveeld" },
+    { key: "tired", emoji: "😴", label: "tired" },
+    { key: "isolated", emoji: "🤐", label: "isolated" },
+    { key: "insecure", emoji: "🤔", label: "insecure" },
+    { key: "bored", emoji: "🥱", label: "bored" },
   ],
   worried: [
-    { key: "angstig", emoji: "😰", label: "angstig" },
-    { key: "bezorgd", emoji: "😟", label: "bezorgd" },
-    { key: "gestressed", emoji: "😵", label: "gestressed" },
+    { key: "disappointed", emoji: "😞", label: "disappointed" },
+    { key: "sad", emoji: "😢", label: "sad" },
+    { key: "hurt", emoji: "🤕", label: "hurt" },
+    { key: "concerned", emoji: "😟", label: "concerned" },
+    { key: "lonely", emoji: "😔", label: "lonely" },
   ],
   negative: [
-    { key: "bang", emoji: "😨", label: "bang" },
-    { key: "boos", emoji: "😡", label: "boos" },
-    { key: "depressief", emoji: "😩", label: "depressief" },
-    { key: "eenzaam", emoji: "😶", label: "eenzaam" },
-    { key: "geirriteerd", emoji: "😤", label: "geïrriteerd" },
-    { key: "geisoleerd", emoji: "🤐", label: "geïsoleerd" },
-    { key: "gekwetst", emoji: "🤕", label: "gekwetst" },
-    { key: "schaamte", emoji: "😖", label: "schaamte" },
-    { key: "schuldig", emoji: "😣", label: "schuldig" },
-    { key: "teleurgesteld", emoji: "😞", label: "teleurgesteld" },
-    { key: "misselijk", emoji: "🤢", label: "misselijk" },
-    { key: "verdrietig", emoji: "😢", label: "verdrietig" },
+    { key: "annoyed", emoji: "😤", label: "annoyed" },
+    { key: "angry", emoji: "😠", label: "angry" },
+    { key: "stressed", emoji: "😫", label: "stressed" },
+    { key: "anxious", emoji: "😰", label: "anxious" },
+    { key: "ashamed", emoji: "😖", label: "ashamed" },
+    { key: "embarrassed", emoji: "😳", label: "embarrassed" },
+    { key: "scared", emoji: "😨", label: "scared" },
+    { key: "nausea", emoji: "🤢", label: "nausea" },
   ],
 };
 
 /** Flat list of all emotions (with category) for consumers that need it. */
-export const emotions: (EmotionDefinition & { category: EmotionCategory })[] = EMOTION_CATEGORY_ORDER.flatMap(
-  category => EMOTIONS_BY_CATEGORY[category].map(e => ({ ...e, category })),
-);
+export const emotions: (EmotionDefinition & { category: EmotionCategory })[] = [
+  ...EMOTION_CATEGORY_ORDER.flatMap(category =>
+    EMOTIONS_BY_CATEGORY[category].map(emotion => ({
+      ...emotion,
+      category,
+    })),
+  ),
+];

@@ -1,8 +1,9 @@
-import { Button, ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
+import { ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 
 import { getCmsText } from "../utils/cms";
 import { behaviorOptions, companyOptions, locationOptions } from "../utils/options";
 import type { WizardStep } from "../utils/steps";
+import { EntryFormButton } from "../partials/EntryFormButton";
 import { CoachChatTextInput } from "./CoachChatTextInput";
 
 interface CoachChatFollowupInputProps {
@@ -19,6 +20,7 @@ interface CoachChatFollowupInputProps {
   setInputOtherText: (value: string) => void;
   setInputText: (value: string) => void;
   onSkip: () => void;
+  onStepBack: () => void;
   onSubmitBehavior: () => void;
   onSubmitCompany: () => void;
   onSubmitDescription: () => void;
@@ -32,7 +34,7 @@ function toOptions(
   options: { value: string; labelKey: string }[],
   translate: (key: string) => string,
 ): { value: string; label: string }[] {
-  return options.map((option) => ({
+  return options.map(option => ({
     value: option.value,
     label: translate(option.labelKey),
   }));
@@ -45,13 +47,22 @@ interface SkipButtonProps {
 
 function SkipButton({ label, onSkip }: SkipButtonProps): React.JSX.Element {
   return (
-    <button
-      type="button"
-      onClick={onSkip}
-      className="mb-ds-s flex items-center gap-ds-xs text-sm text-ds-on-surface-secondary hover:text-ds-interactive"
-    >
+    <EntryFormButton variant="link" onClick={onSkip} className="mt-ds-m">
       {label}
-    </button>
+    </EntryFormButton>
+  );
+}
+
+interface StepBackButtonProps {
+  label: string;
+  onStepBack: () => void;
+}
+
+function StepBackButton({ label, onStepBack }: StepBackButtonProps): React.JSX.Element {
+  return (
+    <EntryFormButton variant="link" onClick={onStepBack}>
+      {label}
+    </EntryFormButton>
   );
 }
 
@@ -69,6 +80,7 @@ export function CoachChatFollowupInput({
   setInputOtherText,
   setInputText,
   onSkip,
+  onStepBack,
   onSubmitBehavior,
   onSubmitCompany,
   onSubmitDescription,
@@ -83,32 +95,30 @@ export function CoachChatFollowupInput({
 
   return (
     <>
-      {step.optional ? (
-        <SkipButton label={t("form.skip")} onSkip={onSkip} />
-      ) : null}
       {step.key === "skippedMeal" ? (
-        <div className="flex items-center gap-ds-s">
-          <Button
-            variant={inputSkippedMeal === false ? "default" : "outline"}
-            onClick={() => setInputSkippedMeal(false)}
-          >
-            {t("form.no")}
-          </Button>
-          <Button
-            variant={inputSkippedMeal === true ? "default" : "outline"}
-            onClick={() => setInputSkippedMeal(true)}
-          >
-            {t("form.yes")}
-          </Button>
-          <div className="flex-1" />
-          <Button
-            variant="default"
-            onClick={onSubmitSkippedMeal}
-            disabled={inputSkippedMeal == null}
-          >
-            {t("form.confirm")}
-          </Button>
-        </div>
+        <>
+          <div className="flex items-center gap-ds-s">
+            <EntryFormButton
+              variant={inputSkippedMeal === false ? "default" : "outline"}
+              onClick={() => setInputSkippedMeal(false)}
+            >
+              {t("form.no")}
+            </EntryFormButton>
+            <EntryFormButton
+              variant={inputSkippedMeal === true ? "default" : "outline"}
+              onClick={() => setInputSkippedMeal(true)}
+            >
+              {t("form.yes")}
+            </EntryFormButton>
+          </div>
+          <div className="mt-ds-m flex items-center justify-between">
+            <StepBackButton label={t("form.back")} onStepBack={onStepBack} />
+            <EntryFormButton onClick={onSubmitSkippedMeal} disabled={inputSkippedMeal == null}>
+              {t("form.confirm")}
+            </EntryFormButton>
+          </div>
+          {step.optional ? <SkipButton label={t("form.skip")} onSkip={onSkip} /> : null}
+        </>
       ) : null}
       {step.key === "location" ? (
         <>
@@ -122,24 +132,22 @@ export function CoachChatFollowupInput({
             <div className="mt-ds-s">
               <TextArea
                 value={inputOtherText}
-                onChange={(e) => setInputOtherText(e.target.value)}
+                onChange={e => setInputOtherText(e.target.value)}
                 placeholder={t("placeholders.other")}
                 className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
               />
             </div>
           ) : null}
-          <div className="mt-ds-m flex justify-end">
-            <Button
-              variant="default"
+          <div className="mt-ds-m flex items-center justify-between">
+            <StepBackButton label={t("form.back")} onStepBack={onStepBack} />
+            <EntryFormButton
               onClick={onSubmitLocation}
-              disabled={
-                inputChips.length === 0 ||
-                (inputChips[0] === "anders" && !inputOtherText.trim())
-              }
+              disabled={inputChips.length === 0 || (inputChips[0] === "anders" && !inputOtherText.trim())}
             >
               {t("form.confirm")}
-            </Button>
+            </EntryFormButton>
           </div>
+          {step.optional ? <SkipButton label={t("form.skip")} onSkip={onSkip} /> : null}
         </>
       ) : null}
       {step.key === "company" ? (
@@ -154,64 +162,72 @@ export function CoachChatFollowupInput({
             <div className="mt-ds-s">
               <TextArea
                 value={inputOtherText}
-                onChange={(e) => setInputOtherText(e.target.value)}
+                onChange={e => setInputOtherText(e.target.value)}
                 placeholder={t("placeholders.other")}
                 className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
               />
             </div>
           ) : null}
-          <div className="mt-ds-m flex justify-end">
-            <Button
-              variant="default"
+          <div className="mt-ds-m flex items-center justify-between">
+            <StepBackButton label={t("form.back")} onStepBack={onStepBack} />
+            <EntryFormButton
               onClick={onSubmitCompany}
-              disabled={
-                inputChips.length === 0 ||
-                (inputChips[0] === "anders" && !inputOtherText.trim())
-              }
+              disabled={inputChips.length === 0 || (inputChips[0] === "anders" && !inputOtherText.trim())}
             >
               {t("form.confirm")}
-            </Button>
+            </EntryFormButton>
           </div>
+          {step.optional ? <SkipButton label={t("form.skip")} onSkip={onSkip} /> : null}
         </>
       ) : null}
       {step.key === "foodEaten" ? (
-        <CoachChatTextInput
-          cms={cms}
-          value={inputText}
-          onChange={setInputText}
-          onSubmit={onSubmitFood}
-          placeholderKey="placeholders.foodEaten"
-          helperTextKey="placeholders.foodEatenAi"
-          isDisabled={!inputText.trim()}
-        />
+        <>
+          <div className="mb-ds-s">
+            <StepBackButton label={t("form.back")} onStepBack={onStepBack} />
+          </div>
+          <CoachChatTextInput
+            cms={cms}
+            value={inputText}
+            onChange={setInputText}
+            onSubmit={onSubmitFood}
+            placeholderKey="placeholders.foodEaten"
+            helperTextKey="placeholders.foodEatenAi"
+            isDisabled={!inputText.trim()}
+          />
+          {step.optional ? <SkipButton label={t("form.skip")} onSkip={onSkip} /> : null}
+        </>
       ) : null}
       {step.key === "emotions" ? (
         <>
           <EmotionPicker
             selectedKeys={inputEmotions}
             onSelectedKeysChange={setInputEmotions}
-            getLabel={(key) => t(`emotions.${key}`)}
+            getLabel={key => t(`emotions.${key}`)}
           />
-          <div className="mt-ds-m flex justify-end">
-            <Button
-              variant="default"
-              onClick={onSubmitEmotions}
-              disabled={inputEmotions.length === 0}
-            >
+          <div className="mt-ds-m flex items-center justify-between">
+            <StepBackButton label={t("form.back")} onStepBack={onStepBack} />
+            <EntryFormButton onClick={onSubmitEmotions} disabled={inputEmotions.length === 0}>
               {t("form.confirm")}
-            </Button>
+            </EntryFormButton>
           </div>
+          {step.optional ? <SkipButton label={t("form.skip")} onSkip={onSkip} /> : null}
         </>
       ) : null}
       {step.key === "description" ? (
-        <CoachChatTextInput
-          cms={cms}
-          value={inputText}
-          onChange={setInputText}
-          onSubmit={onSubmitDescription}
-          placeholderKey="placeholders.description"
-          submitLabelKey={inputText.trim() ? "form.confirm" : "form.skip"}
-        />
+        <>
+          <div className="mb-ds-s">
+            <StepBackButton label={t("form.back")} onStepBack={onStepBack} />
+          </div>
+          <CoachChatTextInput
+            cms={cms}
+            value={inputText}
+            onChange={setInputText}
+            onSubmit={onSubmitDescription}
+            placeholderKey="placeholders.description"
+            submitLabelKey={inputText.trim() ? "form.confirm" : "form.skip"}
+          />
+          {step.optional ? <SkipButton label={t("form.skip")} onSkip={onSkip} /> : null}
+        </>
       ) : null}
       {step.key === "behavior" ? (
         <>
@@ -225,23 +241,22 @@ export function CoachChatFollowupInput({
             <div className="mt-ds-s">
               <TextArea
                 value={inputOtherText}
-                onChange={(e) => setInputOtherText(e.target.value)}
+                onChange={e => setInputOtherText(e.target.value)}
                 placeholder={t("placeholders.other")}
                 className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
               />
             </div>
           ) : null}
-          <div className="mt-ds-m flex justify-end">
-            <Button
-              variant="default"
+          <div className="mt-ds-m flex items-center justify-between">
+            <StepBackButton label={t("form.back")} onStepBack={onStepBack} />
+            <EntryFormButton
               onClick={onSubmitBehavior}
-              disabled={
-                inputChips.includes("anders") && !inputOtherText.trim()
-              }
+              disabled={inputChips.includes("anders") && !inputOtherText.trim()}
             >
               {t("form.confirm")}
-            </Button>
+            </EntryFormButton>
           </div>
+          {step.optional ? <SkipButton label={t("form.skip")} onSkip={onSkip} /> : null}
         </>
       ) : null}
     </>

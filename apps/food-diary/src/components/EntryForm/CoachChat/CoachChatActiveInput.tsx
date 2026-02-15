@@ -1,4 +1,4 @@
-import { Button, ChipSelector } from "@repo/ui";
+import { ChipSelector } from "@repo/ui";
 
 import { getCmsText } from "../utils/cms";
 import { getDefaultEntryType } from "../utils/getDefaultEntryType";
@@ -6,6 +6,7 @@ import { entryTypeOptions } from "../utils/options";
 import type { WizardStep } from "../utils/steps";
 import type { UseCoachChatControllerResult } from "../useCoachChatController";
 import { CoachChatConfirmCard } from "./CoachChatConfirmCard";
+import { EntryFormButton } from "../partials/EntryFormButton";
 import { CoachChatFollowupInput } from "./CoachChatFollowupInput";
 
 interface CoachChatActiveInputProps {
@@ -25,23 +26,17 @@ function toOptions(
   options: { value: string; labelKey: string }[],
   translate: (key: string) => string,
 ): { value: string; label: string }[] {
-  return options.map((option) => ({
+  return options.map(option => ({
     value: option.value,
     label: translate(option.labelKey),
   }));
 }
 
-function getCurrentStep(
-  currentStepIndex: number,
-  filteredSteps: WizardStep[],
-): WizardStep | undefined {
+function getCurrentStep(currentStepIndex: number, filteredSteps: WizardStep[]): WizardStep | undefined {
   return filteredSteps[currentStepIndex];
 }
 
-export function CoachChatActiveInput({
-  cms,
-  controller,
-}: CoachChatActiveInputProps): React.JSX.Element | null {
+export function CoachChatActiveInput({ cms, controller }: CoachChatActiveInputProps): React.JSX.Element | null {
   function t(key: string): string {
     return getCmsText(cms, key);
   }
@@ -93,12 +88,7 @@ export function CoachChatActiveInput({
     const now = new Date();
     const fallbackTime = now.toTimeString().slice(0, 5);
     const suggestedType = getDefaultEntryType(entry.date, entry.time || fallbackTime);
-    const selected =
-      inputChips.length > 0
-        ? inputChips
-        : entry.entryType
-          ? [entry.entryType]
-          : [suggestedType];
+    const selected = inputChips.length > 0 ? inputChips : entry.entryType ? [entry.entryType] : [suggestedType];
 
     return (
       <InputShell>
@@ -109,9 +99,7 @@ export function CoachChatActiveInput({
           selectionMode="single"
         />
         <div className="mt-ds-m flex justify-end">
-          <Button variant="default" onClick={handleSubmitEntryType}>
-            {t("form.confirm")}
-          </Button>
+          <EntryFormButton onClick={handleSubmitEntryType}>{t("form.confirm")}</EntryFormButton>
         </div>
       </InputShell>
     );
@@ -125,24 +113,21 @@ export function CoachChatActiveInput({
             <input
               type="date"
               value={entry.date}
-              onChange={(event) =>
-                setEntry({ ...entry, date: event.target.value })
-              }
+              onChange={event => setEntry({ ...entry, date: event.target.value })}
               className="flex-1 rounded-md border border-ds-border bg-ds-surface-elevated px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
             <input
               type="time"
               value={entry.time}
-              onChange={(event) =>
-                setEntry({ ...entry, time: event.target.value })
-              }
+              onChange={event => setEntry({ ...entry, time: event.target.value })}
               className="w-32 rounded-md border border-ds-border bg-ds-surface-elevated px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
           </div>
-          <div className="flex justify-end">
-            <Button variant="default" onClick={handleSubmitDatetime}>
-              {t("form.confirm")}
-            </Button>
+          <div className="mt-ds-m flex items-center justify-between">
+            <EntryFormButton variant="link" onClick={handleStepBack}>
+              {t("form.back")}
+            </EntryFormButton>
+            <EntryFormButton onClick={handleSubmitDatetime}>{t("form.confirm")}</EntryFormButton>
           </div>
         </div>
       </InputShell>
@@ -180,6 +165,7 @@ export function CoachChatActiveInput({
         setInputOtherText={setInputOtherText}
         setInputText={setInputText}
         onSkip={handleSkip}
+        onStepBack={handleStepBack}
         onSubmitBehavior={handleSubmitBehavior}
         onSubmitCompany={handleSubmitCompany}
         onSubmitDescription={handleSubmitDescription}

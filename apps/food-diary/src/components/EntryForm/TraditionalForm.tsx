@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 
-import { Button, Card, ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
+import { Card, ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 
 import type { TraditionalFormProps } from "./index";
 import { FormSection } from "./FormSection";
+import { EntryFormButton } from "./partials/EntryFormButton";
 import { getCmsText } from "./utils/cms";
 import {
   areEntryBehaviors,
@@ -245,9 +246,9 @@ export function TraditionalForm({
           </FormSection>
 
           <div className="flex justify-end">
-            <Button type="submit" variant="default">
+            <EntryFormButton type="submit">
               {t("form.submit")}
-            </Button>
+            </EntryFormButton>
           </div>
         </form>
       </Card>

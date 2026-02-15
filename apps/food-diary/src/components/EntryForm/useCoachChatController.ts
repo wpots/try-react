@@ -289,7 +289,12 @@ export function useCoachChatController({
   }, [addMessage, advanceStep, entry, t]);
 
   const handleSubmitEntryType = useCallback(() => {
-    const selected = inputChips[0];
+    const fallbackTime = new Date().toTimeString().slice(0, 5);
+    const suggestedType = getDefaultEntryType(
+      entry.date,
+      entry.time || fallbackTime,
+    );
+    const selected = inputChips[0] ?? entry.entryType ?? suggestedType;
     if (!selected || !isEntryType(selected)) {
       return;
     }

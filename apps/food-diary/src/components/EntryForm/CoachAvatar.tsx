@@ -11,7 +11,7 @@ export function CoachAvatar({ size = "sm" }: CoachAvatarProps): React.JSX.Elemen
     <div
       className={cn(
         dimensions,
-        "flex shrink-0 items-center justify-center overflow-hidden rounded-ds-full bg-gradient-to-br from-ds-surface-primary/30 to-ds-brand-support",
+        "flex shrink-0 items-center justify-center overflow-hidden p-1 rounded-ds-full bg-gradient-to-br from-ds-surface-primary/30 to-ds-brand-support",
       )}
       aria-hidden="true"
     >

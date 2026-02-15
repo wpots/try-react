@@ -19,40 +19,110 @@ interface RuntimeEnv {
   NODE_ENV?: string;
 }
 
-function readRuntimeEnv(): RuntimeEnv {
-  if (typeof import.meta !== "undefined" && typeof import.meta.env === "object" && import.meta.env) {
-    return import.meta.env as RuntimeEnv;
+function readImportMetaEnv(): RuntimeEnv {
+  if (
+    typeof import.meta === "undefined" ||
+    typeof import.meta.env !== "object" ||
+    !import.meta.env
+  ) {
+    return {};
   }
 
-  if (typeof process !== "undefined" && process.env) {
-    return process.env as RuntimeEnv;
-  }
-
-  return {};
+  return {
+    NEXT_PUBLIC_FIREBASE_API_KEY: import.meta.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN:
+      import.meta.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID:
+      import.meta.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET:
+      import.meta.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID:
+      import.meta.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    NEXT_PUBLIC_FIREBASE_APP_ID: import.meta.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    VITE_FIREBASE_API_KEY: import.meta.env.VITE_FIREBASE_API_KEY,
+    VITE_FIREBASE_AUTH_DOMAIN: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    VITE_FIREBASE_PROJECT_ID: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    VITE_FIREBASE_STORAGE_BUCKET: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    VITE_FIREBASE_MESSAGING_SENDER_ID:
+      import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    VITE_FIREBASE_APP_ID: import.meta.env.VITE_FIREBASE_APP_ID,
+    STORYBOOK: import.meta.env.STORYBOOK,
+    NODE_ENV: import.meta.env.NODE_ENV,
+  };
 }
 
-const runtimeEnv = readRuntimeEnv();
+const importMetaEnv = readImportMetaEnv();
+
+const processEnv: RuntimeEnv = {
+  NEXT_PUBLIC_FIREBASE_API_KEY:
+    typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FIREBASE_API_KEY
+      : undefined,
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN:
+    typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+      : undefined,
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID:
+    typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+      : undefined,
+  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET:
+    typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+      : undefined,
+  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID:
+    typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+      : undefined,
+  NEXT_PUBLIC_FIREBASE_APP_ID:
+    typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+      : undefined,
+  STORYBOOK:
+    typeof process !== "undefined" ? process.env.STORYBOOK : undefined,
+  NODE_ENV:
+    typeof process !== "undefined" ? process.env.NODE_ENV : undefined,
+};
 
 const firebaseConfig: FirebaseOptions = {
-  apiKey: runtimeEnv.NEXT_PUBLIC_FIREBASE_API_KEY ?? runtimeEnv.VITE_FIREBASE_API_KEY,
-  authDomain: runtimeEnv.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ?? runtimeEnv.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: runtimeEnv.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? runtimeEnv.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: runtimeEnv.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ?? runtimeEnv.VITE_FIREBASE_STORAGE_BUCKET,
+  apiKey:
+    processEnv.NEXT_PUBLIC_FIREBASE_API_KEY ??
+    importMetaEnv.NEXT_PUBLIC_FIREBASE_API_KEY ??
+    importMetaEnv.VITE_FIREBASE_API_KEY,
+  authDomain:
+    processEnv.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ??
+    importMetaEnv.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ??
+    importMetaEnv.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId:
+    processEnv.NEXT_PUBLIC_FIREBASE_PROJECT_ID ??
+    importMetaEnv.NEXT_PUBLIC_FIREBASE_PROJECT_ID ??
+    importMetaEnv.VITE_FIREBASE_PROJECT_ID,
+  storageBucket:
+    processEnv.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ??
+    importMetaEnv.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ??
+    importMetaEnv.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId:
-    runtimeEnv.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ?? runtimeEnv.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: runtimeEnv.NEXT_PUBLIC_FIREBASE_APP_ID ?? runtimeEnv.VITE_FIREBASE_APP_ID,
+    processEnv.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ??
+    importMetaEnv.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ??
+    importMetaEnv.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId:
+    processEnv.NEXT_PUBLIC_FIREBASE_APP_ID ??
+    importMetaEnv.NEXT_PUBLIC_FIREBASE_APP_ID ??
+    importMetaEnv.VITE_FIREBASE_APP_ID,
 };
 
 const missingVars = Object.entries(firebaseConfig)
   .filter(([, value]) => !value)
   .map(([key]) => key);
 
+const storybookEnv = processEnv.STORYBOOK ?? importMetaEnv.STORYBOOK;
+const nodeEnv = processEnv.NODE_ENV ?? importMetaEnv.NODE_ENV;
+
 const isStorybookRuntime =
-  runtimeEnv.STORYBOOK === true || runtimeEnv.STORYBOOK === "true" || runtimeEnv.STORYBOOK === "1";
+  storybookEnv === true || storybookEnv === "true" || storybookEnv === "1";
 
 const isDevWithoutConfig =
-  missingVars.length > 0 &&
-  (runtimeEnv.NODE_ENV === "development" || (typeof process !== "undefined" && process.env.NODE_ENV === "development"));
+  missingVars.length > 0 && nodeEnv === "development";
 
 if (missingVars.length > 0 && !isStorybookRuntime && !isDevWithoutConfig) {
   throw new Error(`Missing Firebase environment variables: ${missingVars.join(", ")}`);

@@ -7,7 +7,7 @@ import type { AnimatedLogoProps } from "./index";
 
 const PEBBLE_FILL: Record<NonNullable<AnimatedLogoProps["variant"]>, string> = {
   default: "fill-ds-brand-support/40",
-  strong: "fill-ds-brand-primary-strong/30",
+  strong: "fill-ds-brand-primary-strong/20",
 };
 
 interface PebbleConfig {

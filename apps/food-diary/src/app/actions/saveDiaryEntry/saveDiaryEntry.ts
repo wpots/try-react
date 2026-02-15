@@ -1,6 +1,5 @@
 "use server";
 
-import { auth } from "@/lib/firebase";
 import { createDiaryEntrySchema } from "@/lib/firestore/schemas";
 import { createDiaryEntry } from "@/lib/firestore/helpers";
 import type { SaveDiaryEntryResult } from "./index";
@@ -10,8 +9,7 @@ export async function saveDiaryEntry(
   formData: FormData,
 ): Promise<SaveDiaryEntryResult> {
   const formUserId = formData.get("userId");
-  const userIdFromForm = typeof formUserId === "string" ? formUserId : null;
-  const userId = auth.currentUser?.uid ?? userIdFromForm;
+  const userId = typeof formUserId === "string" ? formUserId.trim() : "";
 
   if (!userId) {
     console.error("User not authenticated.");

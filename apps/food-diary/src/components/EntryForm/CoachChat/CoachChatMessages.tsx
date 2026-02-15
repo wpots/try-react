@@ -1,5 +1,5 @@
 import { ChatBubble } from "../ChatBubble";
-import { TypingIndicator } from "../TypingIndicator";
+import { TypingIndicator } from "./TypingIndicator";
 
 interface Message {
   id: number;
@@ -13,15 +13,11 @@ interface CoachChatMessagesProps {
   scrollRef: React.RefObject<HTMLDivElement | null>;
 }
 
-export function CoachChatMessages({
-  isTyping,
-  messages,
-  scrollRef,
-}: CoachChatMessagesProps): React.JSX.Element {
+export function CoachChatMessages({ isTyping, messages, scrollRef }: CoachChatMessagesProps): React.JSX.Element {
   return (
     <div ref={scrollRef} className="chat-scroll flex-1 overflow-y-auto px-ds-l py-ds-xl">
       <div className="mx-auto flex max-w-2xl flex-col gap-ds-m">
-        {messages.map((message) => (
+        {messages.map(message => (
           <ChatBubble key={message.id} role={message.role}>
             {message.text}
           </ChatBubble>

@@ -1,4 +1,4 @@
-import { Button, Card } from "@repo/ui";
+import { Card } from "@repo/ui";
 
 import type { WizardEntry } from "../index";
 import { getCmsText } from "../utils/cms";
@@ -7,6 +7,7 @@ import {
   companyOptions,
   locationOptions,
 } from "../utils/options";
+import { EntryFormButton } from "../partials/EntryFormButton";
 
 interface CoachChatConfirmCardProps {
   cms: Record<string, unknown>;
@@ -85,12 +86,12 @@ export function CoachChatConfirmCard({
       </ul>
       {saveError ? <p className="text-sm text-ds-danger">{saveError}</p> : null}
       <div className="mt-ds-m flex justify-end gap-ds-s">
-        <Button variant="outline" size="sm" onClick={onBack}>
+        <EntryFormButton variant="outline" onClick={onBack}>
           {t("form.edit")}
-        </Button>
-        <Button variant="default" size="sm" onClick={onSubmit} disabled={isSaving}>
+        </EntryFormButton>
+        <EntryFormButton onClick={onSubmit} disabled={isSaving}>
           {isSaving ? t("saving") : t("form.submit")}
-        </Button>
+        </EntryFormButton>
       </div>
     </Card>
   );

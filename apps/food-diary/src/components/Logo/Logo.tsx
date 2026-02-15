@@ -20,7 +20,6 @@ const TEXT_SIZE_CLASSNAMES: Record<NonNullable<LogoProps["size"]>, string> = {
   lg: "text-xl",
 };
 
-const MAX_WORDS = 5;
 const MAX_LETTERS = 5;
 const SPRING = { stiffness: 380, damping: 32 };
 const LETTER_ENTER_X = -8;
@@ -89,7 +88,8 @@ const MORPH_START = 0.32;
 const MORPH_X_R_PX = 40;
 const MORPH_X_Y_PX = 88;
 
-function firstLetterX_T(_p: number): number {
+function firstLetterX_T(p: number): number {
+  void p;
   return 0;
 }
 function firstLetterX_R(p: number): number {

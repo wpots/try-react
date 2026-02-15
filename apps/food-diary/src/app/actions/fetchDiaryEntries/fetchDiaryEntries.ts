@@ -1,6 +1,5 @@
 "use server";
 
-import { auth } from "@/lib/firebase";
 import { getDiaryEntriesByUser } from "@/lib/firestore/helpers";
 import type { DiaryEntry } from "./index";
 import { mapToActionDiaryEntry } from "./utils/mapToActionDiaryEntry";
@@ -8,7 +7,8 @@ import { mapToActionDiaryEntry } from "./utils/mapToActionDiaryEntry";
 export async function fetchDiaryEntries(
   userIdFromClient?: string,
 ): Promise<DiaryEntry[]> {
-  const userId = auth.currentUser?.uid ?? userIdFromClient;
+  const userId =
+    typeof userIdFromClient === "string" ? userIdFromClient.trim() : "";
 
   if (!userId) {
     return [];

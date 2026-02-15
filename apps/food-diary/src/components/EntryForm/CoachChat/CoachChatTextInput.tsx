@@ -1,6 +1,7 @@
-import { Button, TextArea } from "@repo/ui";
+import { TextArea } from "@repo/ui";
 
 import { getCmsText } from "../utils/cms";
+import { EntryFormButton } from "../partials/EntryFormButton";
 
 interface CoachChatTextInputProps {
   cms: Record<string, unknown>;
@@ -40,9 +41,9 @@ export function CoachChatTextInput({
         </p>
       ) : null}
       <div className="mt-ds-m flex justify-end">
-        <Button variant="default" onClick={onSubmit} disabled={isDisabled}>
+        <EntryFormButton onClick={onSubmit} disabled={isDisabled}>
           {t(submitLabelKey)}
-        </Button>
+        </EntryFormButton>
       </div>
     </>
   );

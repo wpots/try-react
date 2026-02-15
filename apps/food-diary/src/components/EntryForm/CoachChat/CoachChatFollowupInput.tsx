@@ -23,12 +23,12 @@ interface CoachChatFollowupInputProps {
   onSkip: () => void;
   onStepBack: () => void;
   onSubmitBehavior: () => void;
-  onSubmitCompany: () => void;
+  onSubmitCompany: (override?: string) => void;
   onSubmitDescription: () => void;
   onSubmitEmotions: () => void;
   onSubmitFood: () => void;
-  onSubmitLocation: () => void;
-  onSubmitSkippedMeal: () => void;
+  onSubmitLocation: (override?: string) => void;
+  onSubmitSkippedMeal: (override?: boolean | null) => void;
 }
 
 function toOptions(
@@ -88,20 +88,26 @@ export function CoachChatFollowupInput({
         <div className="flex items-center gap-ds-s">
           <EntryFormButton
             variant={inputSkippedMeal === false ? "default" : "outline"}
-            onClick={() => setInputSkippedMeal(false)}
+            onClick={() => {
+              setInputSkippedMeal(false);
+              onSubmitSkippedMeal(false);
+            }}
           >
             {t("form.no")}
           </EntryFormButton>
           <EntryFormButton
             variant={inputSkippedMeal === true ? "default" : "outline"}
-            onClick={() => setInputSkippedMeal(true)}
+            onClick={() => {
+              setInputSkippedMeal(true);
+              onSubmitSkippedMeal(true);
+            }}
           >
             {t("form.yes")}
           </EntryFormButton>
         </div>
         <CoachChatActions
           onBack={onStepBack}
-          onConfirm={onSubmitSkippedMeal}
+          onConfirm={() => onSubmitSkippedMeal()}
           confirmDisabled={inputSkippedMeal == null}
         >
           {skipAction}
@@ -121,7 +127,12 @@ export function CoachChatFollowupInput({
         <ChipSelector
           options={toOptions(locationOptions, t)}
           selectedValues={inputChips}
-          onSelectedValuesChange={setInputChips}
+          onSelectedValuesChange={(values) => {
+            setInputChips(values);
+            if (values[0] && values[0] !== "anders") {
+              onSubmitLocation(values[0]);
+            }
+          }}
           selectionMode="single"
         />
         {isOtherSelected ? (
@@ -130,13 +141,14 @@ export function CoachChatFollowupInput({
               value={inputOtherText}
               onChange={(event) => setInputOtherText(event.target.value)}
               placeholder={t("placeholders.other")}
+              aria-label={t("coach.location")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
           </div>
         ) : null}
         <CoachChatActions
           onBack={onStepBack}
-          onConfirm={onSubmitLocation}
+          onConfirm={() => onSubmitLocation()}
           confirmDisabled={isConfirmDisabled}
         >
           {skipAction}
@@ -156,7 +168,12 @@ export function CoachChatFollowupInput({
         <ChipSelector
           options={toOptions(companyOptions, t)}
           selectedValues={inputChips}
-          onSelectedValuesChange={setInputChips}
+          onSelectedValuesChange={(values) => {
+            setInputChips(values);
+            if (values[0] && values[0] !== "anders") {
+              onSubmitCompany(values[0]);
+            }
+          }}
           selectionMode="single"
         />
         {isOtherSelected ? (
@@ -165,13 +182,14 @@ export function CoachChatFollowupInput({
               value={inputOtherText}
               onChange={(event) => setInputOtherText(event.target.value)}
               placeholder={t("placeholders.other")}
+              aria-label={t("coach.company")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
           </div>
         ) : null}
         <CoachChatActions
           onBack={onStepBack}
-          onConfirm={onSubmitCompany}
+          onConfirm={() => onSubmitCompany()}
           confirmDisabled={isConfirmDisabled}
         >
           {skipAction}
@@ -256,6 +274,7 @@ export function CoachChatFollowupInput({
               value={inputOtherText}
               onChange={(event) => setInputOtherText(event.target.value)}
               placeholder={t("placeholders.other")}
+              aria-label={t("coach.behavior")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
           </div>

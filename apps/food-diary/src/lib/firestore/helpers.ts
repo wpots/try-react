@@ -52,11 +52,16 @@ export async function getDiaryEntriesByUser(userId: string): Promise<DiaryEntry[
   const entriesQuery = query(
     collection(db, "diaryEntries"),
     where("userId", "==", userId),
-    orderBy("date", "desc"),
   );
   const querySnapshot = await getDocs(entriesQuery);
 
-  return querySnapshot.docs.map((snapshot) => mapDiaryEntrySnapshot(snapshot));
+  const entries = querySnapshot.docs.map((snapshot) =>
+    mapDiaryEntrySnapshot(snapshot),
+  );
+
+  return entries.sort((first, second) => {
+    return second.date.toMillis() - first.date.toMillis();
+  });
 }
 
 export async function getDiaryEntriesByDateRange(

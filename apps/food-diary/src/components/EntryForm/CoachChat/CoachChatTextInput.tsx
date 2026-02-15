@@ -16,6 +16,10 @@ export function CoachChatTextInput({
   helperTextKey,
 }: CoachChatTextInputProps): React.JSX.Element {
   const t = useTranslations("entry");
+  const ariaLabel =
+    placeholderKey === "placeholders.foodEaten"
+      ? t("coach.foodEaten")
+      : t("coach.description");
 
   return (
     <>
@@ -28,6 +32,7 @@ export function CoachChatTextInput({
               : (valueOrEvent?.target?.value ?? ""),
           )}
         placeholder={t(placeholderKey)}
+        aria-label={ariaLabel}
       />
       {helperTextKey ? (
         <p className="mt-ds-xs text-xs text-ds-on-surface-secondary">

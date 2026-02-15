@@ -21,6 +21,34 @@ function parseEntryDate(date: string, time: string): Timestamp {
   return parseTimestampInput(combined);
 }
 
+function getOptionalDiaryEntryFields(input: {
+  locationOther?: string;
+  companyOther?: string;
+  behaviorOther?: string;
+  imageUrl?: string;
+  imagePublicId?: string;
+}): Record<string, string> {
+  const optionalFields: Record<string, string> = {};
+
+  if (input.locationOther !== undefined) {
+    optionalFields.locationOther = input.locationOther;
+  }
+  if (input.companyOther !== undefined) {
+    optionalFields.companyOther = input.companyOther;
+  }
+  if (input.behaviorOther !== undefined) {
+    optionalFields.behaviorOther = input.behaviorOther;
+  }
+  if (input.imageUrl !== undefined) {
+    optionalFields.imageUrl = input.imageUrl;
+  }
+  if (input.imagePublicId !== undefined) {
+    optionalFields.imagePublicId = input.imagePublicId;
+  }
+
+  return optionalFields;
+}
+
 export function mapUserSnapshot(snapshot: QueryDocumentSnapshot<DocumentData>): User {
   const parsed = firestoreUserSchema.parse({
     userId: snapshot.id,
@@ -99,11 +127,7 @@ export function toDiaryEntryWriteData(input: {
     skippedMeal: input.skippedMeal,
     date: parseEntryDate(input.date, input.time),
     time: input.time,
-    locationOther: input.locationOther,
-    companyOther: input.companyOther,
-    behaviorOther: input.behaviorOther,
-    imageUrl: input.imageUrl,
-    imagePublicId: input.imagePublicId,
+    ...getOptionalDiaryEntryFields(input),
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   };

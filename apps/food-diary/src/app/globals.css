@@ -1,3 +1,66 @@
 @import "@repo/ui/globals.css";
 @source "../**/*.{js,jsx,ts,tsx,mdx}";
 @source "../../../../packages/ui/src/**/*.{js,jsx,ts,tsx,mdx}";
+
+@layer utilities {
+  @keyframes dashboard-hero-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .dashboard-hero-float,
+  .dashboard-hero-float-delay {
+    animation: dashboard-hero-float 6s ease-in-out infinite;
+    pointer-events: none;
+    position: absolute;
+    border-radius: var(--radius-ds-full);
+    filter: blur(8px);
+    opacity: 0.75;
+  }
+
+  .dashboard-hero-float-delay {
+    animation-delay: 1.8s;
+  }
+
+  .dashboard-hero-orb-a {
+    background: color-mix(
+      in srgb,
+      var(--color-ds-brand-primary) 35%,
+      transparent
+    );
+    height: 8rem;
+    width: 8rem;
+    right: 1rem;
+    top: 0.75rem;
+  }
+
+  .dashboard-hero-orb-b {
+    background: color-mix(
+      in srgb,
+      var(--color-ds-success) 35%,
+      transparent
+    );
+    height: 6rem;
+    width: 6rem;
+    left: 1rem;
+    bottom: 0.5rem;
+  }
+
+  .dashboard-fab {
+    z-index: 1000;
+  }
+
+  .dashboard-fab-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .dashboard-behavior-left-border {
+    border-left-width: 3px;
+  }
+}

@@ -61,9 +61,9 @@ export interface UseCoachChatControllerResult {
   handleSkip: () => void;
   handleSubmitEntryType: () => void;
   handleSubmitDatetime: () => void;
-  handleSubmitSkippedMeal: () => void;
-  handleSubmitLocation: () => void;
-  handleSubmitCompany: () => void;
+  handleSubmitSkippedMeal: (override?: boolean | null) => void;
+  handleSubmitLocation: (override?: string) => void;
+  handleSubmitCompany: (override?: string) => void;
   handleSubmitFood: () => void;
   handleSubmitEmotions: () => void;
   handleSubmitDescription: () => void;
@@ -302,58 +302,68 @@ export function useCoachChatController({
     advanceStep(entry);
   }, [addMessage, advanceStep, entry, locale]);
 
-  const handleSubmitSkippedMeal = useCallback(() => {
-    if (inputSkippedMeal == null) {
-      return;
-    }
+  const handleSubmitSkippedMeal = useCallback(
+    (override?: boolean | null) => {
+      const value = override !== undefined ? override : inputSkippedMeal;
+      if (value == null) {
+        return;
+      }
 
-    addMessage("user", inputSkippedMeal ? t("form.yes") : t("form.no"));
-    advanceStep({ ...entry, skippedMeal: inputSkippedMeal });
-  }, [addMessage, advanceStep, entry, inputSkippedMeal, t]);
+      addMessage("user", value ? t("form.yes") : t("form.no"));
+      advanceStep({ ...entry, skippedMeal: value });
+    },
+    [addMessage, advanceStep, entry, inputSkippedMeal, t],
+  );
 
-  const handleSubmitLocation = useCallback(() => {
-    const selected = inputChips[0];
-    if (!selected || !isEntryLocation(selected)) {
-      return;
-    }
-    if (selected === "anders" && !inputOtherText.trim()) {
-      return;
-    }
+  const handleSubmitLocation = useCallback(
+    (override?: string) => {
+      const selected = override ?? inputChips[0];
+      if (!selected || !isEntryLocation(selected)) {
+        return;
+      }
+      if (selected === "anders" && !inputOtherText.trim()) {
+        return;
+      }
 
-    const label =
-      selected === "anders"
-        ? inputOtherText.trim()
-        : t(locationOptions.find((o) => o.value === selected)?.labelKey ?? "locations.anders");
-    addMessage("user", label);
-    advanceStep({
-      ...entry,
-      location: selected,
-      locationOther: selected === "anders" ? inputOtherText.trim() : undefined,
-    });
-    setInputOtherText("");
-  }, [addMessage, advanceStep, entry, inputChips, inputOtherText, t]);
+      const label =
+        selected === "anders"
+          ? inputOtherText.trim()
+          : t(locationOptions.find((o) => o.value === selected)?.labelKey ?? "locations.anders");
+      addMessage("user", label);
+      advanceStep({
+        ...entry,
+        location: selected,
+        locationOther: selected === "anders" ? inputOtherText.trim() : undefined,
+      });
+      setInputOtherText("");
+    },
+    [addMessage, advanceStep, entry, inputChips, inputOtherText, t],
+  );
 
-  const handleSubmitCompany = useCallback(() => {
-    const selected = inputChips[0];
-    if (!selected || !isEntryCompany(selected)) {
-      return;
-    }
-    if (selected === "anders" && !inputOtherText.trim()) {
-      return;
-    }
+  const handleSubmitCompany = useCallback(
+    (override?: string) => {
+      const selected = override ?? inputChips[0];
+      if (!selected || !isEntryCompany(selected)) {
+        return;
+      }
+      if (selected === "anders" && !inputOtherText.trim()) {
+        return;
+      }
 
-    const label =
-      selected === "anders"
-        ? inputOtherText.trim()
-        : t(companyOptions.find((o) => o.value === selected)?.labelKey ?? "company.anders");
-    addMessage("user", label);
-    advanceStep({
-      ...entry,
-      company: selected,
-      companyOther: selected === "anders" ? inputOtherText.trim() : undefined,
-    });
-    setInputOtherText("");
-  }, [addMessage, advanceStep, entry, inputChips, inputOtherText, t]);
+      const label =
+        selected === "anders"
+          ? inputOtherText.trim()
+          : t(companyOptions.find((o) => o.value === selected)?.labelKey ?? "company.anders");
+      addMessage("user", label);
+      advanceStep({
+        ...entry,
+        company: selected,
+        companyOther: selected === "anders" ? inputOtherText.trim() : undefined,
+      });
+      setInputOtherText("");
+    },
+    [addMessage, advanceStep, entry, inputChips, inputOtherText, t],
+  );
 
   const handleSubmitFood = useCallback(() => {
     const foodEaten = inputText.trim();

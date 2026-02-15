@@ -1,6 +1,74 @@
 {
-  "title": "Dashboard",
-  "addEntry": "Invoer toevoegen",
+  "title": "Jouw momenten",
+  "addEntry": "Nieuw moment",
   "loading": "Dashboard laden...",
-  "authRequired": "Log in om je overzicht te bekijken."
+  "authRequired": "Log in om je overzicht te bekijken.",
+  "loadError": "Het ophalen van je momenten lukt nu niet. Probeer het later opnieuw.",
+  "view": {
+    "day": "Dag",
+    "week": "Week",
+    "month": "Maand"
+  },
+  "navigation": {
+    "previous": "Vorige periode",
+    "next": "Volgende periode",
+    "today": "Vandaag"
+  },
+  "hero": {
+    "affirmation": "Dagelijkse affirmatie",
+    "averageMood": "Gemiddelde stemming van vandaag",
+    "noMood": "Nog geen stemming vastgelegd"
+  },
+  "moodZones": {
+    "overwhelmed": "Overweldigd",
+    "anxious": "Angstig",
+    "balanced": "In balans",
+    "calm": "Rustig",
+    "happy": "Blij"
+  },
+  "affirmations": {
+    "a1": "Je doet het goed. Elke stap telt, hoe klein ook.",
+    "a2": "Het is oké om het rustig aan te doen. Jouw tempo is goed genoeg.",
+    "a3": "Je bent meer dan je relatie met eten. Je bent waardevol, altijd.",
+    "a4": "Herstel is niet lineair. Elke dag is een nieuwe kans.",
+    "a5": "Dit kan moeilijk zijn. Je hoeft het niet perfect te doen.",
+    "a6": "Het is oké om vandaag zachter voor jezelf te zijn.",
+    "a7": "Je beslist zelf wat nu helpend voelt.",
+    "a8": "Ook als het zwaar is, mag je stap voor stap vooruit.",
+    "a9": "Je gevoelens mogen er zijn. Je hoeft ze niet weg te drukken."
+  },
+  "weekdays": {
+    "mon": "Ma",
+    "tue": "Di",
+    "wed": "Wo",
+    "thu": "Do",
+    "fri": "Vr",
+    "sat": "Za",
+    "sun": "Zo"
+  },
+  "day": {
+    "emptyTitle": "Vandaag zijn er nog geen momenten",
+    "emptyBody": "Je kunt een moment toevoegen wanneer het voor jou goed voelt."
+  },
+  "week": {
+    "emptyDay": "Geen momenten"
+  },
+  "month": {
+    "empty": "Geen momenten in deze maand"
+  },
+  "entry": {
+    "addBookmark": "Moment bewaren",
+    "removeBookmark": "Moment uit bewaard verwijderen",
+    "edit": "Moment bewerken",
+    "expand": "Moment uitklappen",
+    "collapse": "Moment inklappen",
+    "noMood": "Geen stemming gekozen",
+    "whatAte": "Wat heb je gegeten?",
+    "location": "Waar was je?",
+    "company": "Met wie was je?",
+    "notes": "Notities en gedachten",
+    "emptyField": "Niet ingevuld",
+    "behaviorTitle": "Extra zorg voor dit moment",
+    "behaviorNotice": "Je gaf aan dat dit moment lastig voelde. Je mag hier rustig op terugkomen."
+  }
 }

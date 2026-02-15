@@ -110,6 +110,7 @@ export function TraditionalForm({
                   setEntry({ ...entry, foodEaten: event.target.value })
                 }
                 placeholder={t("placeholders.foodEaten")}
+                aria-label={t("coach.foodEaten")}
               />
             </FormSection>
           )}
@@ -163,6 +164,7 @@ export function TraditionalForm({
                     })
                   }
                   placeholder={t("placeholders.other")}
+                  aria-label={t("coach.location")}
                 />
               </div>
             ) : null}
@@ -196,6 +198,7 @@ export function TraditionalForm({
                     })
                   }
                   placeholder={t("placeholders.other")}
+                  aria-label={t("coach.company")}
                 />
               </div>
             ) : null}
@@ -218,6 +221,7 @@ export function TraditionalForm({
                 setEntry({ ...entry, description: event.target.value })
               }
               placeholder={t("placeholders.description")}
+              aria-label={t("coach.description")}
             />
           </FormSection>
 
@@ -252,6 +256,7 @@ export function TraditionalForm({
                     })
                   }
                   placeholder={t("placeholders.other")}
+                  aria-label={t("coach.behavior")}
                 />
               </div>
             ) : null}

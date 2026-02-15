@@ -1,5 +1,9 @@
 "use client";
 
+import { useCallback } from "react";
+
+import { useRouter } from "@/i18n/navigation";
+
 import type { EntryFormProps } from "./index";
 import { CoachChat } from "./CoachChat/CoachChat";
 import { TraditionalForm } from "./Form/TraditionalForm";
@@ -7,7 +11,18 @@ import { EntryFormHeader } from "./partials/EntryFormHeader";
 import { useCoachChatController } from "./useCoachChatController";
 
 export function EntryForm({ onComplete }: EntryFormProps): React.JSX.Element {
-  const controller = useCoachChatController({ onComplete });
+  const router = useRouter();
+
+  const handleComplete = useCallback(() => {
+    if (onComplete) {
+      onComplete();
+      return;
+    }
+
+    router.push("/dashboard");
+  }, [onComplete, router]);
+
+  const controller = useCoachChatController({ onComplete: handleComplete });
 
   return (
     <div className="flex h-full flex-col">

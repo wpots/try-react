@@ -1,6 +1,74 @@
 {
-  "title": "Dashboard",
-  "addEntry": "Add entry",
+  "title": "Your moments",
+  "addEntry": "New moment",
   "loading": "Loading dashboard...",
-  "authRequired": "Sign in to view your overview."
+  "authRequired": "Sign in to view your overview.",
+  "loadError": "Your moments could not be loaded right now. Please try again later.",
+  "view": {
+    "day": "Day",
+    "week": "Week",
+    "month": "Month"
+  },
+  "navigation": {
+    "previous": "Previous period",
+    "next": "Next period",
+    "today": "Today"
+  },
+  "hero": {
+    "affirmation": "Daily affirmation",
+    "averageMood": "Average mood today",
+    "noMood": "No mood logged yet"
+  },
+  "moodZones": {
+    "overwhelmed": "Overwhelmed",
+    "anxious": "Anxious",
+    "balanced": "Steady",
+    "calm": "Calm",
+    "happy": "Happy"
+  },
+  "affirmations": {
+    "a1": "You are doing well. Every step counts, even the smallest one.",
+    "a2": "It is okay to slow down. Your pace is enough.",
+    "a3": "You are more than your relationship with food. Your value stays.",
+    "a4": "Recovery is not linear. Each day can be a new start.",
+    "a5": "This can feel hard. You do not have to do it perfectly.",
+    "a6": "It is okay to be gentler with yourself today.",
+    "a7": "You decide what feels supportive right now.",
+    "a8": "Even when this feels heavy, you can move one step at a time.",
+    "a9": "Your feelings are allowed. You do not need to push them away."
+  },
+  "weekdays": {
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "sun": "Sun"
+  },
+  "day": {
+    "emptyTitle": "No moments logged today",
+    "emptyBody": "You can add a moment whenever it feels right for you."
+  },
+  "week": {
+    "emptyDay": "No moments"
+  },
+  "month": {
+    "empty": "No moments in this month"
+  },
+  "entry": {
+    "addBookmark": "Save moment",
+    "removeBookmark": "Remove saved moment",
+    "edit": "Edit moment",
+    "expand": "Expand moment",
+    "collapse": "Collapse moment",
+    "noMood": "No mood selected",
+    "whatAte": "What did you eat?",
+    "location": "Where were you?",
+    "company": "Who were you with?",
+    "notes": "Notes and thoughts",
+    "emptyField": "Not provided",
+    "behaviorTitle": "Extra care for this moment",
+    "behaviorNotice": "You marked this as a hard moment. You can revisit it gently when you are ready."
+  }
 }

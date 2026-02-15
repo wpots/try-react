@@ -45,7 +45,7 @@ export function EmotionPicker({
                 : "bg-ds-surface-muted text-ds-on-surface-secondary hover:bg-ds-surface-muted/80",
             )}
           >
-            <span className="text-xl" aria-hidden="true">
+            <span className="text-xl font-openmoji" aria-hidden="true">
               {emotion.emoji}
             </span>
             <span>{label}</span>

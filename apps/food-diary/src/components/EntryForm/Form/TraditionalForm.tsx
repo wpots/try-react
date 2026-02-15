@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { Card, ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
+import { Card, ChipSelector, EmotionPicker, Switch, TextArea } from "@repo/ui";
 
 import type { TraditionalFormProps } from "../index";
 import { EntryFormButton } from "../partials/EntryFormButton";
@@ -42,7 +42,8 @@ export function TraditionalForm({
     if (!entry.entryType) {
       return;
     }
-    const needsFoodEaten = entry.entryType !== "moment";
+    const needsFoodEaten =
+      entry.entryType !== "moment" && !(entry.skippedMeal ?? false);
     if (needsFoodEaten && !entry.foodEaten.trim()) {
       return;
     }
@@ -86,7 +87,8 @@ export function TraditionalForm({
             />
           </FormSection>
 
-          {entry.entryType !== "moment" && (
+          {entry.entryType !== "moment" &&
+            !(entry.skippedMeal ?? false) && (
             <FormSection label={t("coach.foodEaten")} required>
               <TextArea
                 value={entry.foodEaten}
@@ -94,6 +96,20 @@ export function TraditionalForm({
                   setEntry({ ...entry, foodEaten: event.target.value })
                 }
                 placeholder={t("placeholders.foodEaten")}
+              />
+            </FormSection>
+          )}
+
+          {(entry.entryType === "breakfast" ||
+            entry.entryType === "lunch" ||
+            entry.entryType === "dinner") && (
+            <FormSection label={t("coach.skippedMeal")}>
+              <Switch
+                isSelected={entry.skippedMeal ?? false}
+                onChange={(isSelected) =>
+                  setEntry({ ...entry, skippedMeal: isSelected })
+                }
+                aria-label={t("coach.skippedMeal")}
               />
             </FormSection>
           )}

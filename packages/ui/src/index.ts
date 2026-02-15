@@ -72,4 +72,7 @@ export type { IconTileProps, IconTileVariant } from "./components/IconTile";
 export { PebbleIcon } from "./components/PebbleIcon";
 export type { PebbleIconProps } from "./components/PebbleIcon";
 
+export { Switch } from "./components/Switch";
+export type { SwitchProps } from "./components/Switch";
+
 export { cn } from "./lib/utils";

@@ -30,6 +30,17 @@ export function PageFooter({ className, id = "page-footer", children, ...props }
         <Typography tag="small" variant="body" size="sm" className="text-ds-on-surface-subtle">
           {t("copyright")}
         </Typography>
+        <Typography tag="small" variant="body" size="sm" className="text-ds-on-surface-subtle">
+          {t("openmoji")}{" "}
+          <a
+            href="https://openmoji.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-ds-on-surface-muted"
+          >
+            openmoji.org
+          </a>
+        </Typography>
       </Container>
     </Section>
   );

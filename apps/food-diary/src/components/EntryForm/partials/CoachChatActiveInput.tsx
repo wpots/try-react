@@ -54,6 +54,7 @@ export function CoachChatActiveInput({
     inputChips,
     inputEmotions,
     inputSkippedMeal,
+    inputOtherText,
     inputText,
     isSaving,
     isTyping,
@@ -63,6 +64,7 @@ export function CoachChatActiveInput({
     setInputChips,
     setInputEmotions,
     setInputSkippedMeal,
+    setInputOtherText,
     setInputText,
     handleSkip,
     handleStepBack,
@@ -170,10 +172,12 @@ export function CoachChatActiveInput({
         inputChips={inputChips}
         inputEmotions={inputEmotions}
         inputSkippedMeal={inputSkippedMeal}
+        inputOtherText={inputOtherText}
         inputText={inputText}
         setInputChips={setInputChips}
         setInputEmotions={setInputEmotions}
         setInputSkippedMeal={setInputSkippedMeal}
+        setInputOtherText={setInputOtherText}
         setInputText={setInputText}
         onSkip={handleSkip}
         onSubmitBehavior={handleSubmitBehavior}

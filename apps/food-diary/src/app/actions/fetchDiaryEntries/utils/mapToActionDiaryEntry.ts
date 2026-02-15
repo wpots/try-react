@@ -17,6 +17,9 @@ export function mapToActionDiaryEntry(
     skippedMeal: entry.skippedMeal,
     date: entry.date.toDate().toISOString().slice(0, 10),
     time: entry.time,
+    locationOther: entry.locationOther,
+    companyOther: entry.companyOther,
+    behaviorOther: entry.behaviorOther,
     createdAt: entry.createdAt.toDate().toISOString(),
     updatedAt: entry.updatedAt.toDate().toISOString(),
   };

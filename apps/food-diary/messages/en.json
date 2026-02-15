@@ -69,7 +69,7 @@
       "restaurant": "Restaurant",
       "friends": "At friends",
       "onTheRoad": "On the road",
-      "familyEvent": "Family event"
+      "anders": "Other"
     },
     "company": {
       "alone": "Alone",
@@ -77,27 +77,41 @@
       "family": "Family",
       "friends": "Friends",
       "colleagues": "Colleagues",
-      "kids": "Kids"
+      "kids": "Kids",
+      "anders": "Other"
     },
     "emotions": {
-      "happy": "Happy",
-      "sad": "Sad",
-      "angry": "Angry",
-      "anxious": "Anxious",
-      "guilty": "Guilty",
-      "calm": "Calm",
-      "tense": "Tense",
-      "proud": "Proud",
-      "lonely": "Lonely",
-      "tired": "Tired",
-      "ashamed": "Ashamed",
-      "relieved": "Relieved"
+      "angstig": "Anxious",
+      "bang": "Scared",
+      "bezorgd": "Worried",
+      "blij": "Happy",
+      "boos": "Angry",
+      "depressief": "Depressed",
+      "eenzaam": "Lonely",
+      "geirriteerd": "Irritated",
+      "geisoleerd": "Isolated",
+      "gekwetst": "Hurt",
+      "gestressed": "Stressed",
+      "hoopvol": "Hopeful",
+      "kalm": "Calm",
+      "moe": "Tired",
+      "onzeker": "Uncertain",
+      "opgelucht": "Relieved",
+      "schaamte": "Ashamed",
+      "schuldig": "Guilty",
+      "teleurgesteld": "Disappointed",
+      "trots": "Proud",
+      "verafschuwd": "Disgusted",
+      "verdrietig": "Sad",
+      "verveeld": "Bored",
+      "zelfverzekerd": "Confident"
     },
     "behaviors": {
       "restricted": "Ate too little",
       "binged": "Binge",
       "overate": "Ate too much",
-      "threwUp": "Threw up"
+      "threwUp": "Threw up",
+      "anders": "Other"
     },
     "form": {
       "switchToForm": "Prefer to fill it in yourself?",
@@ -113,7 +127,8 @@
     "placeholders": {
       "foodEaten": "E.g. sandwich with cheese, coffee...",
       "foodEatenAi": "You can later add a photo and have it analysed with AI.",
-      "description": "Write your thoughts here..."
+      "description": "Write your thoughts here...",
+      "other": "Please specify..."
     },
     "hints": {
       "behavior": "You don't have to fill this in.",

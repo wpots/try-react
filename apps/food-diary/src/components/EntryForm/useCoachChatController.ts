@@ -12,9 +12,12 @@ import { getDefaultEntryType } from "./utils/getDefaultEntryType";
 import { getInitialEntry } from "./utils/getInitialEntry";
 import {
   areEntryBehaviors,
+  behaviorOptions,
+  companyOptions,
   isEntryCompany,
   isEntryLocation,
   isEntryType,
+  locationOptions,
 } from "./utils/options";
 import type { WizardStep } from "./utils/steps";
 import { STEPS } from "./utils/steps";
@@ -44,12 +47,14 @@ export interface UseCoachChatControllerResult {
   inputChips: string[];
   inputEmotions: string[];
   inputSkippedMeal: boolean | null;
+  inputOtherText: string;
   filteredSteps: WizardStep[];
   setEntry: (entry: WizardEntry) => void;
   setInputText: (value: string) => void;
   setInputChips: (value: string[]) => void;
   setInputEmotions: (value: string[]) => void;
   setInputSkippedMeal: (value: boolean | null) => void;
+  setInputOtherText: (value: string) => void;
   handleStepBack: () => void;
   handleSkip: () => void;
   handleSubmitEntryType: () => void;
@@ -90,6 +95,7 @@ export function useCoachChatController({
   const [inputSkippedMeal, setInputSkippedMeal] = useState<boolean | null>(
     null,
   );
+  const [inputOtherText, setInputOtherText] = useState("");
 
   const isInitializedRef = useRef(false);
   const messageIdRef = useRef(0);
@@ -113,6 +119,7 @@ export function useCoachChatController({
     setInputChips([]);
     setInputEmotions([]);
     setInputSkippedMeal(null);
+    setInputOtherText("");
   }, []);
 
   const addMessage = useCallback(
@@ -163,6 +170,25 @@ export function useCoachChatController({
     showCoachMessage(0);
   }, [showCoachMessage]);
 
+  useEffect(() => {
+    const currentStep = filteredSteps[currentStepIndex];
+    if (!currentStep) {
+      return;
+    }
+    if (currentStep.key === "location" && entry.location === "anders") {
+      setInputOtherText(entry.locationOther ?? "");
+    } else if (currentStep.key === "company" && entry.company === "anders") {
+      setInputOtherText(entry.companyOther ?? "");
+    } else if (
+      currentStep.key === "behavior" &&
+      entry.behavior?.includes("anders")
+    ) {
+      setInputOtherText(entry.behaviorOther ?? "");
+    } else {
+      setInputOtherText("");
+    }
+  }, [currentStepIndex, filteredSteps, entry]);
+
   const handlePersist = useCallback(
     async (finalEntry: WizardEntry) => {
       try {
@@ -186,6 +212,9 @@ export function useCoachChatController({
           behavior: finalEntry.behavior,
           date: finalEntry.date,
           time: finalEntry.time,
+          locationOther: finalEntry.locationOther,
+          companyOther: finalEntry.companyOther,
+          behaviorOther: finalEntry.behaviorOther,
           imageUrl: finalEntry.imageUrl,
           imagePublicId: finalEntry.imagePublicId,
         });
@@ -288,20 +317,44 @@ export function useCoachChatController({
     if (!selected || !isEntryLocation(selected)) {
       return;
     }
+    if (selected === "anders" && !inputOtherText.trim()) {
+      return;
+    }
 
-    addMessage("user", t(`locations.${selected}`));
-    advanceStep({ ...entry, location: selected });
-  }, [addMessage, advanceStep, entry, inputChips, t]);
+    const label =
+      selected === "anders"
+        ? inputOtherText.trim()
+        : t(locationOptions.find((o) => o.value === selected)?.labelKey ?? "locations.anders");
+    addMessage("user", label);
+    advanceStep({
+      ...entry,
+      location: selected,
+      locationOther: selected === "anders" ? inputOtherText.trim() : undefined,
+    });
+    setInputOtherText("");
+  }, [addMessage, advanceStep, entry, inputChips, inputOtherText, t]);
 
   const handleSubmitCompany = useCallback(() => {
     const selected = inputChips[0];
     if (!selected || !isEntryCompany(selected)) {
       return;
     }
+    if (selected === "anders" && !inputOtherText.trim()) {
+      return;
+    }
 
-    addMessage("user", t(`company.${selected}`));
-    advanceStep({ ...entry, company: selected });
-  }, [addMessage, advanceStep, entry, inputChips, t]);
+    const label =
+      selected === "anders"
+        ? inputOtherText.trim()
+        : t(companyOptions.find((o) => o.value === selected)?.labelKey ?? "company.anders");
+    addMessage("user", label);
+    advanceStep({
+      ...entry,
+      company: selected,
+      companyOther: selected === "anders" ? inputOtherText.trim() : undefined,
+    });
+    setInputOtherText("");
+  }, [addMessage, advanceStep, entry, inputChips, inputOtherText, t]);
 
   const handleSubmitFood = useCallback(() => {
     const foodEaten = inputText.trim();
@@ -333,15 +386,29 @@ export function useCoachChatController({
     if (!areEntryBehaviors(inputChips)) {
       return;
     }
+    if (inputChips.includes("anders") && !inputOtherText.trim()) {
+      return;
+    }
 
     const label =
       inputChips.length > 0
-        ? inputChips.map((key) => t(`behaviors.${key}`)).join(", ")
+        ? inputChips
+            .map((key) =>
+              key === "anders"
+                ? inputOtherText.trim()
+                : t(behaviorOptions.find((o) => o.value === key)?.labelKey ?? "behaviors.anders"),
+            )
+            .join(", ")
         : t("hints.behaviorNone");
 
     addMessage("user", label);
-    advanceStep({ ...entry, behavior: inputChips });
-  }, [addMessage, advanceStep, entry, inputChips, t]);
+    advanceStep({
+      ...entry,
+      behavior: inputChips,
+      behaviorOther: inputChips.includes("anders") ? inputOtherText.trim() : undefined,
+    });
+    setInputOtherText("");
+  }, [addMessage, advanceStep, entry, inputChips, inputOtherText, t]);
 
   const handleSubmitConfirm = useCallback(() => {
     void handlePersist(entry);
@@ -369,12 +436,14 @@ export function useCoachChatController({
     inputChips,
     inputEmotions,
     inputSkippedMeal,
+    inputOtherText,
     filteredSteps,
     setEntry,
     setInputText,
     setInputChips,
     setInputEmotions,
     setInputSkippedMeal,
+    setInputOtherText,
     handleStepBack,
     handleSkip,
     handleSubmitEntryType,

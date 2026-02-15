@@ -11,6 +11,9 @@ export interface DiaryEntry {
   skippedMeal: boolean;
   date: string;
   time: string;
+  locationOther?: string;
+  companyOther?: string;
+  behaviorOther?: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -27,7 +27,7 @@ export const buttonVariantClasses: Record<ButtonVariantClassKey, string> = {
 
 export const buttonSizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
   default: "px-ds-xxl py-ds-l",
-  sm: "px-ds-xl py-ds-m",
+  sm: "px-ds-l py-ds-m",
   lg: "px-ds-xxl py-ds-l",
   icon: "h-10 w-10 rounded-full",
   link: "px-0 py-0",

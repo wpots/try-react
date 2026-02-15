@@ -1,4 +1,4 @@
-import { Button, ChipSelector, EmotionPicker } from "@repo/ui";
+import { Button, ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 
 import { getCmsText } from "../utils/cms";
 import { behaviorOptions, companyOptions, locationOptions } from "../utils/options";
@@ -11,10 +11,12 @@ interface CoachChatFollowupInputProps {
   inputChips: string[];
   inputEmotions: string[];
   inputSkippedMeal: boolean | null;
+  inputOtherText: string;
   inputText: string;
   setInputChips: (value: string[]) => void;
   setInputEmotions: (value: string[]) => void;
   setInputSkippedMeal: (value: boolean | null) => void;
+  setInputOtherText: (value: string) => void;
   setInputText: (value: string) => void;
   onSkip: () => void;
   onSubmitBehavior: () => void;
@@ -59,10 +61,12 @@ export function CoachChatFollowupInput({
   inputChips,
   inputEmotions,
   inputSkippedMeal,
+  inputOtherText,
   inputText,
   setInputChips,
   setInputEmotions,
   setInputSkippedMeal,
+  setInputOtherText,
   setInputText,
   onSkip,
   onSubmitBehavior,
@@ -114,11 +118,24 @@ export function CoachChatFollowupInput({
             onSelectedValuesChange={setInputChips}
             selectionMode="single"
           />
+          {inputChips[0] === "anders" ? (
+            <div className="mt-ds-s">
+              <TextArea
+                value={inputOtherText}
+                onChange={(e) => setInputOtherText(e.target.value)}
+                placeholder={t("placeholders.other")}
+                className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
+              />
+            </div>
+          ) : null}
           <div className="mt-ds-m flex justify-end">
             <Button
               variant="default"
               onClick={onSubmitLocation}
-              disabled={inputChips.length === 0}
+              disabled={
+                inputChips.length === 0 ||
+                (inputChips[0] === "anders" && !inputOtherText.trim())
+              }
             >
               {t("form.confirm")}
             </Button>
@@ -133,11 +150,24 @@ export function CoachChatFollowupInput({
             onSelectedValuesChange={setInputChips}
             selectionMode="single"
           />
+          {inputChips[0] === "anders" ? (
+            <div className="mt-ds-s">
+              <TextArea
+                value={inputOtherText}
+                onChange={(e) => setInputOtherText(e.target.value)}
+                placeholder={t("placeholders.other")}
+                className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
+              />
+            </div>
+          ) : null}
           <div className="mt-ds-m flex justify-end">
             <Button
               variant="default"
               onClick={onSubmitCompany}
-              disabled={inputChips.length === 0}
+              disabled={
+                inputChips.length === 0 ||
+                (inputChips[0] === "anders" && !inputOtherText.trim())
+              }
             >
               {t("form.confirm")}
             </Button>
@@ -160,6 +190,7 @@ export function CoachChatFollowupInput({
           <EmotionPicker
             selectedKeys={inputEmotions}
             onSelectedKeysChange={setInputEmotions}
+            getLabel={(key) => t(`emotions.${key}`)}
           />
           <div className="mt-ds-m flex justify-end">
             <Button
@@ -189,10 +220,25 @@ export function CoachChatFollowupInput({
             selectedValues={inputChips}
             onSelectedValuesChange={setInputChips}
             selectionMode="multiple"
-            variant="gentle"
           />
+          {inputChips.includes("anders") ? (
+            <div className="mt-ds-s">
+              <TextArea
+                value={inputOtherText}
+                onChange={(e) => setInputOtherText(e.target.value)}
+                placeholder={t("placeholders.other")}
+                className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
+              />
+            </div>
+          ) : null}
           <div className="mt-ds-m flex justify-end">
-            <Button variant="default" onClick={onSubmitBehavior}>
+            <Button
+              variant="default"
+              onClick={onSubmitBehavior}
+              disabled={
+                inputChips.includes("anders") && !inputOtherText.trim()
+              }
+            >
               {t("form.confirm")}
             </Button>
           </div>

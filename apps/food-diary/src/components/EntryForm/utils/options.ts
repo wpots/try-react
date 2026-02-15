@@ -24,7 +24,7 @@ export const locationOptions: SelectOptionDefinition<DiaryEntryLocation>[] = [
   { value: "restaurant", labelKey: "locations.restaurant" },
   { value: "friend's house", labelKey: "locations.friends" },
   { value: "on the road", labelKey: "locations.onTheRoad" },
-  { value: "family event", labelKey: "locations.familyEvent" },
+  { value: "anders", labelKey: "locations.anders" },
 ];
 
 export const companyOptions: SelectOptionDefinition<DiaryEntryCompany>[] = [
@@ -34,6 +34,7 @@ export const companyOptions: SelectOptionDefinition<DiaryEntryCompany>[] = [
   { value: "friends", labelKey: "company.friends" },
   { value: "colleagues", labelKey: "company.colleagues" },
   { value: "kids", labelKey: "company.kids" },
+  { value: "anders", labelKey: "company.anders" },
 ];
 
 export const behaviorOptions: SelectOptionDefinition<DiaryEntryBehavior>[] = [
@@ -41,6 +42,7 @@ export const behaviorOptions: SelectOptionDefinition<DiaryEntryBehavior>[] = [
   { value: "binged", labelKey: "behaviors.binged" },
   { value: "overate", labelKey: "behaviors.overate" },
   { value: "threw up", labelKey: "behaviors.threwUp" },
+  { value: "anders", labelKey: "behaviors.anders" },
 ];
 
 export function isEntryType(value: string): value is DiaryEntryType {

@@ -15,7 +15,7 @@ export const diaryEntryLocations = [
   "restaurant",
   "friend's house",
   "on the road",
-  "family event",
+  "anders",
 ] as const;
 
 export const diaryEntryCompany = [
@@ -25,6 +25,7 @@ export const diaryEntryCompany = [
   "colleagues",
   "kids",
   "partner",
+  "anders",
 ] as const;
 
 export const diaryEntryBehavior = [
@@ -32,6 +33,7 @@ export const diaryEntryBehavior = [
   "binged",
   "overate",
   "threw up",
+  "anders",
 ] as const;
 
 export type DiaryEntryType = (typeof diaryEntryTypes)[number];
@@ -61,6 +63,9 @@ export interface DiaryEntry {
   skippedMeal: boolean;
   date: Timestamp;
   time: string;
+  locationOther?: string;
+  companyOther?: string;
+  behaviorOther?: string;
   imageUrl?: string;
   imagePublicId?: string;
   createdAt: Timestamp;
@@ -87,6 +92,9 @@ export interface CreateDiaryEntryInput {
   skippedMeal?: boolean;
   date: string;
   time: string;
+  locationOther?: string;
+  companyOther?: string;
+  behaviorOther?: string;
   imageUrl?: string;
   imagePublicId?: string;
 }

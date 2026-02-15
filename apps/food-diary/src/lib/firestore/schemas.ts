@@ -47,6 +47,9 @@ export const firestoreDiaryEntrySchema = z.object({
   skippedMeal: z.boolean(),
   date: z.instanceof(Timestamp),
   time: z.string().regex(timePattern),
+  locationOther: z.string().optional(),
+  companyOther: z.string().optional(),
+  behaviorOther: z.string().optional(),
   imageUrl: z.string().url().optional(),
   imagePublicId: z.string().min(1).optional(),
   createdAt: z.instanceof(Timestamp),
@@ -67,6 +70,9 @@ export const storedDiaryEntrySchema = z.object({
     .union([z.instanceof(Timestamp), z.string(), z.date()])
     .transform((value) => parseTimestamp(value)),
   time: z.string().regex(timePattern).default("00:00"),
+  locationOther: z.string().optional(),
+  companyOther: z.string().optional(),
+  behaviorOther: z.string().optional(),
   imageUrl: z.string().url().optional(),
   imagePublicId: z.string().min(1).optional(),
   createdAt: z
@@ -82,7 +88,7 @@ export const storedDiaryEntrySchema = z.object({
 export const createDiaryEntrySchema = z.object({
   userId: z.string().min(1),
   entryType: z.enum(diaryEntryTypes).default("moment"),
-  foodEaten: z.string().min(1),
+  foodEaten: z.string(),
   emotions: z.array(z.string()).default([]),
   location: z.enum(diaryEntryLocations).default("home"),
   company: z.enum(diaryEntryCompany).default("alone"),
@@ -91,6 +97,9 @@ export const createDiaryEntrySchema = z.object({
   skippedMeal: z.boolean().default(false),
   date: z.string().regex(dateKeyPattern),
   time: z.string().regex(timePattern),
+  locationOther: z.string().optional(),
+  companyOther: z.string().optional(),
+  behaviorOther: z.string().optional(),
   imageUrl: z.string().url().optional(),
   imagePublicId: z.string().min(1).optional(),
 });

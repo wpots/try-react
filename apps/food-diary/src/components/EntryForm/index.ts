@@ -11,6 +11,9 @@ export interface WizardEntry {
   emotions: string[];
   description: string;
   behavior: DiaryEntryBehavior[];
+  locationOther?: string;
+  companyOther?: string;
+  behaviorOther?: string;
   imageUrl?: string;
   imagePublicId?: string;
 }

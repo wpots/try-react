@@ -48,6 +48,9 @@ export function mapDiaryEntrySnapshot(
     skippedMeal: parsed.skippedMeal,
     date: parsed.date,
     time: parsed.time,
+    locationOther: parsed.locationOther,
+    companyOther: parsed.companyOther,
+    behaviorOther: parsed.behaviorOther,
     imageUrl: parsed.imageUrl,
     imagePublicId: parsed.imagePublicId,
     createdAt: parsed.createdAt ?? Timestamp.now(),
@@ -78,6 +81,9 @@ export function toDiaryEntryWriteData(input: {
   skippedMeal: boolean;
   date: string;
   time: string;
+  locationOther?: string;
+  companyOther?: string;
+  behaviorOther?: string;
   imageUrl?: string;
   imagePublicId?: string;
 }): DocumentData {
@@ -93,6 +99,9 @@ export function toDiaryEntryWriteData(input: {
     skippedMeal: input.skippedMeal,
     date: parseEntryDate(input.date, input.time),
     time: input.time,
+    locationOther: input.locationOther,
+    companyOther: input.companyOther,
+    behaviorOther: input.behaviorOther,
     imageUrl: input.imageUrl,
     imagePublicId: input.imagePublicId,
     createdAt: Timestamp.now(),

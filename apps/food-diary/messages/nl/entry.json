@@ -35,7 +35,7 @@
       "restaurant": "Restaurant",
       "friends": "Bij vrienden",
       "onTheRoad": "Onderweg",
-      "familyEvent": "Familiefeest"
+      "anders": "Anders"
     },
     "company": {
       "alone": "Alleen",
@@ -43,27 +43,41 @@
       "family": "Familie",
       "friends": "Vrienden",
       "colleagues": "Collega's",
-      "kids": "Kinderen"
+      "kids": "Kinderen",
+      "anders": "Anders"
     },
     "emotions": {
-      "happy": "Blij",
-      "sad": "Verdrietig",
-      "angry": "Boos",
-      "anxious": "Angstig",
-      "guilty": "Schuldig",
-      "calm": "Rustig",
-      "tense": "Gespannen",
-      "proud": "Trots",
-      "lonely": "Eenzaam",
-      "tired": "Moe",
-      "ashamed": "Schaamte",
-      "relieved": "Opgelucht"
+      "angstig": "Angstig",
+      "bang": "Bang",
+      "bezorgd": "Bezorgd",
+      "blij": "Blij",
+      "boos": "Boos",
+      "depressief": "Depressief",
+      "eenzaam": "Eenzaam",
+      "geirriteerd": "Geïrriteerd",
+      "geisoleerd": "Geïsoleerd",
+      "gekwetst": "Gekwetst",
+      "gestressed": "Gestressed",
+      "hoopvol": "Hoopvol",
+      "kalm": "Kalm",
+      "moe": "Moe",
+      "onzeker": "Onzeker",
+      "opgelucht": "Opgelucht",
+      "schaamte": "Schaamte",
+      "schuldig": "Schuldig",
+      "teleurgesteld": "Teleurgesteld",
+      "trots": "Trots",
+      "verafschuwd": "Verafschuwd",
+      "verdrietig": "Verdrietig",
+      "verveeld": "Verveeld",
+      "zelfverzekerd": "Zelfverzekerd"
     },
     "behaviors": {
       "restricted": "Te weinig gegeten",
       "binged": "Eetbui",
       "overate": "Te veel gegeten",
-      "threwUp": "Overgegeven"
+      "threwUp": "Overgegeven",
+      "anders": "Anders"
     },
     "form": {
       "switchToForm": "Liever zelf invullen?",
@@ -79,7 +93,8 @@
     "placeholders": {
       "foodEaten": "Bijv. boterham met kaas, koffie...",
       "foodEatenAi": "Je kunt later een foto toevoegen en laten analyseren met AI.",
-      "description": "Schrijf hier je gedachten..."
+      "description": "Schrijf hier je gedachten...",
+      "other": "Namelijk..."
     },
     "hints": {
       "behavior": "Dit hoef je niet in te vullen.",

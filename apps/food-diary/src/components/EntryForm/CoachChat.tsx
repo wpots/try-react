@@ -1,8 +1,42 @@
 "use client";
 
-import type { CoachChatProps } from "./index";
-import { EntryForm } from "./EntryForm";
+import { useEffect, useRef } from "react";
 
-export function CoachChat({ cms, onComplete }: CoachChatProps): React.JSX.Element {
-  return <EntryForm cms={cms} onComplete={onComplete} />;
+import { CoachChatActiveInput } from "./partials/CoachChatActiveInput";
+import { CoachChatMessages } from "./partials/CoachChatMessages";
+import type { UseCoachChatControllerResult } from "./useCoachChatController";
+
+interface CoachChatProps {
+  cms: Record<string, unknown>;
+  controller: UseCoachChatControllerResult;
+}
+
+export function CoachChat({
+  cms,
+  controller,
+}: CoachChatProps): React.JSX.Element {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!scrollRef.current) {
+      return;
+    }
+
+    const element = scrollRef.current;
+    element.scrollTop = element.scrollHeight;
+  }, [controller.messages, controller.isTyping]);
+
+  return (
+    <>
+      <CoachChatMessages
+        scrollRef={scrollRef}
+        messages={controller.messages}
+        isTyping={controller.isTyping}
+      />
+
+      <div className="mx-auto w-full max-w-2xl">
+        <CoachChatActiveInput controller={controller} cms={cms} />
+      </div>
+    </>
+  );
 }

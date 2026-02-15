@@ -2,6 +2,11 @@ import { Button, Card } from "@repo/ui";
 
 import type { WizardEntry } from "../index";
 import { getCmsText } from "../utils/cms";
+import {
+  behaviorOptions,
+  companyOptions,
+  locationOptions,
+} from "../utils/options";
 
 interface CoachChatConfirmCardProps {
   cms: Record<string, unknown>;
@@ -24,6 +29,36 @@ export function CoachChatConfirmCard({
     return getCmsText(cms, key);
   }
 
+  const locationLabel = entry.location
+    ? entry.location === "anders"
+      ? entry.locationOther || t("locations.anders")
+      : t(
+          locationOptions.find((o) => o.value === entry.location)?.labelKey ??
+            "locations.anders",
+        )
+    : "-";
+  const companyLabel = entry.company
+    ? entry.company === "anders"
+      ? entry.companyOther || t("company.anders")
+      : t(
+          companyOptions.find((o) => o.value === entry.company)?.labelKey ??
+            "company.anders",
+        )
+    : "-";
+  const behaviorLabel =
+    entry.behavior?.length > 0
+      ? entry.behavior
+          .map((value) =>
+            value === "anders"
+              ? entry.behaviorOther || t("behaviors.anders")
+              : t(
+                  behaviorOptions.find((o) => o.value === value)?.labelKey ??
+                    "behaviors.anders",
+                ),
+          )
+          .join(", ")
+      : "-";
+
   return (
     <Card className="space-y-ds-s">
       <p className="text-sm text-ds-on-surface-secondary">{t("coach.confirm")}</p>
@@ -36,15 +71,16 @@ export function CoachChatConfirmCard({
           <strong>{t("fields.datetime")}:</strong> {entry.date} {entry.time}
         </li>
         <li>
-          <strong>{t("coach.location")}:</strong>{" "}
-          {entry.location ? t(`locations.${entry.location}`) : "-"}
+          <strong>{t("coach.location")}:</strong> {locationLabel}
         </li>
         <li>
-          <strong>{t("coach.company")}:</strong>{" "}
-          {entry.company ? t(`company.${entry.company}`) : "-"}
+          <strong>{t("coach.company")}:</strong> {companyLabel}
         </li>
         <li>
           <strong>{t("coach.foodEaten")}:</strong> {entry.foodEaten || "-"}
+        </li>
+        <li>
+          <strong>{t("coach.behavior")}:</strong> {behaviorLabel}
         </li>
       </ul>
       {saveError ? <p className="text-sm text-ds-danger">{saveError}</p> : null}

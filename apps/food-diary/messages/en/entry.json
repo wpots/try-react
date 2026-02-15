@@ -72,6 +72,13 @@
     "verveeld": "Bored",
     "zelfverzekerd": "Confident"
   },
+  "emotionCategories": {
+    "positive": "Positive",
+    "optimistic": "Optimistic",
+    "neutral": "Neutral",
+    "worried": "Worried",
+    "negative": "Negative"
+  },
   "behaviors": {
     "restricted": "Ate too little",
     "binged": "Binge",

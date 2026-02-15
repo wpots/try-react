@@ -21,7 +21,12 @@ export function CoachChatTextInput({
     <>
       <TextArea
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(valueOrEvent) =>
+          onChange(
+            typeof valueOrEvent === "string"
+              ? valueOrEvent
+              : (valueOrEvent?.target?.value ?? ""),
+          )}
         placeholder={t(placeholderKey)}
       />
       {helperTextKey ? (

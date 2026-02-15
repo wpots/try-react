@@ -87,19 +87,6 @@ export function TraditionalForm({
             />
           </FormSection>
 
-          {entry.entryType !== "moment" &&
-            !(entry.skippedMeal ?? false) && (
-            <FormSection label={t("coach.foodEaten")} required>
-              <TextArea
-                value={entry.foodEaten}
-                onChange={(event) =>
-                  setEntry({ ...entry, foodEaten: event.target.value })
-                }
-                placeholder={t("placeholders.foodEaten")}
-              />
-            </FormSection>
-          )}
-
           {(entry.entryType === "breakfast" ||
             entry.entryType === "lunch" ||
             entry.entryType === "dinner") && (
@@ -110,6 +97,19 @@ export function TraditionalForm({
                   setEntry({ ...entry, skippedMeal: isSelected })
                 }
                 aria-label={t("coach.skippedMeal")}
+              />
+            </FormSection>
+          )}
+
+          {entry.entryType !== "moment" &&
+            !(entry.skippedMeal ?? false) && (
+            <FormSection label={t("coach.foodEaten")} required>
+              <TextArea
+                value={entry.foodEaten}
+                onChange={(event) =>
+                  setEntry({ ...entry, foodEaten: event.target.value })
+                }
+                placeholder={t("placeholders.foodEaten")}
               />
             </FormSection>
           )}
@@ -208,6 +208,7 @@ export function TraditionalForm({
                 setEntry({ ...entry, emotions: keys })
               }
               getLabel={(key) => t(`emotions.${key}`)}
+              getCategoryLabel={(category) => t(`emotionCategories.${category}`)}
             />
           </FormSection>
 

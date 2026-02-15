@@ -72,6 +72,13 @@
     "verveeld": "Verveeld",
     "zelfverzekerd": "Zelfverzekerd"
   },
+  "emotionCategories": {
+    "positive": "Positief",
+    "optimistic": "Optimistisch",
+    "neutral": "Neutraal",
+    "worried": "Zorgelijk",
+    "negative": "Negatief"
+  },
   "behaviors": {
     "restricted": "Te weinig gegeten",
     "binged": "Eetbui",

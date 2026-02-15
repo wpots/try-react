@@ -1,7 +1,12 @@
+"use client";
+
+import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
+
 import { Card } from "@repo/ui";
 
 import type { WizardEntry } from "../index";
-import { getCmsText } from "../utils/cms";
+import { formatDatetimeHuman } from "../utils/formatDatetimeHuman";
 import {
   behaviorOptions,
   companyOptions,
@@ -10,7 +15,6 @@ import {
 import { EntryFormButton } from "../partials/EntryFormButton";
 
 interface CoachChatConfirmCardProps {
-  cms: Record<string, unknown>;
   entry: WizardEntry;
   isSaving: boolean;
   saveError: string | null;
@@ -19,16 +23,14 @@ interface CoachChatConfirmCardProps {
 }
 
 export function CoachChatConfirmCard({
-  cms,
   entry,
   isSaving,
   saveError,
   onBack,
   onSubmit,
 }: CoachChatConfirmCardProps): React.JSX.Element {
-  function t(key: string): string {
-    return getCmsText(cms, key);
-  }
+  const locale = useLocale();
+  const t = useTranslations("entry");
 
   const locationLabel = entry.location
     ? entry.location === "anders"
@@ -69,7 +71,8 @@ export function CoachChatConfirmCard({
           {entry.entryType ? t(`entryTypes.${entry.entryType}`) : "-"}
         </li>
         <li>
-          <strong>{t("fields.datetime")}:</strong> {entry.date} {entry.time}
+          <strong>{t("fields.datetime")}:</strong>{" "}
+          {formatDatetimeHuman(entry.date, entry.time ?? "00:00", locale)}
         </li>
         <li>
           <strong>{t("coach.location")}:</strong> {locationLabel}

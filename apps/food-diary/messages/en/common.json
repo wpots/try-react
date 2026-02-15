@@ -1,3 +1,20 @@
 {
-  "skipToContent": "Skip to main content"
+  "appName": "Food Diary",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "language": "Language",
+  "skipToContent": "Skip to main content",
+  "brand": {
+    "logoAlt": "The Real You logo",
+    "wordmark": "The Real You",
+    "wordmarkShort": "Try"
+  },
+  "footer": {
+    "description": "The Real You started during my own recovery process. Recovery is trial and error, while continuing to discover what works for you.",
+    "quote": "Success is not final, failure is not fatal. It's the courage to continue that counts.",
+    "tagline": "The Real You",
+    "copyright": "Copyright 2019 Petticode"
+  }
 }

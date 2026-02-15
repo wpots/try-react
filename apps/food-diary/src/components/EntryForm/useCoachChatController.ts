@@ -1,13 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously } from "@/lib/auth";
 import { saveDiaryEntry } from "@/lib/diaryEntries";
 
 import type { CoachChatProps, WizardEntry } from "./index";
-import { getCmsText, getCmsValue } from "./utils/cms";
+import { formatDatetimeHuman } from "./utils/formatDatetimeHuman";
 import { getDefaultEntryType } from "./utils/getDefaultEntryType";
 import { getInitialEntry } from "./utils/getInitialEntry";
 import {
@@ -70,12 +72,7 @@ export interface UseCoachChatControllerResult {
   handleTraditionalComplete: (entry: WizardEntry) => void;
 }
 
-function getCoachText(rawText: unknown): string {
-  return typeof rawText === "string" ? rawText : "";
-}
-
 export function useCoachChatController({
-  cms,
   onComplete,
 }: CoachChatProps): UseCoachChatControllerResult {
   const { user } = useAuth();
@@ -101,10 +98,8 @@ export function useCoachChatController({
   const messageIdRef = useRef(0);
   const messagesRef = useRef<CoachChatMessage[]>([]);
 
-  const t = useCallback(
-    (key: string): string => getCmsText(cms, key),
-    [cms],
-  );
+  const locale = useLocale();
+  const t = useTranslations("entry");
 
   useEffect(() => {
     messagesRef.current = messages;
@@ -153,12 +148,11 @@ export function useCoachChatController({
 
       setIsTyping(true);
       window.setTimeout(() => {
-        const translated = getCoachText(getCmsValue(cms, step.messageKey));
         setIsTyping(false);
-        addMessage("coach", translated || t("coach.complete"));
+        addMessage("coach", t(step.messageKey));
       }, 700 + Math.random() * 400);
     },
-    [addMessage, cms, filteredSteps, t],
+    [addMessage, filteredSteps, t],
   );
 
   useEffect(() => {
@@ -304,9 +298,9 @@ export function useCoachChatController({
   }, [addMessage, advanceStep, entry, inputChips, t]);
 
   const handleSubmitDatetime = useCallback(() => {
-    addMessage("user", `${entry.date} ${entry.time}`);
+    addMessage("user", formatDatetimeHuman(entry.date, entry.time ?? "00:00", locale));
     advanceStep(entry);
-  }, [addMessage, advanceStep, entry]);
+  }, [addMessage, advanceStep, entry, locale]);
 
   const handleSubmitSkippedMeal = useCallback(() => {
     if (inputSkippedMeal == null) {

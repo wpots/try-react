@@ -1,4 +1,4 @@
-import { ChatBubble } from "../ChatBubble";
+import { ChatBubble } from "./ChatBubble";
 import { TypingIndicator } from "./TypingIndicator";
 
 interface Message {

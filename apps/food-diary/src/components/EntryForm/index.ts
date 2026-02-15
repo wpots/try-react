@@ -19,20 +19,16 @@ export interface WizardEntry {
 }
 
 export interface EntryFormProps {
-  cms: Record<string, unknown>;
   onComplete?: () => void;
 }
 
 export interface TraditionalFormProps {
-  cms: Record<string, unknown>;
   initialEntry: WizardEntry;
   onComplete: (entry: WizardEntry) => void;
 }
 
 export interface CoachChatProps {
-  cms: Record<string, unknown>;
   onComplete?: () => void;
 }
 
 export { EntryForm } from "./EntryForm";
-export { TraditionalForm } from "./TraditionalForm";

@@ -1,0 +1,25 @@
+{
+  "welcome": "Welcome to {appName}",
+  "sharedButton": "Shared UI Button",
+  "entriesOverviewTitle": "Diary Entries Overview",
+  "splash": {
+    "title": "Welcome to",
+    "appName": "The Real You app",
+    "subtitle": "You can start tracking your food diary right away.",
+    "accountTitle": "Create account",
+    "guestTitle": "Continue without account",
+    "googleCta": "Continue with Google",
+    "guestCta": "Continue without account",
+    "googleLoading": "Signing in with Google...",
+    "guestLoading": "Starting session...",
+    "accountFeatureDevice": "Available from any device.",
+    "accountFeaturePrivacy": "We never post anything on your Google profile.",
+    "guestFeatureLocal": "Only available locally in this browser.",
+    "guestFeatureWarning": "Not recommended on a shared computer.",
+    "footerPrefix": "This site uses functional cookies required for core functionality.",
+    "footerLink": "View privacy policy",
+    "guestError": "Continuing without account failed.",
+    "googleError": "Google sign-in failed.",
+    "mergeError": "Could not merge guest data into this account."
+  }
+}

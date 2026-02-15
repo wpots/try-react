@@ -1,16 +1,17 @@
-import { ChipSelector } from "@repo/ui";
+import { useTranslations } from "next-intl";
 
-import { getCmsText } from "../utils/cms";
+import { ChipSelector, DateInput, TimeInput } from "@repo/ui";
+
 import { getDefaultEntryType } from "../utils/getDefaultEntryType";
 import { entryTypeOptions } from "../utils/options";
 import type { WizardStep } from "../utils/steps";
 import type { UseCoachChatControllerResult } from "../useCoachChatController";
 import { CoachChatConfirmCard } from "./CoachChatConfirmCard";
+import { CoachChatActions } from "./CoachChatActions";
 import { EntryFormButton } from "../partials/EntryFormButton";
 import { CoachChatFollowupInput } from "./CoachChatFollowupInput";
 
 interface CoachChatActiveInputProps {
-  cms: Record<string, unknown>;
   controller: UseCoachChatControllerResult;
 }
 
@@ -36,10 +37,10 @@ function getCurrentStep(currentStepIndex: number, filteredSteps: WizardStep[]): 
   return filteredSteps[currentStepIndex];
 }
 
-export function CoachChatActiveInput({ cms, controller }: CoachChatActiveInputProps): React.JSX.Element | null {
-  function t(key: string): string {
-    return getCmsText(cms, key);
-  }
+export function CoachChatActiveInput({
+  controller,
+}: CoachChatActiveInputProps): React.JSX.Element | null {
+  const t = useTranslations("entry");
 
   const {
     completed,
@@ -110,25 +111,23 @@ export function CoachChatActiveInput({ cms, controller }: CoachChatActiveInputPr
       <InputShell>
         <div className="flex flex-col gap-ds-s">
           <div className="flex gap-ds-s">
-            <input
-              type="date"
+            <DateInput
               value={entry.date}
-              onChange={event => setEntry({ ...entry, date: event.target.value })}
-              className="flex-1 rounded-md border border-ds-border bg-ds-surface-elevated px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
+              onChange={date => setEntry({ ...entry, date })}
+              containerClassName="flex-1"
+              aria-label="Date"
             />
-            <input
-              type="time"
-              value={entry.time}
-              onChange={event => setEntry({ ...entry, time: event.target.value })}
-              className="w-32 rounded-md border border-ds-border bg-ds-surface-elevated px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
+            <TimeInput
+              value={entry.time ?? ""}
+              onChange={time => setEntry({ ...entry, time })}
+              containerClassName="w-32"
+              aria-label="Time"
             />
           </div>
-          <div className="mt-ds-m flex items-center justify-between">
-            <EntryFormButton variant="link" onClick={handleStepBack}>
-              {t("form.back")}
-            </EntryFormButton>
-            <EntryFormButton onClick={handleSubmitDatetime}>{t("form.confirm")}</EntryFormButton>
-          </div>
+          <CoachChatActions
+            onBack={handleStepBack}
+            onConfirm={handleSubmitDatetime}
+          />
         </div>
       </InputShell>
     );
@@ -138,7 +137,6 @@ export function CoachChatActiveInput({ cms, controller }: CoachChatActiveInputPr
     return (
       <InputShell>
         <CoachChatConfirmCard
-          cms={cms}
           entry={entry}
           isSaving={isSaving}
           saveError={saveError}
@@ -152,7 +150,6 @@ export function CoachChatActiveInput({ cms, controller }: CoachChatActiveInputPr
   return (
     <InputShell>
       <CoachChatFollowupInput
-        cms={cms}
         step={step}
         inputChips={inputChips}
         inputEmotions={inputEmotions}

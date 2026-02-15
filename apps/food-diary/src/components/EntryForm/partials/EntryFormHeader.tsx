@@ -1,10 +1,10 @@
+import { useTranslations } from "next-intl";
+
 import { Button } from "@repo/ui";
 
-import { ProgressDots } from "../ProgressDots";
-import { getCmsText } from "../utils/cms";
+import { ProgressDots } from "./ProgressDots";
 
 interface EntryFormHeaderProps {
-  cms: Record<string, unknown>;
   mode: "chat" | "form";
   currentStepIndex: number;
   totalSteps: number;
@@ -12,26 +12,19 @@ interface EntryFormHeaderProps {
 }
 
 export function EntryFormHeader({
-  cms,
   mode,
   currentStepIndex,
   totalSteps,
   onSwitchMode,
 }: EntryFormHeaderProps): React.JSX.Element {
+  const t = useTranslations("entry");
   const switchLabel =
-    mode === "chat"
-      ? getCmsText(cms, "form.switchToForm")
-      : getCmsText(cms, "form.switchToChat");
+    mode === "chat" ? t("form.switchToForm") : t("form.switchToChat");
 
   return (
     <div className="flex items-center justify-between border-b border-ds-border-subtle bg-ds-surface/80 px-ds-l py-ds-m">
       <ProgressDots total={totalSteps} currentIndex={currentStepIndex} />
-      <Button
-        variant="link"
-        size="link"
-        onClick={onSwitchMode}
-        className="font-ds-label-sm"
-      >
+      <Button variant="link" size="link" onClick={onSwitchMode} className="font-ds-label-sm">
         {switchLabel}
       </Button>
     </div>

@@ -24,7 +24,7 @@ export function ChatBubble({ role, children }: ChatBubbleProps): React.JSX.Eleme
 
   return (
     <div className="animate-message-in flex justify-end">
-      <div className={cn(bubbleClasses, "rounded-br-sm bg-ds-primary/15 text-ds-on-surface-strong")}>
+      <div className={cn(bubbleClasses, "rounded-br-sm bg-ds-primary/20 text-ds-on-surface")}>
         <p className="leading-relaxed">{children}</p>
       </div>
     </div>

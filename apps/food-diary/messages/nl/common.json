@@ -1,4 +1,10 @@
 {
+  "appName": "Voedingsdagboek",
+  "save": "Opslaan",
+  "cancel": "Annuleren",
+  "delete": "Verwijderen",
+  "edit": "Bewerken",
+  "language": "Taal",
   "skipToContent": "Ga naar hoofdinhoud",
   "brand": {
     "tagline": "The Real You",

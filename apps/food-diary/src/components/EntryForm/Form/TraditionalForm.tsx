@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { Card, ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 
-import type { TraditionalFormProps } from "./index";
-import { FormSection } from "./FormSection";
-import { EntryFormButton } from "./partials/EntryFormButton";
-import { getCmsText } from "./utils/cms";
+import type { TraditionalFormProps } from "../index";
+import { EntryFormButton } from "../partials/EntryFormButton";
 import {
   areEntryBehaviors,
   behaviorOptions,
@@ -17,7 +16,8 @@ import {
   isEntryLocation,
   isEntryType,
   locationOptions,
-} from "./utils/options";
+} from "../utils/options";
+import { FormSection } from "./FormSection";
 
 function toOptions(
   options: { value: string; labelKey: string }[],
@@ -30,16 +30,12 @@ function toOptions(
 }
 
 export function TraditionalForm({
-  cms,
   initialEntry,
   onComplete,
 }: TraditionalFormProps): React.JSX.Element {
+  const t = useTranslations("entry");
   const [entry, setEntry] = useState(initialEntry);
   const [submitted, setSubmitted] = useState(false);
-
-  function t(key: string): string {
-    return getCmsText(cms, key);
-  }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();

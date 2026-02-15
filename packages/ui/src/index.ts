@@ -4,6 +4,12 @@ export type { ButtonProps } from "./components/Button";
 export { TextField } from "./components/TextField";
 export type { TextFieldProps } from "./components/TextField";
 
+export { DateInput } from "./components/DateInput";
+export type { DateInputProps } from "./components/DateInput";
+
+export { TimeInput } from "./components/TimeInput";
+export type { TimeInputProps } from "./components/TimeInput";
+
 export { OverviewCard } from "./components/OverviewCard";
 export type { OverviewCardProps } from "./components/OverviewCard";
 

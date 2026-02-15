@@ -1,18 +1,17 @@
 "use client";
 
 import type { EntryFormProps } from "./index";
-import { CoachChat } from "./CoachChat";
-import { TraditionalForm } from "./TraditionalForm";
+import { CoachChat } from "./CoachChat/CoachChat";
+import { TraditionalForm } from "./Form/TraditionalForm";
 import { EntryFormHeader } from "./partials/EntryFormHeader";
 import { useCoachChatController } from "./useCoachChatController";
 
-export function EntryForm({ onComplete, cms }: EntryFormProps): React.JSX.Element {
-  const controller = useCoachChatController({ onComplete, cms });
+export function EntryForm({ onComplete }: EntryFormProps): React.JSX.Element {
+  const controller = useCoachChatController({ onComplete });
 
   return (
     <div className="flex h-full flex-col">
       <EntryFormHeader
-        cms={cms}
         currentStepIndex={controller.currentStepIndex}
         mode={controller.mode}
         totalSteps={controller.filteredSteps.length}
@@ -20,9 +19,9 @@ export function EntryForm({ onComplete, cms }: EntryFormProps): React.JSX.Elemen
       />
 
       {controller.mode === "form" ? (
-        <TraditionalForm cms={cms} initialEntry={controller.entry} onComplete={controller.handleTraditionalComplete} />
+        <TraditionalForm initialEntry={controller.entry} onComplete={controller.handleTraditionalComplete} />
       ) : (
-        <CoachChat cms={cms} controller={controller} />
+        <CoachChat controller={controller} />
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import { CoachAvatar } from "../CoachAvatar";
+import { CoachAvatar } from "./CoachAvatar";
 
 export function TypingIndicator(): React.JSX.Element {
   return (

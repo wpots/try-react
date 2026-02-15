@@ -18,9 +18,9 @@ export function Quote({
       className={cn("italic text-center", className)}
       {...props}
     >
-      <span aria-hidden="true">"</span>
+      <span aria-hidden="true">&ldquo;</span>
       {children}
-      <span aria-hidden="true">"</span>
+      <span aria-hidden="true">&rdquo;</span>
     </Typography>
   );
 }

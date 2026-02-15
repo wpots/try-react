@@ -157,6 +157,7 @@
     font-size: var(--font-size-ds-sm);
     line-height: var(--line-height-ds-relaxed);
     font-weight: var(--font-weight-ds-semibold);
+    color: var(--color-ds-brand-neutral);
   }
 
   .font-ds-label-base {

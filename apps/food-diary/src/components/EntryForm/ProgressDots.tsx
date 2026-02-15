@@ -20,7 +20,6 @@ export function ProgressDots({
 
         return (
           <div
-            // eslint-disable-next-line react/no-array-index-key
             key={index}
             className={[
               "h-1.5 rounded-full transition-all duration-300",

@@ -5,4 +5,4 @@ export interface PageIndicatorProps extends React.ComponentProps<"div"> {
   activeIndex: number;
 }
 
-export { PageIndicator } from "./PageIndicator.tsx";
+export { PageIndicator } from "./PageIndicator";

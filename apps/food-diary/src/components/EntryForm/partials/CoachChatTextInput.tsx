@@ -1,8 +1,9 @@
-import { useTranslations } from "next-intl";
-
 import { Button, TextArea } from "@repo/ui";
 
+import { getCmsText } from "../utils/cms";
+
 interface CoachChatTextInputProps {
+  cms: Record<string, unknown>;
   value: string;
   onChange: (value: string) => void;
   onSubmit: () => void;
@@ -13,6 +14,7 @@ interface CoachChatTextInputProps {
 }
 
 export function CoachChatTextInput({
+  cms,
   value,
   onChange,
   onSubmit,
@@ -21,7 +23,9 @@ export function CoachChatTextInput({
   helperTextKey,
   isDisabled,
 }: CoachChatTextInputProps): React.JSX.Element {
-  const t = useTranslations("createEntry");
+  function t(key: string): string {
+    return getCmsText(cms, key);
+  }
 
   return (
     <>

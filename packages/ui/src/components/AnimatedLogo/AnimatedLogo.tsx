@@ -1,53 +1,33 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { PEBBLE_PATH } from "../../assets/pebblePath";
 import { cn } from "../../lib/utils";
 import type { AnimatedLogoProps } from "./index";
 
-const PEBBLE_PATH =
-  "M 407.507812 2930.03125 C -966.570312 1529.390625 2265.960938 -2091.140625 3740.929688 2590.960938 C 4477.929688 4930.476562 1159.339844 3696.390625 407.507812 2930.03125 Z";
+const PEBBLE_FILL: Record<NonNullable<AnimatedLogoProps["variant"]>, string> = {
+  default: "fill-ds-brand-support/40",
+  strong: "fill-ds-brand-primary-strong/30",
+};
 
 interface PebbleConfig {
   id: string;
   tx: number;
   ty: number;
   baseScale: number;
-  fillClass: string;
+  rotate: number;
   speed: number;
   phase: number;
 }
 
 const PEBBLES: PebbleConfig[] = [
-  {
-    id: "pebble-1",
-    tx: 100,
-    ty: -500,
-    baseScale: 1,
-    fillClass: "fill-ds-brand-support/40",
-    speed: 0.7,
-    phase: 0,
-  },
-  {
-    id: "pebble-2",
-    tx: 400,
-    ty: -300,
-    baseScale: 1.01,
-    fillClass: "fill-ds-brand-support/40",
-    speed: 0.9,
-    phase: 2.1,
-  },
-  {
-    id: "pebble-3",
-    tx: 0,
-    ty: 0,
-    baseScale: 1.02,
-    fillClass: "fill-ds-brand-support/40",
-    speed: 0.55,
-    phase: 4.3,
-  },
+  { id: "pebble-1", tx: 100, ty: -500, baseScale: 1, rotate: 0, speed: 0.7, phase: 0 },
+  { id: "pebble-2", tx: 400, ty: -300, baseScale: 1.01, rotate: 0, speed: 0.9, phase: 2.1 },
+  { id: "pebble-3", tx: 0, ty: 0, baseScale: 1.02, rotate: 0, speed: 0.55, phase: 4.3 },
 ];
 
-export function AnimatedLogo({ className, ...rest }: AnimatedLogoProps): React.JSX.Element {
+export function AnimatedLogo({ className, variant = "default", ...rest }: AnimatedLogoProps): React.JSX.Element {
+  const fillClass = PEBBLE_FILL[variant];
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -125,7 +105,7 @@ export function AnimatedLogo({ className, ...rest }: AnimatedLogoProps): React.J
               transform={`translate(${pebble.tx}, ${pebble.ty}) scale(${pebble.baseScale}) rotate(${pebble.rotate})`}
               className="will-change-transform"
             >
-              <path d={PEBBLE_PATH} className={pebble.fillClass} filter="url(#pebble-blur)" />
+              <path d={PEBBLE_PATH} className={fillClass} filter="url(#pebble-blur)" />
             </g>
           ))}
 
@@ -136,7 +116,7 @@ export function AnimatedLogo({ className, ...rest }: AnimatedLogoProps): React.J
               transform={`translate(${pebble.tx}, ${pebble.ty}) scale(${pebble.baseScale}) rotate(${pebble.rotate})`}
               className="will-change-transform"
             >
-              <path d={PEBBLE_PATH} className={pebble.fillClass} fillRule="evenodd" />
+              <path d={PEBBLE_PATH} className={fillClass} fillRule="evenodd" />
             </g>
           ))}
         </svg>

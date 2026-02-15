@@ -4,8 +4,6 @@ import { useTranslations } from "next-intl";
 import type { PageFooterProps } from "./index";
 
 import { AnimatedLogo } from "@repo/ui";
-import { Quote } from "@/components/Quote";
-import { SectionHeader } from "@/components/SectionHeader";
 
 export function PageFooter({ className, id = "page-footer", children, ...props }: PageFooterProps): React.JSX.Element {
   const t = useTranslations("common.footer");

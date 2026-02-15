@@ -1,0 +1,97 @@
+ {
+    "title": "Nieuw moment vastleggen",
+    "subtitle": "Samen met je coach loop je stap voor stap door dit moment heen.",
+    "fields": {
+      "foodEaten": "Gegeten voeding",
+      "description": "Beschrijving",
+      "date": "Datum",
+      "time": "Tijd",
+      "type": "Type moment",
+      "datetime": "Moment"
+    },
+    "coach": {
+      "entryType": "Hoi! Wat voor moment wil je vastleggen?",
+      "datetime": "Op welk moment was dit?",
+      "skippedMeal": "Heb je deze maaltijd overgeslagen?",
+      "location": "Waar was je?",
+      "company": "Met wie was je?",
+      "foodEaten": "Wat heb je gegeten of gedronken?",
+      "emotions": "Hoe voelde je je?",
+      "description": "Wil je er iets over opschrijven?",
+      "behavior": "Was er iets bijzonders aan dit moment?",
+      "confirm": "Hier is een overzicht van je moment. Klopt alles?",
+      "complete": "Goed gedaan! Je moment is opgeslagen."
+    },
+    "entryTypes": {
+      "breakfast": "Ontbijt",
+      "lunch": "Lunch",
+      "dinner": "Diner",
+      "snack": "Snack",
+      "moment": "Moment"
+    },
+    "locations": {
+      "home": "Thuis",
+      "work": "Werk",
+      "restaurant": "Restaurant",
+      "friends": "Bij vrienden",
+      "onTheRoad": "Onderweg",
+      "familyEvent": "Familiefeest"
+    },
+    "company": {
+      "alone": "Alleen",
+      "partner": "Partner",
+      "family": "Familie",
+      "friends": "Vrienden",
+      "colleagues": "Collega's",
+      "kids": "Kinderen"
+    },
+    "emotions": {
+      "happy": "Blij",
+      "sad": "Verdrietig",
+      "angry": "Boos",
+      "anxious": "Angstig",
+      "guilty": "Schuldig",
+      "calm": "Rustig",
+      "tense": "Gespannen",
+      "proud": "Trots",
+      "lonely": "Eenzaam",
+      "tired": "Moe",
+      "ashamed": "Schaamte",
+      "relieved": "Opgelucht"
+    },
+    "behaviors": {
+      "restricted": "Te weinig gegeten",
+      "binged": "Eetbui",
+      "overate": "Te veel gegeten",
+      "threwUp": "Overgegeven"
+    },
+    "form": {
+      "switchToForm": "Liever zelf invullen?",
+      "switchToChat": "Met coach invullen",
+      "back": "Vorige stap",
+      "confirm": "Bevestig",
+      "skip": "Overslaan",
+      "submit": "Moment opslaan",
+      "edit": "Wijzig",
+      "yes": "Ja",
+      "no": "Nee"
+    },
+    "placeholders": {
+      "foodEaten": "Bijv. boterham met kaas, koffie...",
+      "foodEatenAi": "Je kunt later een foto toevoegen en laten analyseren met AI.",
+      "description": "Schrijf hier je gedachten..."
+    },
+    "hints": {
+      "behavior": "Dit hoef je niet in te vullen.",
+      "behaviorNone": "Niets bijzonders."
+    },
+    "saveEntry": "Invoer opslaan",
+    "saving": "Bezig met opslaan...",
+    "saveSuccess": "Invoer succesvol opgeslagen!",
+    "authRequired": "Log eerst in.",
+    "goToLogin": "Ga naar inloggen",
+    "errors": {
+      "notAuthenticated": "Gebruiker niet geauthenticeerd",
+      "saveFailed": "Opslaan van invoer mislukt"
+    }
+  },

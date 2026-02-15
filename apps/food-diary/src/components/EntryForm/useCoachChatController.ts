@@ -1,13 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously } from "@/lib/auth";
 import { saveDiaryEntry } from "@/lib/diaryEntries";
 
 import type { CoachChatProps, WizardEntry } from "./index";
+import { getCmsText, getCmsValue } from "./utils/cms";
 import { getDefaultEntryType } from "./utils/getDefaultEntryType";
 import { getInitialEntry } from "./utils/getInitialEntry";
 import {
@@ -70,9 +70,9 @@ function getCoachText(rawText: unknown): string {
 }
 
 export function useCoachChatController({
+  cms,
   onComplete,
 }: CoachChatProps): UseCoachChatControllerResult {
-  const t = useTranslations("createEntry");
   const { user } = useAuth();
 
   const [mode, setMode] = useState<"chat" | "form">("chat");
@@ -95,6 +95,11 @@ export function useCoachChatController({
   const messageIdRef = useRef(0);
   const messagesRef = useRef<CoachChatMessage[]>([]);
 
+  const t = useCallback(
+    (key: string): string => getCmsText(cms, key),
+    [cms],
+  );
+
   useEffect(() => {
     messagesRef.current = messages;
   }, [messages]);
@@ -110,14 +115,17 @@ export function useCoachChatController({
     setInputSkippedMeal(null);
   }, []);
 
-  const addMessage = useCallback((role: CoachChatMessage["role"], text: string) => {
-    setMessages((previous) => {
-      const next = [...previous, { id: messageIdRef.current + 1, role, text }];
-      messageIdRef.current += 1;
-      messagesRef.current = next;
-      return next;
-    });
-  }, []);
+  const addMessage = useCallback(
+    (role: CoachChatMessage["role"], text: string) => {
+      setMessages((previous) => {
+        const next = [...previous, { id: messageIdRef.current + 1, role, text }];
+        messageIdRef.current += 1;
+        messagesRef.current = next;
+        return next;
+      });
+    },
+    [],
+  );
 
   const showCoachMessage = useCallback(
     (stepIndex: number) => {
@@ -138,12 +146,12 @@ export function useCoachChatController({
 
       setIsTyping(true);
       window.setTimeout(() => {
-        const translated = getCoachText(t.raw(step.messageKey));
+        const translated = getCoachText(getCmsValue(cms, step.messageKey));
         setIsTyping(false);
         addMessage("coach", translated || t("coach.complete"));
       }, 700 + Math.random() * 400);
     },
-    [addMessage, filteredSteps, t],
+    [addMessage, cms, filteredSteps, t],
   );
 
   useEffect(() => {

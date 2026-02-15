@@ -1,9 +1,10 @@
 "use client";
 
-import { Button, MenuTrigger, Popover } from "react-aria-components";
+import { MenuTrigger, Popover } from "react-aria-components";
 
 import type { HamburgerMenuProps } from "./index";
 
+import { Button } from "../Button/Button";
 import { cn } from "../../lib/utils";
 
 export function HamburgerMenu({
@@ -20,15 +21,12 @@ export function HamburgerMenu({
       <MenuTrigger>
         <Button
           aria-label={buttonLabel}
-          className={cn(
-            "inline-flex size-10 items-center justify-center rounded-full",
-            "text-ds-text-strong transition-colors hover:opacity-80",
-            "focus:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring",
-            buttonClassName,
-          )}
+          variant="default"
+          size="icon"
+          className={buttonClassName}
         >
           {triggerContent != null ? (
-            <span className="flex h-5 w-5 items-center justify-center [&>svg]:size-5">{triggerContent}</span>
+            <span className="flex size-4 items-center justify-center">{triggerContent}</span>
           ) : (
             <span className="flex h-4 w-4 flex-col justify-between" aria-hidden>
               <span className="block h-0.5 w-4 bg-current" />

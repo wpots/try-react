@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 import type { PageHeroProps } from "./index";
 
-export function PageHero({ className, id = "hero-section", ...props }: PageHeroProps): React.JSX.Element {
+export function PageHero({ className, id = "hero-section" }: PageHeroProps): React.JSX.Element {
   const t = useTranslations("landing.hero");
   const ctaButtons: LinkProps[] = [
     { href: "/entry/create", children: t("primaryCta"), variant: "default" },
@@ -34,7 +34,7 @@ export function PageHero({ className, id = "hero-section", ...props }: PageHeroP
           </Typography>
 
           <div className="mt-8 flex flex-col gap-ds-m sm:flex-row">
-            {ctaButtons.map((button, index) => {
+            {ctaButtons.map((button) => {
               const isPrimary = button.variant === "default";
               return (
                 <Link

@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardActions, CardHeader, cn, Container, IconTile, Link, Section, Typography } from "@repo/ui";
+import { Card, CardHeader, cn, Container, Link, Section, Typography } from "@repo/ui";
 
 import type { CallToActionProps } from "./index";
 
@@ -21,7 +21,6 @@ export function CallToAction({
   className,
   eyebrow,
   id = "cta-section",
-  ...props
 }: CallToActionProps): React.JSX.Element {
   const isDefault = variant === "default";
   return (

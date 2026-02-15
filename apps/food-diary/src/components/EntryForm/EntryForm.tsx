@@ -1,55 +1,58 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { Button, Card, Form, Text, TextField } from "@repo/ui";
-import { useEntryForm } from "./useEntryForm";
+import { useEffect, useRef } from "react";
 
-function EntryForm(): React.JSX.Element {
-  const t = useTranslations("createEntry");
-  const { formValues, isSaving, onFieldChange, onSubmit, saveState } =
-    useEntryForm();
+import type { EntryFormProps } from "./index";
+import { TraditionalForm } from "./TraditionalForm";
+import { CoachChatActiveInput } from "./partials/CoachChatActiveInput";
+import { CoachChatMessages } from "./partials/CoachChatMessages";
+import { EntryFormHeader } from "./partials/EntryFormHeader";
+import { useCoachChatController } from "./useCoachChatController";
+
+export function EntryForm({ onComplete, cms }: EntryFormProps): React.JSX.Element {
+  const controller = useCoachChatController({ onComplete, cms });
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!scrollRef.current) {
+      return;
+    }
+
+    const element = scrollRef.current;
+    element.scrollTop = element.scrollHeight;
+  }, [controller.messages, controller.isTyping]);
 
   return (
-    <Card>
-      <Form className="mt-4 flex flex-col gap-4" onSubmit={onSubmit}>
-        <TextField
-          id="foodEaten"
-          label={t("fields.foodEaten")}
-          name="foodEaten"
-          onChange={(value) => onFieldChange("foodEaten", value)}
-          required
-          value={formValues.foodEaten}
+    <div className="flex h-full flex-col">
+      <EntryFormHeader
+        cms={cms}
+        currentStepIndex={controller.currentStepIndex}
+        mode={controller.mode}
+        totalSteps={controller.filteredSteps.length}
+        onSwitchMode={() =>
+          controller.setMode(controller.mode === "chat" ? "form" : "chat")
+        }
+      />
+
+      {controller.mode === "form" ? (
+        <TraditionalForm
+          cms={cms}
+          initialEntry={controller.entry}
+          onComplete={controller.handleTraditionalComplete}
         />
-        <TextField
-          id="description"
-          label={t("fields.description")}
-          name="description"
-          onChange={(value) => onFieldChange("description", value)}
-          value={formValues.description}
-        />
-        <TextField
-          id="date"
-          label={t("fields.date")}
-          name="date"
-          onChange={(value) => onFieldChange("date", value)}
-          type="date"
-          value={formValues.date}
-        />
-        <TextField
-          id="time"
-          label={t("fields.time")}
-          onChange={(value) => onFieldChange("time", value)}
-          type="time"
-          value={formValues.time}
-        />
-        <Button className="mt-2 w-full" disabled={isSaving} type="submit">
-          {isSaving ? t("saving") : t("saveEntry")}
-        </Button>
-        {saveState.error ? <Text tone="danger">{saveState.error}</Text> : null}
-        {saveState.success ? <Text>{t("saveSuccess")}</Text> : null}
-      </Form>
-    </Card>
+      ) : (
+        <>
+          <CoachChatMessages
+            scrollRef={scrollRef}
+            messages={controller.messages}
+            isTyping={controller.isTyping}
+          />
+
+          <div className="mx-auto w-full max-w-2xl">
+            <CoachChatActiveInput controller={controller} cms={cms} />
+          </div>
+        </>
+      )}
+    </div>
   );
 }
-
-export default EntryForm;

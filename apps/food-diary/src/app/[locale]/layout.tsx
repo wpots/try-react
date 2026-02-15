@@ -7,8 +7,6 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { locales } from "@/i18n/config";
 
 import { SkipLink } from "@repo/ui";
-import { PageFooter } from "@/components/PageFooter";
-import { PageHeader } from "@/components/PageHeader";
 
 export const metadata: Metadata = {
   title: "Food Diary",

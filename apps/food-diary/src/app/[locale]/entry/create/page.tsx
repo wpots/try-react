@@ -1,15 +1,15 @@
-import { useTranslations } from "next-intl";
+import { useMessages } from "next-intl";
 
-import { Card } from "@repo/ui";
-
-import { CoachChat } from "@/components/CoachChat";
+import { EntryForm } from "@/components/EntryForm";
+import { getCmsNamespace } from "@/components/EntryForm/utils/cms";
 
 function CreateEntryPage(): React.JSX.Element {
-  const t = useTranslations("createEntry");
+  const messages = useMessages();
+  const cms = getCmsNamespace(messages, "createEntry");
 
   return (
     <div className="flex h-dvh flex-col">
-      <CoachChat />
+      <EntryForm cms={cms} />
     </div>
   );
 }

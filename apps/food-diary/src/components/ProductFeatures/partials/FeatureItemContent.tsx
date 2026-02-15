@@ -15,9 +15,10 @@ export function FeatureItemContent({
   item,
   option,
   isActive = false,
-  variant,
+  variant, // reserved for future desktop/mobile layout variants
 }: FeatureItemContentProps): React.JSX.Element {
   const Icon = option.icon;
+  void variant;
   return (
     <div className="flex items-start gap-ds-m">
       <IconTile

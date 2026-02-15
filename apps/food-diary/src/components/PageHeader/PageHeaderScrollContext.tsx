@@ -16,7 +16,7 @@ export function PageHeaderScrollProvider({
   value: PageHeaderScrollContextValue;
   children: React.ReactNode;
 }): React.JSX.Element {
-  const memoValue = useMemo(() => value, [value.isScrolled, value.scrollProgress]);
+  const memoValue = useMemo(() => value, [value]);
   return (
     <PageHeaderScrollContext.Provider value={memoValue}>
       {children}

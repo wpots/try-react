@@ -1,14 +1,12 @@
-import { useTranslations } from "next-intl";
 import { Button, ChipSelector, EmotionPicker } from "@repo/ui";
-import {
-  behaviorOptions,
-  companyOptions,
-  locationOptions,
-} from "../utils/options";
+
+import { getCmsText } from "../utils/cms";
+import { behaviorOptions, companyOptions, locationOptions } from "../utils/options";
 import type { WizardStep } from "../utils/steps";
 import { CoachChatTextInput } from "./CoachChatTextInput";
 
 interface CoachChatFollowupInputProps {
+  cms: Record<string, unknown>;
   step: WizardStep;
   inputChips: string[];
   inputEmotions: string[];
@@ -38,20 +36,25 @@ function toOptions(
   }));
 }
 
-function SkipButton({ onSkip }: { onSkip: () => void }): React.JSX.Element {
-  const t = useTranslations("createEntry");
+interface SkipButtonProps {
+  label: string;
+  onSkip: () => void;
+}
+
+function SkipButton({ label, onSkip }: SkipButtonProps): React.JSX.Element {
   return (
     <button
       type="button"
       onClick={onSkip}
       className="mb-ds-s flex items-center gap-ds-xs text-sm text-ds-on-surface-secondary hover:text-ds-interactive"
     >
-      {t("form.skip")}
+      {label}
     </button>
   );
 }
 
 export function CoachChatFollowupInput({
+  cms,
   step,
   inputChips,
   inputEmotions,
@@ -70,11 +73,15 @@ export function CoachChatFollowupInput({
   onSubmitLocation,
   onSubmitSkippedMeal,
 }: CoachChatFollowupInputProps): React.JSX.Element {
-  const t = useTranslations("createEntry");
+  function t(key: string): string {
+    return getCmsText(cms, key);
+  }
 
   return (
     <>
-      {step.optional ? <SkipButton onSkip={onSkip} /> : null}
+      {step.optional ? (
+        <SkipButton label={t("form.skip")} onSkip={onSkip} />
+      ) : null}
       {step.key === "skippedMeal" ? (
         <div className="flex items-center gap-ds-s">
           <Button
@@ -139,6 +146,7 @@ export function CoachChatFollowupInput({
       ) : null}
       {step.key === "foodEaten" ? (
         <CoachChatTextInput
+          cms={cms}
           value={inputText}
           onChange={setInputText}
           onSubmit={onSubmitFood}
@@ -166,6 +174,7 @@ export function CoachChatFollowupInput({
       ) : null}
       {step.key === "description" ? (
         <CoachChatTextInput
+          cms={cms}
           value={inputText}
           onChange={setInputText}
           onSubmit={onSubmitDescription}

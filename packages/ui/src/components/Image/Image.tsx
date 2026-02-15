@@ -16,7 +16,7 @@ export function Image({
 }: ImageProps): React.JSX.Element {
   if (ImageComponent) {
     const componentProps: NextImageLikeProps = {
-      src: src ?? "",
+      src: typeof src === "string" ? (src ?? "") : "",
       alt: alt ?? "",
       width: typeof width === "number" ? width : undefined,
       height: typeof height === "number" ? height : undefined,

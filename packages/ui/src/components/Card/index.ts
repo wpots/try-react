@@ -6,7 +6,7 @@ export interface CardProps extends React.ComponentProps<"div"> {
   variant?: CardVariant;
 }
 
-export interface CardHeaderProps extends React.ComponentProps<"div"> {
+export interface CardHeaderProps extends Omit<React.ComponentProps<"div">, "title"> {
   title?: React.ReactNode;
   description?: React.ReactNode;
 }

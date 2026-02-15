@@ -1,10 +1,10 @@
-import { useTranslations } from "next-intl";
-
 import { Button, Card } from "@repo/ui";
 
 import type { WizardEntry } from "../index";
+import { getCmsText } from "../utils/cms";
 
 interface CoachChatConfirmCardProps {
+  cms: Record<string, unknown>;
   entry: WizardEntry;
   isSaving: boolean;
   saveError: string | null;
@@ -13,13 +13,16 @@ interface CoachChatConfirmCardProps {
 }
 
 export function CoachChatConfirmCard({
+  cms,
   entry,
   isSaving,
   saveError,
   onBack,
   onSubmit,
 }: CoachChatConfirmCardProps): React.JSX.Element {
-  const t = useTranslations("createEntry");
+  function t(key: string): string {
+    return getCmsText(cms, key);
+  }
 
   return (
     <Card className="space-y-ds-s">
@@ -46,10 +49,10 @@ export function CoachChatConfirmCard({
       </ul>
       {saveError ? <p className="text-sm text-ds-danger">{saveError}</p> : null}
       <div className="mt-ds-m flex justify-end gap-ds-s">
-        <Button variant="outline" onClick={onBack}>
+        <Button variant="outline" size="sm" onClick={onBack}>
           {t("form.edit")}
         </Button>
-        <Button variant="default" onClick={onSubmit} disabled={isSaving}>
+        <Button variant="default" size="sm" onClick={onSubmit} disabled={isSaving}>
           {isSaving ? t("saving") : t("form.submit")}
         </Button>
       </div>

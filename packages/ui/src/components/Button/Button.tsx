@@ -27,19 +27,30 @@ export const buttonVariantClasses: Record<ButtonVariantClassKey, string> = {
 
 export const buttonSizeClasses: Record<NonNullable<ButtonProps["size"]>, string> = {
   default: "px-ds-xxl py-ds-l",
+  sm: "px-ds-xl py-ds-m",
   lg: "px-ds-xxl py-ds-l",
-  icon: "h-10 w-10",
+  icon: "h-10 w-10 rounded-full",
   link: "px-0 py-0",
 };
 
-export function Button({ children, className, variant = "default", size = "default", ...props }: ButtonProps) {
+function setRef(
+  el: HTMLButtonElement | null,
+  localRef: React.RefObject<HTMLButtonElement | null>,
+  ref: React.Ref<HTMLButtonElement> | undefined,
+): void {
+  (localRef as React.MutableRefObject<HTMLButtonElement | null>).current = el;
+  if (typeof ref === "function") ref(el);
+  else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = el;
+}
+
+export function Button({ children, className, variant = "default", size = "default", ref, ...props }: ButtonProps) {
   const localRef = useRef<HTMLButtonElement>(null);
   const { buttonProps, isPressed } = useButton(props as Parameters<typeof useButton>[0], localRef);
 
   return (
     <button
       {...buttonProps}
-      ref={localRef}
+      ref={el => setRef(el, localRef, ref)}
       className={cn(
         buttonBaseClasses,
         buttonFocusClasses,

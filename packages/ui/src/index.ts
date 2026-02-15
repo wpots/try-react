@@ -55,12 +55,15 @@ export { TextArea } from "./components/TextArea";
 export type { TextAreaProps } from "./components/TextArea";
 
 export { AnimatedLogo } from "./components/AnimatedLogo";
-export type { AnimatedLogoProps } from "./components/AnimatedLogo";
+export type { AnimatedLogoProps, AnimatedLogoVariant } from "./components/AnimatedLogo";
 
 export { Label } from "./components/Label";
 export type { LabelProps } from "./components/Label";
 
 export { IconTile } from "./components/IconTile";
 export type { IconTileProps, IconTileVariant } from "./components/IconTile";
+
+export { PebbleIcon } from "./components/PebbleIcon";
+export type { PebbleIconProps } from "./components/PebbleIcon";
 
 export { cn } from "./lib/utils";

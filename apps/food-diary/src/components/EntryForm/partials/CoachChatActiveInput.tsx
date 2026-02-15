@@ -1,17 +1,15 @@
-import { useTranslations } from "next-intl";
-
 import { Button, ChipSelector } from "@repo/ui";
 
+import { getCmsText } from "../utils/cms";
 import { getDefaultEntryType } from "../utils/getDefaultEntryType";
-import {
-  entryTypeOptions,
-} from "../utils/options";
+import { entryTypeOptions } from "../utils/options";
 import type { WizardStep } from "../utils/steps";
 import type { UseCoachChatControllerResult } from "../useCoachChatController";
 import { CoachChatConfirmCard } from "./CoachChatConfirmCard";
 import { CoachChatFollowupInput } from "./CoachChatFollowupInput";
 
 interface CoachChatActiveInputProps {
+  cms: Record<string, unknown>;
   controller: UseCoachChatControllerResult;
 }
 
@@ -41,9 +39,13 @@ function getCurrentStep(
 }
 
 export function CoachChatActiveInput({
+  cms,
   controller,
 }: CoachChatActiveInputProps): React.JSX.Element | null {
-  const t = useTranslations("createEntry");
+  function t(key: string): string {
+    return getCmsText(cms, key);
+  }
+
   const {
     completed,
     currentStepIndex,
@@ -90,7 +92,11 @@ export function CoachChatActiveInput({
     const fallbackTime = now.toTimeString().slice(0, 5);
     const suggestedType = getDefaultEntryType(entry.date, entry.time || fallbackTime);
     const selected =
-      inputChips.length > 0 ? inputChips : entry.entryType ? [entry.entryType] : [suggestedType];
+      inputChips.length > 0
+        ? inputChips
+        : entry.entryType
+          ? [entry.entryType]
+          : [suggestedType];
 
     return (
       <InputShell>
@@ -117,13 +123,17 @@ export function CoachChatActiveInput({
             <input
               type="date"
               value={entry.date}
-              onChange={(event) => setEntry({ ...entry, date: event.target.value })}
+              onChange={(event) =>
+                setEntry({ ...entry, date: event.target.value })
+              }
               className="flex-1 rounded-md border border-ds-border bg-ds-surface-elevated px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
             <input
               type="time"
               value={entry.time}
-              onChange={(event) => setEntry({ ...entry, time: event.target.value })}
+              onChange={(event) =>
+                setEntry({ ...entry, time: event.target.value })
+              }
               className="w-32 rounded-md border border-ds-border bg-ds-surface-elevated px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
           </div>
@@ -141,6 +151,7 @@ export function CoachChatActiveInput({
     return (
       <InputShell>
         <CoachChatConfirmCard
+          cms={cms}
           entry={entry}
           isSaving={isSaving}
           saveError={saveError}
@@ -154,6 +165,7 @@ export function CoachChatActiveInput({
   return (
     <InputShell>
       <CoachChatFollowupInput
+        cms={cms}
         step={step}
         inputChips={inputChips}
         inputEmotions={inputEmotions}

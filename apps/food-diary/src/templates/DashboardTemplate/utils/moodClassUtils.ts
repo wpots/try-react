@@ -9,11 +9,11 @@ const moodBadgeClasses: Record<MoodZone, string> = {
 };
 
 const moodDotClasses: Record<MoodZone, string> = {
-  1: "bg-ds-danger text-ds-on-danger",
-  2: "bg-ds-warning text-ds-on-warning",
-  3: "bg-ds-surface-subtle text-ds-on-surface",
-  4: "bg-ds-brand-primary text-ds-on-primary",
-  5: "bg-ds-success text-ds-on-success",
+  1: "bg-ds-danger/60 ",
+  2: "bg-ds-warning-strong/60 ",
+  3: "bg-ds-brand-support/60",
+  4: "bg-ds-brand-primary/40",
+  5: "bg-ds-success/60 ",
 };
 
 export function getMoodBadgeClass(zone: MoodZone): string {

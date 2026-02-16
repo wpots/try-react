@@ -75,7 +75,16 @@ export interface UseCoachChatControllerResult {
   handleTraditionalComplete: (entry: WizardEntry) => void;
 }
 
+function getFilteredStepsByEntryType(
+  entryType: WizardEntry["entryType"],
+): WizardStep[] {
+  return STEPS.filter((step) =>
+    step.condition ? step.condition({ entryType }) : true,
+  );
+}
+
 export function useCoachChatController({
+  entryId,
   initialMode = "chat",
   onComplete,
 }: CoachChatProps): UseCoachChatControllerResult {
@@ -110,9 +119,7 @@ export function useCoachChatController({
     messagesRef.current = messages;
   }, [messages]);
 
-  const filteredSteps = STEPS.filter((step) =>
-    step.condition ? step.condition({ entryType: entry.entryType }) : true,
-  );
+  const filteredSteps = getFilteredStepsByEntryType(entry.entryType);
 
   const resetInputState = useCallback(() => {
     setInputText("");
@@ -136,8 +143,8 @@ export function useCoachChatController({
   );
 
   const showCoachMessage = useCallback(
-    (stepIndex: number) => {
-      if (stepIndex >= filteredSteps.length) {
+    (stepIndex: number, steps: WizardStep[]) => {
+      if (stepIndex >= steps.length) {
         setIsTyping(true);
         window.setTimeout(() => {
           setIsTyping(false);
@@ -147,7 +154,7 @@ export function useCoachChatController({
         return;
       }
 
-      const step = filteredSteps[stepIndex];
+      const step = steps[stepIndex];
       if (!step) {
         return;
       }
@@ -158,7 +165,7 @@ export function useCoachChatController({
         addMessage("coach", t(step.messageKey));
       }, 700 + Math.random() * 400);
     },
-    [addMessage, filteredSteps, t],
+    [addMessage, t],
   );
 
   useEffect(() => {
@@ -167,8 +174,8 @@ export function useCoachChatController({
     }
 
     isInitializedRef.current = true;
-    showCoachMessage(0);
-  }, [showCoachMessage]);
+    showCoachMessage(0, filteredSteps);
+  }, [filteredSteps, showCoachMessage]);
 
   useEffect(() => {
     const currentStep = filteredSteps[currentStepIndex];
@@ -204,6 +211,7 @@ export function useCoachChatController({
           getDefaultEntryType(finalEntry.date, finalEntry.time || "00:00");
 
         await saveDiaryEntry({
+          entryId,
           userId: activeUser.uid,
           entryType,
           skippedMeal: finalEntry.skippedMeal ?? false,
@@ -235,7 +243,7 @@ export function useCoachChatController({
         setIsSaving(false);
       }
     },
-    [onComplete, t, user],
+    [entryId, onComplete, t, user],
   );
 
   const advanceStep = useCallback(
@@ -247,20 +255,20 @@ export function useCoachChatController({
       setEntry(updatedEntry);
 
       const nextIndex = currentStepIndex + 1;
+      const nextSteps = getFilteredStepsByEntryType(updatedEntry.entryType);
       setCurrentStepIndex(nextIndex);
       resetInputState();
 
-      if (nextIndex >= filteredSteps.length) {
+      if (nextIndex >= nextSteps.length) {
         void handlePersist(updatedEntry);
         return;
       }
 
-      showCoachMessage(nextIndex);
+      showCoachMessage(nextIndex, nextSteps);
     },
     [
       currentStepIndex,
       entry,
-      filteredSteps.length,
       handlePersist,
       resetInputState,
       showCoachMessage,
@@ -284,7 +292,10 @@ export function useCoachChatController({
     setCurrentStepIndex(previousIndex);
     setCompleted(false);
     resetInputState();
-    showCoachMessage(previousIndex);
+    showCoachMessage(
+      previousIndex,
+      getFilteredStepsByEntryType(previousSnapshot.entry.entryType),
+    );
   }, [currentStepIndex, history, isTyping, resetInputState, showCoachMessage]);
 
   const handleSkip = useCallback(() => {

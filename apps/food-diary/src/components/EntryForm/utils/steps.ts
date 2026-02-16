@@ -21,8 +21,8 @@ export interface WizardStep {
 }
 
 export const STEPS: WizardStep[] = [
-  { key: "entryType", messageKey: "coach.entryType" },
   { key: "datetime", messageKey: "coach.datetime" },
+  { key: "entryType", messageKey: "coach.entryType" },
   {
     key: "skippedMeal",
     messageKey: "coach.skippedMeal",

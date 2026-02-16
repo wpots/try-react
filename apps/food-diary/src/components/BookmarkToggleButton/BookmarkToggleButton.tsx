@@ -7,6 +7,7 @@ export function BookmarkToggleButton({
   addBookmarkLabel,
   className,
   isBookmarked,
+  onToggle,
   removeBookmarkLabel,
   ...props
 }: BookmarkToggleButtonProps): React.JSX.Element {
@@ -22,16 +23,14 @@ export function BookmarkToggleButton({
         "focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-ds-focus-ring focus-visible:ring-offset-2",
         "disabled:pointer-events-none disabled:opacity-50",
-        isBookmarked && "border-ds-brand-zen bg-ds-brand-zen text-ds-sand-700",
+        isBookmarked && "border-ds-brand-zen text-ds-brand-zen",
         className,
       )}
       isSelected={isBookmarked}
+      onChange={onToggle}
       {...props}
     >
-      <Bookmark
-        className={cn("h-4 w-4", isBookmarked && "fill-current")}
-        aria-hidden="true"
-      />
+      <Bookmark className={cn("h-4 w-4", isBookmarked && "fill-current")} aria-hidden="true" />
     </ToggleButton>
   );
 }

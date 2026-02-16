@@ -1,9 +1,12 @@
 import {
   createDiaryEntry,
+  getDiaryEntryById,
   getDiaryEntriesByUser,
+  updateDiaryEntry,
 } from "@/lib/firestore/helpers";
 import type {
   CreateDiaryEntryInput,
+  DiaryEntry as FirestoreDiaryEntry,
   DiaryEntryBehavior,
   DiaryEntryCompany,
   DiaryEntryLocation,
@@ -13,13 +16,13 @@ import type {
 export interface DiaryEntry {
   id: string;
   userId: string;
-  entryType: string;
+  entryType: DiaryEntryType;
   foodEaten: string;
   emotions: string[];
-  location: string;
-  company: string;
+  location: DiaryEntryLocation;
+  company: DiaryEntryCompany;
   description: string;
-  behavior: string[];
+  behavior: DiaryEntryBehavior[];
   skippedMeal: boolean;
   isBookmarked: boolean;
   date: string;
@@ -34,6 +37,7 @@ export interface DiaryEntry {
 }
 
 export interface SaveDiaryEntryInput {
+  entryId?: string;
   userId: string;
   entryType?: DiaryEntryType;
   foodEaten: string;
@@ -53,7 +57,7 @@ export interface SaveDiaryEntryInput {
   imagePublicId?: string;
 }
 
-function toClientEntry(entry: Awaited<ReturnType<typeof getDiaryEntriesByUser>>[number]) {
+function toClientEntry(entry: FirestoreDiaryEntry): DiaryEntry {
   return {
     id: entry.entryId,
     userId: entry.userId,
@@ -83,6 +87,19 @@ export async function fetchDiaryEntries(userId: string): Promise<DiaryEntry[]> {
   return entries.map((entry) => toClientEntry(entry));
 }
 
+export async function fetchDiaryEntryById(
+  userId: string,
+  entryId: string,
+): Promise<DiaryEntry | null> {
+  const entry = await getDiaryEntryById(entryId);
+
+  if (!entry || entry.userId !== userId) {
+    return null;
+  }
+
+  return toClientEntry(entry);
+}
+
 export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> {
   const createInput: CreateDiaryEntryInput = {
     userId: input.userId,
@@ -103,6 +120,11 @@ export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> 
     imageUrl: input.imageUrl,
     imagePublicId: input.imagePublicId,
   };
+
+  if (input.entryId) {
+    await updateDiaryEntry(input.entryId, createInput);
+    return;
+  }
 
   await createDiaryEntry(createInput);
 }

@@ -116,7 +116,7 @@ export function TraditionalForm({ initialEntry, onComplete, onEntryChange }: Tra
             <FormSection label={t("form.foodEaten")} required>
               <TextArea
                 value={entry.foodEaten}
-                onChange={event => setEntry({ ...entry, foodEaten: event.target.value })}
+                onChange={value => setEntry({ ...entry, foodEaten: value })}
                 placeholder={t("placeholders.foodEaten")}
                 aria-label={t("form.foodEaten")}
               />
@@ -159,10 +159,10 @@ export function TraditionalForm({ initialEntry, onComplete, onEntryChange }: Tra
                 {entry.location === "anders" ? (
                   <TextArea
                     value={entry.locationOther ?? ""}
-                    onChange={event =>
+                    onChange={value =>
                       setEntry({
                         ...entry,
-                        locationOther: event.target.value,
+                        locationOther: value,
                       })
                     }
                     placeholder={t("placeholders.other")}
@@ -190,10 +190,10 @@ export function TraditionalForm({ initialEntry, onComplete, onEntryChange }: Tra
                 {entry.company === "anders" ? (
                   <TextArea
                     value={entry.companyOther ?? ""}
-                    onChange={event =>
+                    onChange={value =>
                       setEntry({
                         ...entry,
-                        companyOther: event.target.value,
+                        companyOther: value,
                       })
                     }
                     placeholder={t("placeholders.other")}
@@ -215,7 +215,7 @@ export function TraditionalForm({ initialEntry, onComplete, onEntryChange }: Tra
           <FormSection label={t("form.description")} optional>
             <TextArea
               value={entry.description}
-              onChange={event => setEntry({ ...entry, description: event.target.value })}
+              onChange={value => setEntry({ ...entry, description: value })}
               placeholder={t("placeholders.description")}
               aria-label={t("form.description")}
             />
@@ -243,10 +243,10 @@ export function TraditionalForm({ initialEntry, onComplete, onEntryChange }: Tra
               <div className="mt-ds-s">
                 <TextArea
                   value={entry.behaviorOther ?? ""}
-                  onChange={event =>
+                  onChange={value =>
                     setEntry({
                       ...entry,
-                      behaviorOther: event.target.value,
+                      behaviorOther: value,
                     })
                   }
                   placeholder={t("placeholders.other")}

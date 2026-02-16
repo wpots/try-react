@@ -34,5 +34,10 @@ export default async function CreateEntryPage({
         ? "form"
         : "chat";
 
-  return <CreateEntryTemplate initialMode={initialMode} />;
+  return (
+    <CreateEntryTemplate
+      entryId={entryIdParam}
+      initialMode={initialMode}
+    />
+  );
 }

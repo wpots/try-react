@@ -1,5 +1,5 @@
 import { ChevronDown, Pencil, ClockIcon, MapPin, Users } from "lucide-react";
-import { cn, Typography } from "@repo/ui";
+import { Card, cn, Typography } from "@repo/ui";
 
 import { BookmarkToggleButton } from "@/components/BookmarkToggleButton";
 import { FormButton } from "@/components/FormButton";
@@ -55,11 +55,11 @@ export function DayEntryCard({
   );
 
   return (
-    //TODO: convert to Card with 'as' prop for the article tag.
-    <article
+    <Card
+      as="article"
       className={cn(
-        "rounded-ds-xl border border-ds-border-subtle bg-ds-surface",
-        "p-ds-l shadow-ds-sm transition-colors",
+        "items-stretch gap-0 border-ds-border-subtle bg-ds-surface",
+        "p-ds-l shadow-ds-sm transition-colors md:p-ds-l",
         hasBehavior && "border-b-4 border-ds-warning-strong bg-ds-warning/10",
       )}
     >
@@ -76,9 +76,8 @@ export function DayEntryCard({
           <BookmarkToggleButton
             addBookmarkLabel={translateDashboard("entry.addBookmark")}
             isBookmarked={isBookmarked}
-            onClick={() => onToggleBookmark(entry.id)}
+            onToggle={() => onToggleBookmark(entry.id)}
             removeBookmarkLabel={translateDashboard("entry.removeBookmark")}
-            type="button"
           />
 
           <FormButton
@@ -114,31 +113,31 @@ export function DayEntryCard({
 
       {isExpanded ? (
         <div className="mt-ds-l grid gap-ds-m">
-          <section className="flex gap-ds-xl bg-ds-surface-muted p-ds-m">
-            <div className="flex items-center">
-              <MapPin />
+          <section className="flex gap-ds-xl bg-ds-surface-muted p-ds-m -mx-ds-m">
+            <div className="flex items-center gap-ds-xs">
+              <MapPin className="h-4 w-4" />
               <Typography variant="body" size="sm">
                 {locationLabel}
               </Typography>
             </div>
-            <div className="flex items-center gap-ds-s">
-              <Users />
+            <div className="flex items-center gap-ds-xs">
+              <Users className="h-4 w-4" />
               <Typography variant="body" size="sm">
                 {companyLabel}
               </Typography>
             </div>
+            {entry.description.trim() && (
+              <div className="flex-1 items-center gap-ds-xs p-ds-m">
+                <Typography variant="body" size="sm">
+                  {entry.description.trim()}
+                </Typography>
+              </div>
+            )}
           </section>
           <section>
             <p className="font-ds-label-sm text-ds-on-surface-secondary">{translateDashboard("entry.whatAte")}</p>
             <p className="font-ds-body-base text-ds-on-surface">
               {entry.foodEaten.trim() || translateDashboard("entry.emptyField")}
-            </p>
-          </section>
-
-          <section>
-            <p className="font-ds-label-sm text-ds-on-surface-secondary">{translateDashboard("entry.notes")}</p>
-            <p className="font-ds-body-base text-ds-on-surface">
-              {entry.description.trim() || translateDashboard("entry.emptyField")}
             </p>
           </section>
 
@@ -153,6 +152,6 @@ export function DayEntryCard({
           ) : null}
         </div>
       ) : null}
-    </article>
+    </Card>
   );
 }

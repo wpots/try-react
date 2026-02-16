@@ -2,6 +2,7 @@ import {
   Timestamp,
   addDoc,
   collection,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -18,6 +19,7 @@ import {
 } from "@/lib/firestore/converters";
 import {
   createDiaryEntrySchema,
+  storedDiaryEntrySchema,
   userAnalysisQuotaSchema,
 } from "@/lib/firestore/schemas";
 import type {
@@ -38,6 +40,10 @@ function getQuotaDocumentReference(userId: string) {
   return doc(db, "userAnalysisQuota", userId);
 }
 
+function parseEntryDate(date: string, time: string): Timestamp {
+  return Timestamp.fromDate(new Date(`${date}T${time}:00`));
+}
+
 export async function createDiaryEntry(
   input: CreateDiaryEntryInput,
 ): Promise<string> {
@@ -46,6 +52,69 @@ export async function createDiaryEntry(
   const documentReference = await addDoc(collection(db, "diaryEntries"), payload);
 
   return documentReference.id;
+}
+
+export async function getDiaryEntryById(entryId: string): Promise<DiaryEntry | null> {
+  const entryReference = doc(db, "diaryEntries", entryId);
+  const snapshot = await getDoc(entryReference);
+
+  if (!snapshot.exists()) {
+    return null;
+  }
+
+  const parsed = storedDiaryEntrySchema.parse(snapshot.data());
+
+  return {
+    entryId: snapshot.id,
+    userId: parsed.userId,
+    entryType: parsed.entryType,
+    foodEaten: parsed.foodEaten,
+    emotions: parsed.emotions,
+    location: parsed.location,
+    company: parsed.company,
+    description: parsed.description,
+    behavior: parsed.behavior,
+    skippedMeal: parsed.skippedMeal,
+    isBookmarked: parsed.isBookmarked,
+    date: parsed.date,
+    time: parsed.time,
+    locationOther: parsed.locationOther,
+    companyOther: parsed.companyOther,
+    behaviorOther: parsed.behaviorOther,
+    imageUrl: parsed.imageUrl,
+    imagePublicId: parsed.imagePublicId,
+    createdAt: parsed.createdAt ?? Timestamp.now(),
+    updatedAt: parsed.updatedAt ?? Timestamp.now(),
+  };
+}
+
+export async function updateDiaryEntry(
+  entryId: string,
+  input: CreateDiaryEntryInput,
+): Promise<void> {
+  const parsed = createDiaryEntrySchema.parse(input);
+  const entryReference = doc(db, "diaryEntries", entryId);
+
+  await updateDoc(entryReference, {
+    userId: parsed.userId,
+    entryType: parsed.entryType,
+    foodEaten: parsed.foodEaten,
+    emotions: parsed.emotions,
+    location: parsed.location,
+    company: parsed.company,
+    description: parsed.description,
+    behavior: parsed.behavior,
+    skippedMeal: parsed.skippedMeal,
+    isBookmarked: parsed.isBookmarked,
+    date: parseEntryDate(parsed.date, parsed.time),
+    time: parsed.time,
+    locationOther: parsed.locationOther ?? deleteField(),
+    companyOther: parsed.companyOther ?? deleteField(),
+    behaviorOther: parsed.behaviorOther ?? deleteField(),
+    imageUrl: parsed.imageUrl ?? deleteField(),
+    imagePublicId: parsed.imagePublicId ?? deleteField(),
+    updatedAt: Timestamp.now(),
+  });
 }
 
 export async function getDiaryEntriesByUser(userId: string): Promise<DiaryEntry[]> {

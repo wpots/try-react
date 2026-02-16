@@ -22,6 +22,7 @@ export interface WizardEntry {
 }
 
 export interface EntryFormProps {
+  entryId?: string;
   initialMode?: EntryFormMode;
   isBookmarked?: boolean;
   onBookmarkChange?: (isBookmarked: boolean) => void;
@@ -36,6 +37,7 @@ export interface TraditionalFormProps {
 }
 
 export interface CoachChatProps {
+  entryId?: string;
   initialMode?: EntryFormMode;
   onComplete?: () => void;
 }

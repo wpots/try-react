@@ -66,9 +66,8 @@ export function EntryPageHeader({
         addBookmarkLabel={tDashboard("entry.addBookmark")}
         className="h-6 w-6 justify-self-end"
         isBookmarked={isBookmarked}
-        onClick={onBookmarkClick}
+        onToggle={onBookmarkClick}
         removeBookmarkLabel={tDashboard("entry.removeBookmark")}
-        type="button"
       />
     </header>
   );

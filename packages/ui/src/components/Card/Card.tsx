@@ -1,3 +1,4 @@
+import type React from "react";
 import type { CardProps } from "./index";
 import { cn } from "../../lib/utils";
 
@@ -11,9 +12,20 @@ const cardVariantClasses: Record<NonNullable<CardProps["variant"]>, string> = {
   knockout: "border-transparent bg-gradient-to-br from-ds-surface-primary/15 to-ds-surface-primary/35",
 };
 
-export function Card({ className, variant = "default", children, ...props }: CardProps): React.JSX.Element {
+export function Card<T extends React.ElementType = "div">({
+  as,
+  className,
+  variant = "default",
+  children,
+  ...props
+}: CardProps<T>): React.JSX.Element {
+  const Component = as ?? "div";
+
   return (
-    <div className={cn(cardBaseClasses, cardVariantClasses[variant], className)} {...props}>
+    <Component
+      className={cn(cardBaseClasses, cardVariantClasses[variant], className)}
+      {...props}
+    >
       {variant === "knockout" && (
         <>
           <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 translate-x-1/3 -translate-y-1/3 rounded-full bg-ds-brand-support/30 blur-3xl" />
@@ -21,6 +33,6 @@ export function Card({ className, variant = "default", children, ...props }: Car
         </>
       )}
       {children}
-    </div>
+    </Component>
   );
 }

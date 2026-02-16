@@ -179,7 +179,7 @@ export function CoachChatFollowupInput({
           <div className="mt-ds-s">
             <TextArea
               value={inputOtherText}
-              onChange={(event) => setInputOtherText(event.target.value)}
+              onChange={(value) => setInputOtherText(value)}
               placeholder={t("placeholders.other")}
               aria-label={t("coach.location")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
@@ -220,7 +220,7 @@ export function CoachChatFollowupInput({
           <div className="mt-ds-s">
             <TextArea
               value={inputOtherText}
-              onChange={(event) => setInputOtherText(event.target.value)}
+              onChange={(value) => setInputOtherText(value)}
               placeholder={t("placeholders.other")}
               aria-label={t("coach.company")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
@@ -312,7 +312,7 @@ export function CoachChatFollowupInput({
           <div className="mt-ds-s">
             <TextArea
               value={inputOtherText}
-              onChange={(event) => setInputOtherText(event.target.value)}
+              onChange={(value) => setInputOtherText(value)}
               placeholder={t("placeholders.other")}
               aria-label={t("coach.behavior")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"

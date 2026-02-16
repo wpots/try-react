@@ -7,10 +7,12 @@ import { EntryForm, type EntryFormMode } from "@/components/EntryForm";
 import { EntryPageHeader } from "@/components/EntryPageHeader";
 
 interface CreateEntryTemplateProps {
+  entryId?: string;
   initialMode?: EntryFormMode;
 }
 
 export function CreateEntryTemplate({
+  entryId,
   initialMode = "chat",
 }: CreateEntryTemplateProps): React.JSX.Element {
   const tEntry = useTranslations("entry");
@@ -44,6 +46,7 @@ export function CreateEntryTemplate({
       />
       <div className="min-h-0 flex-1">
         <EntryForm
+          entryId={entryId}
           initialMode={initialMode}
           isBookmarked={isBookmarked}
           onBookmarkChange={setIsBookmarked}

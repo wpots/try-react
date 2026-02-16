@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn, ToggleButtonGroup } from "@repo/ui";
+import { cn, ToggleButtonGroup, Section, Container, Button } from "@repo/ui";
 
 import type { DashboardViewMode } from "../index";
 
@@ -36,15 +36,35 @@ export function DashboardToolbar({
   translateDashboard,
   viewMode,
 }: DashboardToolbarProps): React.JSX.Element {
-  const viewModeOptions = viewModes.map((view) => ({
+  const viewModeOptions = viewModes.map(view => ({
     value: view,
     label: translateDashboard(viewModeLabels[view]),
   }));
 
   return (
-    <section className="grid gap-ds-s rounded-ds-xl border border-ds-border-subtle bg-ds-surface p-ds-m">
-      <div className="flex flex-wrap items-center justify-between gap-ds-s">
-        <div className="flex items-center gap-ds-xs">
+    <Section>
+      <Container size="wide">
+        <div className="flex flex-wrap items-center justify-between md:justify-end gap-ds-s">
+          <Button
+            variant="outline"
+            size="sm"
+            className={cn("!rounded-ds-full text-sm")}
+            onClick={onGoToToday}
+            type="button"
+          >
+            {translateDashboard("navigation.today")}
+          </Button>
+          <ToggleButtonGroup
+            options={viewModeOptions}
+            selectedValue={viewMode}
+            onSelectedValueChange={value => {
+              if (isDashboardViewMode(value)) {
+                onSelectViewMode(value);
+              }
+            }}
+          />
+        </div>
+        <div className="flex items-center justify-center gap-ds-l">
           <button
             aria-label={translateDashboard("navigation.previous")}
             className={cn(
@@ -58,7 +78,7 @@ export function DashboardToolbar({
           >
             <ChevronLeft aria-hidden="true" className="h-4 w-4" />
           </button>
-
+          <p className="font-ds-label-base text-ds-on-surface">{periodLabel}</p>
           <button
             aria-label={translateDashboard("navigation.next")}
             className={cn(
@@ -75,31 +95,7 @@ export function DashboardToolbar({
             <ChevronRight aria-hidden="true" className="h-4 w-4" />
           </button>
         </div>
-
-        <p className="font-ds-label-base text-ds-on-surface">{periodLabel}</p>
-
-        <button
-          className={cn(
-            "rounded-ds-full border border-ds-border-subtle",
-            "px-ds-m py-ds-xs font-ds-label-xs text-ds-on-surface-secondary",
-            "transition hover:border-ds-brand-primary hover:bg-ds-brand-primary-soft",
-          )}
-          onClick={onGoToToday}
-          type="button"
-        >
-          {translateDashboard("navigation.today")}
-        </button>
-      </div>
-
-      <ToggleButtonGroup
-        options={viewModeOptions}
-        selectedValue={viewMode}
-        onSelectedValueChange={(value) => {
-          if (isDashboardViewMode(value)) {
-            onSelectViewMode(value);
-          }
-        }}
-      />
-    </section>
+      </Container>
+    </Section>
   );
 }

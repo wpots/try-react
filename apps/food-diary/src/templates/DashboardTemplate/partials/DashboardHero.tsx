@@ -14,13 +14,13 @@ export function DashboardHero({
   affirmation,
   averageMood,
   dateLabel,
-  title,
+
   translateDashboard,
 }: DashboardHeroProps): React.JSX.Element {
   return (
     <section
       className={
-        "border-b-1 border-ds-border-subtle " +
+        "min-h-80 border-b-1 border-ds-border-subtle " +
         "bg-gradient-to-br from-ds-brand-primary/40 " +
         "via-ds-surface-primary-soft to-ds-surface-muted/20 p-ds-xxl"
       }
@@ -32,17 +32,17 @@ export function DashboardHero({
         </div>
 
         <div>
-          <Label>{translateDashboard("hero.averageMood")}</Label>
           {averageMood ? (
-            <Card className="mt-ds-xs font-ds-display-base bg-ds-surface h-12 flex-row gap-ds-xs">
-              <span className="font-openmoji grayscale brightness-110 text-xl" aria-hidden="true">
-                {averageMood.emoji}
-              </span>
-              {averageMood.label}
-            </Card>
-          ) : (
-            <p className="mt-ds-xs font-ds-body-sm">{translateDashboard("hero.noMood")}</p>
-          )}
+            <>
+              <Label>{translateDashboard("hero.averageMood")}</Label>
+              <Card className="mt-ds-xs font-ds-display-base bg-ds-surface h-12 flex-row gap-ds-xs">
+                <span className="font-openmoji grayscale brightness-110 text-xl" aria-hidden="true">
+                  {averageMood.emoji}
+                </span>
+                {averageMood.label}
+              </Card>
+            </>
+          ) : null}
         </div>
       </div>
     </section>

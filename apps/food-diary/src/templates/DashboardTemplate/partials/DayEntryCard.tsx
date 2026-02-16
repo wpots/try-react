@@ -1,6 +1,7 @@
-import { ChevronDown, Pencil, ClockIcon, Bookmark } from "lucide-react";
-import { cn } from "@repo/ui";
+import { ChevronDown, Pencil, ClockIcon, MapPin, Users } from "lucide-react";
+import { cn, Typography } from "@repo/ui";
 
+import { BookmarkToggleButton } from "@/components/BookmarkToggleButton";
 import { FormButton } from "@/components/FormButton";
 import type { DiaryEntry } from "@/lib/diaryEntries";
 import type { DashboardMood } from "../index";
@@ -54,6 +55,7 @@ export function DayEntryCard({
   );
 
   return (
+    //TODO: convert to Card with 'as' prop for the article tag.
     <article
       className={cn(
         "rounded-ds-xl border border-ds-border-subtle bg-ds-surface",
@@ -71,31 +73,17 @@ export function DayEntryCard({
         </h3>
 
         <div className="flex items-center gap-ds-xs">
-          <FormButton
-            aria-label={
-              isBookmarked
-                ? translateDashboard("entry.removeBookmark")
-                : translateDashboard("entry.addBookmark")
-            }
-            variant="iconOnly"
-            className={cn(
-              "hover:border-ds-warning-strong hover:bg-ds-warning/20",
-              isBookmarked && "border-ds-warning-strong bg-ds-warning",
-              isBookmarked && "text-ds-on-warning",
-            )}
+          <BookmarkToggleButton
+            addBookmarkLabel={translateDashboard("entry.addBookmark")}
+            isBookmarked={isBookmarked}
             onClick={() => onToggleBookmark(entry.id)}
+            removeBookmarkLabel={translateDashboard("entry.removeBookmark")}
             type="button"
-          >
-            <Bookmark className={cn("h-4 w-4", isBookmarked && "fill-current")} aria-hidden="true" />
-          </FormButton>
+          />
 
           <FormButton
             aria-label={translateDashboard("entry.edit")}
-            variant="iconOnly"
-            className={cn(
-              "hover:border-ds-brand-primary",
-              "hover:bg-ds-brand-primary-soft",
-            )}
+            iconOnly
             onClick={() => onEditEntry(entry.id)}
             type="button"
           >
@@ -104,11 +92,7 @@ export function DayEntryCard({
 
           <FormButton
             aria-label={isExpanded ? translateDashboard("entry.collapse") : translateDashboard("entry.expand")}
-            variant="iconOnly"
-            className={cn(
-              "hover:border-ds-brand-primary",
-              "hover:bg-ds-brand-primary-soft",
-            )}
+            iconOnly
             onClick={() => onToggleExpanded(entry.id)}
             type="button"
           >
@@ -130,22 +114,25 @@ export function DayEntryCard({
 
       {isExpanded ? (
         <div className="mt-ds-l grid gap-ds-m">
+          <section className="flex gap-ds-xl bg-ds-surface-muted p-ds-m">
+            <div className="flex items-center">
+              <MapPin />
+              <Typography variant="body" size="sm">
+                {locationLabel}
+              </Typography>
+            </div>
+            <div className="flex items-center gap-ds-s">
+              <Users />
+              <Typography variant="body" size="sm">
+                {companyLabel}
+              </Typography>
+            </div>
+          </section>
           <section>
             <p className="font-ds-label-sm text-ds-on-surface-secondary">{translateDashboard("entry.whatAte")}</p>
             <p className="font-ds-body-base text-ds-on-surface">
               {entry.foodEaten.trim() || translateDashboard("entry.emptyField")}
             </p>
-          </section>
-
-          <section className="grid gap-ds-xs sm:grid-cols-2">
-            <div>
-              <p className="font-ds-label-sm text-ds-on-surface-secondary">{translateDashboard("entry.location")}</p>
-              <p className="font-ds-body-base text-ds-on-surface">{locationLabel}</p>
-            </div>
-            <div>
-              <p className="font-ds-label-sm text-ds-on-surface-secondary">{translateDashboard("entry.company")}</p>
-              <p className="font-ds-body-base text-ds-on-surface">{companyLabel}</p>
-            </div>
           </section>
 
           <section>

@@ -66,14 +66,10 @@ export function DashboardToolbar({
         <div className="flex items-center justify-center gap-ds-l">
           <FormButton
             aria-label={translateDashboard("navigation.previous")}
-            className={cn(
-              "h-9 w-9",
-              "hover:border-ds-brand-primary",
-              "hover:bg-ds-brand-primary-soft",
-            )}
+            className="h-9 w-9"
             onClick={onNavigatePrevious}
             type="button"
-            variant="iconOnly"
+            iconOnly
           >
             <ChevronLeft aria-hidden="true" className="h-4 w-4" />
           </FormButton>
@@ -82,14 +78,12 @@ export function DashboardToolbar({
             aria-label={translateDashboard("navigation.next")}
             className={cn(
               "h-9 w-9",
-              "hover:border-ds-brand-primary",
-              "hover:bg-ds-brand-primary-soft",
               "disabled:cursor-not-allowed disabled:opacity-40",
             )}
             disabled={!canNavigateNext}
             onClick={onNavigateNext}
             type="button"
-            variant="iconOnly"
+            iconOnly
           >
             <ChevronRight aria-hidden="true" className="h-4 w-4" />
           </FormButton>

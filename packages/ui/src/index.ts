@@ -75,6 +75,9 @@ export type { PebbleIconProps } from "./components/PebbleIcon";
 export { Switch } from "./components/Switch";
 export type { SwitchProps } from "./components/Switch";
 
+export { ToggleButton } from "./components/ToggleButton";
+export type { ToggleButtonProps } from "./components/ToggleButton";
+
 export { ToggleButtonGroup } from "./components/ToggleButtonGroup";
 export type {
   ToggleButtonGroupOption,

@@ -2,43 +2,79 @@ import { Button, cn } from "@repo/ui";
 
 type ButtonVariant = NonNullable<React.ComponentProps<typeof Button>["variant"]>;
 type ButtonSize = NonNullable<React.ComponentProps<typeof Button>["size"]>;
+type SharedFormButtonProps = Omit<
+  React.ComponentProps<typeof Button>,
+  "size" | "variant"
+>;
 
-const variantMap = {
-  default: "default",
-  iconOnly: "outline",
-  link: "link",
-  outline: "outline",
-} satisfies Record<FormButtonVariant, ButtonVariant>;
+type FormButtonRegularVariant = "default" | "outline" | "link";
+type FormButtonIconVariant = "default" | "accent";
 
-const sizeMap = {
-  default: "sm",
-  iconOnly: "icon",
-  link: "link",
-  outline: "sm",
-} satisfies Record<FormButtonVariant, ButtonSize>;
-
-export interface FormButtonProps
-  extends Omit<React.ComponentProps<typeof Button>, "size" | "variant"> {
-  variant?: FormButtonVariant;
+interface FormButtonRegularProps extends SharedFormButtonProps {
+  iconOnly?: false;
+  variant?: FormButtonRegularVariant;
 }
 
-export type FormButtonVariant = "default" | "outline" | "link" | "iconOnly";
+interface FormButtonIconOnlyProps extends SharedFormButtonProps {
+  iconOnly: true;
+  variant?: FormButtonIconVariant;
+}
+
+export type FormButtonVariant =
+  | FormButtonRegularVariant
+  | FormButtonIconVariant;
+export type FormButtonProps = FormButtonRegularProps | FormButtonIconOnlyProps;
+
+function getButtonVariant(
+  isIconOnly: boolean,
+  variant: FormButtonVariant,
+): ButtonVariant {
+  if (isIconOnly) {
+    return "outline";
+  }
+
+  if (variant === "link" || variant === "outline") {
+    return variant;
+  }
+
+  return "default";
+}
+
+function getButtonSize(
+  isIconOnly: boolean,
+  variant: FormButtonVariant,
+): ButtonSize {
+  if (isIconOnly) {
+    return "icon";
+  }
+
+  if (variant === "link") {
+    return "link";
+  }
+
+  return "sm";
+}
 
 export function FormButton({
   className,
+  iconOnly = false,
   variant = "default",
   ...props
 }: FormButtonProps): React.JSX.Element {
-  const isIconOnly = variant === "iconOnly";
+  const iconVariantClasses =
+    iconOnly && variant === "accent"
+      ? "hover:border-ds-brand-zen hover:bg-ds-brand-zen/20"
+      : iconOnly && "hover:border-ds-brand-primary hover:bg-ds-brand-primary-soft";
 
   return (
     <Button
       className={cn(
-        isIconOnly && "h-8 w-8 rounded-ds-full text-ds-on-surface-secondary",
+        iconOnly && "h-8 w-8 rounded-ds-full text-ds-on-surface-secondary",
+        iconVariantClasses,
         className,
       )}
-      size={sizeMap[variant]}
-      variant={variantMap[variant]}
+      size={getButtonSize(iconOnly, variant)}
+      variant={getButtonVariant(iconOnly, variant)}
       {...props}
     />
   );

@@ -12,17 +12,20 @@ interface CoachChatFollowupInputProps {
   step: WizardStep;
   inputChips: string[];
   inputEmotions: string[];
+  inputBookmarked: boolean | null;
   inputSkippedMeal: boolean | null;
   inputOtherText: string;
   inputText: string;
   setInputChips: (value: string[]) => void;
   setInputEmotions: (value: string[]) => void;
+  setInputBookmarked: (value: boolean | null) => void;
   setInputSkippedMeal: (value: boolean | null) => void;
   setInputOtherText: (value: string) => void;
   setInputText: (value: string) => void;
   onSkip: () => void;
   onStepBack: () => void;
   onSubmitBehavior: () => void;
+  onSubmitBookmark: (override?: boolean | null) => void;
   onSubmitCompany: (override?: string) => void;
   onSubmitDescription: () => void;
   onSubmitEmotions: () => void;
@@ -58,17 +61,20 @@ export function CoachChatFollowupInput({
   step,
   inputChips,
   inputEmotions,
+  inputBookmarked,
   inputSkippedMeal,
   inputOtherText,
   inputText,
   setInputChips,
   setInputEmotions,
+  setInputBookmarked,
   setInputSkippedMeal,
   setInputOtherText,
   setInputText,
   onSkip,
   onStepBack,
   onSubmitBehavior,
+  onSubmitBookmark,
   onSubmitCompany,
   onSubmitDescription,
   onSubmitEmotions,
@@ -81,6 +87,40 @@ export function CoachChatFollowupInput({
   const skipAction = step.optional ? (
     <SkipButton label={t("form.skip")} onSkip={onSkip} />
   ) : null;
+
+  if (step.key === "bookmark") {
+    return (
+      <>
+        <div className="flex items-center gap-ds-s">
+          <EntryFormButton
+            variant={inputBookmarked === false ? "default" : "outline"}
+            onClick={() => {
+              setInputBookmarked(false);
+              onSubmitBookmark(false);
+            }}
+          >
+            {t("form.no")}
+          </EntryFormButton>
+          <EntryFormButton
+            variant={inputBookmarked === true ? "default" : "outline"}
+            onClick={() => {
+              setInputBookmarked(true);
+              onSubmitBookmark(true);
+            }}
+          >
+            {t("form.yes")}
+          </EntryFormButton>
+        </div>
+        <CoachChatActions
+          onBack={onStepBack}
+          onConfirm={() => onSubmitBookmark()}
+          confirmDisabled={inputBookmarked == null}
+        >
+          {skipAction}
+        </CoachChatActions>
+      </>
+    );
+  }
 
   if (step.key === "skippedMeal") {
     return (

@@ -12,6 +12,7 @@ import { Button } from "../Button";
 import type { SelectProps } from "./index.ts";
 import { cn } from "../../lib/utils";
 import { ChevronDown } from "lucide-react";
+import { getFormFieldClasses } from "../../utils/getFormFieldClasses";
 
 export function Select({
   label,
@@ -32,7 +33,7 @@ export function Select({
         }
       }}
       aria-label={ariaLabel}
-      className={cn("grid w-full items-start gap-2", className)}
+      className={cn(getFormFieldClasses("container"), className)}
       {...props}
     >
       {label ? (
@@ -40,11 +41,20 @@ export function Select({
           {label}
         </Label>
       ) : null}
-      <Button variant="outline">
-        <SelectValue className="truncate text-left text-ds-on-surface">
+      <Button
+        variant="outline"
+        size="sm"
+        className={getFormFieldClasses("selectTrigger")}
+      >
+        <SelectValue
+          className={cn(getFormFieldClasses("selectValue"), "text-ds-on-surface")}
+        >
           {({ selectedText }) => selectedText || placeholder || "\u00A0"}
         </SelectValue>
-        <ChevronDown aria-hidden="true" className="ml-ds-s text-xs text-ds-on-surface-secondary" />
+        <ChevronDown
+          aria-hidden="true"
+          className={getFormFieldClasses("rightIcon")}
+        />
       </Button>
 
       <Popover

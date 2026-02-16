@@ -49,6 +49,7 @@ export function CoachChatActiveInput({
     filteredSteps,
     inputChips,
     inputEmotions,
+    inputBookmarked,
     inputSkippedMeal,
     inputOtherText,
     inputText,
@@ -62,9 +63,11 @@ export function CoachChatActiveInput({
     setInputSkippedMeal,
     setInputOtherText,
     setInputText,
+    setInputBookmarked,
     handleSkip,
     handleStepBack,
     handleSubmitBehavior,
+    handleSubmitBookmark,
     handleSubmitCompany,
     handleSubmitConfirm,
     handleSubmitDatetime,
@@ -153,17 +156,20 @@ export function CoachChatActiveInput({
         step={step}
         inputChips={inputChips}
         inputEmotions={inputEmotions}
+        inputBookmarked={inputBookmarked}
         inputSkippedMeal={inputSkippedMeal}
         inputOtherText={inputOtherText}
         inputText={inputText}
         setInputChips={setInputChips}
         setInputEmotions={setInputEmotions}
+        setInputBookmarked={setInputBookmarked}
         setInputSkippedMeal={setInputSkippedMeal}
         setInputOtherText={setInputOtherText}
         setInputText={setInputText}
         onSkip={handleSkip}
         onStepBack={handleStepBack}
         onSubmitBehavior={handleSubmitBehavior}
+        onSubmitBookmark={handleSubmitBookmark}
         onSubmitCompany={handleSubmitCompany}
         onSubmitDescription={handleSubmitDescription}
         onSubmitEmotions={handleSubmitEmotions}

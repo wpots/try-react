@@ -61,6 +61,7 @@ export interface DiaryEntry {
   description: string;
   behavior: DiaryEntryBehavior[];
   skippedMeal: boolean;
+  isBookmarked: boolean;
   date: Timestamp;
   time: string;
   locationOther?: string;
@@ -90,6 +91,7 @@ export interface CreateDiaryEntryInput {
   description?: string;
   behavior?: DiaryEntryBehavior[];
   skippedMeal?: boolean;
+  isBookmarked?: boolean;
   date: string;
   time: string;
   locationOther?: string;

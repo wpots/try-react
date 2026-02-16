@@ -21,6 +21,7 @@ export interface DiaryEntry {
   description: string;
   behavior: string[];
   skippedMeal: boolean;
+  isBookmarked: boolean;
   date: string;
   time: string;
   locationOther?: string;
@@ -42,6 +43,7 @@ export interface SaveDiaryEntryInput {
   company?: DiaryEntryCompany;
   behavior?: DiaryEntryBehavior[];
   skippedMeal?: boolean;
+  isBookmarked?: boolean;
   date: string;
   time: string;
   locationOther?: string;
@@ -63,6 +65,7 @@ function toClientEntry(entry: Awaited<ReturnType<typeof getDiaryEntriesByUser>>[
     description: entry.description,
     behavior: entry.behavior,
     skippedMeal: entry.skippedMeal,
+    isBookmarked: entry.isBookmarked,
     date: entry.date.toDate().toISOString().slice(0, 10),
     time: entry.time,
     locationOther: entry.locationOther,
@@ -91,6 +94,7 @@ export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> 
     description: input.description ?? "",
     behavior: input.behavior,
     skippedMeal: input.skippedMeal ?? false,
+    isBookmarked: input.isBookmarked ?? false,
     date: input.date,
     time: input.time,
     locationOther: input.locationOther,

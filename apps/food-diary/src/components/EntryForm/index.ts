@@ -1,8 +1,11 @@
 import type { DiaryEntryBehavior, DiaryEntryCompany, DiaryEntryLocation, DiaryEntryType } from "@/lib/firestore/types";
 
+export type EntryFormMode = "chat" | "form";
+
 export interface WizardEntry {
   entryType: DiaryEntryType | null;
   skippedMeal: boolean | null;
+  isBookmarked: boolean;
   date: string;
   time: string;
   location: DiaryEntryLocation | null;
@@ -19,6 +22,9 @@ export interface WizardEntry {
 }
 
 export interface EntryFormProps {
+  initialMode?: EntryFormMode;
+  isBookmarked?: boolean;
+  onBookmarkChange?: (isBookmarked: boolean) => void;
   onComplete?: () => void;
   onDirtyChange?: (isDirty: boolean) => void;
 }
@@ -30,6 +36,7 @@ export interface TraditionalFormProps {
 }
 
 export interface CoachChatProps {
+  initialMode?: EntryFormMode;
   onComplete?: () => void;
 }
 

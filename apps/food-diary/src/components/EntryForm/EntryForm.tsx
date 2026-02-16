@@ -12,6 +12,9 @@ import { useCoachChatController } from "./useCoachChatController";
 import { hasUnsavedEntryChanges } from "./utils/hasUnsavedEntryChanges";
 
 export function EntryForm({
+  initialMode = "chat",
+  isBookmarked,
+  onBookmarkChange,
   onComplete,
   onDirtyChange,
 }: EntryFormProps): React.JSX.Element {
@@ -26,8 +29,12 @@ export function EntryForm({
     router.push("/dashboard");
   }, [onComplete, router]);
 
-  const controller = useCoachChatController({ onComplete: handleComplete });
+  const controller = useCoachChatController({
+    initialMode,
+    onComplete: handleComplete,
+  });
   const initialEntryRef = useRef<WizardEntry>(controller.entry);
+  const previousBookmarkedPropRef = useRef(isBookmarked);
 
   const isDirty = useMemo(
     () =>
@@ -38,6 +45,7 @@ export function EntryForm({
         inputText: controller.inputText,
         inputChips: controller.inputChips,
         inputEmotions: controller.inputEmotions,
+        inputBookmarked: controller.inputBookmarked,
         inputSkippedMeal: controller.inputSkippedMeal,
         inputOtherText: controller.inputOtherText,
         messages: controller.messages,
@@ -46,6 +54,7 @@ export function EntryForm({
       controller.currentStepIndex,
       controller.entry,
       controller.inputChips,
+      controller.inputBookmarked,
       controller.inputEmotions,
       controller.inputOtherText,
       controller.inputSkippedMeal,
@@ -61,6 +70,36 @@ export function EntryForm({
 
     onDirtyChange(isDirty);
   }, [isDirty, onDirtyChange]);
+
+  useEffect(() => {
+    if (isBookmarked == null) {
+      previousBookmarkedPropRef.current = isBookmarked;
+      return;
+    }
+
+    if (previousBookmarkedPropRef.current === isBookmarked) {
+      return;
+    }
+
+    previousBookmarkedPropRef.current = isBookmarked;
+
+    if (controller.entry.isBookmarked === isBookmarked) {
+      return;
+    }
+
+    controller.setEntry({
+      ...controller.entry,
+      isBookmarked,
+    });
+  }, [controller.entry, controller.setEntry, isBookmarked]);
+
+  useEffect(() => {
+    if (!onBookmarkChange) {
+      return;
+    }
+
+    onBookmarkChange(controller.entry.isBookmarked);
+  }, [controller.entry.isBookmarked, onBookmarkChange]);
 
   return (
     <div className="flex h-full flex-col">

@@ -126,6 +126,18 @@ export function useDashboardContent(): UseDashboardContentResult {
     };
   }, [user?.uid]);
 
+  useEffect(() => {
+    setBookmarkState((previousState) => {
+      const nextState: Record<string, boolean> = {};
+
+      for (const entry of entries) {
+        nextState[entry.id] = previousState[entry.id] ?? entry.isBookmarked;
+      }
+
+      return nextState;
+    });
+  }, [entries]);
+
   const entriesByDate = useMemo(() => mapEntriesByDate(entries), [entries]);
 
   const dayEntries = useMemo(() => {
@@ -198,6 +210,7 @@ export function useDashboardContent(): UseDashboardContentResult {
       const params = new URLSearchParams({
         entryId,
         from: "dashboard",
+        mode: "form",
       });
 
       router.push(`/entry/create?${params.toString()}`);

@@ -8,7 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously } from "@/lib/auth";
 import { saveDiaryEntry } from "@/lib/diaryEntries";
 
-import type { CoachChatProps, WizardEntry } from "./index";
+import type { CoachChatProps, EntryFormMode, WizardEntry } from "./index";
 import { formatDatetimeHuman } from "./utils/formatDatetimeHuman";
 import { getDefaultEntryType } from "./utils/getDefaultEntryType";
 import { getInitialEntry } from "./utils/getInitialEntry";
@@ -36,8 +36,8 @@ interface Snapshot {
 }
 
 export interface UseCoachChatControllerResult {
-  mode: "chat" | "form";
-  setMode: (mode: "chat" | "form") => void;
+  mode: EntryFormMode;
+  setMode: (mode: EntryFormMode) => void;
   currentStepIndex: number;
   messages: CoachChatMessage[];
   isTyping: boolean;
@@ -48,6 +48,7 @@ export interface UseCoachChatControllerResult {
   inputText: string;
   inputChips: string[];
   inputEmotions: string[];
+  inputBookmarked: boolean | null;
   inputSkippedMeal: boolean | null;
   inputOtherText: string;
   filteredSteps: WizardStep[];
@@ -55,12 +56,14 @@ export interface UseCoachChatControllerResult {
   setInputText: (value: string) => void;
   setInputChips: (value: string[]) => void;
   setInputEmotions: (value: string[]) => void;
+  setInputBookmarked: (value: boolean | null) => void;
   setInputSkippedMeal: (value: boolean | null) => void;
   setInputOtherText: (value: string) => void;
   handleStepBack: () => void;
   handleSkip: () => void;
   handleSubmitEntryType: () => void;
   handleSubmitDatetime: () => void;
+  handleSubmitBookmark: (override?: boolean | null) => void;
   handleSubmitSkippedMeal: (override?: boolean | null) => void;
   handleSubmitLocation: (override?: string) => void;
   handleSubmitCompany: (override?: string) => void;
@@ -73,11 +76,12 @@ export interface UseCoachChatControllerResult {
 }
 
 export function useCoachChatController({
+  initialMode = "chat",
   onComplete,
 }: CoachChatProps): UseCoachChatControllerResult {
   const { user } = useAuth();
 
-  const [mode, setMode] = useState<"chat" | "form">("chat");
+  const [mode, setMode] = useState<EntryFormMode>(initialMode);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [messages, setMessages] = useState<CoachChatMessage[]>([]);
   const [isTyping, setIsTyping] = useState(true);
@@ -89,6 +93,7 @@ export function useCoachChatController({
   const [inputText, setInputText] = useState("");
   const [inputChips, setInputChips] = useState<string[]>([]);
   const [inputEmotions, setInputEmotions] = useState<string[]>([]);
+  const [inputBookmarked, setInputBookmarked] = useState<boolean | null>(null);
   const [inputSkippedMeal, setInputSkippedMeal] = useState<boolean | null>(
     null,
   );
@@ -113,6 +118,7 @@ export function useCoachChatController({
     setInputText("");
     setInputChips([]);
     setInputEmotions([]);
+    setInputBookmarked(null);
     setInputSkippedMeal(null);
     setInputOtherText("");
   }, []);
@@ -169,7 +175,10 @@ export function useCoachChatController({
     if (!currentStep) {
       return;
     }
-    if (currentStep.key === "location" && entry.location === "anders") {
+    if (currentStep.key === "bookmark") {
+      setInputBookmarked(entry.isBookmarked);
+      setInputOtherText("");
+    } else if (currentStep.key === "location" && entry.location === "anders") {
       setInputOtherText(entry.locationOther ?? "");
     } else if (currentStep.key === "company" && entry.company === "anders") {
       setInputOtherText(entry.companyOther ?? "");
@@ -209,6 +218,7 @@ export function useCoachChatController({
           locationOther: finalEntry.locationOther,
           companyOther: finalEntry.companyOther,
           behaviorOther: finalEntry.behaviorOther,
+          isBookmarked: finalEntry.isBookmarked,
           imageUrl: finalEntry.imageUrl,
           imagePublicId: finalEntry.imagePublicId,
         });
@@ -301,6 +311,19 @@ export function useCoachChatController({
     addMessage("user", formatDatetimeHuman(entry.date, entry.time ?? "00:00", locale));
     advanceStep(entry);
   }, [addMessage, advanceStep, entry, locale]);
+
+  const handleSubmitBookmark = useCallback(
+    (override?: boolean | null) => {
+      const value = override !== undefined ? override : inputBookmarked;
+      if (value == null) {
+        return;
+      }
+
+      addMessage("user", value ? t("form.yes") : t("form.no"));
+      advanceStep({ ...entry, isBookmarked: value });
+    },
+    [addMessage, advanceStep, entry, inputBookmarked, t],
+  );
 
   const handleSubmitSkippedMeal = useCallback(
     (override?: boolean | null) => {
@@ -444,6 +467,7 @@ export function useCoachChatController({
     inputText,
     inputChips,
     inputEmotions,
+    inputBookmarked,
     inputSkippedMeal,
     inputOtherText,
     filteredSteps,
@@ -451,12 +475,14 @@ export function useCoachChatController({
     setInputText,
     setInputChips,
     setInputEmotions,
+    setInputBookmarked,
     setInputSkippedMeal,
     setInputOtherText,
     handleStepBack,
     handleSkip,
     handleSubmitEntryType,
     handleSubmitDatetime,
+    handleSubmitBookmark,
     handleSubmitSkippedMeal,
     handleSubmitLocation,
     handleSubmitCompany,

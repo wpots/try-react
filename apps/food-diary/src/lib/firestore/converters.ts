@@ -74,6 +74,7 @@ export function mapDiaryEntrySnapshot(
     description: parsed.description,
     behavior: parsed.behavior,
     skippedMeal: parsed.skippedMeal,
+    isBookmarked: parsed.isBookmarked,
     date: parsed.date,
     time: parsed.time,
     locationOther: parsed.locationOther,
@@ -107,6 +108,7 @@ export function toDiaryEntryWriteData(input: {
   description: string;
   behavior: string[];
   skippedMeal: boolean;
+  isBookmarked: boolean;
   date: string;
   time: string;
   locationOther?: string;
@@ -125,6 +127,7 @@ export function toDiaryEntryWriteData(input: {
     description: input.description,
     behavior: input.behavior,
     skippedMeal: input.skippedMeal,
+    isBookmarked: input.isBookmarked,
     date: parseEntryDate(input.date, input.time),
     time: input.time,
     ...getOptionalDiaryEntryFields(input),

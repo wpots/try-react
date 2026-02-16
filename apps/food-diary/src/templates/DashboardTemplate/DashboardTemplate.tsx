@@ -36,7 +36,7 @@ function getWeekdayLabels(translate: (key: string) => string): string[] {
   ];
 }
 
-export function DashboardContent(): React.JSX.Element {
+export function DashboardTemplate(): React.JSX.Element {
   const locale = useLocale();
   const tDashboard = useTranslations("dashboard");
   const tEntry = useTranslations("entry");

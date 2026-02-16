@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@repo/ui";
+import { cn, ToggleButtonGroup } from "@repo/ui";
 
 import type { DashboardViewMode } from "../index";
 
@@ -22,6 +22,10 @@ const viewModeLabels: Record<DashboardViewMode, string> = {
 
 const viewModes: DashboardViewMode[] = ["day", "week", "month"];
 
+function isDashboardViewMode(value: string): value is DashboardViewMode {
+  return value === "day" || value === "week" || value === "month";
+}
+
 export function DashboardToolbar({
   canNavigateNext,
   onGoToToday,
@@ -32,6 +36,11 @@ export function DashboardToolbar({
   translateDashboard,
   viewMode,
 }: DashboardToolbarProps): React.JSX.Element {
+  const viewModeOptions = viewModes.map((view) => ({
+    value: view,
+    label: translateDashboard(viewModeLabels[view]),
+  }));
+
   return (
     <section className="grid gap-ds-s rounded-ds-xl border border-ds-border-subtle bg-ds-surface p-ds-m">
       <div className="flex flex-wrap items-center justify-between gap-ds-s">
@@ -82,28 +91,15 @@ export function DashboardToolbar({
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-ds-xs">
-        {viewModes.map((view) => {
-          const isActive = viewMode === view;
-
-          return (
-            <button
-              key={view}
-              className={cn(
-                "rounded-ds-full border px-ds-m py-ds-xs font-ds-label-xs",
-                "transition",
-                isActive
-                  ? "border-ds-brand-primary bg-ds-brand-primary-soft"
-                  : "border-ds-border-subtle text-ds-on-surface-secondary",
-              )}
-              onClick={() => onSelectViewMode(view)}
-              type="button"
-            >
-              {translateDashboard(viewModeLabels[view])}
-            </button>
-          );
-        })}
-      </div>
+      <ToggleButtonGroup
+        options={viewModeOptions}
+        selectedValue={viewMode}
+        onSelectedValueChange={(value) => {
+          if (isDashboardViewMode(value)) {
+            onSelectViewMode(value);
+          }
+        }}
+      />
     </section>
   );
 }

@@ -3,10 +3,16 @@
 import { useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { EntryForm } from "@/components/EntryForm";
+import { EntryForm, type EntryFormMode } from "@/components/EntryForm";
 import { EntryPageHeader } from "@/components/EntryPageHeader";
 
-export function CreateEntryPageContent(): React.JSX.Element {
+interface CreateEntryTemplateProps {
+  initialMode?: EntryFormMode;
+}
+
+export function CreateEntryTemplate({
+  initialMode = "chat",
+}: CreateEntryTemplateProps): React.JSX.Element {
   const tEntry = useTranslations("entry");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -37,7 +43,12 @@ export function CreateEntryPageContent(): React.JSX.Element {
         onBookmarkClick={handleBookmarkClick}
       />
       <div className="min-h-0 flex-1">
-        <EntryForm onDirtyChange={setHasUnsavedChanges} />
+        <EntryForm
+          initialMode={initialMode}
+          isBookmarked={isBookmarked}
+          onBookmarkChange={setIsBookmarked}
+          onDirtyChange={setHasUnsavedChanges}
+        />
       </div>
     </div>
   );

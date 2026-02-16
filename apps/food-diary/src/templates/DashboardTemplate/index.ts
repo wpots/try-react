@@ -34,4 +34,4 @@ export interface DashboardWeekDay {
   isToday: boolean;
 }
 
-export { DashboardContent } from "./DashboardContent";
+export { DashboardTemplate } from "./DashboardTemplate";

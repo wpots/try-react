@@ -10,6 +10,7 @@ export type WizardStepKey =
   | "emotions"
   | "description"
   | "behavior"
+  | "bookmark"
   | "confirm";
 
 export interface WizardStep {
@@ -48,5 +49,6 @@ export const STEPS: WizardStep[] = [
     messageKey: "coach.behavior",
     optional: true,
   },
+  { key: "bookmark", messageKey: "coach.bookmark" },
   { key: "confirm", messageKey: "coach.confirm" },
 ];

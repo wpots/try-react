@@ -2,13 +2,12 @@
 
 import { useId, useRef } from "react";
 import { useLabel } from "@react-aria/label";
+import { Clock3 } from "lucide-react";
 
 import type { TimeInputProps } from "./index";
 import { cn } from "../../lib/utils";
 import { FormLabel } from "../Form";
-
-const inputBaseClasses =
-  "flex h-10 w-full rounded-md border border-ds-border bg-ds-surface-elevated px-ds-m py-ds-s text-ds-on-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20 disabled:cursor-not-allowed disabled:opacity-50";
+import { getFormFieldClasses } from "../../utils/getFormFieldClasses";
 
 export function TimeInput({
   label,
@@ -31,21 +30,30 @@ export function TimeInput({
   });
 
   return (
-    <div className={cn("grid w-full items-start gap-2", containerClassName)}>
+    <div className={cn(getFormFieldClasses("container"), containerClassName)}>
       {label ? (
         <FormLabel {...labelProps} className={labelClassName}>
           {label}
         </FormLabel>
       ) : null}
-      <input
-        {...fieldProps}
-        {...props}
-        ref={ref}
-        type="time"
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className={cn(inputBaseClasses, inputClassName)}
-      />
+      <div className="relative">
+        <input
+          {...fieldProps}
+          {...props}
+          ref={ref}
+          type="time"
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          className={cn(
+            getFormFieldClasses("controlWithRightIcon"),
+            inputClassName,
+          )}
+        />
+        <Clock3
+          aria-hidden="true"
+          className={getFormFieldClasses("rightIcon")}
+        />
+      </div>
     </div>
   );
 }

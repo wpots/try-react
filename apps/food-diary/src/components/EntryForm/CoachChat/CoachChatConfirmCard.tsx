@@ -86,6 +86,10 @@ export function CoachChatConfirmCard({
         <li>
           <strong>{t("coach.behavior")}:</strong> {behaviorLabel}
         </li>
+        <li>
+          <strong>{t("fields.bookmark")}:</strong>{" "}
+          {entry.isBookmarked ? t("form.yes") : t("form.no")}
+        </li>
       </ul>
       {saveError ? <p className="text-sm text-ds-danger">{saveError}</p> : null}
       <div className="mt-ds-m flex justify-end gap-ds-s">

@@ -7,6 +7,7 @@ interface HasUnsavedEntryChangesParams {
   inputText: string;
   inputChips: string[];
   inputEmotions: string[];
+  inputBookmarked: boolean | null;
   inputSkippedMeal: boolean | null;
   inputOtherText: string;
   messages: { role: "coach" | "user" }[];
@@ -24,6 +25,7 @@ interface NormalizedEntry {
   foodEaten: string;
   imagePublicId?: string;
   imageUrl?: string;
+  isBookmarked: boolean;
   location: string | null;
   locationOther?: string;
   skippedMeal: boolean | null;
@@ -48,6 +50,7 @@ function normalizeEntry(entry: WizardEntry): NormalizedEntry {
     foodEaten: entry.foodEaten.trim(),
     imagePublicId: entry.imagePublicId,
     imageUrl: entry.imageUrl,
+    isBookmarked: entry.isBookmarked,
     location: entry.location,
     locationOther: normalizeOptionalText(entry.locationOther),
     skippedMeal: entry.skippedMeal,
@@ -62,6 +65,7 @@ export function hasUnsavedEntryChanges({
   inputText,
   inputChips,
   inputEmotions,
+  inputBookmarked,
   inputSkippedMeal,
   inputOtherText,
   messages,
@@ -75,6 +79,7 @@ export function hasUnsavedEntryChanges({
     inputOtherText.trim().length > 0 ||
     inputChips.length > 0 ||
     inputEmotions.length > 0 ||
+    inputBookmarked !== null ||
     inputSkippedMeal !== null;
 
   const hasChatProgress =

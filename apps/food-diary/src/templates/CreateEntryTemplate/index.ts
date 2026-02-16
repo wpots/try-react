@@ -1,0 +1,1 @@
+export { CreateEntryTemplate } from "./CreateEntryTemplate";

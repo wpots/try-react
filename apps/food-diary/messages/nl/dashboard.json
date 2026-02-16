@@ -16,7 +16,7 @@
   },
   "hero": {
     "affirmation": "Dagelijkse affirmatie",
-    "averageMood": "Gemiddelde stemming van vandaag",
+    "averageMood": "stemming",
     "noMood": "Nog geen stemming vastgelegd"
   },
   "moodZones": {

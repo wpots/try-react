@@ -7,7 +7,8 @@
     "date": "Datum",
     "time": "Tijd",
     "type": "Type moment",
-    "datetime": "Moment"
+    "datetime": "Moment",
+    "bookmark": "Moment bewaren"
   },
   "coach": {
     "entryType": "Hoi! Wat voor moment wil je vastleggen?",
@@ -19,6 +20,7 @@
     "emotions": "Hoe voelde je je?",
     "description": "Wil je er iets over opschrijven?",
     "behavior": "Was er iets bijzonders aan dit moment?",
+    "bookmark": "Wil je dit moment bewaren?",
     "confirm": "Hier is een overzicht van je moment. Klopt alles?",
     "complete": "Goed gedaan! Je moment is opgeslagen."
   },
@@ -82,13 +84,23 @@
     "negative": "Negatief"
   },
   "behaviors": {
-    "restricted": "Te weinig gegeten",
-    "binged": "Eetbui",
-    "overate": "Te veel gegeten",
-    "threwUp": "Overgegeven",
-    "anders": "Anders"
+    "restricted": "te weinig gegeten",
+    "binged": "eetbui",
+    "overate": "te veel gegeten",
+    "threwUp": "overgegeven",
+    "anders": "anders ..."
   },
   "form": {
+    "entryType": "Wat voor moment wil je vastleggen?",
+    "datetime": "Wanneer was dit?",
+    "skippedMeal": "Heb je deze maaltijd overgeslagen?",
+    "location": "Waar en met wie was je?",
+    "foodEaten": "Wat heb je gegeten of gedronken?",
+    "emotions": "Hoe voelde je je?",
+    "description": "Notities",
+    "behavior": "Was er iets bijzonders aan dit moment?",
+    "bookmark": "Wil je dit moment bewaren?",
+    "complete": "Goed gedaan! Je moment is opgeslagen.",
     "switchToForm": "Liever zelf invullen?",
     "switchToChat": "Met coach invullen",
     "back": "Vorige stap",
@@ -106,10 +118,12 @@
     "foodEaten": "Bijv. boterham met kaas, koffie...",
     "foodEatenAi": "Je kunt later een foto toevoegen en laten analyseren met AI.",
     "description": "Schrijf hier je gedachten...",
+    "location": "Selecteer een locatie",
+    "company": "Selecteer met wie je was",
     "other": "Namelijk..."
   },
   "hints": {
-    "behavior": "Dit hoef je niet in te vullen.",
+    "behavior": "",
     "behaviorNone": "Niets bijzonders."
   },
   "saveEntry": "Invoer opslaan",

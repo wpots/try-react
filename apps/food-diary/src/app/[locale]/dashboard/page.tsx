@@ -1,5 +1,5 @@
-import { DashboardContent } from "@/components/DashboardContent";
+import { DashboardTemplate } from "@/templates/DashboardTemplate";
 
 export default function DashboardPage(): React.JSX.Element {
-  return <DashboardContent />;
+  return <DashboardTemplate />;
 }

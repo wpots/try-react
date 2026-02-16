@@ -8,6 +8,7 @@ export function getInitialEntry(): WizardEntry {
   return {
     entryType: null,
     skippedMeal: null,
+    isBookmarked: false,
     date,
     time,
     location: null,

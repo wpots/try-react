@@ -1,6 +1,9 @@
+"use client";
+
 import { Label, Card } from "@repo/ui";
 import type { DashboardMoodSummary } from "../index";
 import { Quote } from "@/components/Quote";
+import { AverageMoodAura } from "./AverageMoodAura";
 
 interface DashboardHeroProps {
   affirmation: string;
@@ -20,11 +23,12 @@ export function DashboardHero({
   return (
     <section
       className={
-        "min-h-80 border-b-1 border-ds-border-subtle " +
+        "relative min-h-80 overflow-hidden border-b-1 border-ds-border-subtle " +
         "bg-gradient-to-br from-ds-brand-primary/40 " +
         "via-ds-surface-primary-soft to-ds-surface-muted/20 p-ds-xxl"
       }
     >
+      {averageMood ? <AverageMoodAura zone={averageMood.zone} /> : null}
       <div className="relative z-10 grid gap-ds-l">
         <div>
           <Label>{dateLabel}</Label>
@@ -35,12 +39,19 @@ export function DashboardHero({
           {averageMood ? (
             <>
               <Label>{translateDashboard("hero.averageMood")}</Label>
-              <Card className="mt-ds-xs font-ds-display-base bg-ds-surface h-12 flex-row gap-ds-xs">
-                <span className="font-openmoji grayscale brightness-110 text-xl" aria-hidden="true">
-                  {averageMood.emoji}
-                </span>
-                {averageMood.label}
-              </Card>
+              <div className="mt-ds-xs flex w-full items-center p-ds-m">
+                <Card
+                  className={
+                    "h-12 w-fit flex-row gap-ds-xs bg-ds-surface " +
+                    "font-ds-display-base"
+                  }
+                >
+                  <span className="font-openmoji grayscale brightness-110 text-xl" aria-hidden="true">
+                    {averageMood.emoji}
+                  </span>
+                  {averageMood.label}
+                </Card>
+              </div>
             </>
           ) : null}
         </div>

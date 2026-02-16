@@ -50,6 +50,7 @@ export function DashboardToolbar({
             className={cn("!rounded-ds-full text-sm")}
             onClick={onGoToToday}
             type="button"
+            variant="outline"
           >
             {translateDashboard("navigation.today")}
           </FormButton>

@@ -99,6 +99,9 @@
     "yes": "Yes",
     "no": "No"
   },
+  "leavePrompt": {
+    "message": "Leave without saving this moment? Press OK to leave or Cancel to keep editing."
+  },
   "placeholders": {
     "foodEaten": "E.g. sandwich with cheese, coffee...",
     "foodEatenAi": "You can later add a photo and have it analysed with AI.",

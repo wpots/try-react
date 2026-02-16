@@ -99,6 +99,9 @@
     "yes": "Ja",
     "no": "Nee"
   },
+  "leavePrompt": {
+    "message": "Wil je dit moment verlaten zonder op te slaan? Druk op OK om te verlaten of op Annuleren om verder te bewerken."
+  },
   "placeholders": {
     "foodEaten": "Bijv. boterham met kaas, koffie...",
     "foodEatenAi": "Je kunt later een foto toevoegen en laten analyseren met AI.",

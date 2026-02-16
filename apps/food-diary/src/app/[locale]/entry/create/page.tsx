@@ -1,11 +1,7 @@
-import { EntryForm } from "@/components/EntryForm";
+import { CreateEntryPageContent } from "@/components/CreateEntryPageContent";
 
 function CreateEntryPage(): React.JSX.Element {
-  return (
-    <div className="flex h-dvh flex-col">
-      <EntryForm />
-    </div>
-  );
+  return <CreateEntryPageContent />;
 }
 
 export default CreateEntryPage;

@@ -20,11 +20,13 @@ export interface WizardEntry {
 
 export interface EntryFormProps {
   onComplete?: () => void;
+  onDirtyChange?: (isDirty: boolean) => void;
 }
 
 export interface TraditionalFormProps {
   initialEntry: WizardEntry;
   onComplete: (entry: WizardEntry) => void;
+  onEntryChange?: (entry: WizardEntry) => void;
 }
 
 export interface CoachChatProps {

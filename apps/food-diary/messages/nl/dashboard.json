@@ -27,15 +27,16 @@
     "happy": "Blij"
   },
   "affirmations": {
-    "a1": "Je doet het goed. Elke stap telt, hoe klein ook.",
-    "a2": "Het is oké om het rustig aan te doen. Jouw tempo is goed genoeg.",
-    "a3": "Je bent meer dan je relatie met eten. Je bent waardevol, altijd.",
+    "a1": "Ik doe het goed. Elke stap telt, hoe klein ook.",
+    "a2": "Het is oké om het rustig aan te doen. Mijn tempo is goed genoeg.",
+    "a3": "Ik ben meer dan mijn relatie met eten. Ik ben waardevol, altijd.",
     "a4": "Herstel is niet lineair. Elke dag is een nieuwe kans.",
-    "a5": "Dit kan moeilijk zijn. Je hoeft het niet perfect te doen.",
-    "a6": "Het is oké om vandaag zachter voor jezelf te zijn.",
-    "a7": "Je beslist zelf wat nu helpend voelt.",
-    "a8": "Ook als het zwaar is, mag je stap voor stap vooruit.",
-    "a9": "Je gevoelens mogen er zijn. Je hoeft ze niet weg te drukken."
+    "a5": "Dit kan moeilijk zijn. Ik hoeft het niet perfect te doen.",
+    "a6": "Het is oké om vandaag zachter voor mezelf te zijn.",
+    "a7": "Ik beslis zelf wat nu helpend voelt.",
+    "a8": "Ook als het zwaar is, mag ik stap voor stap vooruit.",
+    "a9": "Mijn gevoelens mogen er zijn. Ik hoeft ze niet weg te drukken.",
+    "a10": "Ik accepteer alleen gedachten die mij helpen en waar ik me goed door voel."
   },
   "weekdays": {
     "mon": "Ma",

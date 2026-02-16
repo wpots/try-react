@@ -34,7 +34,7 @@ export function DashboardHero({
         <div>
           <Label>{translateDashboard("hero.averageMood")}</Label>
           {averageMood ? (
-            <Card className="mt-ds-xs font-ds-display-base bg-ds-surface h-12 flex-row">
+            <Card className="mt-ds-xs font-ds-display-base bg-ds-surface h-12 flex-row gap-ds-xs">
               <span className="font-openmoji grayscale brightness-110 text-xl" aria-hidden="true">
                 {averageMood.emoji}
               </span>

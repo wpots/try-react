@@ -1,6 +1,7 @@
 import { cn } from "@repo/ui";
 
-import type { DashboardMonthCell } from "../index";
+import type { DashboardMonthCell, DashboardMood } from "../index";
+import { getAverageMoodZone, getMoodSummary } from "../utils/moodUtils";
 import { MoodDot } from "./MoodDot";
 
 interface MonthViewProps {
@@ -37,7 +38,18 @@ export function MonthView({
         ))}
 
         {cells.map((cell) => {
-          const moods = cell.moods.slice(0, 6);
+          const averageMoodSummary = getMoodSummary(
+            getAverageMoodZone(cell.entries),
+            translateDashboard,
+          );
+          const averageMood: DashboardMood | null = averageMoodSummary
+            ? {
+                emoji: averageMoodSummary.emoji,
+                key: `${cell.dateKey}-average`,
+                label: averageMoodSummary.label,
+                zone: averageMoodSummary.zone,
+              }
+            : null;
           const ariaLabel = `${dayFormatter.format(cell.date)}.`;
 
           return (
@@ -63,13 +75,7 @@ export function MonthView({
               </span>
 
               <span className="mt-ds-xs flex flex-wrap gap-ds-xxs sm:gap-ds-xs">
-                {moods.map((mood) => (
-                  <MoodDot
-                    key={`${cell.dateKey}-${mood.key}-${mood.emoji}`}
-                    mood={mood}
-                    size="month"
-                  />
-                ))}
+                {averageMood ? <MoodDot mood={averageMood} size="month" /> : null}
               </span>
 
               {cell.entries.length > 0 ? (

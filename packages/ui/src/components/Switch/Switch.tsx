@@ -22,9 +22,9 @@ export function Switch({ className, children, ...props }: SwitchProps): React.JS
       <span
         aria-hidden
         className={cn(
-          "pointer-events-none inline-block h-5 w-5 shrink-0 rounded-ds-full bg-ds-surface-primary shadow-sm transition-transform",
+          "pointer-events-none inline-block h-5 w-5 shrink-0 rounded-ds-full bg-ds-on-surface-muted/40 shadow-sm transition-transform",
           "translate-x-0.5",
-          "group-data-[selected]:translate-x-4",
+          "group-data-[selected]:bg-ds-surface-primary group-data-[selected]:translate-x-4",
         )}
       />
       {children ? <span className="ml-ds-s text-ds-on-surface">{children}</span> : null}

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Button as AriaButton,
   Label,
   ListBox,
   ListBoxItem,
@@ -8,7 +9,6 @@ import {
   Select as AriaSelect,
   SelectValue,
 } from "react-aria-components";
-import { Button } from "../Button";
 import type { SelectProps } from "./index.ts";
 import { cn } from "../../lib/utils";
 import { ChevronDown } from "lucide-react";
@@ -36,31 +36,18 @@ export function Select({
       className={cn(getFormFieldClasses("container"), className)}
       {...props}
     >
-      {label ? (
-        <Label className="text-sm font-medium text-ds-text-muted">
-          {label}
-        </Label>
-      ) : null}
-      <Button
-        variant="outline"
-        size="sm"
-        className={getFormFieldClasses("selectTrigger")}
-      >
-        <SelectValue
-          className={cn(getFormFieldClasses("selectValue"), "text-ds-on-surface")}
-        >
+      {label ? <Label className="text-sm font-medium text-ds-text-muted">{label}</Label> : null}
+      <AriaButton className={getFormFieldClasses("selectTrigger")}>
+        <SelectValue className={cn(getFormFieldClasses("selectValue"), "text-ds-on-surface")}>
           {({ selectedText }) => selectedText || placeholder || "\u00A0"}
         </SelectValue>
-        <ChevronDown
-          aria-hidden="true"
-          className={getFormFieldClasses("rightIcon")}
-        />
-      </Button>
+        <ChevronDown aria-hidden="true" className={getFormFieldClasses("rightIcon")} />
+      </AriaButton>
 
       <Popover
         className={cn(
-          "z-50 mt-1 w-[--trigger-width] rounded-md border border-ds-border",
-          "bg-ds-surface-elevated py-1 shadow-lg",
+          "z-50 w-[var(--trigger-width)] rounded-md border border-ds-border",
+          "bg-ds-surface py-1 shadow-lg",
         )}
       >
         <ListBox className="max-h-60 overflow-auto outline-none">

@@ -18,7 +18,7 @@ export function CreateEntryTemplate({
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   const handleBackClick = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement>) => {
+    (event: React.MouseEvent<HTMLButtonElement>) => {
       if (!hasUnsavedChanges) {
         return;
       }

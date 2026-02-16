@@ -1,19 +1,9 @@
-import { Button } from "@repo/ui";
+import { FormButton } from "@/components/FormButton";
 
-interface EntryFormButtonProps
-  extends Omit<React.ComponentProps<typeof Button>, "size" | "variant"> {
-  variant?: "default" | "outline" | "link";
-}
+type EntryFormButtonProps = React.ComponentProps<typeof FormButton>;
 
 export function EntryFormButton({
-  variant = "default",
   ...props
 }: EntryFormButtonProps): React.JSX.Element {
-  return (
-    <Button
-      size={variant === "link" ? "link" : "sm"}
-      variant={variant}
-      {...props}
-    />
-  );
+  return <FormButton {...props} />;
 }

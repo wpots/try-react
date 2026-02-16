@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn, ToggleButtonGroup, Section, Container, Button } from "@repo/ui";
+import { cn, ToggleButtonGroup, Section, Container } from "@repo/ui";
 
+import { FormButton } from "@/components/FormButton";
 import type { DashboardViewMode } from "../index";
 
 interface DashboardToolbarProps {
@@ -44,16 +45,14 @@ export function DashboardToolbar({
   return (
     <Section>
       <Container size="wide">
-        <div className="flex flex-wrap items-center justify-between md:justify-end gap-ds-s">
-          <Button
-            variant="outline"
-            size="sm"
+        <div className="flex flex-wrap items-center justify-between md:justify-end gap-ds-s mb-ds-xl">
+          <FormButton
             className={cn("!rounded-ds-full text-sm")}
             onClick={onGoToToday}
             type="button"
           >
             {translateDashboard("navigation.today")}
-          </Button>
+          </FormButton>
           <ToggleButtonGroup
             options={viewModeOptions}
             selectedValue={viewMode}
@@ -65,35 +64,35 @@ export function DashboardToolbar({
           />
         </div>
         <div className="flex items-center justify-center gap-ds-l">
-          <button
+          <FormButton
             aria-label={translateDashboard("navigation.previous")}
             className={cn(
-              "inline-flex h-9 w-9 items-center justify-center rounded-ds-full",
-              "border border-ds-border-subtle text-ds-on-surface-secondary",
-              "transition hover:border-ds-brand-primary",
+              "h-9 w-9",
+              "hover:border-ds-brand-primary",
               "hover:bg-ds-brand-primary-soft",
             )}
             onClick={onNavigatePrevious}
             type="button"
+            variant="iconOnly"
           >
             <ChevronLeft aria-hidden="true" className="h-4 w-4" />
-          </button>
+          </FormButton>
           <p className="font-ds-label-base text-ds-on-surface">{periodLabel}</p>
-          <button
+          <FormButton
             aria-label={translateDashboard("navigation.next")}
             className={cn(
-              "inline-flex h-9 w-9 items-center justify-center rounded-ds-full",
-              "border border-ds-border-subtle text-ds-on-surface-secondary",
-              "transition hover:border-ds-brand-primary",
+              "h-9 w-9",
+              "hover:border-ds-brand-primary",
               "hover:bg-ds-brand-primary-soft",
               "disabled:cursor-not-allowed disabled:opacity-40",
             )}
             disabled={!canNavigateNext}
             onClick={onNavigateNext}
             type="button"
+            variant="iconOnly"
           >
             <ChevronRight aria-hidden="true" className="h-4 w-4" />
-          </button>
+          </FormButton>
         </div>
       </Container>
     </Section>

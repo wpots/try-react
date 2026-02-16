@@ -113,7 +113,7 @@ export function DashboardTemplate(): React.JSX.Element {
   }
   return (
     <>
-      <main>
+      <main className="bg-ds-surface-muted min-h-screen">
         <DashboardHero
           affirmation={affirmation}
           averageMood={averageMood}

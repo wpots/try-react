@@ -27,22 +27,16 @@ export function DayView({
 }: DayViewProps): React.JSX.Element {
   if (entries.length === 0) {
     return (
-      <section
-        className="rounded-ds-xl border border-ds-border-subtle bg-ds-surface p-ds-xxl"
-      >
-        <h2 className="font-ds-heading-xs text-ds-on-surface">
-          {translateDashboard("day.emptyTitle")}
-        </h2>
-        <p className="mt-ds-s font-ds-body-base text-ds-on-surface-secondary">
-          {translateDashboard("day.emptyBody")}
-        </p>
+      <section className="rounded-ds-xl border border-ds-border-subtle bg-ds-surface p-ds-xxl">
+        <h2 className="font-ds-heading-xs text-ds-on-surface">{translateDashboard("day.emptyTitle")}</h2>
+        <p className="mt-ds-s font-ds-body-base text-ds-on-surface-secondary">{translateDashboard("day.emptyBody")}</p>
       </section>
     );
   }
 
   return (
     <section className="grid gap-ds-m lg:grid-cols-2">
-      {entries.map((entry) => (
+      {entries.map(entry => (
         <DayEntryCard
           key={entry.id}
           entry={entry}

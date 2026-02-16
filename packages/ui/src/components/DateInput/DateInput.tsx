@@ -5,6 +5,7 @@ import { useLabel } from "@react-aria/label";
 
 import type { DateInputProps } from "./index";
 import { cn } from "../../lib/utils";
+import { FormLabel } from "../Form";
 
 const inputBaseClasses =
   "h-10 w-full rounded-md border border-ds-border bg-ds-surface-elevated px-ds-m py-ds-s text-ds-on-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20 disabled:cursor-not-allowed disabled:opacity-50";
@@ -32,9 +33,9 @@ export function DateInput({
   return (
     <div className={cn("grid w-full gap-2", containerClassName)}>
       {label ? (
-        <label {...labelProps} className={cn("text-sm font-medium text-ds-text-muted", labelClassName)}>
+        <FormLabel {...labelProps} className={labelClassName}>
           {label}
-        </label>
+        </FormLabel>
       ) : null}
       <input
         {...fieldProps}

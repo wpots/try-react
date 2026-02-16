@@ -6,6 +6,7 @@ import { useTextField } from "@react-aria/textfield";
 
 import type { TextAreaProps } from "./index";
 import { cn } from "../../lib/utils";
+import { FormLabel } from "../Form";
 
 export function TextArea({
   label,
@@ -43,12 +44,12 @@ export function TextArea({
   return (
     <div className={cn("grid w-full items-start gap-2", containerClassName)}>
       {label ? (
-        <label
+        <FormLabel
           {...labelProps}
-          className={cn("text-sm font-medium text-ds-text-muted", labelClassName)}
+          className={labelClassName}
         >
           {label}
-        </label>
+        </FormLabel>
       ) : null}
       <textarea
         {...textareaElementProps}
@@ -74,4 +75,3 @@ export function TextArea({
     </div>
   );
 }
-

@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeft } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@repo/ui";
 
@@ -12,11 +13,14 @@ export function EntryPageHeader({
   backHref = "/dashboard",
   className,
   id = "entry-page-header",
+  isBookmarked = false,
   onBackClick,
+  onBookmarkClick,
   ...props
 }: EntryPageHeaderProps): React.JSX.Element {
   const tBrand = useTranslations("common.brand");
   const tNav = useTranslations("nav");
+  const tDashboard = useTranslations("dashboard");
 
   return (
     <header
@@ -49,7 +53,31 @@ export function EntryPageHeader({
         {tBrand("wordmark")}
       </span>
 
-      <span aria-hidden="true" className="h-6 w-6 justify-self-end" />
+      <button
+        type="button"
+        aria-label={
+          isBookmarked
+            ? tDashboard("entry.removeBookmark")
+            : tDashboard("entry.addBookmark")
+        }
+        onClick={onBookmarkClick}
+        className={cn(
+          "inline-flex h-6 w-6 items-center justify-center justify-self-end",
+          "rounded-ds-full border border-ds-border-subtle",
+          "text-ds-on-surface-secondary transition-colors",
+          "hover:border-ds-warning-strong hover:bg-ds-warning/20",
+          "focus-visible:outline-none focus-visible:ring-2",
+          "focus-visible:ring-focus-ring focus-visible:ring-offset-2",
+          "focus-visible:ring-offset-background",
+          isBookmarked && "border-ds-warning-strong bg-ds-warning",
+          isBookmarked && "text-ds-on-warning",
+        )}
+      >
+        <Bookmark
+          className={cn("h-4 w-4", isBookmarked && "fill-current")}
+          aria-hidden="true"
+        />
+      </button>
     </header>
   );
 }

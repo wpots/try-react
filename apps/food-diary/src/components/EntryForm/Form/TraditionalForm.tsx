@@ -1,9 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { Card, ChipSelector, EmotionPicker, Switch, TextArea } from "@repo/ui";
+import {
+  Card,
+  ChipSelector,
+  DateInput,
+  EmotionPicker,
+  Select,
+  Switch,
+  TextArea,
+  TimeInput,
+} from "@repo/ui";
 
 import type { TraditionalFormProps } from "../index";
 import { EntryFormButton } from "../partials/EntryFormButton";
@@ -32,10 +41,19 @@ function toOptions(
 export function TraditionalForm({
   initialEntry,
   onComplete,
+  onEntryChange,
 }: TraditionalFormProps): React.JSX.Element {
   const t = useTranslations("entry");
   const [entry, setEntry] = useState(initialEntry);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (!onEntryChange) {
+      return;
+    }
+
+    onEntryChange(entry);
+  }, [entry, onEntryChange]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
@@ -117,31 +135,26 @@ export function TraditionalForm({
 
           <FormSection label={t("coach.datetime")}>
             <div className="flex gap-ds-s">
-              <input
-                type="date"
+              <DateInput
                 value={entry.date}
-                onChange={(event) =>
-                  setEntry({ ...entry, date: event.target.value })
-                }
-                className="flex-1 rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
+                onChange={(value) => setEntry({ ...entry, date: value })}
+                aria-label={t("coach.datetime")}
               />
-              <input
-                type="time"
+              <TimeInput
                 value={entry.time}
-                onChange={(event) =>
-                  setEntry({ ...entry, time: event.target.value })
-                }
-                className="w-36 rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
+                onChange={(value) => setEntry({ ...entry, time: value })}
+                aria-label={t("coach.datetime")}
               />
             </div>
           </FormSection>
 
           <FormSection label={t("coach.location")}>
-            <ChipSelector
+            <Select
+              placeholder={t("coach.location")}
               options={toOptions(locationOptions, t)}
-              selectedValues={entry.location ? [entry.location] : []}
-              onSelectedValuesChange={(values) => {
-                const selected = values[0];
+              selectedKey={entry.location ?? null}
+              onSelectedKeyChange={(key) => {
+                const selected = key ?? "";
                 const location =
                   selected && isEntryLocation(selected) ? selected : null;
                 setEntry({
@@ -151,7 +164,7 @@ export function TraditionalForm({
                     selected === "anders" ? entry.locationOther : undefined,
                 });
               }}
-              selectionMode="single"
+              aria-label={t("coach.location")}
             />
             {entry.location === "anders" ? (
               <div className="mt-ds-s">
@@ -171,11 +184,12 @@ export function TraditionalForm({
           </FormSection>
 
           <FormSection label={t("coach.company")}>
-            <ChipSelector
+            <Select
+              placeholder={t("coach.company")}
               options={toOptions(companyOptions, t)}
-              selectedValues={entry.company ? [entry.company] : []}
-              onSelectedValuesChange={(values) => {
-                const selected = values[0];
+              selectedKey={entry.company ?? null}
+              onSelectedKeyChange={(key) => {
+                const selected = key ?? "";
                 const company =
                   selected && isEntryCompany(selected) ? selected : null;
                 setEntry({
@@ -185,7 +199,7 @@ export function TraditionalForm({
                     selected === "anders" ? entry.companyOther : undefined,
                 });
               }}
-              selectionMode="single"
+              aria-label={t("coach.company")}
             />
             {entry.company === "anders" ? (
               <div className="mt-ds-s">

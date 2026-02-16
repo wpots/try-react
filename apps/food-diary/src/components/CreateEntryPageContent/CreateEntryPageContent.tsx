@@ -9,6 +9,7 @@ import { EntryPageHeader } from "@/components/EntryPageHeader";
 export function CreateEntryPageContent(): React.JSX.Element {
   const tEntry = useTranslations("entry");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const handleBackClick = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -24,9 +25,17 @@ export function CreateEntryPageContent(): React.JSX.Element {
     [hasUnsavedChanges, tEntry],
   );
 
+  const handleBookmarkClick = useCallback(() => {
+    setIsBookmarked((previousState) => !previousState);
+  }, []);
+
   return (
     <div className="flex h-dvh flex-col">
-      <EntryPageHeader onBackClick={handleBackClick} />
+      <EntryPageHeader
+        isBookmarked={isBookmarked}
+        onBackClick={handleBackClick}
+        onBookmarkClick={handleBookmarkClick}
+      />
       <div className="min-h-0 flex-1">
         <EntryForm onDirtyChange={setHasUnsavedChanges} />
       </div>

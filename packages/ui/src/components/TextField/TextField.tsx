@@ -7,6 +7,7 @@ import { useTextField } from "@react-aria/textfield";
 
 import type { TextFieldProps } from "./index";
 import { cn } from "../../lib/utils";
+import { FormLabel } from "../Form";
 
 export function TextField({
   label,
@@ -39,12 +40,12 @@ export function TextField({
 
   return (
     <div className={cn("grid w-full items-start gap-2", containerClassName)}>
-      <label
+      <FormLabel
         {...labelProps}
-        className={cn("text-sm font-medium text-ds-text-muted", labelClassName)}
+        className={labelClassName}
       >
         {label}
-      </label>
+      </FormLabel>
       <input
         {...inputElementProps}
         ref={localRef}

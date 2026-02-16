@@ -24,8 +24,8 @@ export type {
   CardVariant,
 } from "./components/Card";
 
-export { Form } from "./components/Form";
-export type { FormProps } from "./components/Form";
+export { Form, FormLabel } from "./components/Form";
+export type { FormProps, FormLabelProps } from "./components/Form";
 
 export { Typography } from "./components/Typography";
 export type { TypographyProps } from "./components/Typography";
@@ -74,5 +74,8 @@ export type { PebbleIconProps } from "./components/PebbleIcon";
 
 export { Switch } from "./components/Switch";
 export type { SwitchProps } from "./components/Switch";
+
+export { Select } from "./components/Select";
+export type { SelectProps, SelectOption } from "./components/Select";
 
 export { cn } from "./lib/utils";

@@ -59,7 +59,9 @@ function getDisplayName(value: unknown): string | null {
   return typeof displayName === "string" ? displayName : null;
 }
 
-function hasVariant(value: unknown): value is { variant: "heading" | "body" | "script" | "display" } {
+function hasVariant(value: unknown): value is {
+  variant: "heading" | "body" | "script" | "display" | "label";
+} {
   if (!value || typeof value !== "object") {
     return false;
   }
@@ -72,7 +74,8 @@ function hasVariant(value: unknown): value is { variant: "heading" | "body" | "s
     value.variant === "heading" ||
     value.variant === "body" ||
     value.variant === "script" ||
-    value.variant === "display"
+    value.variant === "display" ||
+    value.variant === "label"
   );
 }
 
@@ -93,7 +96,7 @@ function getTypographyTagFromProps(childProps: unknown): string {
 export function validateNesting(
   parentTag: string,
   children: React.ReactNode,
-  variant: "heading" | "body" | "script" | "display",
+  variant: "heading" | "body" | "script" | "display" | "label",
 ): void {
   // eslint-disable-next-line no-process-env -- NODE_ENV is a special build-time constant in Next.js
   if (process.env.NODE_ENV === "production") {

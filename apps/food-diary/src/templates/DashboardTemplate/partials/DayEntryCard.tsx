@@ -60,7 +60,7 @@ export function DayEntryCard({
       className={cn(
         "items-stretch gap-0 border-ds-border-subtle bg-ds-surface",
         "p-ds-l shadow-ds-sm transition-colors md:p-ds-l",
-        hasBehavior && "border-b-4 border-ds-warning-strong bg-ds-warning/10",
+        hasBehavior && "border-b-4 border-ds-surface-strong",
       )}
     >
       <div className="flex items-start justify-between gap-ds-m">
@@ -112,45 +112,49 @@ export function DayEntryCard({
       </div>
 
       {isExpanded ? (
-        <div className="grid gap-ds-m">
+        <div className="grid gap-ds-xl border-t-1 border-ds-border-subtle pt-ds-xl">
           {entry.description.trim() && (
             <section>
-              {/* TODO: create variant 'label' where text on surface secondary is used and text is uppercase with font body */}
-              <Typography variant="body" size="sm" className="font-ds-label-sm text-ds-on-surface-secondary">
+              <Typography variant="label" size="sm">
                 {translateDashboard("entry.notes")}
               </Typography>
-              <Typography variant="body" size="sm" className="text-italic">
+              <Typography variant="body" size="sm">
                 {entry.description.trim()}
               </Typography>
             </section>
           )}
           <section className="grid grid-cols-2 gap-ds-m">
-            <Card variant="soft" className="flex flex-row">
+            <Card variant="soft" className="flex flex-row !py-ds-xs">
               <MapPin className="h-4 w-4" />
               <Typography variant="body" size="sm">
                 {locationLabel}
               </Typography>
             </Card>
-            <Card variant="soft" className="flex flex-row">
+            <Card variant="soft" className="flex flex-row !py-ds-xs">
               <Users className="h-4 w-4" />
               <Typography variant="body" size="sm">
                 {companyLabel}
               </Typography>
             </Card>
           </section>
-          <section>
-            <p className="font-ds-label-sm text-ds-on-surface-secondary">{translateDashboard("entry.whatAte")}</p>
-            <p className="font-ds-body-base text-ds-on-surface">
-              {entry.foodEaten.trim() || translateDashboard("entry.emptyField")}
-            </p>
-          </section>
+          {entry.foodEaten.trim() && (
+            <section>
+              <Typography variant="label" size="sm">
+                {translateDashboard("entry.whatAte")}
+              </Typography>
+              <Typography variant="body" size="base">
+                {entry.foodEaten.trim()}
+              </Typography>
+            </section>
+          )}
 
           {hasBehavior ? (
-            <section className={cn("rounded-ds-lg border border-ds-warning-strong bg-ds-warning/20", "p-ds-m")}>
-              <p className="font-ds-label-base text-ds-on-warning">{translateDashboard("entry.behaviorTitle")}</p>
-              <p className="mt-ds-xs font-ds-body-sm text-ds-on-warning">
-                {translateDashboard("entry.behaviorNotice")}
-              </p>
+            <section className={cn("rounded-ds-lg border border-ds-surface-strong bg-ds-surface-strong/10", "p-ds-m")}>
+              <Typography variant="label" size="sm">
+                {translateDashboard("entry.behaviorTitle")}
+              </Typography>
+
+              {/* TODO convert to chips */}
               <p className="mt-ds-xs font-ds-body-sm text-ds-on-warning">{behaviorLabels.join(", ")}</p>
             </section>
           ) : null}

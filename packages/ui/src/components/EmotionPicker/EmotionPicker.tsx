@@ -12,25 +12,21 @@ export function EmotionPicker({
   className,
   ...props
 }: EmotionPickerProps) {
-  function toLowercaseLabel(label: string): string {
-    return label.trim().toLocaleLowerCase();
-  }
-
   function resolveLabel(key: string, fallback: string): string {
     if (!getLabel) {
-      return toLowercaseLabel(fallback);
+      return fallback;
     }
 
     try {
       const translatedLabel = getLabel(key);
       if (translatedLabel.trim().length > 0) {
-        return toLowercaseLabel(translatedLabel);
+        return translatedLabel;
       }
     } catch {
-      return toLowercaseLabel(fallback);
+      return fallback;
     }
 
-    return toLowercaseLabel(fallback);
+    return fallback;
   }
 
   return (

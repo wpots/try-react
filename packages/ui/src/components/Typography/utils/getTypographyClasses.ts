@@ -1,5 +1,9 @@
 import type { ResponsiveSize } from "../index";
 
+type TypographyVariant = "heading" | "body" | "script" | "display" | "label";
+
+const LABEL_CLASSES = "text-ds-on-surface-secondary/50 uppercase tracking-wider";
+
 const TYPOGRAPHY_CLASSES: Record<string, Record<string, string>> = {
   body: {
     xs: "font-ds-body-xs",
@@ -34,10 +38,7 @@ const TYPOGRAPHY_CLASSES: Record<string, Record<string, string>> = {
   },
 };
 
-const RESPONSIVE_TYPOGRAPHY_CLASSES: Record<
-  string,
-  Record<string, Record<string, string>>
-> = {
+const RESPONSIVE_TYPOGRAPHY_CLASSES: Record<string, Record<string, Record<string, string>>> = {
   body: {
     sm: {
       xs: "sm:font-ds-body-xs",
@@ -203,39 +204,52 @@ const RESPONSIVE_TYPOGRAPHY_CLASSES: Record<
   },
 };
 
+function getVariantScaleKey(variant: TypographyVariant): "heading" | "body" | "script" | "display" {
+  return variant === "label" ? "body" : variant;
+}
+
+function withLabelClasses(variant: TypographyVariant, classes: string): string {
+  if (variant !== "label") {
+    return classes;
+  }
+
+  return `${classes} ${LABEL_CLASSES}`.trim();
+}
+
 export function getTypographyClasses<T extends string>(
-  variant: "heading" | "body" | "script" | "display",
+  variant: TypographyVariant,
   size: ResponsiveSize<T> | undefined,
 ): string {
+  const variantScaleKey = getVariantScaleKey(variant);
+
   if (!size) {
-    return TYPOGRAPHY_CLASSES[variant]?.base || "";
+    return withLabelClasses(variant, TYPOGRAPHY_CLASSES[variantScaleKey]?.base || "");
   }
 
   if (typeof size === "string") {
-    return TYPOGRAPHY_CLASSES[variant]?.[size] || "";
+    return withLabelClasses(variant, TYPOGRAPHY_CLASSES[variantScaleKey]?.[size] || "");
   }
 
   const classes: string[] = [];
 
   if (size.base) {
-    classes.push(TYPOGRAPHY_CLASSES[variant]?.[size.base] || "");
+    classes.push(TYPOGRAPHY_CLASSES[variantScaleKey]?.[size.base] || "");
   }
 
   const breakpoints = ["sm", "md", "lg", "xl", "2xl"] as const;
 
-  breakpoints.forEach((breakpoint) => {
+  breakpoints.forEach(breakpoint => {
     const breakpointSize = size[breakpoint];
     if (!breakpointSize || typeof breakpointSize !== "string") {
       return;
     }
 
-    const responsiveClass =
-      RESPONSIVE_TYPOGRAPHY_CLASSES[variant]?.[breakpoint]?.[breakpointSize];
+    const responsiveClass = RESPONSIVE_TYPOGRAPHY_CLASSES[variantScaleKey]?.[breakpoint]?.[breakpointSize];
 
     if (responsiveClass) {
       classes.push(responsiveClass);
     }
   });
 
-  return classes.join(" ");
+  return withLabelClasses(variant, classes.join(" "));
 }

@@ -34,6 +34,7 @@ export const EMOTIONS_BY_CATEGORY: Record<EmotionCategory, EmotionDefinition[]> 
     { key: "hurt", emoji: "🤕", label: "hurt" },
     { key: "concerned", emoji: "😟", label: "concerned" },
     { key: "lonely", emoji: "😔", label: "lonely" },
+    { key: "busy", emoji: "🤯", label: "busy" },
   ],
   negative: [
     { key: "annoyed", emoji: "😤", label: "annoyed" },

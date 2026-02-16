@@ -1,11 +1,11 @@
 import type { MoodZone } from "../index";
 
 const moodBadgeClasses: Record<MoodZone, string> = {
-  1: "bg-gradient-to-br from-ds-danger to-ds-surface-muted border-1 border-ds-danger ",
-  2: "bg-gradient-to-br from-ds-warning-strong to-ds-surface-muted border-1 border-ds-warning-strong",
-  3: "bg-gradient-to-br from-ds-brand-support to-ds-surface-muted border-1 border-ds-brand-support/50 ",
-  4: "bg-gradient-to-br from-ds-brand-primary/50 to-ds-surface-muted border-1 border-ds-brand-primary/50",
-  5: "bg-gradient-to-br from-ds-success to-ds-surface-muted border-1 border-ds-success ",
+  1: "bg-ds-danger/60 to-ds-surface-muted border-1 border-ds-danger ",
+  2: "bg-ds-warning-strong/60 to-ds-surface-muted border-1 border-ds-warning-strong",
+  3: "bg-ds-brand-support/60 to-ds-surface-muted border-1 border-ds-brand-support/50 ",
+  4: "bg-ds-brand-primary/40 to-ds-surface-muted border-1 border-ds-brand-primary/50",
+  5: "bg-ds-success/60 to-ds-surface-muted border-1 border-ds-success ",
 };
 
 const moodDotClasses: Record<MoodZone, string> = {

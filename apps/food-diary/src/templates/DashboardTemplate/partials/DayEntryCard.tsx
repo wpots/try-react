@@ -112,27 +112,31 @@ export function DayEntryCard({
       </div>
 
       {isExpanded ? (
-        <div className="mt-ds-l grid gap-ds-m">
-          <section className="flex gap-ds-xl bg-ds-surface-muted p-ds-m -mx-ds-m">
-            <div className="flex items-center gap-ds-xs">
+        <div className="grid gap-ds-m">
+          {entry.description.trim() && (
+            <section>
+              {/* TODO: create variant 'label' where text on surface secondary is used and text is uppercase with font body */}
+              <Typography variant="body" size="sm" className="font-ds-label-sm text-ds-on-surface-secondary">
+                {translateDashboard("entry.notes")}
+              </Typography>
+              <Typography variant="body" size="sm" className="text-italic">
+                {entry.description.trim()}
+              </Typography>
+            </section>
+          )}
+          <section className="grid grid-cols-2 gap-ds-m">
+            <Card variant="soft" className="flex flex-row">
               <MapPin className="h-4 w-4" />
               <Typography variant="body" size="sm">
                 {locationLabel}
               </Typography>
-            </div>
-            <div className="flex items-center gap-ds-xs">
+            </Card>
+            <Card variant="soft" className="flex flex-row">
               <Users className="h-4 w-4" />
               <Typography variant="body" size="sm">
                 {companyLabel}
               </Typography>
-            </div>
-            {entry.description.trim() && (
-              <div className="flex-1 items-center gap-ds-xs p-ds-m">
-                <Typography variant="body" size="sm">
-                  {entry.description.trim()}
-                </Typography>
-              </div>
-            )}
+            </Card>
           </section>
           <section>
             <p className="font-ds-label-sm text-ds-on-surface-secondary">{translateDashboard("entry.whatAte")}</p>

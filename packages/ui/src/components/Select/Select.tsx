@@ -9,7 +9,7 @@ import {
   Select as AriaSelect,
   SelectValue,
 } from "react-aria-components";
-import type { SelectProps } from "./index.ts";
+import type { SelectProps } from "./index";
 import { cn } from "../../lib/utils";
 import { ChevronDown } from "lucide-react";
 import { getFormFieldClasses } from "../../utils/getFormFieldClasses";

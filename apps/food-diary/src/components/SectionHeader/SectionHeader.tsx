@@ -1,6 +1,6 @@
 import { Typography, cn } from "@repo/ui";
 
-import type { SectionHeaderProps } from "./index.ts";
+import type { SectionHeaderProps } from "./index";
 
 export function SectionHeader({
   eyebrow,

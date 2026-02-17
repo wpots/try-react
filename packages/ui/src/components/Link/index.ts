@@ -1,5 +1,5 @@
 import type React from "react";
-import type { ButtonProps } from "../Button/index.ts";
+import type { ButtonProps } from "../Button";
 
 export interface NextLinkLikeProps extends React.ComponentProps<"a"> {
   href: string;

@@ -21,7 +21,7 @@ import {
 } from "@/components/LanguageSwitcher";
 import { locales } from "@/i18n/config";
 import { Link as I18nLink } from "@/i18n/navigation";
-import type { HeaderNavProps } from "./index.ts";
+import type { HeaderNavProps } from "./index";
 
 export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element {
   const { isPending, label, locale, handleLocaleChange } = useLanguageSwitcher();

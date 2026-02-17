@@ -1,4 +1,4 @@
-import type { StackProps, StackGap } from "./index.ts";
+import type { StackProps, StackGap } from "./index";
 import { cn } from "../../lib/utils";
 
 const gapClassNames: Record<StackGap, string> = {
@@ -68,4 +68,3 @@ export function Stack({
     />
   );
 }
-

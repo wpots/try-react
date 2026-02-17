@@ -6,7 +6,7 @@ import { motion, useSpring, useTransform } from "framer-motion";
 import { Image, cn } from "@repo/ui";
 import NextImage from "next/image";
 
-import type { LogoProps } from "./index.ts";
+import type { LogoProps } from "./index";
 
 const IMAGE_SIZE_CLASSNAMES: Record<NonNullable<LogoProps["size"]>, string> = {
   sm: "h-8 w-8",

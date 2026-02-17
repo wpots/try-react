@@ -72,15 +72,15 @@ export function ProductFeatures({
               {items.map((item, idx) => {
                 const option = getFeatureOption(item.id);
                 return (
-                  <Card
-                    key={item.id}
-                    ref={isLg ? setRef(idx) : undefined}
-                    className={cn(
-                      activeIdx === idx ? "shadow-ds-elevation-2 -translate-x-ds-xxs -translate-y-ds-xxs" : "",
-                    )}
-                  >
-                    <FeatureItemContent item={item} option={option} isActive={activeIdx === idx} variant="desktop" />
-                  </Card>
+                  <div key={item.id} ref={isLg ? setRef(idx) : undefined}>
+                    <Card
+                      className={cn(
+                        activeIdx === idx ? "shadow-ds-elevation-2 -translate-x-ds-xxs -translate-y-ds-xxs" : "",
+                      )}
+                    >
+                      <FeatureItemContent item={item} option={option} isActive={activeIdx === idx} variant="desktop" />
+                    </Card>
+                  </div>
                 );
               })}
             </div>
@@ -93,16 +93,18 @@ export function ProductFeatures({
             const option = getFeatureOption(item.id);
             const Preview = option.Preview;
             return (
-              <Card key={item.id} ref={!isLg ? setRef(idx) : undefined}>
-                <FeatureItemContent item={item} option={option} variant="mobile" />
-                {Preview ? (
-                  <div className="mt-ds-m">
-                    <MobilePhoneFrame>
-                      <Preview />
-                    </MobilePhoneFrame>
-                  </div>
-                ) : null}
-              </Card>
+              <div key={item.id} ref={!isLg ? setRef(idx) : undefined}>
+                <Card>
+                  <FeatureItemContent item={item} option={option} variant="mobile" />
+                  {Preview ? (
+                    <div className="mt-ds-m">
+                      <MobilePhoneFrame>
+                        <Preview />
+                      </MobilePhoneFrame>
+                    </div>
+                  ) : null}
+                </Card>
+              </div>
             );
           })}
         </div>

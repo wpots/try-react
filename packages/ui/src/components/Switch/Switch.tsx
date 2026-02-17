@@ -2,7 +2,7 @@
 
 import { Switch as AriaSwitch } from "react-aria-components";
 
-import type { SwitchProps } from "./index.ts";
+import type { SwitchProps } from "./index";
 import { cn } from "../../lib/utils";
 
 export function Switch({ className, children, ...props }: SwitchProps): React.JSX.Element {

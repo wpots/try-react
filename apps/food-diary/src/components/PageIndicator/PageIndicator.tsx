@@ -1,6 +1,6 @@
 import { cn } from "@repo/ui";
 
-import type { PageIndicatorProps } from "./index.ts";
+import type { PageIndicatorProps } from "./index";
 
 export function PageIndicator({
   count,

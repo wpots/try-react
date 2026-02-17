@@ -9,7 +9,9 @@ const cardVariantClasses: Record<NonNullable<CardProps["variant"]>, string> = {
   default: "border-ds-surface-muted bg-ds-surface",
   soft: "border-ds-border-subtle bg-ds-surface-muted text-ds-on-surface-muted",
   strong: "border-transparent bg-ds-brand-primary-soft",
-  knockout: "border-transparent bg-gradient-to-br from-ds-surface-primary/15 to-ds-surface-primary/35",
+  knockout:
+    "overflow-hidden border-transparent " +
+    "bg-gradient-to-br from-ds-surface-primary/15 to-ds-surface-primary/35",
 };
 
 export function Card<T extends React.ElementType = "div">({

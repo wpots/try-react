@@ -13,7 +13,8 @@ export function PageFooter({ className, id = "page-footer", children, ...props }
       data-component-type="PageFooter"
       id={id}
       className={cn(
-        "relative bg-gradient-to-br from-ds-surface-muted to-ds-brand-neutral/20 border-t-1 border-ds-border",
+        "relative overflow-hidden border-t-1 border-ds-border " +
+          "bg-gradient-to-br from-ds-surface-muted to-ds-brand-neutral/20",
         className,
       )}
       {...props}

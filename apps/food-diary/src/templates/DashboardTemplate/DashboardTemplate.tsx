@@ -2,6 +2,7 @@
 import { useCallback, useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { AuthButtons } from "@/components/AuthButtons";
+import { DashboardHeader } from "@/components/DashboardHeader";
 import type { DiaryEntry } from "@/lib/diaryEntries";
 import { DayView } from "./partials/DayView";
 import { DashboardHero } from "./partials/DashboardHero";
@@ -97,11 +98,17 @@ export function DashboardTemplate(): React.JSX.Element {
     });
   }, [dashboardState.entriesByDate, dashboardState.monthGridDates, dashboardState.today, resolveEntryMoods]);
   if (dashboardState.isLoading) {
-    return <p>{tDashboard("loading")}</p>;
+    return (
+      <>
+        <DashboardHeader />
+        <p>{tDashboard("loading")}</p>
+      </>
+    );
   }
   if (dashboardState.isUnauthenticated) {
     return (
       <>
+        <DashboardHeader />
         <section className="grid gap-ds-m pb-32">
           <h1 className="font-ds-heading-sm text-ds-on-surface">{tDashboard("title")}</h1>
           <p className="font-ds-body-base text-ds-on-surface-secondary">{tDashboard("authRequired")}</p>
@@ -113,6 +120,7 @@ export function DashboardTemplate(): React.JSX.Element {
   }
   return (
     <>
+      <DashboardHeader />
       <main className="bg-ds-surface-muted min-h-screen">
         <DashboardHero
           affirmation={affirmation}

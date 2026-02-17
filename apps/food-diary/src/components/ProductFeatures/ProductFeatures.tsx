@@ -20,7 +20,7 @@ export function ProductFeatures({
   id = "product-features",
   ...props
 }: ProductFeaturesProps): React.JSX.Element {
-  const [activeIdx, setRef, isLg] = useActiveFeatureIndex(items.length);
+  const [activeIdx, setRef, isDesktop] = useActiveFeatureIndex(items.length);
   const itemIds = items.map(i => i.id);
   const showPhoneColumn = hasAnyPreview(itemIds);
 
@@ -43,27 +43,25 @@ export function ProductFeatures({
         {/* Desktop: two-column scrollytelling when previews exist */}
         <div className="hidden md:flex md:gap-ds-xl">
           {showPhoneColumn ? (
-            <div className="w-[340px] shrink-0">
-              <div className="sticky top-24">
-                <DesktopPhoneFrame>
-                  {items.map((item, idx) => {
-                    const option = getFeatureOption(item.id);
-                    const Preview = option.Preview;
-                    return (
-                      <div
-                        key={item.id}
-                        className={cn(
-                          "absolute inset-0 px-ds-m py-ds-m transition-opacity duration-500",
-                          activeIdx === idx ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
-                        )}
-                      >
-                        {Preview ? <ActivePreviewWrapper Preview={Preview} isActive={activeIdx === idx} /> : null}
-                      </div>
-                    );
-                  })}
-                </DesktopPhoneFrame>
-                <PageIndicator count={items.length} activeIndex={activeIdx} />
-              </div>
+            <div className="sticky top-ds-4xl w-[340px] shrink-0 self-start">
+              <DesktopPhoneFrame>
+                {items.map((item, idx) => {
+                  const option = getFeatureOption(item.id);
+                  const Preview = option.Preview;
+                  return (
+                    <div
+                      key={item.id}
+                      className={cn(
+                        "absolute inset-0 px-ds-m py-ds-m transition-opacity duration-500",
+                        activeIdx === idx ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
+                      )}
+                    >
+                      {Preview ? <ActivePreviewWrapper Preview={Preview} isActive={activeIdx === idx} /> : null}
+                    </div>
+                  );
+                })}
+              </DesktopPhoneFrame>
+              <PageIndicator count={items.length} activeIndex={activeIdx} />
             </div>
           ) : null}
 
@@ -72,7 +70,7 @@ export function ProductFeatures({
               {items.map((item, idx) => {
                 const option = getFeatureOption(item.id);
                 return (
-                  <div key={item.id} ref={isLg ? setRef(idx) : undefined}>
+                  <div key={item.id} ref={isDesktop ? setRef(idx) : undefined}>
                     <Card
                       className={cn(
                         activeIdx === idx ? "shadow-ds-elevation-2 -translate-x-ds-xxs -translate-y-ds-xxs" : "",
@@ -93,7 +91,7 @@ export function ProductFeatures({
             const option = getFeatureOption(item.id);
             const Preview = option.Preview;
             return (
-              <div key={item.id} ref={!isLg ? setRef(idx) : undefined}>
+              <div key={item.id} ref={!isDesktop ? setRef(idx) : undefined}>
                 <Card>
                   <FeatureItemContent item={item} option={option} variant="mobile" />
                   {Preview ? (

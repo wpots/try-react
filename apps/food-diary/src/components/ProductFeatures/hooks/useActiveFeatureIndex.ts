@@ -7,8 +7,7 @@ const INTERSECTION_OPTIONS: IntersectionObserverInit = {
   threshold: [0, 0.25, 0.5, 0.75, 1],
 };
 
-const LG_MEDIA = "(min-width: 1024px)";
-const MD_MEDIA = "(min-width: 768px)";
+const DESKTOP_MEDIA = "(min-width: 768px)";
 
 /**
  * Tracks which feature card has the most area in the "active" viewport band (roughly centered).
@@ -19,14 +18,16 @@ export function useActiveFeatureIndex(
   itemCount: number,
 ): [number, (idx: number) => (el: HTMLElement | null) => void, boolean] {
   const [activeIdx, setActiveIdx] = useState(0);
-  const [isLg, setIsLg] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(DESKTOP_MEDIA).matches;
+  });
   const refs = useRef<(HTMLElement | null)[]>([]);
   const ratiosRef = useRef<number[]>([]);
 
   useEffect(() => {
-    const mql = window.matchMedia(MD_MEDIA);
-    const handle = () => setIsLg(mql.matches);
-    setIsLg(mql.matches);
+    const mql = window.matchMedia(DESKTOP_MEDIA);
+    const handle = () => setIsDesktop(mql.matches);
     mql.addEventListener("change", handle);
     return () => mql.removeEventListener("change", handle);
   }, []);
@@ -63,11 +64,11 @@ export function useActiveFeatureIndex(
       if (el) observer.observe(el);
     }
     return () => observer.disconnect();
-  }, [itemCount, isLg]);
+  }, [itemCount, isDesktop]);
 
   const setRef = (idx: number) => (el: HTMLElement | null) => {
     refs.current[idx] = el;
   };
 
-  return [activeIdx, setRef, isLg];
+  return [activeIdx, setRef, isDesktop];
 }

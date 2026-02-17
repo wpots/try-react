@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { textFieldDefaultArgs } from "./TextField.mocks";
-import { TextField } from "./TextField";
+import { cardDefaultArgs } from "./Card.mocks";
+import { Card } from "./Card";
 
 const meta = {
-  title: "Components/TextField",
-  component: TextField,
+  title: "Components/Card",
+  component: Card,
   tags: ["autodocs", "a11y"],
-  args: textFieldDefaultArgs,
+  args: cardDefaultArgs,
   parameters: {
     layout: "padded",
   },
-} satisfies Meta<typeof TextField>;
+} satisfies Meta<typeof Card>;
 
 export default meta;
 

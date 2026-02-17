@@ -3,6 +3,7 @@
     "skipToContent": "Skip to main content"
   },
   "hero": {
+    "eyebrow": "Food diary for recovery",
     "pill": "Food diary for recovery",
     "title": "Food diary app that helps you build a healthier relationship with food.",
     "subtitle": "Track moments, feelings and patterns without pressure.",
@@ -24,6 +25,7 @@
       "button": "Open The Real You app"
     },
     "feedback": {
+      "eyebrow": "Our focus",
       "title": "Our focus",
       "description": "We keep improving this app together with professionals and lived-experience experts. Your feedback helps us support recovery better.",
       "button": "Share your feedback"
@@ -44,6 +46,7 @@
     }
   },
   "features": {
+    "eyebrow": "The Real You",
     "heading": "Product features",
     "description": "The Real You app offers you a simple and safe way to keep a food diary that supports your recovery.",
     "items": {

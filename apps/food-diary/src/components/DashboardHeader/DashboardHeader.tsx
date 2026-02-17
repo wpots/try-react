@@ -88,7 +88,7 @@ export function DashboardHeader({
         buttonLabel={tLandingNav("accountMenuLabel")}
         className="pointer-events-auto"
         buttonClassName={cn(
-          "h-7 w-7 overflow-hidden border-transparent bg-transparent p-0",
+          "h-8 w-8 overflow-hidden border-transparent bg-transparent p-0",
           "!text-ds-on-surface-secondary hover:border-transparent",
           "hover:bg-transparent hover:!text-ds-on-surface",
         )}

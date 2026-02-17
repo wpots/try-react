@@ -49,7 +49,7 @@ export function EntryPageHeader({
         aria-label={tNav("dashboard")}
         onClick={handleBackClick}
         className={cn(
-          "h-6 w-6 border-transparent bg-transparent p-0",
+          "h-8 w-8 border-transparent bg-transparent p-0",
           "text-ds-on-surface-secondary hover:border-transparent",
           "hover:bg-ds-surface-muted",
           "hover:text-ds-on-surface",
@@ -64,7 +64,7 @@ export function EntryPageHeader({
 
       <BookmarkToggleButton
         addBookmarkLabel={tDashboard("entry.addBookmark")}
-        className="h-6 w-6 justify-self-end"
+        className="h-8 w-8 justify-self-end"
         isBookmarked={isBookmarked}
         onToggle={onBookmarkClick}
         removeBookmarkLabel={tDashboard("entry.removeBookmark")}

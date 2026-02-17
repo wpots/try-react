@@ -36,6 +36,10 @@ export function DashboardTemplate(): React.JSX.Element {
   const tEntry = useTranslations("entry");
   const dashboardState = useDashboardContent();
   const translateDashboard = useCallback((key: string): string => tDashboard(key), [tDashboard]);
+  const getDashboardRawMessage = useCallback(
+    (key: string): unknown => tDashboard.raw(key),
+    [tDashboard],
+  );
   const translateEntry = useCallback((key: string): string => tEntry(key), [tEntry]);
   const resolveEmotionLabel = useCallback(
     (emotionKey: string): string => {
@@ -55,7 +59,10 @@ export function DashboardTemplate(): React.JSX.Element {
     const zone = getAverageMoodZone(dashboardState.dayEntries);
     return getMoodSummary(zone, translateDashboard);
   }, [dashboardState.dayEntries, translateDashboard]);
-  const affirmationPool = useMemo(() => getAffirmationPool(translateDashboard), [translateDashboard]);
+  const affirmationPool = useMemo(
+    () => getAffirmationPool(translateDashboard, getDashboardRawMessage),
+    [translateDashboard, getDashboardRawMessage],
+  );
   const affirmation = useMemo(
     () => pickAffirmation(toDateKey(dashboardState.selectedDate), affirmationPool),
     [affirmationPool, dashboardState.selectedDate],

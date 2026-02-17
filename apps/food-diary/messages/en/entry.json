@@ -77,7 +77,8 @@
     "anxious": "Anxious",
     "embarrassed": "Embarrassed",
     "scared": "Scared",
-    "nausea": "Nausea"
+    "nausea": "Nausea",
+    "busy": "Busy"
   },
   "emotionCategories": {
     "positive": "Positive",

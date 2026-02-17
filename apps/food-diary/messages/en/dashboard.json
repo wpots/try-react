@@ -20,11 +20,11 @@
     "noMood": "No mood logged yet"
   },
   "moodZones": {
-    "overwhelmed": "Overwhelmed",
-    "anxious": "Anxious",
-    "balanced": "Steady",
-    "calm": "Calm",
-    "happy": "Happy"
+    "negative": "Take a break",
+    "worried": "Time for some self-care",
+    "neutral": "Balanced",
+    "optimistic": "Good strong!",
+    "positive": "Looking good!"
   },
   "affirmations": {
     "a1": "You are doing well. Every step counts, even the smallest one.",

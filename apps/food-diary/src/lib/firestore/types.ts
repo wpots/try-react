@@ -15,6 +15,7 @@ export const diaryEntryLocations = [
   "restaurant",
   "friend's house",
   "on the road",
+  "party",
   "anders",
 ] as const;
 
@@ -33,6 +34,7 @@ export const diaryEntryBehavior = [
   "binged",
   "overate",
   "threw up",
+  "overexercised",
   "anders",
 ] as const;
 

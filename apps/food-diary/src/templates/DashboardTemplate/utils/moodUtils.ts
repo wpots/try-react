@@ -1,4 +1,6 @@
 import type { DiaryEntry } from "@/lib/diaryEntries";
+import type { EmotionCategory } from "@repo/ui";
+import { emotions } from "@repo/ui";
 import type {
   DashboardMood,
   DashboardMoodSummary,
@@ -20,42 +22,36 @@ const FALLBACK_MOOD: EmotionMoodConfig = {
   zone: 3,
 };
 
-const ZONE_SUMMARY: Record<MoodZone, ZoneSummaryConfig> = {
-  1: { emoji: "😣", labelKey: "moodZones.overwhelmed" },
-  2: { emoji: "😟", labelKey: "moodZones.anxious" },
-  3: { emoji: "😐", labelKey: "moodZones.balanced" },
-  4: { emoji: "😌", labelKey: "moodZones.calm" },
-  5: { emoji: "🙂", labelKey: "moodZones.happy" },
+const CATEGORY_ZONE: Record<EmotionCategory, MoodZone> = {
+  positive: 5,
+  optimistic: 4,
+  neutral: 3,
+  worried: 2,
+  negative: 1,
 };
 
-const EMOTION_MOOD: Record<string, EmotionMoodConfig> = {
-  happy: { emoji: "😄", zone: 5 },
-  hopeful: { emoji: "😊", zone: 5 },
-  relieved: { emoji: "😌", zone: 5 },
-  joyful: { emoji: "😁", zone: 5 },
-  proud: { emoji: "🥲", zone: 5 },
-  confident: { emoji: "😎", zone: 5 },
-  calm: { emoji: "😌", zone: 4 },
-  fine: { emoji: "🙂", zone: 4 },
-  meh: { emoji: "😐", zone: 3 },
-  tired: { emoji: "😴", zone: 3 },
-  isolated: { emoji: "🤐", zone: 3 },
-  insecure: { emoji: "🤔", zone: 2 },
-  bored: { emoji: "🥱", zone: 3 },
-  disappointed: { emoji: "😞", zone: 2 },
-  sad: { emoji: "😢", zone: 2 },
-  hurt: { emoji: "🤕", zone: 2 },
-  concerned: { emoji: "😟", zone: 2 },
-  lonely: { emoji: "😔", zone: 2 },
-  annoyed: { emoji: "😤", zone: 2 },
-  angry: { emoji: "😠", zone: 1 },
-  stressed: { emoji: "😫", zone: 2 },
-  anxious: { emoji: "😰", zone: 2 },
-  ashamed: { emoji: "😖", zone: 1 },
-  embarrassed: { emoji: "😳", zone: 2 },
-  scared: { emoji: "😨", zone: 2 },
-  nausea: { emoji: "🤢", zone: 2 },
+const ZONE_SUMMARY: Record<MoodZone, ZoneSummaryConfig> = {
+  1: { emoji: "😣", labelKey: "moodZones.negative" },
+  2: { emoji: "😟", labelKey: "moodZones.worried" },
+  3: { emoji: "😐", labelKey: "moodZones.neutral" },
+  4: { emoji: "😌", labelKey: "moodZones.optimistic" },
+  5: { emoji: "🙂", labelKey: "moodZones.positive" },
 };
+
+function createEmotionMoodMap(): Record<string, EmotionMoodConfig> {
+  const moodMap: Record<string, EmotionMoodConfig> = {};
+
+  for (const emotion of emotions) {
+    moodMap[emotion.key] = {
+      emoji: emotion.emoji,
+      zone: CATEGORY_ZONE[emotion.category],
+    };
+  }
+
+  return moodMap;
+}
+
+const EMOTION_MOOD = createEmotionMoodMap();
 
 function toMoodZone(value: number): MoodZone {
   if (value <= 1) {

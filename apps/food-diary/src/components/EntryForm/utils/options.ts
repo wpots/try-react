@@ -24,6 +24,7 @@ export const locationOptions: SelectOptionDefinition<DiaryEntryLocation>[] = [
   { value: "restaurant", labelKey: "locations.restaurant" },
   { value: "friend's house", labelKey: "locations.friends" },
   { value: "on the road", labelKey: "locations.onTheRoad" },
+  { value: "party", labelKey: "locations.party" },
   { value: "anders", labelKey: "locations.anders" },
 ];
 
@@ -42,6 +43,7 @@ export const behaviorOptions: SelectOptionDefinition<DiaryEntryBehavior>[] = [
   { value: "binged", labelKey: "behaviors.binged" },
   { value: "overate", labelKey: "behaviors.overate" },
   { value: "threw up", labelKey: "behaviors.threwUp" },
+  { value: "overexercised", labelKey: "behaviors.overExercised" },
   { value: "anders", labelKey: "behaviors.anders" },
 ];
 

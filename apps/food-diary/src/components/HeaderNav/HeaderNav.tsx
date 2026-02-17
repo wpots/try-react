@@ -1,7 +1,6 @@
 "use client";
 
 import type { Key } from "react";
-import { User } from "lucide-react";
 import {
   Button,
   Label,
@@ -13,7 +12,7 @@ import {
   Select,
   SelectValue,
 } from "react-aria-components";
-import { HamburgerMenu, Link, Navigation, Text, cn } from "@repo/ui";
+import { HamburgerMenu, Link, Navigation, Text } from "@repo/ui";
 import {
   useLanguageSwitcher,
   isLocale,
@@ -43,14 +42,10 @@ export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element 
         ))}
       </Navigation>
 
-      <HamburgerMenu
-        buttonLabel={cms("accountMenuLabel")}
-        buttonClassName={cn()}
-        triggerContent={<User aria-hidden />}
-      >
+      <HamburgerMenu buttonLabel={cms("accountMenuLabel")}>
         <Menu className="grid gap-ds-s outline-none">
           {navItems.map(item => (
-            <MenuItem key={item.id} className="md:hidden">
+            <MenuItem key={item.id} className="md:!hidden">
               <Link as={I18nLink} href={item.href} variant="link">
                 {item.children}
               </Link>

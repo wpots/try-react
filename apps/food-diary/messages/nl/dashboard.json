@@ -20,11 +20,11 @@
     "noMood": "Nog geen stemming vastgelegd"
   },
   "moodZones": {
-    "overwhelmed": "Overweldigd",
-    "anxious": "Angstig",
-    "balanced": "In balans",
-    "calm": "Rustig",
-    "happy": "Blij"
+    "negative": "Neem je rust",
+    "worried": "Pas goed op jezelf",
+    "neutral": "In balans",
+    "optimistic": "Goed Bezig",
+    "positive": "Prima zo!"
   },
   "affirmations": {
     "a1": "Ik doe het goed. Elke stap telt, hoe klein ook.",

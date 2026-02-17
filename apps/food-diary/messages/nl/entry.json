@@ -37,6 +37,7 @@
     "restaurant": "Restaurant",
     "friends": "Bij vrienden",
     "onTheRoad": "Onderweg",
+    "party": "Feest",
     "anders": "Anders"
   },
   "company": {
@@ -54,6 +55,7 @@
     "fine": "prima",
     "relieved": "opgelucht",
     "joyful": "vrolijk",
+    "excited": "enthousiast",
     "proud": "trots",
     "confident": "zelfverzekerd",
     "calm": "kalm",
@@ -68,6 +70,7 @@
     "hurt": "gekwetst",
     "concerned": "bezorgd",
     "lonely": "eenzaam",
+    "panic": "paniek",
     "annoyed": "geïrriteerd",
     "angry": "boos",
     "stressed": "gestrest",
@@ -75,7 +78,7 @@
     "embarrassed": "gegeneerd",
     "scared": "bang",
     "nausea": "misselijk",
-    "busy": "bezig"
+    "busy": "druk"
   },
   "emotionCategories": {
     "positive": "Positief",
@@ -89,6 +92,7 @@
     "binged": "eetbui",
     "overate": "te veel gegeten",
     "threwUp": "overgegeven",
+    "overExercised": "overmatig sporten",
     "anders": "anders ..."
   },
   "form": {

@@ -37,6 +37,7 @@
     "restaurant": "Restaurant",
     "friends": "At friends",
     "onTheRoad": "On the road",
+    "party": "At a party",
     "anders": "Other"
   },
   "company": {
@@ -54,6 +55,7 @@
     "fine": "Fine",
     "relieved": "Relieved",
     "joyful": "Joyful",
+    "excited": "Excited",
     "proud": "Proud",
     "confident": "Confident",
     "calm": "Calm",
@@ -68,6 +70,7 @@
     "hurt": "Hurt",
     "concerned": "Concerned",
     "lonely": "Lonely",
+    "panic": "Panic",
     "annoyed": "Annoyed",
     "angry": "Angry",
     "stressed": "Stressed",
@@ -88,6 +91,7 @@
     "binged": "Binge",
     "overate": "Ate too much",
     "threwUp": "Threw up",
+    "overExercised": "Exercised too much",
     "anders": "Other"
   },
   "form": {

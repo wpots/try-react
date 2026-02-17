@@ -72,6 +72,10 @@ export function getEntryLocationLabel(
     return translate("locations.onTheRoad");
   }
 
+  if (entry.location === "party") {
+    return translate("locations.party");
+  }
+
   return entry.locationOther?.trim() || translate("locations.anders");
 }
 
@@ -125,6 +129,10 @@ export function getBehaviorLabel(
 
   if (behavior === "threw up") {
     return translate("behaviors.threwUp");
+  }
+
+  if (behavior === "overexercised") {
+    return translate("behaviors.overExercised");
   }
 
   return behaviorOther?.trim() || translate("behaviors.anders");

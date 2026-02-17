@@ -55,7 +55,12 @@ export { ChipSelector } from "./components/ChipSelector";
 export type { ChipSelectorProps, ChipSelectorOption } from "./components/ChipSelector";
 
 export { EmotionPicker } from "./components/EmotionPicker";
-export type { EmotionPickerProps } from "./components/EmotionPicker";
+export type {
+  EmotionCategory,
+  EmotionDefinition,
+  EmotionPickerProps,
+} from "./components/EmotionPicker";
+export { EMOTION_CATEGORY_ORDER, emotions } from "./components/EmotionPicker";
 
 export { TextArea } from "./components/TextArea";
 export type { TextAreaProps } from "./components/TextArea";

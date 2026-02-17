@@ -14,6 +14,7 @@ export const EMOTIONS_BY_CATEGORY: Record<EmotionCategory, EmotionDefinition[]> 
     { key: "hopeful", emoji: "😊", label: "hopeful" },
     { key: "relieved", emoji: "😌", label: "relieved" },
     { key: "joyful", emoji: "😁", label: "joyful" },
+    { key: "excited", emoji: "🤩", label: "excited" },
     { key: "proud", emoji: "🥲", label: "proud" },
     { key: "confident", emoji: "😎", label: "confident" },
   ],
@@ -34,6 +35,7 @@ export const EMOTIONS_BY_CATEGORY: Record<EmotionCategory, EmotionDefinition[]> 
     { key: "hurt", emoji: "🤕", label: "hurt" },
     { key: "concerned", emoji: "😟", label: "concerned" },
     { key: "lonely", emoji: "😔", label: "lonely" },
+    { key: "panic", emoji: "😱", label: "panic" },
     { key: "busy", emoji: "🤯", label: "busy" },
   ],
   negative: [

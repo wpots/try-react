@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "react-aria-components";
 import { HamburgerMenu, Link, Navigation, Text } from "@repo/ui";
+import { User } from "lucide-react";
 import {
   useLanguageSwitcher,
   isLocale,
@@ -42,7 +43,22 @@ export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element 
         ))}
       </Navigation>
 
-      <HamburgerMenu buttonLabel={cms("accountMenuLabel")}>
+      <HamburgerMenu
+        buttonLabel={cms("accountMenuLabel")}
+        triggerContent={
+          <>
+            <span
+              className="flex h-4 w-4 flex-col justify-between md:hidden"
+              aria-hidden
+            >
+              <span className="block h-0.5 w-4 bg-current" />
+              <span className="block h-0.5 w-4 bg-current" />
+              <span className="block h-0.5 w-4 bg-current" />
+            </span>
+            <User className="hidden md:block" aria-hidden />
+          </>
+        }
+      >
         <Menu className="grid gap-ds-s outline-none">
           {navItems.map(item => (
             <MenuItem key={item.id} className="md:!hidden">

@@ -41,7 +41,7 @@ export function ProductFeatures({
         />
 
         {/* Desktop: two-column scrollytelling when previews exist */}
-        <div className="hidden lg:flex lg:gap-ds-xl">
+        <div className="hidden md:flex md:gap-ds-xl">
           {showPhoneColumn ? (
             <div className="w-[340px] shrink-0">
               <div className="sticky top-24">
@@ -88,7 +88,7 @@ export function ProductFeatures({
         </div>
 
         {/* Mobile: stacked cards with optional inline preview */}
-        <div className="flex flex-col gap-ds-xl lg:hidden">
+        <div className="flex flex-col gap-ds-xl md:hidden">
           {items.map((item, idx) => {
             const option = getFeatureOption(item.id);
             const Preview = option.Preview;

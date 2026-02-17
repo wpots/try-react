@@ -8,6 +8,7 @@ const INTERSECTION_OPTIONS: IntersectionObserverInit = {
 };
 
 const LG_MEDIA = "(min-width: 1024px)";
+const MD_MEDIA = "(min-width: 768px)";
 
 /**
  * Tracks which feature card has the most area in the "active" viewport band (roughly centered).
@@ -23,7 +24,7 @@ export function useActiveFeatureIndex(
   const ratiosRef = useRef<number[]>([]);
 
   useEffect(() => {
-    const mql = window.matchMedia(LG_MEDIA);
+    const mql = window.matchMedia(MD_MEDIA);
     const handle = () => setIsLg(mql.matches);
     setIsLg(mql.matches);
     mql.addEventListener("change", handle);
@@ -40,25 +41,22 @@ export function useActiveFeatureIndex(
     }
     if (targetToIdx.size === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
-        for (const entry of entries) {
-          const idx = targetToIdx.get(entry.target);
-          if (idx !== undefined) ratios[idx] = entry.intersectionRatio;
+    const observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+      for (const entry of entries) {
+        const idx = targetToIdx.get(entry.target);
+        if (idx !== undefined) ratios[idx] = entry.intersectionRatio;
+      }
+      let bestIdx = 0;
+      let bestRatio = 0;
+      for (let i = 0; i < itemCount; i++) {
+        const r = ratios[i] ?? 0;
+        if (r > bestRatio) {
+          bestRatio = r;
+          bestIdx = i;
         }
-        let bestIdx = 0;
-        let bestRatio = 0;
-        for (let i = 0; i < itemCount; i++) {
-          const r = ratios[i] ?? 0;
-          if (r > bestRatio) {
-            bestRatio = r;
-            bestIdx = i;
-          }
-        }
-        setActiveIdx(bestIdx);
-      },
-      INTERSECTION_OPTIONS,
-    );
+      }
+      setActiveIdx(bestIdx);
+    }, INTERSECTION_OPTIONS);
 
     for (let i = 0; i < itemCount; i++) {
       const el = elements[i];

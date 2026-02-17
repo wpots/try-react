@@ -4,7 +4,8 @@ import { useCallback, useState } from "react";
 import type { Key } from "react";
 import { Menu, MenuItem } from "react-aria-components";
 import { useTranslations } from "next-intl";
-import { HamburgerMenu, Text, cn } from "@repo/ui";
+import { User } from "lucide-react";
+import { HamburgerMenu, Image, Text, cn } from "@repo/ui";
 import { signOut } from "@/lib/auth";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/contexts/AuthContext";
@@ -13,6 +14,19 @@ import type { DashboardHeaderProps } from "./index";
 
 const loginActionKey = "login";
 const logoutActionKey = "logout";
+
+function getAvatarUrl(photoUrl: string | null | undefined): string | null {
+  if (photoUrl == null) {
+    return null;
+  }
+
+  const trimmedPhotoUrl = photoUrl.trim();
+  if (trimmedPhotoUrl.length === 0) {
+    return null;
+  }
+
+  return trimmedPhotoUrl;
+}
 
 export function DashboardHeader({
   className,
@@ -27,6 +41,7 @@ export function DashboardHeader({
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isAuthenticated = !loading && Boolean(user);
+  const avatarUrl = getAvatarUrl(user?.photoURL);
 
   const handleMenuAction = useCallback(
     async (key: Key): Promise<void> => {
@@ -73,10 +88,22 @@ export function DashboardHeader({
         buttonLabel={tLandingNav("accountMenuLabel")}
         className="pointer-events-auto"
         buttonClassName={cn(
-          "h-6 w-6 border-transparent bg-transparent p-0",
+          "h-7 w-7 overflow-hidden border-transparent bg-transparent p-0",
           "!text-ds-on-surface-secondary hover:border-transparent",
           "hover:bg-transparent hover:!text-ds-on-surface",
         )}
+        triggerContent={
+          avatarUrl ? (
+            <Image
+              src={avatarUrl}
+              alt=""
+              aria-hidden
+              className="h-full w-full rounded-full object-cover"
+            />
+          ) : (
+            <User aria-hidden />
+          )
+        }
       >
         <Menu className="grid gap-ds-xs outline-none" onAction={handleMenuAction}>
           {isAuthenticated ? (

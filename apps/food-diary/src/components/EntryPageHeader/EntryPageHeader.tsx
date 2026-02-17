@@ -12,17 +12,20 @@ import type { EntryPageHeaderProps } from "./index";
 
 export function EntryPageHeader({
   backHref = "/dashboard",
+  backAriaLabel,
   className,
   id = "entry-page-header",
   isBookmarked = false,
   onBackClick,
   onBookmarkClick,
+  showBookmarkButton = true,
   ...props
 }: EntryPageHeaderProps): React.JSX.Element {
   const router = useRouter();
   const tBrand = useTranslations("common.brand");
   const tNav = useTranslations("nav");
   const tDashboard = useTranslations("dashboard");
+  const resolvedBackAriaLabel = backAriaLabel ?? tNav("dashboard");
 
   const handleBackClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onBackClick?.(event);
@@ -46,7 +49,7 @@ export function EntryPageHeader({
       {...props}
     >
       <FormButton
-        aria-label={tNav("dashboard")}
+        aria-label={resolvedBackAriaLabel}
         onClick={handleBackClick}
         className={cn(
           "h-8 w-8 border-transparent bg-transparent p-0",
@@ -62,13 +65,17 @@ export function EntryPageHeader({
 
       <span className="font-ds-script-base text-ds-on-surface text-center">{tBrand("wordmark")}</span>
 
-      <BookmarkToggleButton
-        addBookmarkLabel={tDashboard("entry.addBookmark")}
-        className="h-8 w-8 justify-self-end"
-        isBookmarked={isBookmarked}
-        onToggle={onBookmarkClick}
-        removeBookmarkLabel={tDashboard("entry.removeBookmark")}
-      />
+      {showBookmarkButton ? (
+        <BookmarkToggleButton
+          addBookmarkLabel={tDashboard("entry.addBookmark")}
+          className="h-8 w-8 justify-self-end"
+          isBookmarked={isBookmarked}
+          onToggle={onBookmarkClick}
+          removeBookmarkLabel={tDashboard("entry.removeBookmark")}
+        />
+      ) : (
+        <span aria-hidden="true" className="h-8 w-8 justify-self-end" />
+      )}
     </header>
   );
 }

@@ -2,9 +2,11 @@ import { Card, Container, IconTile, Label, Section, Typography } from "@repo/ui"
 import { LockKeyhole, MonitorSmartphone, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { AuthButtons } from "@/components/AuthButtons";
+import { EntryPageHeader } from "@/components/EntryPageHeader";
 
 export default function LoginPage(): React.JSX.Element {
   const t = useTranslations("auth");
+  const tNav = useTranslations("nav");
   const loginHighlights = [
     {
       id: "sync",
@@ -27,16 +29,25 @@ export default function LoginPage(): React.JSX.Element {
   ];
 
   return (
-    <main id="main-content">
+    <main id="main-content" className="flex min-h-dvh flex-col">
+      <EntryPageHeader
+        backAriaLabel={tNav("home")}
+        backHref="/"
+        showBookmarkButton={false}
+      />
       <Section
         spacing="none"
-        className="relative overflow-hidden py-ds-3xl md:py-ds-5xl"
+        className="relative flex-1 overflow-hidden py-ds-3xl md:py-ds-5xl"
       >
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-surface-primary/20 via-ds-surface to-ds-surface-muted" />
         <Container
           size="wide"
           className="relative grid items-start gap-ds-l lg:grid-cols-2"
         >
+          <div className="grid justify-items-center lg:justify-items-start">
+            <AuthButtons redirectPath="/dashboard" />
+          </div>
+
           <Card variant="knockout" className="items-start gap-ds-l">
             <Label variant="pill">{t("loginEyebrow")}</Label>
             <div className="grid gap-ds-s">
@@ -84,10 +95,6 @@ export default function LoginPage(): React.JSX.Element {
               })}
             </div>
           </Card>
-
-          <div className="grid justify-items-center lg:justify-items-end">
-            <AuthButtons redirectPath="/dashboard" />
-          </div>
         </Container>
       </Section>
     </main>

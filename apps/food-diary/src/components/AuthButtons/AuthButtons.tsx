@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button, Card, Text } from "@repo/ui";
-import { Sparkles, User } from "lucide-react";
+import { Button, Card, GoogleIcon, Text } from "@repo/ui";
+import { User } from "lucide-react";
 import type { AuthButtonsProps } from "./index";
 import { useAuthButtons } from "./useAuthButtons";
 
@@ -48,7 +48,7 @@ export function AuthButtons({
         onClick={onGoogleLogin}
         type="button"
       >
-        <Sparkles aria-hidden />
+        <GoogleIcon className="h-5 w-5" />
         {submittingMethod === "google"
           ? t("googleLoginLoading")
           : t("continueWithGoogle")}

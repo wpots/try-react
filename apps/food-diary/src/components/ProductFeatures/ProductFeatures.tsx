@@ -97,7 +97,7 @@ export function ProductFeatures({
                 <Card>
                   <FeatureItemContent item={item} option={option} variant="mobile" />
                   {Preview ? (
-                    <div className="mt-ds-m">
+                    <div className="mt-ds-m w-full">
                       <MobilePhoneFrame>
                         <Preview />
                       </MobilePhoneFrame>

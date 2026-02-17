@@ -77,6 +77,9 @@ export type { IconTileProps, IconTileVariant } from "./components/IconTile";
 export { PebbleIcon } from "./components/PebbleIcon";
 export type { PebbleIconProps } from "./components/PebbleIcon";
 
+export { GoogleIcon } from "./components/GoogleIcon";
+export type { GoogleIconProps } from "./components/GoogleIcon";
+
 export { Switch } from "./components/Switch";
 export type { SwitchProps } from "./components/Switch";
 

@@ -41,9 +41,9 @@ export function ProductFeatures({
         />
 
         {/* Desktop: two-column scrollytelling when previews exist */}
-        <div className="hidden md:flex md:gap-ds-xl">
+        <div className="hidden md:flex md:items-start md:gap-ds-xl">
           {showPhoneColumn ? (
-            <div className="sticky top-ds-4xl w-[340px] shrink-0 self-start">
+            <div className="h-fit w-[340px] shrink-0 self-start md:sticky md:top-24">
               <DesktopPhoneFrame>
                 {items.map((item, idx) => {
                   const option = getFeatureOption(item.id);

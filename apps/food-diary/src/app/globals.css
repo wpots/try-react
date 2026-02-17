@@ -2,6 +2,14 @@
 @source "../**/*.{js,jsx,ts,tsx,mdx}";
 @source "../../../../packages/ui/src/**/*.{js,jsx,ts,tsx,mdx}";
 
+@layer base {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+
 @layer utilities {
   @keyframes dashboard-hero-float {
     0%,

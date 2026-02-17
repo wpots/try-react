@@ -4,6 +4,7 @@ import { mergeGuestEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
+import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
 import { getHomeSplashDisabledState } from "./utils";
 
 export interface UseHomeSplashResult {
@@ -71,7 +72,7 @@ export function useHomeSplash(): UseHomeSplashResult {
 
       router.push("/dashboard");
     } catch (err) {
-      const message = err instanceof Error ? err.message : t("googleError");
+      const message = getFirebaseAuthErrorMessage(err, t("googleError"));
       setErrorMessage(message);
     } finally {
       setSubmittingMethod(null);

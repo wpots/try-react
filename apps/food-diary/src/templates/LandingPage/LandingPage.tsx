@@ -15,7 +15,7 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
   return (
     <>
       <main data-component-type="LandingPage" id={id} {...props}>
-        <PageHero className="md:pt-ds-5xl" />
+        <PageHero className="pt-ds-5xl" />
         <ProductFeatures
           eyebrow={<Label>{t("features.eyebrow")}</Label>}
           heading={t("features.heading")}

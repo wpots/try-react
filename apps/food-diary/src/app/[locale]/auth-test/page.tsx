@@ -5,6 +5,7 @@ import type { User } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { useTranslations } from "next-intl";
 import { auth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@/lib/firebase";
+import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
 
 const AuthTestPage = () => {
   const t = useTranslations("auth");
@@ -27,7 +28,7 @@ const AuthTestPage = () => {
     try {
       await signInWithPopup(auth, googleProvider);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Google login failed.";
+      const message = getFirebaseAuthErrorMessage(err, "Google login failed.");
       setError(message);
     } finally {
       setLoading(false);

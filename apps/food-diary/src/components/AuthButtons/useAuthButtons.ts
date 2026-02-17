@@ -4,6 +4,7 @@ import { mergeGuestEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
+import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
 import { getAuthButtonsDisabledState } from "./utils";
 
 interface UseAuthButtonsInput {
@@ -68,8 +69,10 @@ export function useAuthButtons({
 
       router.push(redirectPath);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : t("googleLoginUnknownError");
+      const message = getFirebaseAuthErrorMessage(
+        err,
+        t("googleLoginUnknownError"),
+      );
       setError(message);
     } finally {
       setSubmittingMethod(null);

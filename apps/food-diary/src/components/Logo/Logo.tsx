@@ -201,7 +201,8 @@ export function Logo({
         href={href}
         className={cn(
           "relative inline-flex h-ds-xl items-center no-underline md:h-ds-3xl",
-          "shrink-0 overflow-visible transition-[min-width] duration-300 ease-out",
+          "shrink-0 overflow-hidden md:overflow-visible " +
+            "transition-[min-width] duration-300 ease-out",
           className,
         )}
         style={{
@@ -210,7 +211,10 @@ export function Logo({
         {...props}
       >
         <span
-          className="absolute left-0 top-ds-lg inline-block whitespace-nowrap font-ds-script-xl text-ds-on-surface"
+          className={
+            "absolute left-0 top-ds-lg inline-block whitespace-nowrap " +
+            "font-ds-script-base md:font-ds-script-xl text-ds-on-surface"
+          }
           aria-hidden={expandedAriaHidden}
         >
           {useSegmentWordmark && segments.length === 3 ? (
@@ -281,7 +285,7 @@ export function Logo({
               aria-hidden
             />
           </motion.span>
-          <span className="font-ds-script-xl flex">
+          <span className="flex font-ds-script-base md:font-ds-script-xl">
             {visibleLetters.map((letter, i) => (
               <motion.span
                 key={`${i}-${letter}`}

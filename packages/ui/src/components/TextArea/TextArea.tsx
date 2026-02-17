@@ -62,7 +62,7 @@ export function TextArea({
         {...textareaElementProps}
         ref={localRef}
         className={cn(
-          "flex min-h-[5rem] w-full resize-y rounded-md border border-ds-border bg-ds-surface px-3 py-2 text-sm text-ds-text transition-colors",
+          "flex min-h-[5rem] w-full resize-y rounded-md border border-ds-border bg-ds-surface px-3 py-2 text-base text-ds-text transition-colors md:text-sm",
           "placeholder:text-ds-text-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20",
           "disabled:cursor-not-allowed disabled:opacity-50",
           isInvalid && "border-danger focus-visible:ring-danger/20",

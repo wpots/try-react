@@ -23,10 +23,10 @@ const TEXT_SIZE_CLASSNAMES: Record<NonNullable<LogoProps["size"]>, string> = {
 const MAX_LETTERS = 5;
 const SPRING = { stiffness: 380, damping: 32 };
 const LETTER_ENTER_X = -8;
-/** Min width when expanded (full wordmark). */
-const MIN_WIDTH_EXPANDED = "22rem";
-/** Min width when collapsed (pebble + TRY) so it never squishes. */
-const MIN_WIDTH_COLLAPSED = "9rem";
+/** Responsive min width when expanded (full wordmark). */
+const MIN_WIDTH_EXPANDED = "clamp(10.5rem, 58vw, 22rem)";
+/** Responsive min width when collapsed (pebble + TRY). */
+const MIN_WIDTH_COLLAPSED = "clamp(8.25rem, 33vw, 9rem)";
 
 /** When R/Y switch to r/y */
 const LOWERCASE_P = 0.08;

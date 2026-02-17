@@ -25,11 +25,17 @@ export function PageHeader({ className, id = "page-header", children, ...props }
       )}
       {...props}
     >
-      <Container className="flex items-center justify-between gap-ds-l py-ds-m">
+      <Container
+        className="flex min-w-0 items-center justify-between gap-ds-s py-ds-m md:gap-ds-l"
+      >
         <Logo id="page-header-logo" scrollProgress={scrollProgress} href="#home" />
 
         <PageHeaderScrollProvider value={{ isScrolled, scrollProgress }}>
-          {children ? <div className="ml-auto flex items-center gap-ds-m">{children}</div> : null}
+          {children ? (
+            <div className="ml-auto flex shrink-0 items-center gap-ds-xs md:gap-ds-m">
+              {children}
+            </div>
+          ) : null}
         </PageHeaderScrollProvider>
       </Container>
     </Section>

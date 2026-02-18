@@ -1,0 +1,22 @@
+{
+  "leavePrompt": {
+    "message": "Wil je dit moment verlaten zonder op te slaan? Druk op OK om te verlaten of op Annuleren om verder te bewerken."
+  },
+  "placeholders": {
+    "foodEaten": "Bijv. boterham met kaas, koffie...",
+    "foodEatenAi": "Je kunt later een foto toevoegen en laten analyseren met AI.",
+    "description": "Schrijf hier je gedachten...",
+    "location": "Selecteer een locatie",
+    "company": "Selecteer met wie je was",
+    "other": "Namelijk..."
+  },
+  "hints": {
+    "behavior": "",
+    "behaviorNone": "Niets bijzonders."
+  },
+  "errors": {
+    "notAuthenticated": "Gebruiker niet geauthenticeerd",
+    "saveFailed": "Opslaan van invoer mislukt",
+    "deleteFailed": "Verwijderen van invoer mislukt"
+  }
+}

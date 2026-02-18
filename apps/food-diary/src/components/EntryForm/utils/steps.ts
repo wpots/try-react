@@ -74,18 +74,16 @@ export const STEPS: WizardStep[] = [
   { key: "location", messageKey: "coach.location", replyKey: "location" },
   { key: "company", messageKey: "coach.company", replyKey: "company" },
   {
+    key: "foodEaten",
+    messageKey: "coach.foodEaten",
+    replyKey: "foodEaten",
+    condition: (context) => context.entryType !== "moment",
+  },
+  {
     key: "behavior",
     messageKey: "coach.behavior",
     replyKey: "behavior",
     optional: true,
-  },
-  {
-    key: "foodEaten",
-    messageKey: "coach.foodEaten",
-    replyKey: "foodEaten",
-    condition: (context) =>
-      context.entryType !== "moment" &&
-      !context.behavior.includes("skipped meal"),
   },
   { key: "emotions", messageKey: "coach.emotions", replyKey: "emotions" },
   {

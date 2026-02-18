@@ -1,5 +1,12 @@
 import { Card, cn, Typography } from "@repo/ui";
-import { ChevronDown, Pencil, ClockIcon, MapPin, Users } from "lucide-react";
+import {
+  ChevronDown,
+  Pencil,
+  ClockIcon,
+  MapPin,
+  Trash2,
+  Users,
+} from "lucide-react";
 
 import { BookmarkToggleButton } from "@/components/BookmarkToggleButton";
 import { FormButton } from "@/components/FormButton";
@@ -195,7 +202,7 @@ export function DayEntryCard({
                 type="button"
                 variant="link"
               >
-                {translateDashboard("entry.delete")}
+                <Trash2 className="h-4 w-4" aria-hidden="true" />
               </FormButton>
             </section>
           ) : null}

@@ -1,0 +1,67 @@
+{
+  "entryTypes": {
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "snack": "Snack",
+    "moment": "Moment"
+  },
+  "locations": {
+    "home": "At home",
+    "work": "At work",
+    "restaurant": "Restaurant",
+    "friends": "At friends",
+    "onTheRoad": "On the road",
+    "party": "At a party",
+    "anders": "Other"
+  },
+  "company": {
+    "alone": "Alone",
+    "partner": "Partner",
+    "family": "Family",
+    "friends": "Friends",
+    "colleagues": "Colleagues",
+    "kids": "Kids",
+    "anders": "Other"
+  },
+  "emotions": {
+    "happy": "Happy",
+    "hopeful": "Hopeful",
+    "fine": "Fine",
+    "relieved": "Relieved",
+    "joyful": "Joyful",
+    "excited": "Excited",
+    "proud": "Proud",
+    "confident": "Confident",
+    "calm": "Calm",
+    "meh": "Meh",
+    "tired": "Tired",
+    "isolated": "Isolated",
+    "insecure": "Insecure",
+    "bored": "Bored",
+    "ashamed": "Ashamed",
+    "disappointed": "Disappointed",
+    "sad": "Sad",
+    "hurt": "Hurt",
+    "concerned": "Concerned",
+    "lonely": "Lonely",
+    "panic": "Panic",
+    "annoyed": "Annoyed",
+    "angry": "Angry",
+    "stressed": "Stressed",
+    "anxious": "Anxious",
+    "embarrassed": "Embarrassed",
+    "scared": "Scared",
+    "nausea": "Nausea",
+    "busy": "Busy"
+  },
+  "behaviors": {
+    "restricted": "Ate too little",
+    "skippedMeal": "Skipped meal",
+    "binged": "Binge",
+    "overate": "Ate too much",
+    "threwUp": "Threw up",
+    "overExercised": "Exercised too much",
+    "anders": "Other"
+  }
+}

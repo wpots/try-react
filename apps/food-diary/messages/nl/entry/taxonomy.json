@@ -1,0 +1,67 @@
+{
+  "entryTypes": {
+    "breakfast": "Ontbijt",
+    "lunch": "Lunch",
+    "dinner": "Diner",
+    "snack": "Snack",
+    "moment": "Moment"
+  },
+  "locations": {
+    "home": "thuis",
+    "work": "op het werk",
+    "restaurant": "in een restaurant",
+    "friends": "bij vrienden",
+    "onTheRoad": "onderweg",
+    "party": "op een feest",
+    "anders": "Anders"
+  },
+  "company": {
+    "alone": "alleen",
+    "partner": "met mijn partner",
+    "family": "met mijn familie",
+    "friends": "met vrienden",
+    "colleagues": "met collega's",
+    "kids": "met mijn kind(eren)",
+    "anders": "anders"
+  },
+  "emotions": {
+    "happy": "blij",
+    "hopeful": "hoopvol",
+    "fine": "prima",
+    "relieved": "opgelucht",
+    "joyful": "vrolijk",
+    "excited": "enthousiast",
+    "proud": "trots",
+    "confident": "zelfverzekerd",
+    "calm": "kalm",
+    "meh": "mwah",
+    "tired": "moe",
+    "isolated": "geïsoleerd",
+    "insecure": "onzeker",
+    "bored": "verveeld",
+    "ashamed": "beschaamd",
+    "disappointed": "teleurgesteld",
+    "sad": "verdrietig",
+    "hurt": "gekwetst",
+    "concerned": "bezorgd",
+    "lonely": "eenzaam",
+    "panic": "paniek",
+    "annoyed": "geïrriteerd",
+    "angry": "boos",
+    "stressed": "gestrest",
+    "anxious": "angstig",
+    "embarrassed": "gegeneerd",
+    "scared": "bang",
+    "nausea": "misselijk",
+    "busy": "druk"
+  },
+  "behaviors": {
+    "restricted": "te weinig gegeten",
+    "skippedMeal": "maaltijd overgeslagen",
+    "binged": "eetbui",
+    "overate": "te veel gegeten",
+    "threwUp": "overgegeven",
+    "overExercised": "overmatig sporten",
+    "anders": "anders ..."
+  }
+}

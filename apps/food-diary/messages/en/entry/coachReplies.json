@@ -1,0 +1,133 @@
+{
+  "default": "Thanks, I've noted that.",
+  "entryType": "Clear, thanks.",
+  "datetime": "Great, I've got the timing.",
+  "location": "Thanks, that helps with context.",
+  "company": "Thanks, I'll note who you were with.",
+  "behavior": "Thanks for sharing that.",
+  "foodEaten": "Thanks, that's clear.",
+  "emotions": "Thanks for sharing how you felt.",
+  "description": "Thanks for adding that.",
+  "bookmark": "Sounds good, I'll mark that.",
+  "confirm": "Thanks, we can save this.",
+  "skip": "Totally fine, we'll skip this question.",
+  "stepBack": "You want to change something, totally fine. Let's go over it again.",
+  "locationDefaults": [
+    "Thanks, I'll include the location context.",
+    "Clear, that place helps with context."
+  ],
+  "locationByType": {
+    "home": [
+      "Thanks, being at home can shape how moments feel.",
+      "Clear, I noted that you were at home."
+    ],
+    "work": [
+      "Thanks, work context is useful to include.",
+      "Clear, I noted that this happened at work."
+    ],
+    "restaurant": [
+      "Good to know this happened at a restaurant.",
+      "Clear, I'll include that eating environment."
+    ],
+    "friend's house": [
+      "Thanks, being at a friend's place adds important context.",
+      "Good note, social settings can really matter."
+    ],
+    "on the road": [
+      "Clear, being on the road can change these moments.",
+      "Thanks, I noted that you were on the road."
+    ],
+    "party": [
+      "Good to note this happened at a party.",
+      "Clear, I noted that high-stimulus setting."
+    ],
+    "anders": [
+      "Thanks for the extra location context.",
+      "Clear, I'll include your custom location."
+    ]
+  },
+  "companyDefaults": [
+    "Thanks, I'll note who you were with.",
+    "Clear, social context helps spot patterns."
+  ],
+  "companyByType": {
+    "alone": [
+      "Thanks, being alone can influence the moment.",
+      "Clear, I noted that you were alone."
+    ],
+    "partner": [
+      "Good to know your partner was with you.",
+      "Clear, I noted that you were with your partner."
+    ],
+    "family": [
+      "Thanks, family context is useful here.",
+      "Clear, I noted that you were with family."
+    ],
+    "friends": [
+      "Thanks, being with friends can shape the experience.",
+      "Clear, I noted that you were with friends."
+    ],
+    "colleagues": [
+      "Good to know colleagues were there too.",
+      "Clear, I noted that you were with colleagues."
+    ],
+    "kids": [
+      "Thanks, having kids around is helpful context.",
+      "Clear, I noted that you were with kids."
+    ],
+    "anders": [
+      "Thanks for the extra company detail.",
+      "Clear, I'll include your custom company context."
+    ]
+  },
+  "behaviorDefaults": [
+    "Thanks for sharing that.",
+    "Good catch noticing this pattern.",
+    "I appreciate your honesty here."
+  ],
+  "behaviorByType": {
+    "restricted": [
+      "Thanks for sharing this. Noticing this signal is important.",
+      "Strong step naming this. It helps uncover patterns."
+    ],
+    "skipped meal": [
+      "Clear, you skipped a meal. Good job logging it.",
+      "Thanks for noting this. It adds useful context to your pattern."
+    ],
+    "binged": [
+      "Thanks for sharing this. Writing it down takes courage.",
+      "Good job capturing this moment. It helps reveal triggers."
+    ],
+    "overate": [
+      "Clear, I noted it. Good that you're reflecting on it.",
+      "Thanks for your openness. This helps build insight."
+    ],
+    "threw up": [
+      "Thanks for sharing this. You don't have to carry this alone.",
+      "Good that you flagged this. It's important information."
+    ],
+    "overexercised": [
+      "Clear, I've noted this. Good that you recognized this signal.",
+      "Thanks for naming this. That's a strong step."
+    ],
+    "anders": [
+      "Thanks, I'll note this behavior detail.",
+      "Good add, that extra context helps a lot."
+    ]
+  },
+  "emotionsSupportive": [
+    "Thanks for sharing this. You don't have to carry it alone.",
+    "I appreciate your honesty about how you feel.",
+    "Good that you're pausing to notice this."
+  ],
+  "emotionsMotivational": [
+    "Great awareness noticing your emotions.",
+    "Strong check-in with yourself here.",
+    "Nice work, this kind of reflection moves you forward."
+  ],
+  "thoughtsReflective": [
+    "Thanks for taking the time to reflect.",
+    "Great that you paused and wrote this down.",
+    "You can be proud of this reflection."
+  ]
+}

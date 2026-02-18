@@ -1,0 +1,13 @@
+{
+  "entryType": "Hi! What kind of moment would you like to capture?",
+  "datetime": "Do you want to capture something for {moment}?",
+  "location": "Where were you?",
+  "company": "Who were you with?",
+  "foodEaten": "What did you eat or drink?",
+  "emotions": "How did you feel?",
+  "description": "Is there anything you want to write about this moment?",
+  "behavior": "Was there anything special about this moment?",
+  "bookmark": "Do you want to save this moment?",
+  "confirm": "Here is a summary of your moment. Does everything look right?",
+  "complete": "Well done! Your moment has been saved."
+}

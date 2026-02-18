@@ -1,5 +1,6 @@
 "use client";
 
+import { emotions as emotionDefinitions } from "@repo/ui";
 import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -100,6 +101,26 @@ const COACH_REPLY_KEYS: Record<WizardStepKey, string> = {
 
 const MIN_TYPING_DELAY_MS = 550;
 const TYPING_DELAY_VARIANCE_MS = 350;
+const negativeEmotionKeys = new Set(
+  emotionDefinitions
+    .filter((emotion) => emotion.category === "negative")
+    .map((emotion) => emotion.key),
+);
+
+function isStringArray(value: unknown): value is string[] {
+  return (
+    Array.isArray(value) &&
+    value.every((item) => typeof item === "string")
+  );
+}
+
+function isStringArrayMap(value: unknown): value is Record<string, string[]> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return false;
+  }
+
+  return Object.values(value).every((entry) => isStringArray(entry));
+}
 
 export function useCoachChatController({
   entryId,
@@ -128,6 +149,12 @@ export function useCoachChatController({
   const messagesRef = useRef<CoachChatMessage[]>([]);
   const coachSequenceIdRef = useRef(0);
   const timeoutIdsRef = useRef<number[]>([]);
+  const initialDatetimeRef = useRef<{ date: string; time: string }>({
+    date: entry.date,
+    time: entry.time,
+  });
+  const replyRotationRef = useRef<Record<string, number>>({});
+  const didAutoSubmitDatetimeRef = useRef(false);
 
   const locale = useLocale();
   const t = useTranslations("entry");
@@ -216,8 +243,223 @@ export function useCoachChatController({
     [addMessage, clearPendingCoachTimeouts],
   );
 
+  const getReplyArray = useCallback(
+    (key: string): string[] => {
+      try {
+        const rawValue = t.raw(key);
+        if (!isStringArray(rawValue)) {
+          return [];
+        }
+
+        return rawValue
+          .map((message) => message.trim())
+          .filter((message) => message.length > 0);
+      } catch {
+        return [];
+      }
+    },
+    [t],
+  );
+
+  const getReplyArrayMap = useCallback(
+    (key: string): Record<string, string[]> => {
+      try {
+        const rawValue = t.raw(key);
+        if (!isStringArrayMap(rawValue)) {
+          return {};
+        }
+
+        const replyMap: Record<string, string[]> = {};
+        Object.entries(rawValue).forEach(([replyKey, messages]) => {
+          const sanitizedMessages = messages
+            .map((message) => message.trim())
+            .filter((message) => message.length > 0);
+
+          if (sanitizedMessages.length > 0) {
+            replyMap[replyKey] = sanitizedMessages;
+          }
+        });
+
+        return replyMap;
+      } catch {
+        return {};
+      }
+    },
+    [t],
+  );
+
+  const getRotatingReply = useCallback(
+    (
+      messages: string[],
+      rotationKey: string,
+      fallbackMessage: string,
+    ): string => {
+      if (messages.length === 0) {
+        return fallbackMessage;
+      }
+
+      const index = replyRotationRef.current[rotationKey] ?? 0;
+      const normalizedIndex = index % messages.length;
+      const selectedMessage = messages[normalizedIndex];
+      replyRotationRef.current[rotationKey] = normalizedIndex + 1;
+
+      if (!selectedMessage) {
+        return fallbackMessage;
+      }
+
+      return selectedMessage;
+    },
+    [],
+  );
+
+  const getSingleValueReplyMessage = useCallback(
+    ({
+      byTypeKey,
+      defaultKey,
+      fallback,
+      rotationPrefix,
+      value,
+    }: {
+      byTypeKey: string;
+      defaultKey: string;
+      fallback: string;
+      rotationPrefix: string;
+      value: string | null;
+    }): string => {
+      if (!value) {
+        return fallback;
+      }
+
+      const repliesByType = getReplyArrayMap(byTypeKey);
+      const scopedReplies = repliesByType[value];
+      if (scopedReplies && scopedReplies.length > 0) {
+        return getRotatingReply(
+          scopedReplies,
+          `${rotationPrefix}.${value}`,
+          fallback,
+        );
+      }
+
+      const defaultReplies = getReplyArray(defaultKey);
+      if (defaultReplies.length > 0) {
+        return getRotatingReply(
+          defaultReplies,
+          `${rotationPrefix}.default`,
+          fallback,
+        );
+      }
+
+      return fallback;
+    },
+    [getReplyArray, getReplyArrayMap, getRotatingReply],
+  );
+
+  const getLocationReplyMessage = useCallback(
+    (targetEntry: WizardEntry): string =>
+      getSingleValueReplyMessage({
+        byTypeKey: "coachReplies.locationByType",
+        defaultKey: "coachReplies.locationDefaults",
+        fallback: "",
+        rotationPrefix: "location",
+        value: targetEntry.location,
+      }),
+    [getSingleValueReplyMessage],
+  );
+
+  const getCompanyReplyMessage = useCallback(
+    (targetEntry: WizardEntry): string =>
+      getSingleValueReplyMessage({
+        byTypeKey: "coachReplies.companyByType",
+        defaultKey: "coachReplies.companyDefaults",
+        fallback: "",
+        rotationPrefix: "company",
+        value: targetEntry.company,
+      }),
+    [getSingleValueReplyMessage],
+  );
+
+  const getBehaviorReplyMessage = useCallback(
+    (targetEntry: WizardEntry): string => {
+      const behaviorReplyMap = getReplyArrayMap("coachReplies.behaviorByType");
+      const scopedReplies = targetEntry.behavior.reduce<string[]>(
+        (allReplies, behavior) => {
+          const mappedReplies = behaviorReplyMap[behavior];
+          if (!mappedReplies || mappedReplies.length === 0) {
+            return allReplies;
+          }
+
+          return [...allReplies, ...mappedReplies];
+        },
+        [],
+      );
+
+      if (scopedReplies.length > 0) {
+        const rotationKey =
+          targetEntry.behavior.join("|") || "behavior.scoped";
+        return getRotatingReply(
+          scopedReplies,
+          `behavior.${rotationKey}`,
+          t("coachReplies.behavior"),
+        );
+      }
+
+      const defaultReplies = getReplyArray("coachReplies.behaviorDefaults");
+      return getRotatingReply(
+        defaultReplies,
+        "behavior.default",
+        t("coachReplies.behavior"),
+      );
+    },
+    [getReplyArray, getReplyArrayMap, getRotatingReply, t],
+  );
+
+  const getEmotionReplyMessage = useCallback(
+    (targetEntry: WizardEntry): string => {
+      const hasNegativeEmotion = targetEntry.emotions.some((emotion) =>
+        negativeEmotionKeys.has(emotion),
+      );
+      if (hasNegativeEmotion) {
+        const supportiveReplies = getReplyArray(
+          "coachReplies.emotionsSupportive",
+        );
+        return getRotatingReply(
+          supportiveReplies,
+          "emotions.supportive",
+          t("coachReplies.emotions"),
+        );
+      }
+
+      if (targetEntry.emotions.length > 0) {
+        const motivationalReplies = getReplyArray(
+          "coachReplies.emotionsMotivational",
+        );
+        return getRotatingReply(
+          motivationalReplies,
+          "emotions.motivational",
+          t("coachReplies.emotions"),
+        );
+      }
+
+      return t("coachReplies.emotions");
+    },
+    [getReplyArray, getRotatingReply, t],
+  );
+
+  const getThoughtsReplyMessage = useCallback((): string => {
+    const thoughtsReplies = getReplyArray("coachReplies.thoughtsReflective");
+    return getRotatingReply(
+      thoughtsReplies,
+      "thoughts.reflective",
+      t("coachReplies.description"),
+    );
+  }, [getReplyArray, getRotatingReply, t]);
+
   const getCoachReplyMessage = useCallback(
-    (step: WizardStep | undefined, wasSkipped: boolean): string => {
+    (
+      step: WizardStep | undefined,
+      wasSkipped: boolean,
+      targetEntry: WizardEntry,
+    ): string => {
       if (wasSkipped) {
         return t("coachReplies.skip");
       }
@@ -227,9 +469,56 @@ export function useCoachChatController({
       }
 
       const replyKey = step.replyKey ?? step.key;
+      if (replyKey === "location") {
+        return getLocationReplyMessage(targetEntry);
+      }
+      if (replyKey === "company") {
+        return getCompanyReplyMessage(targetEntry);
+      }
+      if (replyKey === "behavior") {
+        return getBehaviorReplyMessage(targetEntry);
+      }
+      if (replyKey === "emotions") {
+        return getEmotionReplyMessage(targetEntry);
+      }
+      if (replyKey === "description") {
+        return getThoughtsReplyMessage();
+      }
+
       return t(COACH_REPLY_KEYS[replyKey]);
     },
-    [t],
+    [
+      getCompanyReplyMessage,
+      getBehaviorReplyMessage,
+      getEmotionReplyMessage,
+      getLocationReplyMessage,
+      getThoughtsReplyMessage,
+      t,
+    ],
+  );
+
+  const getCoachStepMessage = useCallback(
+    (step: WizardStep, targetEntry: WizardEntry): string => {
+      if (step.key !== "datetime") {
+        return t(step.messageKey);
+      }
+
+      return t(step.messageKey, {
+        moment: formatDatetimeHuman(
+          targetEntry.date,
+          targetEntry.time || "00:00",
+          locale,
+        ),
+      });
+    },
+    [locale, t],
+  );
+
+  const isDatetimeUnchanged = useCallback(
+    (targetEntry: WizardEntry): boolean =>
+      targetEntry.date === initialDatetimeRef.current.date &&
+      targetEntry.time === initialDatetimeRef.current.time,
+    [],
   );
 
   useEffect(() => {
@@ -244,8 +533,8 @@ export function useCoachChatController({
       return;
     }
 
-    startCoachSequence([t(firstStep.messageKey)]);
-  }, [filteredSteps, startCoachSequence, t]);
+    startCoachSequence([getCoachStepMessage(firstStep, entry)]);
+  }, [entry, filteredSteps, getCoachStepMessage, startCoachSequence]);
 
   useEffect(() => {
     return () => {
@@ -327,6 +616,7 @@ export function useCoachChatController({
       updatedEntry: WizardEntry,
       options?: {
         wasSkipped?: boolean;
+        skipAcknowledgement?: boolean;
       },
     ) => {
       const answeredStep = filteredSteps[currentStepIndex];
@@ -351,21 +641,30 @@ export function useCoachChatController({
         return;
       }
 
+      if (options?.skipAcknowledgement) {
+        startCoachSequence([getCoachStepMessage(nextStep, updatedEntry)]);
+        return;
+      }
+
       const acknowledgement = getCoachReplyMessage(
         answeredStep,
         options?.wasSkipped ?? false,
+        updatedEntry,
       );
-      startCoachSequence([acknowledgement, t(nextStep.messageKey)]);
+      startCoachSequence([
+        acknowledgement,
+        getCoachStepMessage(nextStep, updatedEntry),
+      ]);
     },
     [
       filteredSteps,
       currentStepIndex,
       entry,
+      getCoachStepMessage,
       getCoachReplyMessage,
       handlePersist,
       resetInputState,
       startCoachSequence,
-      t,
     ],
   );
 
@@ -397,9 +696,17 @@ export function useCoachChatController({
 
     startCoachSequence([
       t("coachReplies.stepBack"),
-      t(previousStep.messageKey),
+      getCoachStepMessage(previousStep, previousSnapshot.entry),
     ]);
-  }, [currentStepIndex, history, isTyping, resetInputState, startCoachSequence, t]);
+  }, [
+    currentStepIndex,
+    getCoachStepMessage,
+    history,
+    isTyping,
+    resetInputState,
+    startCoachSequence,
+    t,
+  ]);
 
   const handleSkip = useCallback(() => {
     addMessage("user", t("form.skip"));
@@ -422,9 +729,14 @@ export function useCoachChatController({
   }, [addMessage, advanceStep, entry, inputChips, t]);
 
   const handleSubmitDatetime = useCallback(() => {
-    addMessage("user", formatDatetimeHuman(entry.date, entry.time ?? "00:00", locale));
-    advanceStep(entry);
-  }, [addMessage, advanceStep, entry, locale]);
+    const unchangedDatetime = isDatetimeUnchanged(entry);
+    const message = unchangedDatetime
+      ? t("form.ok")
+      : formatDatetimeHuman(entry.date, entry.time || "00:00", locale);
+
+    addMessage("user", message);
+    advanceStep(entry, { skipAcknowledgement: unchangedDatetime });
+  }, [addMessage, advanceStep, entry, isDatetimeUnchanged, locale, t]);
 
   const handleSubmitBookmark = useCallback(
     (override?: boolean | null) => {
@@ -546,6 +858,42 @@ export function useCoachChatController({
   const handleSubmitConfirm = useCallback(() => {
     void handlePersist(entry);
   }, [entry, handlePersist]);
+
+  useEffect(() => {
+    if (mode !== "chat" || isTyping || completed) {
+      return;
+    }
+    if (didAutoSubmitDatetimeRef.current) {
+      return;
+    }
+
+    const currentStep = filteredSteps[currentStepIndex];
+    if (!currentStep || currentStep.key !== "datetime") {
+      return;
+    }
+    if (!isDatetimeUnchanged(entry)) {
+      return;
+    }
+
+    didAutoSubmitDatetimeRef.current = true;
+
+    const timeoutId = window.setTimeout(() => {
+      handleSubmitDatetime();
+    }, 120);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [
+    completed,
+    currentStepIndex,
+    entry,
+    filteredSteps,
+    handleSubmitDatetime,
+    isDatetimeUnchanged,
+    isTyping,
+    mode,
+  ]);
 
   const handleTraditionalComplete = useCallback(
     (updatedEntry: WizardEntry) => {

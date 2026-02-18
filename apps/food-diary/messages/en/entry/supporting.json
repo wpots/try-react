@@ -1,0 +1,22 @@
+{
+  "leavePrompt": {
+    "message": "Leave without saving this moment? Press OK to leave or Cancel to keep editing."
+  },
+  "placeholders": {
+    "foodEaten": "E.g. sandwich with cheese, coffee...",
+    "foodEatenAi": "You can later add a photo and have it analysed with AI.",
+    "description": "Write your thoughts here...",
+    "location": "Select a location",
+    "company": "Select who you were with",
+    "other": "Please specify..."
+  },
+  "hints": {
+    "behavior": "You don't have to fill this in.",
+    "behaviorNone": "Nothing special."
+  },
+  "errors": {
+    "notAuthenticated": "User not authenticated",
+    "saveFailed": "Failed to save entry",
+    "deleteFailed": "Failed to delete entry"
+  }
+}

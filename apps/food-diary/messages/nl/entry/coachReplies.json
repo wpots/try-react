@@ -1,0 +1,133 @@
+{
+  "default": "Dankjewel, ik heb het genoteerd.",
+  "entryType": "Helder, dankjewel.",
+  "datetime": "Top, ik heb het moment.",
+  "location": "Fijn, dat helpt om context te geven.",
+  "company": "Dankjewel, ik noteer met wie je was.",
+  "behavior": "Dankjewel dat je dit deelt.",
+  "foodEaten": "Dankjewel, dat is duidelijk.",
+  "emotions": "Dankjewel dat je aangeeft hoe je je voelde.",
+  "description": "Fijn dat je dit erbij zet.",
+  "bookmark": "Helemaal goed, ik zet dat zo neer.",
+  "confirm": "Dankjewel, dan slaan we dit op.",
+  "skip": "Helemaal goed, we slaan deze vraag over.",
+  "stepBack": "Je wilt iets aanpassen, helemaal goed. We kijken er opnieuw naar.",
+  "locationDefaults": [
+    "Dankjewel, ik neem de locatie mee.",
+    "Helder, die plek geeft goede context."
+  ],
+  "locationByType": {
+    "home": [
+      "Fijn, thuis kan veel invloed hebben op hoe een moment voelt.",
+      "Helder, ik noteer dat je thuis was."
+    ],
+    "work": [
+      "Dankjewel, werkcontext is goed om mee te nemen.",
+      "Helder, ik noteer dat dit op je werk was."
+    ],
+    "restaurant": [
+      "Goed om te weten dat dit in een restaurant was.",
+      "Helder, ik neem die eetomgeving mee."
+    ],
+    "friend's house": [
+      "Dankjewel, bij vrienden geeft belangrijke context.",
+      "Fijn dat je dit aangeeft, sociale setting telt mee."
+    ],
+    "on the road": [
+      "Helder, onderweg maakt momenten vaak anders.",
+      "Dankjewel, ik noteer dat je onderweg was."
+    ],
+    "party": [
+      "Goed dat je dit noemt, een feestje kan veel prikkels geven.",
+      "Helder, ik noteer dat dit op een feest was."
+    ],
+    "anders": [
+      "Dankjewel voor de extra context over je locatie.",
+      "Helder, ik neem je eigen locatieomschrijving mee."
+    ]
+  },
+  "companyDefaults": [
+    "Dankjewel, ik noteer met wie je was.",
+    "Helder, sociale context helpt om patronen te zien."
+  ],
+  "companyByType": {
+    "alone": [
+      "Dankjewel, alleen zijn kan veel invloed hebben op je moment.",
+      "Helder, ik noteer dat je alleen was."
+    ],
+    "partner": [
+      "Goed dat je dit deelt, je partnercontext neem ik mee.",
+      "Helder, ik noteer dat je met je partner was."
+    ],
+    "family": [
+      "Dankjewel, familiecontext is waardevol om te zien.",
+      "Helder, ik noteer dat je met familie was."
+    ],
+    "friends": [
+      "Fijn dat je dit aangeeft, met vrienden kan veel betekenen.",
+      "Helder, ik noteer dat je met vrienden was."
+    ],
+    "colleagues": [
+      "Dankjewel, collega's erbij geeft belangrijke context.",
+      "Helder, ik noteer dat je met collega's was."
+    ],
+    "kids": [
+      "Goed dat je dit noemt, met kinderen erbij telt mee.",
+      "Helder, ik noteer dat je met je kind(eren) was."
+    ],
+    "anders": [
+      "Dankjewel voor je extra toelichting over gezelschap.",
+      "Helder, ik neem je eigen omschrijving mee."
+    ]
+  },
+  "behaviorDefaults": [
+    "Dankjewel dat je dit deelt.",
+    "Goed dat je dit opmerkt.",
+    "Fijn dat je dit eerlijk invult."
+  ],
+  "behaviorByType": {
+    "restricted": [
+      "Dankjewel dat je dit deelt. Goed dat je dit signaal opmerkt.",
+      "Sterk dat je dit benoemt. Dit helpt om patronen te herkennen."
+    ],
+    "skipped meal": [
+      "Helder dat je een maaltijd hebt overgeslagen. Goed dat je dit noteert.",
+      "Dankjewel dat je dit invult. Dit is waardevolle context voor je patroon."
+    ],
+    "binged": [
+      "Dankjewel dat je dit deelt. Dit vraagt moed om op te schrijven.",
+      "Goed dat je dit moment vastlegt. Dat helpt om verbanden te zien."
+    ],
+    "overate": [
+      "Helder, ik noteer dit. Goed dat je hier bewust bij stilstaat.",
+      "Dankjewel voor je openheid. Dit helpt bij inzicht in je eetmomenten."
+    ],
+    "threw up": [
+      "Dankjewel dat je dit deelt. Je hoeft dit niet alleen te dragen.",
+      "Goed dat je dit aangeeft. Dit is belangrijk om serieus te nemen."
+    ],
+    "overexercised": [
+      "Helder, ik heb dit genoteerd. Goed dat je dit signaal herkent.",
+      "Dankjewel dat je dit benoemt. Dat is een sterke stap."
+    ],
+    "anders": [
+      "Dankjewel, ik noteer dit bijzondere gedrag.",
+      "Goed dat je extra context toevoegt, dat helpt echt."
+    ]
+  },
+  "emotionsSupportive": [
+    "Dankjewel dat je dit deelt. Je hoeft dit niet alleen te dragen.",
+    "Fijn dat je eerlijk bent over hoe je je voelt.",
+    "Goed dat je hierbij stilstaat. Dat is al een belangrijke stap."
+  ],
+  "emotionsMotivational": [
+    "Mooi dat je je gevoel zo bewust opmerkt.",
+    "Sterk dat je dit checkt bij jezelf.",
+    "Goed bezig, dit soort reflectie helpt je vooruit."
+  ],
+  "thoughtsReflective": [
+    "Dankjewel dat je de tijd neemt om dit op te schrijven.",
+    "Mooi dat je even stilstaat bij je gedachten.",
+    "Hier mag je trots op zijn, dit is waardevolle reflectie."
+  ]
+}

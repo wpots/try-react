@@ -1,11 +1,4 @@
-import {
-  ChevronDown,
-  Pencil,
-  ClockIcon,
-  MapPin,
-  Trash2,
-  Users,
-} from "lucide-react";
+import { ChevronDown, Pencil, ClockIcon, MapPin, Users } from "lucide-react";
 import { Card, cn, Typography } from "@repo/ui";
 
 import { BookmarkToggleButton } from "@/components/BookmarkToggleButton";
@@ -105,11 +98,7 @@ export function DayEntryCard({
             <BookmarkToggleButton
               addBookmarkLabel={translateDashboard("entry.addBookmark")}
               isBookmarked={isBookmarked}
-              onToggle={
-                onToggleBookmark
-                  ? () => onToggleBookmark(entry.id)
-                  : undefined
-              }
+              onToggle={onToggleBookmark ? () => onToggleBookmark(entry.id) : undefined}
               removeBookmarkLabel={translateDashboard("entry.removeBookmark")}
             />
 
@@ -123,20 +112,6 @@ export function DayEntryCard({
             </FormButton>
 
             <FormButton
-              aria-label={translateDashboard("entry.delete")}
-              className={cn(
-                "text-ds-danger",
-                "hover:border-ds-danger hover:bg-ds-danger/10",
-              )}
-              disabled={isDeleting || !onDeleteEntry}
-              iconOnly
-              onClick={handleDeleteClick}
-              type="button"
-            >
-              <Trash2 className="h-4 w-4" aria-hidden="true" />
-            </FormButton>
-
-            <FormButton
               aria-label={isDetailExpanded ? translateDashboard("entry.collapse") : translateDashboard("entry.expand")}
               disabled={!onToggleExpanded}
               iconOnly
@@ -144,10 +119,7 @@ export function DayEntryCard({
               type="button"
             >
               <ChevronDown
-                className={cn(
-                  "h-4 w-4 transition-transform",
-                  isDetailExpanded && "rotate-180",
-                )}
+                className={cn("h-4 w-4 transition-transform", isDetailExpanded && "rotate-180")}
                 aria-hidden="true"
               />
             </FormButton>
@@ -208,6 +180,21 @@ export function DayEntryCard({
 
               {/* TODO convert to chips */}
               <p className="mt-ds-xs font-ds-body-sm text-ds-on-warning">{behaviorLabels.join(", ")}</p>
+            </section>
+          ) : null}
+
+          {showActionButtons ? (
+            <section className="border-t-1 border-ds-border-subtle pt-ds-s text-right">
+              <FormButton
+                aria-label={translateDashboard("entry.delete")}
+                className={cn("h-auto px-0 py-0 text-ds-danger", "hover:bg-transparent hover:text-ds-danger")}
+                disabled={isDeleting || !onDeleteEntry}
+                onClick={handleDeleteClick}
+                type="button"
+                variant="link"
+              >
+                {translateDashboard("entry.delete")}
+              </FormButton>
             </section>
           ) : null}
         </div>

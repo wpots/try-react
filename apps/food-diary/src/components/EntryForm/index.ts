@@ -4,7 +4,6 @@ export type EntryFormMode = "chat" | "form";
 
 export interface WizardEntry {
   entryType: DiaryEntryType | null;
-  skippedMeal: boolean | null;
   isBookmarked: boolean;
   date: string;
   time: string;

@@ -31,6 +31,7 @@ export const diaryEntryCompany = [
 
 export const diaryEntryBehavior = [
   "restricted",
+  "skipped meal",
   "binged",
   "overate",
   "threw up",
@@ -62,7 +63,6 @@ export interface DiaryEntry {
   company: DiaryEntryCompany;
   description: string;
   behavior: DiaryEntryBehavior[];
-  skippedMeal: boolean;
   isBookmarked: boolean;
   date: Timestamp;
   time: string;
@@ -92,7 +92,6 @@ export interface CreateDiaryEntryInput {
   company?: DiaryEntryCompany;
   description?: string;
   behavior?: DiaryEntryBehavior[];
-  skippedMeal?: boolean;
   isBookmarked?: boolean;
   date: string;
   time: string;

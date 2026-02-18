@@ -8,7 +8,6 @@ interface HasUnsavedEntryChangesParams {
   inputChips: string[];
   inputEmotions: string[];
   inputBookmarked: boolean | null;
-  inputSkippedMeal: boolean | null;
   inputOtherText: string;
   messages: { role: "coach" | "user" }[];
 }
@@ -28,7 +27,6 @@ interface NormalizedEntry {
   isBookmarked: boolean;
   location: string | null;
   locationOther?: string;
-  skippedMeal: boolean | null;
   time: string;
 }
 
@@ -53,7 +51,6 @@ function normalizeEntry(entry: WizardEntry): NormalizedEntry {
     isBookmarked: entry.isBookmarked,
     location: entry.location,
     locationOther: normalizeOptionalText(entry.locationOther),
-    skippedMeal: entry.skippedMeal,
     time: entry.time,
   };
 }
@@ -66,7 +63,6 @@ export function hasUnsavedEntryChanges({
   inputChips,
   inputEmotions,
   inputBookmarked,
-  inputSkippedMeal,
   inputOtherText,
   messages,
 }: HasUnsavedEntryChangesParams): boolean {
@@ -79,8 +75,7 @@ export function hasUnsavedEntryChanges({
     inputOtherText.trim().length > 0 ||
     inputChips.length > 0 ||
     inputEmotions.length > 0 ||
-    inputBookmarked !== null ||
-    inputSkippedMeal !== null;
+    inputBookmarked !== null;
 
   const hasChatProgress =
     currentStepIndex > 0 || messages.some((message) => message.role === "user");

@@ -49,7 +49,6 @@ export interface UseCoachChatControllerResult {
   inputChips: string[];
   inputEmotions: string[];
   inputBookmarked: boolean | null;
-  inputSkippedMeal: boolean | null;
   inputOtherText: string;
   filteredSteps: WizardStep[];
   setEntry: (entry: WizardEntry) => void;
@@ -57,14 +56,12 @@ export interface UseCoachChatControllerResult {
   setInputChips: (value: string[]) => void;
   setInputEmotions: (value: string[]) => void;
   setInputBookmarked: (value: boolean | null) => void;
-  setInputSkippedMeal: (value: boolean | null) => void;
   setInputOtherText: (value: string) => void;
   handleStepBack: () => void;
   handleSkip: () => void;
   handleSubmitEntryType: () => void;
   handleSubmitDatetime: () => void;
   handleSubmitBookmark: (override?: boolean | null) => void;
-  handleSubmitSkippedMeal: (override?: boolean | null) => void;
   handleSubmitLocation: (override?: string) => void;
   handleSubmitCompany: (override?: string) => void;
   handleSubmitFood: () => void;
@@ -75,11 +72,14 @@ export interface UseCoachChatControllerResult {
   handleTraditionalComplete: (entry: WizardEntry) => void;
 }
 
-function getFilteredStepsByEntryType(
-  entryType: WizardEntry["entryType"],
-): WizardStep[] {
+function getFilteredSteps(entry: WizardEntry): WizardStep[] {
   return STEPS.filter((step) =>
-    step.condition ? step.condition({ entryType }) : true,
+    step.condition
+      ? step.condition({
+          entryType: entry.entryType,
+          behavior: entry.behavior,
+        })
+      : true,
   );
 }
 
@@ -103,9 +103,6 @@ export function useCoachChatController({
   const [inputChips, setInputChips] = useState<string[]>([]);
   const [inputEmotions, setInputEmotions] = useState<string[]>([]);
   const [inputBookmarked, setInputBookmarked] = useState<boolean | null>(null);
-  const [inputSkippedMeal, setInputSkippedMeal] = useState<boolean | null>(
-    null,
-  );
   const [inputOtherText, setInputOtherText] = useState("");
 
   const isInitializedRef = useRef(false);
@@ -119,14 +116,13 @@ export function useCoachChatController({
     messagesRef.current = messages;
   }, [messages]);
 
-  const filteredSteps = getFilteredStepsByEntryType(entry.entryType);
+  const filteredSteps = getFilteredSteps(entry);
 
   const resetInputState = useCallback(() => {
     setInputText("");
     setInputChips([]);
     setInputEmotions([]);
     setInputBookmarked(null);
-    setInputSkippedMeal(null);
     setInputOtherText("");
   }, []);
 
@@ -214,7 +210,6 @@ export function useCoachChatController({
           entryId,
           userId: activeUser.uid,
           entryType,
-          skippedMeal: finalEntry.skippedMeal ?? false,
           foodEaten: finalEntry.foodEaten,
           description: finalEntry.description,
           emotions: finalEntry.emotions,
@@ -255,7 +250,7 @@ export function useCoachChatController({
       setEntry(updatedEntry);
 
       const nextIndex = currentStepIndex + 1;
-      const nextSteps = getFilteredStepsByEntryType(updatedEntry.entryType);
+      const nextSteps = getFilteredSteps(updatedEntry);
       setCurrentStepIndex(nextIndex);
       resetInputState();
 
@@ -294,7 +289,7 @@ export function useCoachChatController({
     resetInputState();
     showCoachMessage(
       previousIndex,
-      getFilteredStepsByEntryType(previousSnapshot.entry.entryType),
+      getFilteredSteps(previousSnapshot.entry),
     );
   }, [currentStepIndex, history, isTyping, resetInputState, showCoachMessage]);
 
@@ -334,19 +329,6 @@ export function useCoachChatController({
       advanceStep({ ...entry, isBookmarked: value });
     },
     [addMessage, advanceStep, entry, inputBookmarked, t],
-  );
-
-  const handleSubmitSkippedMeal = useCallback(
-    (override?: boolean | null) => {
-      const value = override !== undefined ? override : inputSkippedMeal;
-      if (value == null) {
-        return;
-      }
-
-      addMessage("user", value ? t("form.yes") : t("form.no"));
-      advanceStep({ ...entry, skippedMeal: value });
-    },
-    [addMessage, advanceStep, entry, inputSkippedMeal, t],
   );
 
   const handleSubmitLocation = useCallback(
@@ -479,7 +461,6 @@ export function useCoachChatController({
     inputChips,
     inputEmotions,
     inputBookmarked,
-    inputSkippedMeal,
     inputOtherText,
     filteredSteps,
     setEntry,
@@ -487,14 +468,12 @@ export function useCoachChatController({
     setInputChips,
     setInputEmotions,
     setInputBookmarked,
-    setInputSkippedMeal,
     setInputOtherText,
     handleStepBack,
     handleSkip,
     handleSubmitEntryType,
     handleSubmitDatetime,
     handleSubmitBookmark,
-    handleSubmitSkippedMeal,
     handleSubmitLocation,
     handleSubmitCompany,
     handleSubmitFood,

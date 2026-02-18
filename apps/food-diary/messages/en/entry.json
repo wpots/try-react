@@ -4,7 +4,6 @@
   "coach": {
     "entryType": "Hi! What kind of moment would you like to capture?",
     "datetime": "When did this happen?",
-    "skippedMeal": "Did you skip this meal?",
     "location": "Where were you?",
     "company": "Who were you with?",
     "foodEaten": "What did you eat or drink?",
@@ -73,6 +72,7 @@
   },
   "behaviors": {
     "restricted": "Ate too little",
+    "skippedMeal": "Skipped meal",
     "binged": "Binge",
     "overate": "Ate too much",
     "threwUp": "Threw up",
@@ -82,7 +82,6 @@
   "form": {
     "entryType": "What kind of moment would you like to capture?",
     "datetime": "When did this happen?",
-    "skippedMeal": "Did you skip this meal?",
     "location": "Where and with whom were you?",
     "foodEaten": "What did you eat or drink?",
     "emotions": "How did you feel?",

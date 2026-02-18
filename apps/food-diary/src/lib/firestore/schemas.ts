@@ -44,7 +44,6 @@ export const firestoreDiaryEntrySchema = z.object({
   company: z.enum(diaryEntryCompany),
   description: z.string(),
   behavior: z.array(z.enum(diaryEntryBehavior)),
-  skippedMeal: z.boolean(),
   isBookmarked: z.boolean().default(false),
   date: z.instanceof(Timestamp),
   time: z.string().regex(timePattern),
@@ -66,7 +65,7 @@ export const storedDiaryEntrySchema = z.object({
   company: z.enum(diaryEntryCompany).default("alone"),
   description: z.string().default(""),
   behavior: z.array(z.enum(diaryEntryBehavior)).default([]),
-  skippedMeal: z.boolean().default(false),
+  skippedMeal: z.boolean().optional(),
   isBookmarked: z.boolean().default(false),
   date: z
     .union([z.instanceof(Timestamp), z.string(), z.date()])
@@ -96,7 +95,6 @@ export const createDiaryEntrySchema = z.object({
   company: z.enum(diaryEntryCompany).default("alone"),
   description: z.string().default(""),
   behavior: z.array(z.enum(diaryEntryBehavior)).default([]),
-  skippedMeal: z.boolean().default(false),
   isBookmarked: z.boolean().default(false),
   date: z.string().regex(dateKeyPattern),
   time: z.string().regex(timePattern),

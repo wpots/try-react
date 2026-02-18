@@ -34,7 +34,6 @@ function mapDiaryEntryToWizardEntry(entry: DiaryEntry): WizardEntry {
     isBookmarked: entry.isBookmarked,
     location: entry.location,
     locationOther: entry.locationOther,
-    skippedMeal: entry.skippedMeal,
     time: entry.time,
   };
 }
@@ -147,7 +146,6 @@ export function EntryForm({
         inputChips: controller.inputChips,
         inputEmotions: controller.inputEmotions,
         inputBookmarked: controller.inputBookmarked,
-        inputSkippedMeal: controller.inputSkippedMeal,
         inputOtherText: controller.inputOtherText,
         messages: controller.messages,
       }),
@@ -158,7 +156,6 @@ export function EntryForm({
       controller.inputBookmarked,
       controller.inputEmotions,
       controller.inputOtherText,
-      controller.inputSkippedMeal,
       controller.inputText,
       controller.messages,
     ],

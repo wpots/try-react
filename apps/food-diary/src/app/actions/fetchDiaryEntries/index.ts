@@ -8,7 +8,6 @@ export interface DiaryEntry {
   company: string;
   description: string;
   behavior: string[];
-  skippedMeal: boolean;
   date: string;
   time: string;
   locationOther?: string;

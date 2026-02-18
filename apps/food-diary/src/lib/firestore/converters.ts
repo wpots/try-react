@@ -49,6 +49,17 @@ function getOptionalDiaryEntryFields(input: {
   return optionalFields;
 }
 
+function withLegacySkippedMealBehavior(
+  behavior: DiaryEntry["behavior"],
+  skippedMeal?: boolean,
+): DiaryEntry["behavior"] {
+  if (!skippedMeal || behavior.includes("skipped meal")) {
+    return behavior;
+  }
+
+  return [...behavior, "skipped meal"];
+}
+
 export function mapUserSnapshot(snapshot: QueryDocumentSnapshot<DocumentData>): User {
   const parsed = firestoreUserSchema.parse({
     userId: snapshot.id,
@@ -72,8 +83,7 @@ export function mapDiaryEntrySnapshot(
     location: parsed.location,
     company: parsed.company,
     description: parsed.description,
-    behavior: parsed.behavior,
-    skippedMeal: parsed.skippedMeal,
+    behavior: withLegacySkippedMealBehavior(parsed.behavior, parsed.skippedMeal),
     isBookmarked: parsed.isBookmarked,
     date: parsed.date,
     time: parsed.time,
@@ -107,7 +117,6 @@ export function toDiaryEntryWriteData(input: {
   company: string;
   description: string;
   behavior: string[];
-  skippedMeal: boolean;
   isBookmarked: boolean;
   date: string;
   time: string;
@@ -126,7 +135,6 @@ export function toDiaryEntryWriteData(input: {
     company: input.company,
     description: input.description,
     behavior: input.behavior,
-    skippedMeal: input.skippedMeal,
     isBookmarked: input.isBookmarked,
     date: parseEntryDate(input.date, input.time),
     time: input.time,

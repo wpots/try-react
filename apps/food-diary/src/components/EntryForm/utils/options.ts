@@ -40,6 +40,7 @@ export const companyOptions: SelectOptionDefinition<DiaryEntryCompany>[] = [
 
 export const behaviorOptions: SelectOptionDefinition<DiaryEntryBehavior>[] = [
   { value: "restricted", labelKey: "behaviors.restricted" },
+  { value: "skipped meal", labelKey: "behaviors.skippedMeal" },
   { value: "binged", labelKey: "behaviors.binged" },
   { value: "overate", labelKey: "behaviors.overate" },
   { value: "threw up", labelKey: "behaviors.threwUp" },

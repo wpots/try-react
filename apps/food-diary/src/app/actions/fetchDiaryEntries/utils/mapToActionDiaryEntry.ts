@@ -15,7 +15,6 @@ export function mapToActionDiaryEntry(
     company: entry.company,
     description: entry.description,
     behavior: entry.behavior,
-    skippedMeal: entry.skippedMeal,
     date: getLocalDateKey(entry.date.toDate()),
     time: entry.time,
     locationOther: entry.locationOther,

@@ -21,8 +21,7 @@
 - `location` (`"home" | "work" | "restaurant" | "friend's house" | "on the road" | "party" | "anders"`)
 - `company` (`"family" | "friends" | "alone" | "colleagues" | "kids" | "partner" | "anders"`)
 - `description` (`string`)
-- `behavior` (`("restricted" | "binged" | "overate" | "threw up" | "overexercised" | "anders")[]`)
-- `skippedMeal` (`boolean`)
+- `behavior` (`("restricted" | "skipped meal" | "binged" | "overate" | "threw up" | "overexercised" | "anders")[]`)
 - `date` (`Timestamp`)
 - `time` (`string`, `"HH:mm"`)
 - `imageUrl` (`string`, optional)
@@ -85,7 +84,6 @@ Detailed production security rules are implemented in later stories.
   - `DatePicker` for `date`
   - `Select` for `entryType`, `location`, `company`
   - `TagGroup` for `emotions`, `behavior`
-  - `Switch` for `skippedMeal`
 - Image + AI flow:
   - `FileTrigger` as default picker
   - `DropZone` optional for desktop drag-and-drop

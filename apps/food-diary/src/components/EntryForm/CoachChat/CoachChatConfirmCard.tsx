@@ -27,7 +27,6 @@ function toPreviewEntry(entry: WizardEntry): DiaryEntry {
     company: entry.company ?? "alone",
     description: entry.description,
     behavior: entry.behavior,
-    skippedMeal: entry.skippedMeal ?? false,
     isBookmarked: entry.isBookmarked,
     date: entry.date,
     time: entry.time,

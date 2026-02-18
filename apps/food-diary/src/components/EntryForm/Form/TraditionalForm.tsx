@@ -9,7 +9,6 @@ import {
   DateInput,
   EmotionPicker,
   Select,
-  Switch,
   TextArea,
   TimeInput,
   ToggleButtonGroup,
@@ -70,7 +69,8 @@ export function TraditionalForm({
     if (!entry.entryType) {
       return;
     }
-    const needsFoodEaten = entry.entryType !== "moment" && !(entry.skippedMeal ?? false);
+    const hasSkippedMealBehavior = entry.behavior.includes("skipped meal");
+    const needsFoodEaten = entry.entryType !== "moment" && !hasSkippedMealBehavior;
     if (needsFoodEaten && !entry.foodEaten.trim()) {
       return;
     }
@@ -111,17 +111,8 @@ export function TraditionalForm({
             />
           </FormSection>
 
-          {(entry.entryType === "breakfast" || entry.entryType === "lunch" || entry.entryType === "dinner") && (
-            <FormSection label={t("form.skippedMeal")}>
-              <Switch
-                isSelected={entry.skippedMeal ?? false}
-                onChange={isSelected => setEntry({ ...entry, skippedMeal: isSelected })}
-                aria-label={t("form.skippedMeal")}
-              />
-            </FormSection>
-          )}
-
-          {entry.entryType !== "moment" && !(entry.skippedMeal ?? false) && (
+          {entry.entryType !== "moment" &&
+          !entry.behavior.includes("skipped meal") ? (
             <FormSection label={t("form.foodEaten")} required>
               <TextArea
                 value={entry.foodEaten}
@@ -130,7 +121,7 @@ export function TraditionalForm({
                 aria-label={t("form.foodEaten")}
               />
             </FormSection>
-          )}
+          ) : null}
 
           <FormSection label={t("form.datetime")}>
             <div className="flex gap-ds-s">

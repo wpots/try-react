@@ -50,7 +50,6 @@ export function CoachChatActiveInput({
     inputChips,
     inputEmotions,
     inputBookmarked,
-    inputSkippedMeal,
     inputOtherText,
     inputText,
     isSaving,
@@ -60,7 +59,6 @@ export function CoachChatActiveInput({
     setEntry,
     setInputChips,
     setInputEmotions,
-    setInputSkippedMeal,
     setInputOtherText,
     setInputText,
     setInputBookmarked,
@@ -76,7 +74,6 @@ export function CoachChatActiveInput({
     handleSubmitEntryType,
     handleSubmitFood,
     handleSubmitLocation,
-    handleSubmitSkippedMeal,
   } = controller;
 
   if (completed || isTyping || mode !== "chat") {
@@ -157,13 +154,11 @@ export function CoachChatActiveInput({
         inputChips={inputChips}
         inputEmotions={inputEmotions}
         inputBookmarked={inputBookmarked}
-        inputSkippedMeal={inputSkippedMeal}
         inputOtherText={inputOtherText}
         inputText={inputText}
         setInputChips={setInputChips}
         setInputEmotions={setInputEmotions}
         setInputBookmarked={setInputBookmarked}
-        setInputSkippedMeal={setInputSkippedMeal}
         setInputOtherText={setInputOtherText}
         setInputText={setInputText}
         onSkip={handleSkip}
@@ -175,7 +170,6 @@ export function CoachChatActiveInput({
         onSubmitEmotions={handleSubmitEmotions}
         onSubmitFood={handleSubmitFood}
         onSubmitLocation={handleSubmitLocation}
-        onSubmitSkippedMeal={handleSubmitSkippedMeal}
       />
     </InputShell>
   );

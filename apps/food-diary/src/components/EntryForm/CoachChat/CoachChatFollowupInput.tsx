@@ -13,13 +13,11 @@ interface CoachChatFollowupInputProps {
   inputChips: string[];
   inputEmotions: string[];
   inputBookmarked: boolean | null;
-  inputSkippedMeal: boolean | null;
   inputOtherText: string;
   inputText: string;
   setInputChips: (value: string[]) => void;
   setInputEmotions: (value: string[]) => void;
   setInputBookmarked: (value: boolean | null) => void;
-  setInputSkippedMeal: (value: boolean | null) => void;
   setInputOtherText: (value: string) => void;
   setInputText: (value: string) => void;
   onSkip: () => void;
@@ -31,7 +29,6 @@ interface CoachChatFollowupInputProps {
   onSubmitEmotions: () => void;
   onSubmitFood: () => void;
   onSubmitLocation: (override?: string) => void;
-  onSubmitSkippedMeal: (override?: boolean | null) => void;
 }
 
 function toOptions(
@@ -62,13 +59,11 @@ export function CoachChatFollowupInput({
   inputChips,
   inputEmotions,
   inputBookmarked,
-  inputSkippedMeal,
   inputOtherText,
   inputText,
   setInputChips,
   setInputEmotions,
   setInputBookmarked,
-  setInputSkippedMeal,
   setInputOtherText,
   setInputText,
   onSkip,
@@ -80,7 +75,6 @@ export function CoachChatFollowupInput({
   onSubmitEmotions,
   onSubmitFood,
   onSubmitLocation,
-  onSubmitSkippedMeal,
 }: CoachChatFollowupInputProps): React.JSX.Element | null {
   const t = useTranslations("entry");
 
@@ -115,40 +109,6 @@ export function CoachChatFollowupInput({
           onBack={onStepBack}
           onConfirm={() => onSubmitBookmark()}
           confirmDisabled={inputBookmarked == null}
-        >
-          {skipAction}
-        </CoachChatActions>
-      </>
-    );
-  }
-
-  if (step.key === "skippedMeal") {
-    return (
-      <>
-        <div className="flex items-center gap-ds-s">
-          <EntryFormButton
-            variant={inputSkippedMeal === false ? "default" : "outline"}
-            onClick={() => {
-              setInputSkippedMeal(false);
-              onSubmitSkippedMeal(false);
-            }}
-          >
-            {t("form.no")}
-          </EntryFormButton>
-          <EntryFormButton
-            variant={inputSkippedMeal === true ? "default" : "outline"}
-            onClick={() => {
-              setInputSkippedMeal(true);
-              onSubmitSkippedMeal(true);
-            }}
-          >
-            {t("form.yes")}
-          </EntryFormButton>
-        </div>
-        <CoachChatActions
-          onBack={onStepBack}
-          onConfirm={() => onSubmitSkippedMeal()}
-          confirmDisabled={inputSkippedMeal == null}
         >
           {skipAction}
         </CoachChatActions>

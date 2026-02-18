@@ -4,7 +4,6 @@
   "coach": {
     "entryType": "Wat voor moment wil je vastleggen?",
     "datetime": "Op welk moment was dit?",
-    "skippedMeal": "Heb je deze maaltijd overgeslagen?",
     "location": "Waar was je?",
     "company": "Met wie was je?",
     "foodEaten": "Wat heb je gegeten of gedronken?",
@@ -73,6 +72,7 @@
   },
   "behaviors": {
     "restricted": "te weinig gegeten",
+    "skippedMeal": "maaltijd overgeslagen",
     "binged": "eetbui",
     "overate": "te veel gegeten",
     "threwUp": "overgegeven",
@@ -82,7 +82,6 @@
   "form": {
     "entryType": "Wat voor moment wil je vastleggen?",
     "datetime": "Wanneer was dit?",
-    "skippedMeal": "Heb je deze maaltijd overgeslagen?",
     "location": "Waar en met wie was je?",
     "foodEaten": "Wat heb je gegeten of gedronken?",
     "emotions": "Hoe voelde je je?",

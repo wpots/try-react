@@ -119,6 +119,10 @@ export function getBehaviorLabel(
     return translate("behaviors.restricted");
   }
 
+  if (behavior === "skipped meal") {
+    return translate("behaviors.skippedMeal");
+  }
+
   if (behavior === "binged") {
     return translate("behaviors.binged");
   }

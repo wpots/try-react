@@ -3,13 +3,12 @@ import type { WizardEntry } from "../index";
 export type WizardStepKey =
   | "entryType"
   | "datetime"
-  | "skippedMeal"
   | "location"
   | "company"
+  | "behavior"
   | "foodEaten"
   | "emotions"
   | "description"
-  | "behavior"
   | "bookmark"
   | "confirm";
 
@@ -17,36 +16,33 @@ export interface WizardStep {
   key: WizardStepKey;
   messageKey: string;
   optional?: boolean;
-  condition?: (context: { entryType: WizardEntry["entryType"] }) => boolean;
+  condition?: (context: {
+    entryType: WizardEntry["entryType"];
+    behavior: WizardEntry["behavior"];
+  }) => boolean;
 }
 
 export const STEPS: WizardStep[] = [
   { key: "datetime", messageKey: "coach.datetime" },
   { key: "entryType", messageKey: "coach.entryType" },
-  {
-    key: "skippedMeal",
-    messageKey: "coach.skippedMeal",
-    condition: (context) =>
-      context.entryType === "breakfast" ||
-      context.entryType === "lunch" ||
-      context.entryType === "dinner",
-  },
   { key: "location", messageKey: "coach.location" },
   { key: "company", messageKey: "coach.company" },
   {
+    key: "behavior",
+    messageKey: "coach.behavior",
+    optional: true,
+  },
+  {
     key: "foodEaten",
     messageKey: "coach.foodEaten",
-    condition: (context) => context.entryType !== "moment",
+    condition: (context) =>
+      context.entryType !== "moment" &&
+      !context.behavior.includes("skipped meal"),
   },
   { key: "emotions", messageKey: "coach.emotions" },
   {
     key: "description",
     messageKey: "coach.description",
-    optional: true,
-  },
-  {
-    key: "behavior",
-    messageKey: "coach.behavior",
     optional: true,
   },
   { key: "bookmark", messageKey: "coach.bookmark" },

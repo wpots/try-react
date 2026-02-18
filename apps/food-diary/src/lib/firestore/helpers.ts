@@ -45,6 +45,17 @@ function parseEntryDate(date: string, time: string): Timestamp {
   return Timestamp.fromDate(new Date(`${date}T${time}:00`));
 }
 
+function withLegacySkippedMealBehavior(
+  behavior: DiaryEntry["behavior"],
+  skippedMeal?: boolean,
+): DiaryEntry["behavior"] {
+  if (!skippedMeal || behavior.includes("skipped meal")) {
+    return behavior;
+  }
+
+  return [...behavior, "skipped meal"];
+}
+
 export async function createDiaryEntry(
   input: CreateDiaryEntryInput,
 ): Promise<string> {
@@ -74,8 +85,7 @@ export async function getDiaryEntryById(entryId: string): Promise<DiaryEntry | n
     location: parsed.location,
     company: parsed.company,
     description: parsed.description,
-    behavior: parsed.behavior,
-    skippedMeal: parsed.skippedMeal,
+    behavior: withLegacySkippedMealBehavior(parsed.behavior, parsed.skippedMeal),
     isBookmarked: parsed.isBookmarked,
     date: parsed.date,
     time: parsed.time,
@@ -105,7 +115,7 @@ export async function updateDiaryEntry(
     company: parsed.company,
     description: parsed.description,
     behavior: parsed.behavior,
-    skippedMeal: parsed.skippedMeal,
+    skippedMeal: deleteField(),
     isBookmarked: parsed.isBookmarked,
     date: parseEntryDate(parsed.date, parsed.time),
     time: parsed.time,

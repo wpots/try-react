@@ -25,7 +25,6 @@ export interface DiaryEntry {
   company: DiaryEntryCompany;
   description: string;
   behavior: DiaryEntryBehavior[];
-  skippedMeal: boolean;
   isBookmarked: boolean;
   date: string;
   time: string;
@@ -48,7 +47,6 @@ export interface SaveDiaryEntryInput {
   location?: DiaryEntryLocation;
   company?: DiaryEntryCompany;
   behavior?: DiaryEntryBehavior[];
-  skippedMeal?: boolean;
   isBookmarked?: boolean;
   date: string;
   time: string;
@@ -70,7 +68,6 @@ function toClientEntry(entry: FirestoreDiaryEntry): DiaryEntry {
     company: entry.company,
     description: entry.description,
     behavior: entry.behavior,
-    skippedMeal: entry.skippedMeal,
     isBookmarked: entry.isBookmarked,
     date: getLocalDateKey(entry.date.toDate()),
     time: entry.time,
@@ -112,7 +109,6 @@ export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> 
     company: input.company,
     description: input.description ?? "",
     behavior: input.behavior,
-    skippedMeal: input.skippedMeal ?? false,
     isBookmarked: input.isBookmarked ?? false,
     date: input.date,
     time: input.time,

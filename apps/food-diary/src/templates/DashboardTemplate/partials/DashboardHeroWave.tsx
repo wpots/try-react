@@ -37,9 +37,9 @@ const TERTIARY_WAVE_PATH =
 const PRIMARY_TILT_X_MULTIPLIER = 68;
 const SECONDARY_TILT_X_MULTIPLIER = 40;
 const TERTIARY_TILT_X_MULTIPLIER = 24;
-const PRIMARY_TILT_Y_MULTIPLIER = 28;
-const SECONDARY_TILT_Y_MULTIPLIER = 18;
-const TERTIARY_TILT_Y_MULTIPLIER = 10;
+const PRIMARY_TILT_Y_MULTIPLIER = 18;
+const SECONDARY_TILT_Y_MULTIPLIER = 12;
+const TERTIARY_TILT_Y_MULTIPLIER = 8;
 const PRIMARY_TILT_ROTATE_MULTIPLIER = 5;
 const SECONDARY_TILT_ROTATE_MULTIPLIER = 3;
 const TERTIARY_TILT_ROTATE_MULTIPLIER = 2;
@@ -97,7 +97,7 @@ function WaveLayer({
 }: WaveLayerProps): React.JSX.Element {
   return (
     <motion.div
-      className="absolute inset-0"
+      className="absolute -inset-y-ds-xxl inset-x-0 origin-bottom"
       animate={{
         rotate: tiltRotate,
         x: tiltX,
@@ -155,7 +155,7 @@ export function DashboardHeroWave({
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-ds-xxl overflow-hidden opacity-60 md:h-ds-3xl"
+      className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-ds-3xl overflow-hidden opacity-60 md:h-ds-4xl"
     >
       <WaveLayer
         className={waveTone.primary}

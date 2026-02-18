@@ -18,11 +18,6 @@ interface DashboardHeroProps {
   translateDashboard: (key: string) => string;
 }
 
-function formatTiltValue(value: number): string {
-  const safeValue = Math.abs(value) < 0.005 ? 0 : value;
-  return safeValue.toFixed(2);
-}
-
 export function DashboardHero({
   affirmation,
   averageMood,
@@ -33,7 +28,6 @@ export function DashboardHero({
   const {
     tiltX,
     tiltY,
-    tiltOffset,
     hasTiltSignal,
     permissionState,
     canRequestPermission,
@@ -112,10 +106,6 @@ export function DashboardHero({
                   {translateDashboard(tiltStatusKey)}
                 </p>
               ) : null}
-              <p className="font-ds-label-sm text-ds-on-surface-secondary">
-                x {formatTiltValue(tiltX)} | y {formatTiltValue(tiltY)} |
-                mix {formatTiltValue(tiltOffset)}
-              </p>
             </div>
           ) : null}
         </div>

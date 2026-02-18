@@ -1,6 +1,25 @@
 {
   "default": "Dankjewel, ik heb het genoteerd.",
-  "entryType": "Helder, dankjewel.",
+  "entryTypeByType": {
+    "breakfast": [
+      "Helder, we nemen dit als ontbijt mee."
+    ],
+    "lunch": [
+      "Helder, ik noteer dit als lunch."
+    ],
+    "dinner": [
+      "Helder, ik noteer dit als diner."
+    ],
+    "snack": [
+      "Helder, ik noteer dit als snack."
+    ],
+    "moment": [
+      "Helder, ik noteer dit als moment."
+    ],
+    "thought": [
+      "Helder, ik noteer dit als gedachte."
+    ]
+  },
   "datetime": "Top, ik heb het moment.",
   "location": "Fijn, dat helpt om context te geven.",
   "company": "Dankjewel, ik noteer met wie je was.",

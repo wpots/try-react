@@ -1,6 +1,25 @@
 {
   "default": "Thanks, I've noted that.",
-  "entryType": "Clear, thanks.",
+  "entryTypeByType": {
+    "breakfast": [
+      "Clear, we'll log this as breakfast."
+    ],
+    "lunch": [
+      "Clear, I'll log this as lunch."
+    ],
+    "dinner": [
+      "Clear, I'll log this as dinner."
+    ],
+    "snack": [
+      "Clear, I'll log this as snack."
+    ],
+    "moment": [
+      "Clear, I'll log this as a moment."
+    ],
+    "thought": [
+      "Clear, I'll log this as a thought."
+    ]
+  },
   "datetime": "Great, I've got the timing.",
   "location": "Thanks, that helps with context.",
   "company": "Thanks, I'll note who you were with.",

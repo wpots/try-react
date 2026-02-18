@@ -366,6 +366,20 @@ export function useCoachChatController({
     [getSingleValueReplyMessage],
   );
 
+  const getEntryTypeReplyMessage = useCallback(
+    (targetEntry: WizardEntry): string => {
+      const selectedType = targetEntry.entryType;
+      if (!selectedType) {
+        return "";
+      }
+
+      const repliesByType = getReplyArrayMap("coachReplies.entryTypeByType");
+      const scopedReplies = repliesByType[selectedType] ?? [];
+      return getRotatingReply(scopedReplies, `entryType.${selectedType}`, "");
+    },
+    [getReplyArrayMap, getRotatingReply],
+  );
+
   const getCompanyReplyMessage = useCallback(
     (targetEntry: WizardEntry): string =>
       getSingleValueReplyMessage({
@@ -469,6 +483,9 @@ export function useCoachChatController({
       }
 
       const replyKey = step.replyKey ?? step.key;
+      if (replyKey === "entryType") {
+        return getEntryTypeReplyMessage(targetEntry);
+      }
       if (replyKey === "location") {
         return getLocationReplyMessage(targetEntry);
       }
@@ -490,6 +507,7 @@ export function useCoachChatController({
     [
       getCompanyReplyMessage,
       getBehaviorReplyMessage,
+      getEntryTypeReplyMessage,
       getEmotionReplyMessage,
       getLocationReplyMessage,
       getThoughtsReplyMessage,

@@ -1,7 +1,7 @@
 "use client";
 import { Container, Section, Typography } from "@repo/ui";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { AuthButtons } from "@/components/AuthButtons";
 import { DashboardHeader } from "@/components/DashboardHeader";
@@ -17,7 +17,7 @@ import { useDashboardContent } from "./useDashboardContent";
 import { pickAffirmation } from "./utils/affirmationUtils";
 import { isFutureDay, isSameDay, toDateKey } from "./utils/dateUtils";
 import { getAffirmationPool } from "./utils/getAffirmationPool";
-import { getAverageMoodDebug, getEntryMoods, getMoodSummary } from "./utils/moodUtils";
+import { getAverageMoodZone, getEntryMoods, getMoodSummary } from "./utils/moodUtils";
 import { getHeroDateLabel, getPeriodLabel } from "./utils/periodLabelUtils";
 
 import type { DashboardMonthCell, DashboardMood, DashboardWeekDay } from "./index";
@@ -33,14 +33,6 @@ function getWeekdayLabels(translate: (key: string) => string): string[] {
     translate("weekdays.sat"),
     translate("weekdays.sun"),
   ];
-}
-
-function isMoodDebugEnabled(): boolean {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return window.localStorage.getItem("debug:mood") === "1";
 }
 
 export function DashboardTemplate(): React.JSX.Element {
@@ -68,13 +60,9 @@ export function DashboardTemplate(): React.JSX.Element {
     (entry: DiaryEntry): DashboardMood[] => getEntryMoods(entry, resolveEmotionLabel),
     [resolveEmotionLabel],
   );
-  const averageMoodDebug = useMemo(
-    () => getAverageMoodDebug(dashboardState.dayEntries),
-    [dashboardState.dayEntries],
-  );
   const averageMood = useMemo(
-    () => getMoodSummary(averageMoodDebug.zone, translateDashboard),
-    [averageMoodDebug.zone, translateDashboard],
+    () => getMoodSummary(getAverageMoodZone(dashboardState.dayEntries), translateDashboard),
+    [dashboardState.dayEntries, translateDashboard],
   );
   const affirmationPool = useMemo(
     () => getAffirmationPool(translateDashboard, getDashboardRawMessage),
@@ -121,42 +109,6 @@ export function DashboardTemplate(): React.JSX.Element {
       };
     });
   }, [dashboardState.entriesByDate, dashboardState.monthGridDates, dashboardState.today, resolveEntryMoods]);
-
-  useEffect(() => {
-    if (!isMoodDebugEnabled()) {
-      return;
-    }
-
-    const dateKey = toDateKey(dashboardState.selectedDate);
-    console.groupCollapsed(
-      `[mood-debug][day=${dateKey}] zone=${String(averageMoodDebug.zone)}`,
-    );
-    console.table(
-      averageMoodDebug.entries.map((entry) => ({
-        entryId: entry.entryId,
-        type: entry.entryType,
-        date: entry.date,
-        time: entry.time,
-        emotionCount: entry.emotionCount,
-        emotions: entry.emotions
-          .map((emotion) => {
-            return `${emotion.key}->${emotion.zone} (${emotion.source})`;
-          })
-          .join(", "),
-        entryAverage: entry.entryAverage,
-        weight: entry.weight,
-        weightedContribution: entry.weightedContribution,
-      })),
-    );
-    console.log("summary", {
-      totalWeight: averageMoodDebug.totalWeight,
-      weightedTotal: averageMoodDebug.weightedTotal,
-      average: averageMoodDebug.average,
-      roundedAverage: averageMoodDebug.roundedAverage,
-      zone: averageMoodDebug.zone,
-    });
-    console.groupEnd();
-  }, [averageMoodDebug, dashboardState.selectedDate]);
 
   if (dashboardState.isLoading) {
     return (

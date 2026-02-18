@@ -16,7 +16,6 @@ import { hasUnsavedEntryChanges } from "./utils/hasUnsavedEntryChanges";
 
 import type { EntryFormProps, WizardEntry } from "./index";
 
-
 function mapDiaryEntryToWizardEntry(entry: DiaryEntry): WizardEntry {
   return {
     behavior: entry.behavior,
@@ -196,7 +195,7 @@ export function EntryForm({
   }, [controller.entry.isBookmarked, onBookmarkChange]);
 
   return (
-    <Section spacing="none">
+    <Section spacing="none" className="h-full ">
       <Container size="narrow" className="flex h-full flex-col">
         <EntryFormHeader
           currentStepIndex={controller.currentStepIndex}

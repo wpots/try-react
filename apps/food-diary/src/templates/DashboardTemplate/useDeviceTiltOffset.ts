@@ -103,6 +103,47 @@ export function useDeviceTiltOffset({
   useEffect(() => {
     if (
       !isEnabled ||
+      !canRequestPermission ||
+      requestedPermissionState !== "prompt" ||
+      typeof window === "undefined"
+    ) {
+      return undefined;
+    }
+
+    let hasRequestedPermission = false;
+
+    const handleFirstInteraction = (): void => {
+      if (hasRequestedPermission) {
+        return;
+      }
+
+      hasRequestedPermission = true;
+      void requestPermission();
+    };
+
+    window.addEventListener("touchstart", handleFirstInteraction, {
+      once: true,
+      passive: true,
+    });
+    window.addEventListener("pointerdown", handleFirstInteraction, {
+      once: true,
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("touchstart", handleFirstInteraction);
+      window.removeEventListener("pointerdown", handleFirstInteraction);
+    };
+  }, [
+    canRequestPermission,
+    isEnabled,
+    requestPermission,
+    requestedPermissionState,
+  ]);
+
+  useEffect(() => {
+    if (
+      !isEnabled ||
       permissionState !== "granted" ||
       typeof window === "undefined"
     ) {

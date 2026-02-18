@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Icon, Label, useMotionEnabled } from "@repo/ui";
+import { Card, Icon, Label, useMotionEnabled } from "@repo/ui";
 
 import { Quote } from "@/components/Quote";
 
@@ -25,49 +25,10 @@ export function DashboardHero({
   translateDashboard,
 }: DashboardHeroProps): React.JSX.Element {
   const isMotionEnabled = useMotionEnabled();
-  const {
-    tiltX,
-    tiltY,
-    hasTiltSignal,
-    permissionState,
-    canRequestPermission,
-    requestPermission,
-  } = useDeviceTiltOffset({
+  const { tiltX, tiltY } = useDeviceTiltOffset({
     isEnabled: isMotionEnabled,
     maxGamma: 18,
   });
-
-  const showEnableTiltButton =
-    isMotionEnabled &&
-    canRequestPermission &&
-    permissionState !== "granted" &&
-    permissionState !== "unsupported";
-
-  let tiltStatusKey: string | null = null;
-  let tiltStatusClassName = "font-ds-label-sm text-ds-on-surface-secondary";
-
-  if (!isMotionEnabled) {
-    tiltStatusKey = "hero.tilt.motionDisabled";
-  } else if (permissionState === "denied") {
-    tiltStatusKey = "hero.tilt.denied";
-    tiltStatusClassName = "font-ds-label-sm text-ds-danger";
-  } else if (permissionState === "unsupported") {
-    tiltStatusKey = "hero.tilt.unsupported";
-  } else if (permissionState === "granted" && !hasTiltSignal) {
-    tiltStatusKey = "hero.tilt.noSignal";
-    tiltStatusClassName = "font-ds-label-sm text-ds-warning-strong";
-  } else if (permissionState === "granted") {
-    tiltStatusKey = "hero.tilt.enabled";
-    tiltStatusClassName = "font-ds-label-sm text-ds-success";
-  } else if (showEnableTiltButton) {
-    tiltStatusKey = "hero.tilt.prompt";
-  }
-
-  const showTiltPanel = showEnableTiltButton || tiltStatusKey != null;
-
-  const handleEnableTilt = (): void => {
-    void requestPermission();
-  };
 
   return (
     <section
@@ -88,26 +49,6 @@ export function DashboardHero({
         <div>
           <Label>{dateLabel}</Label>
           <Quote className="py-ds-xl text-left">{affirmation}</Quote>
-          {showTiltPanel ? (
-            <div className="mt-ds-s flex w-fit flex-col gap-ds-xs rounded-ds-md border border-ds-border-subtle bg-ds-surface px-ds-s py-ds-xs">
-              <Label>{translateDashboard("hero.tilt.label")}</Label>
-              {showEnableTiltButton ? (
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  onClick={handleEnableTilt}
-                >
-                  {translateDashboard("hero.tilt.enable")}
-                </Button>
-              ) : null}
-              {tiltStatusKey != null ? (
-                <p className={tiltStatusClassName}>
-                  {translateDashboard(tiltStatusKey)}
-                </p>
-              ) : null}
-            </div>
-          ) : null}
         </div>
 
         <div>

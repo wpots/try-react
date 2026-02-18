@@ -16,6 +16,7 @@ import {
 } from "@repo/ui";
 
 import type { TraditionalFormProps } from "../index";
+import { FormButton } from "@/components/FormButton";
 import { EntryFormButton } from "../partials/EntryFormButton";
 import {
   areEntryBehaviors,
@@ -39,7 +40,15 @@ function toOptions(
   }));
 }
 
-export function TraditionalForm({ initialEntry, onComplete, onEntryChange }: TraditionalFormProps): React.JSX.Element {
+export function TraditionalForm({
+  canDelete = false,
+  deleteError,
+  initialEntry,
+  isDeleting = false,
+  onComplete,
+  onDelete,
+  onEntryChange,
+}: TraditionalFormProps): React.JSX.Element {
   const t = useTranslations("entry");
   const [entry, setEntry] = useState(initialEntry);
   const [submitted, setSubmitted] = useState(false);
@@ -273,6 +282,24 @@ export function TraditionalForm({ initialEntry, onComplete, onEntryChange }: Tra
           <div className="flex justify-end">
             <EntryFormButton type="submit">{t("form.submit")}</EntryFormButton>
           </div>
+
+          {canDelete ? (
+            <div className="flex justify-start">
+              <FormButton
+                className="h-auto px-0 py-0 text-ds-danger hover:bg-transparent hover:text-ds-danger"
+                disabled={isDeleting}
+                onClick={onDelete}
+                type="button"
+                variant="link"
+              >
+                {isDeleting ? t("form.deleting") : t("form.delete")}
+              </FormButton>
+            </div>
+          ) : null}
+
+          {deleteError ? (
+            <p className="font-ds-body-sm text-ds-danger">{deleteError}</p>
+          ) : null}
         </form>
       </Card>
     </div>

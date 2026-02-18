@@ -2,6 +2,7 @@
 
 import { createDiaryEntrySchema } from "@/lib/firestore/schemas";
 import { createDiaryEntry } from "@/lib/firestore/helpers";
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 import type { SaveDiaryEntryResult } from "./index";
 
 export async function saveDiaryEntry(
@@ -31,7 +32,7 @@ export async function saveDiaryEntry(
       date:
         typeof formData.get("date") === "string"
           ? formData.get("date")
-          : new Date().toISOString().slice(0, 10),
+          : getLocalDateKey(new Date()),
       time:
         typeof formData.get("time") === "string"
           ? formData.get("time")

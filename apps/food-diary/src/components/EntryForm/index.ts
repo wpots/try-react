@@ -31,8 +31,12 @@ export interface EntryFormProps {
 }
 
 export interface TraditionalFormProps {
+  canDelete?: boolean;
+  deleteError?: string | null;
   initialEntry: WizardEntry;
+  isDeleting?: boolean;
   onComplete: (entry: WizardEntry) => void;
+  onDelete?: () => void;
   onEntryChange?: (entry: WizardEntry) => void;
 }
 

@@ -3,11 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Key } from "react";
 import { useTranslations } from "next-intl";
-import { mergeGuestEntries, wipeGuestEntries } from "@/app/actions";
+import { wipeGuestEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInWithGoogle, signOut } from "@/lib/auth";
 import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
+import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
 
 export const guestModeActionKey = "guest-mode";
 export const loginActionKey = "login";
@@ -72,13 +73,13 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       const result = await signInWithGoogle(user);
 
       if (result.mergedFromGuestId) {
-        const mergeResult = await mergeGuestEntries(
+        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(
           result.mergedFromGuestId,
           result.user.uid,
         );
 
         if (!mergeResult.success) {
-          throw new Error(mergeResult.error ?? tAuth("mergeUnknownError"));
+          console.error(mergeResult.error ?? tAuth("mergeUnknownError"));
         }
       }
 

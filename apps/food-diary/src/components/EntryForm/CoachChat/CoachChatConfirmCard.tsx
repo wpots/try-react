@@ -1,17 +1,11 @@
 "use client";
 
-import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
 
-import { Card } from "@repo/ui";
-
 import type { WizardEntry } from "../index";
-import { formatDatetimeHuman } from "../utils/formatDatetimeHuman";
-import {
-  behaviorOptions,
-  companyOptions,
-  locationOptions,
-} from "../utils/options";
+import type { DiaryEntry } from "@/lib/diaryEntries";
+import { DayEntryCard } from "@/templates/DashboardTemplate/partials/DayEntryCard";
+import { getEntryMoods } from "@/templates/DashboardTemplate/utils/moodUtils";
 import { EntryFormButton } from "../partials/EntryFormButton";
 
 interface CoachChatConfirmCardProps {
@@ -22,6 +16,31 @@ interface CoachChatConfirmCardProps {
   onSubmit: () => void;
 }
 
+function toPreviewEntry(entry: WizardEntry): DiaryEntry {
+  return {
+    id: "coach-chat-preview",
+    userId: "coach-chat-preview",
+    entryType: entry.entryType ?? "moment",
+    foodEaten: entry.foodEaten,
+    emotions: entry.emotions,
+    location: entry.location ?? "home",
+    company: entry.company ?? "alone",
+    description: entry.description,
+    behavior: entry.behavior,
+    skippedMeal: entry.skippedMeal ?? false,
+    isBookmarked: entry.isBookmarked,
+    date: entry.date,
+    time: entry.time,
+    locationOther: entry.locationOther,
+    companyOther: entry.companyOther,
+    behaviorOther: entry.behaviorOther,
+    createdAt: entry.date,
+    updatedAt: entry.date,
+    imageUrl: entry.imageUrl,
+    imagePublicId: entry.imagePublicId,
+  };
+}
+
 export function CoachChatConfirmCard({
   entry,
   isSaving,
@@ -29,77 +48,52 @@ export function CoachChatConfirmCard({
   onBack,
   onSubmit,
 }: CoachChatConfirmCardProps): React.JSX.Element {
-  const locale = useLocale();
-  const t = useTranslations("entry");
+  const tEntry = useTranslations("entry");
+  const tDashboard = useTranslations("dashboard");
+  const previewEntry = toPreviewEntry(entry);
 
-  const locationLabel = entry.location
-    ? entry.location === "anders"
-      ? entry.locationOther || t("locations.anders")
-      : t(
-          locationOptions.find((o) => o.value === entry.location)?.labelKey ??
-            "locations.anders",
-        )
-    : "-";
-  const companyLabel = entry.company
-    ? entry.company === "anders"
-      ? entry.companyOther || t("company.anders")
-      : t(
-          companyOptions.find((o) => o.value === entry.company)?.labelKey ??
-            "company.anders",
-        )
-    : "-";
-  const behaviorLabel =
-    entry.behavior?.length > 0
-      ? entry.behavior
-          .map((value) =>
-            value === "anders"
-              ? entry.behaviorOther || t("behaviors.anders")
-              : t(
-                  behaviorOptions.find((o) => o.value === value)?.labelKey ??
-                    "behaviors.anders",
-                ),
-          )
-          .join(", ")
-      : "-";
+  function translateEntry(key: string): string {
+    return tEntry(key);
+  }
+
+  function translateDashboard(key: string): string {
+    return tDashboard(key);
+  }
+
+  function resolveEmotionLabel(emotionKey: string): string {
+    try {
+      return tEntry(`emotions.${emotionKey}`);
+    } catch {
+      return emotionKey;
+    }
+  }
+
+  const entryMoods = getEntryMoods(previewEntry, resolveEmotionLabel);
 
   return (
-    <Card className="space-y-ds-s">
-      <p className="text-sm text-ds-on-surface-secondary">{t("coach.confirm")}</p>
-      <ul className="space-y-ds-xs text-sm">
-        <li>
-          <strong>{t("fields.type")}:</strong>{" "}
-          {entry.entryType ? t(`entryTypes.${entry.entryType}`) : "-"}
-        </li>
-        <li>
-          <strong>{t("fields.datetime")}:</strong>{" "}
-          {formatDatetimeHuman(entry.date, entry.time ?? "00:00", locale)}
-        </li>
-        <li>
-          <strong>{t("coach.location")}:</strong> {locationLabel}
-        </li>
-        <li>
-          <strong>{t("coach.company")}:</strong> {companyLabel}
-        </li>
-        <li>
-          <strong>{t("coach.foodEaten")}:</strong> {entry.foodEaten || "-"}
-        </li>
-        <li>
-          <strong>{t("coach.behavior")}:</strong> {behaviorLabel}
-        </li>
-        <li>
-          <strong>{t("fields.bookmark")}:</strong>{" "}
-          {entry.isBookmarked ? t("form.yes") : t("form.no")}
-        </li>
-      </ul>
-      {saveError ? <p className="text-sm text-ds-danger">{saveError}</p> : null}
-      <div className="mt-ds-m flex justify-end gap-ds-s">
+    <div className="space-y-ds-s">
+      <DayEntryCard
+        entry={previewEntry}
+        entryMoods={entryMoods}
+        isBookmarked={previewEntry.isBookmarked}
+        isDeleting={false}
+        isExpanded={false}
+        showActionButtons={false}
+        forceExpanded
+        translateDashboard={translateDashboard}
+        translateEntry={translateEntry}
+      />
+      {saveError ? (
+        <p className="text-sm text-ds-danger">{saveError}</p>
+      ) : null}
+      <div className="flex justify-end gap-ds-s">
         <EntryFormButton variant="outline" onClick={onBack}>
-          {t("form.edit")}
+          {tEntry("form.edit")}
         </EntryFormButton>
         <EntryFormButton onClick={onSubmit} disabled={isSaving}>
-          {isSaving ? t("saving") : t("form.submit")}
+          {isSaving ? tEntry("saving") : tEntry("form.submit")}
         </EntryFormButton>
       </div>
-    </Card>
+    </div>
   );
 }

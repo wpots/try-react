@@ -1,8 +1,9 @@
 import type { WizardEntry } from "../index";
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 
 export function getInitialEntry(): WizardEntry {
   const now = new Date();
-  const date = now.toISOString().slice(0, 10);
+  const date = getLocalDateKey(now);
   const time = now.toTimeString().slice(0, 5);
 
   return {

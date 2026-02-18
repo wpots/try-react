@@ -1,10 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import {
+  deleteDiaryEntry,
   fetchDiaryEntryById,
   type DiaryEntry,
 } from "@/lib/diaryEntries";
@@ -47,6 +49,10 @@ export function EntryForm({
 }: EntryFormProps): React.JSX.Element {
   const router = useRouter();
   const { loading: isAuthLoading, user } = useAuth();
+  const t = useTranslations("entry");
+  const userId = user?.uid;
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleComplete = useCallback(() => {
     if (onComplete) {
@@ -65,9 +71,42 @@ export function EntryForm({
   const initialEntryRef = useRef<WizardEntry>(controller.entry);
   const previousBookmarkedPropRef = useRef(isBookmarked);
 
-  useEffect(() => {
-    const userId = user?.uid;
+  const handleDelete = useCallback(async (): Promise<void> => {
+    const selectedEntryId = entryId?.trim() ?? "";
 
+    if (!selectedEntryId) {
+      return;
+    }
+
+    if (!window.confirm(t("form.deleteConfirm"))) {
+      return;
+    }
+
+    if (!userId) {
+      setDeleteError(t("errors.notAuthenticated"));
+      return;
+    }
+
+    setDeleteError(null);
+    setIsDeleting(true);
+
+    try {
+      const hasDeleted = await deleteDiaryEntry(userId, selectedEntryId);
+
+      if (!hasDeleted) {
+        setDeleteError(t("errors.deleteFailed"));
+        return;
+      }
+
+      handleComplete();
+    } catch {
+      setDeleteError(t("errors.deleteFailed"));
+    } finally {
+      setIsDeleting(false);
+    }
+  }, [entryId, handleComplete, t, userId]);
+
+  useEffect(() => {
     if (!entryId || isAuthLoading || !userId) {
       return;
     }
@@ -96,7 +135,7 @@ export function EntryForm({
     return () => {
       isCanceled = true;
     };
-  }, [controller.setEntry, entryId, isAuthLoading, user?.uid]);
+  }, [controller.setEntry, entryId, isAuthLoading, userId]);
 
   const isDirty = useMemo(
     () =>
@@ -174,8 +213,12 @@ export function EntryForm({
 
       {controller.mode === "form" ? (
         <TraditionalForm
+          canDelete={Boolean(entryId)}
+          deleteError={deleteError}
           initialEntry={controller.entry}
+          isDeleting={isDeleting}
           onComplete={controller.handleTraditionalComplete}
+          onDelete={handleDelete}
           onEntryChange={controller.setEntry}
         />
       ) : (

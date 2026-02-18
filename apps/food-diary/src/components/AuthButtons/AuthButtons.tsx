@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button, Card, GoogleIcon, Text } from "@repo/ui";
+import { Button, GoogleIcon, Text } from "@repo/ui";
 import { User } from "lucide-react";
 import type { AuthButtonsProps } from "./index";
 import { useAuthButtons } from "./useAuthButtons";

@@ -1,3 +1,3 @@
-export interface DashboardHeaderProps extends React.ComponentProps<"header"> {}
+export type DashboardHeaderProps = React.ComponentProps<"header">;
 
 export { DashboardHeader } from "./DashboardHeader";

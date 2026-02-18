@@ -1,5 +1,6 @@
 import type { DiaryEntry } from "../index";
 import type { DiaryEntry as FirestoreDiaryEntry } from "@/lib/firestore/types";
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 
 export function mapToActionDiaryEntry(
   entry: FirestoreDiaryEntry,
@@ -15,7 +16,7 @@ export function mapToActionDiaryEntry(
     description: entry.description,
     behavior: entry.behavior,
     skippedMeal: entry.skippedMeal,
-    date: entry.date.toDate().toISOString().slice(0, 10),
+    date: getLocalDateKey(entry.date.toDate()),
     time: entry.time,
     locationOther: entry.locationOther,
     companyOther: entry.companyOther,

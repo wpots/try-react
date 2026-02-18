@@ -76,8 +76,45 @@ function toMoodZone(value: number): MoodZone {
   return 5;
 }
 
+function isEmotionCategory(value: string): value is EmotionCategory {
+  return (
+    value === "positive" ||
+    value === "optimistic" ||
+    value === "neutral" ||
+    value === "worried" ||
+    value === "negative"
+  );
+}
+
+function getCategoryMoodConfig(category: EmotionCategory): EmotionMoodConfig {
+  const zone = CATEGORY_ZONE[category];
+
+  return {
+    emoji: ZONE_SUMMARY[zone].emoji,
+    zone,
+  };
+}
+
 function getMoodConfig(emotionKey: string): EmotionMoodConfig {
-  return EMOTION_MOOD[emotionKey] ?? FALLBACK_MOOD;
+  const key = emotionKey.trim();
+  const mappedByKey = EMOTION_MOOD[key];
+
+  if (mappedByKey) {
+    return mappedByKey;
+  }
+
+  const normalizedKey = key.toLowerCase();
+  const mappedByNormalizedKey = EMOTION_MOOD[normalizedKey];
+
+  if (mappedByNormalizedKey) {
+    return mappedByNormalizedKey;
+  }
+
+  if (isEmotionCategory(normalizedKey)) {
+    return getCategoryMoodConfig(normalizedKey);
+  }
+
+  return FALLBACK_MOOD;
 }
 
 function getEntryAverageMoodScore(entry: DiaryEntry): number | null {

@@ -1,15 +1,6 @@
 {
   "title": "Nieuw moment vastleggen",
   "subtitle": "Samen met je coach loop je stap voor stap door dit moment heen.",
-  "fields": {
-    "foodEaten": "Gegeten voeding",
-    "description": "Beschrijving",
-    "date": "Datum",
-    "time": "Tijd",
-    "type": "Type moment",
-    "datetime": "Moment",
-    "bookmark": "Moment bewaren"
-  },
   "coach": {
     "entryType": "Wat voor moment wil je vastleggen?",
     "datetime": "Op welk moment was dit?",
@@ -32,22 +23,22 @@
     "moment": "Moment"
   },
   "locations": {
-    "home": "Thuis",
-    "work": "Werk",
-    "restaurant": "Restaurant",
-    "friends": "Bij vrienden",
-    "onTheRoad": "Onderweg",
-    "party": "Feest",
+    "home": "thuis",
+    "work": "op het werk",
+    "restaurant": "in een restaurant",
+    "friends": "bij vrienden",
+    "onTheRoad": "onderweg",
+    "party": "op een feest",
     "anders": "Anders"
   },
   "company": {
-    "alone": "Alleen",
-    "partner": "Partner",
-    "family": "Familie",
-    "friends": "Vrienden",
-    "colleagues": "Collega's",
-    "kids": "Kinderen",
-    "anders": "Anders"
+    "alone": "alleen",
+    "partner": "met mijn partner",
+    "family": "met mijn familie",
+    "friends": "met vrienden",
+    "colleagues": "met collega's",
+    "kids": "met mijn kind(eren)",
+    "anders": "anders"
   },
   "emotions": {
     "happy": "blij",
@@ -80,13 +71,6 @@
     "nausea": "misselijk",
     "busy": "druk"
   },
-  "emotionCategories": {
-    "positive": "Positief",
-    "optimistic": "Optimistisch",
-    "neutral": "Neutraal",
-    "worried": "Zorgelijk",
-    "negative": "Negatief"
-  },
   "behaviors": {
     "restricted": "te weinig gegeten",
     "binged": "eetbui",
@@ -112,6 +96,9 @@
     "confirm": "Bevestig",
     "skip": "Overslaan",
     "submit": "Moment opslaan",
+    "delete": "Moment verwijderen",
+    "deleteConfirm": "Dit moment verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+    "deleting": "Bezig met verwijderen...",
     "edit": "Wijzig",
     "yes": "Ja",
     "no": "Nee"
@@ -131,13 +118,11 @@
     "behavior": "",
     "behaviorNone": "Niets bijzonders."
   },
-  "saveEntry": "Invoer opslaan",
   "saving": "Bezig met opslaan...",
-  "saveSuccess": "Invoer succesvol opgeslagen!",
   "authRequired": "Log eerst in.",
-  "goToLogin": "Ga naar inloggen",
   "errors": {
     "notAuthenticated": "Gebruiker niet geauthenticeerd",
-    "saveFailed": "Opslaan van invoer mislukt"
+    "saveFailed": "Opslaan van invoer mislukt",
+    "deleteFailed": "Verwijderen van invoer mislukt"
   }
 }

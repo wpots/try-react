@@ -5,6 +5,7 @@ import {
   getDiaryEntriesByUser,
   updateDiaryEntry,
 } from "@/lib/firestore/helpers";
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 import type {
   CreateDiaryEntryInput,
   DiaryEntry as FirestoreDiaryEntry,
@@ -71,7 +72,7 @@ function toClientEntry(entry: FirestoreDiaryEntry): DiaryEntry {
     behavior: entry.behavior,
     skippedMeal: entry.skippedMeal,
     isBookmarked: entry.isBookmarked,
-    date: entry.date.toDate().toISOString().slice(0, 10),
+    date: getLocalDateKey(entry.date.toDate()),
     time: entry.time,
     locationOther: entry.locationOther,
     companyOther: entry.companyOther,

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { mergeGuestEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
 import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
+import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
 import { getAuthButtonsDisabledState } from "./utils";
 
 interface UseAuthButtonsInput {
@@ -57,13 +57,13 @@ export function useAuthButtons({
       const result = await signInWithGoogle(user);
 
       if (result.mergedFromGuestId) {
-        const mergeResult = await mergeGuestEntries(
+        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(
           result.mergedFromGuestId,
           result.user.uid,
         );
 
         if (!mergeResult.success) {
-          throw new Error(mergeResult.error ?? t("mergeUnknownError"));
+          console.error(mergeResult.error ?? t("mergeUnknownError"));
         }
       }
 

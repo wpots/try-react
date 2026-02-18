@@ -26,10 +26,12 @@ interface DayEntryCardProps {
   isBookmarked: boolean;
   isDeleting: boolean;
   isExpanded: boolean;
-  onDeleteEntry: (entryId: string) => void;
-  onEditEntry: (entryId: string) => void;
-  onToggleBookmark: (entryId: string) => void;
-  onToggleExpanded: (entryId: string) => void;
+  showActionButtons?: boolean;
+  forceExpanded?: boolean;
+  onDeleteEntry?: (entryId: string) => void;
+  onEditEntry?: (entryId: string) => void;
+  onToggleBookmark?: (entryId: string) => void;
+  onToggleExpanded?: (entryId: string) => void;
   translateDashboard: (key: string) => string;
   translateEntry: (key: string) => string;
 }
@@ -50,6 +52,8 @@ export function DayEntryCard({
   isBookmarked,
   isDeleting,
   isExpanded,
+  showActionButtons = true,
+  forceExpanded = false,
   onDeleteEntry,
   onEditEntry,
   onToggleBookmark,
@@ -58,6 +62,7 @@ export function DayEntryCard({
   translateEntry,
 }: DayEntryCardProps): React.JSX.Element {
   const hasBehavior = entry.behavior.length > 0;
+  const isDetailExpanded = forceExpanded || isExpanded;
   const locationLabel = getEntryLocationLabel(entry, translateEntry);
   const companyLabel = getEntryCompanyLabel(entry, translateEntry);
   const entryTypeLabel = getEntryTypeLabel(entry.entryType, translateEntry);
@@ -66,6 +71,10 @@ export function DayEntryCard({
   );
 
   function handleDeleteClick(): void {
+    if (!onDeleteEntry) {
+      return;
+    }
+
     if (!window.confirm(translateDashboard("entry.deleteConfirm"))) {
       return;
     }
@@ -91,49 +100,59 @@ export function DayEntryCard({
           </span>
         </h3>
 
-        <div className="flex items-center gap-ds-xs">
-          <BookmarkToggleButton
-            addBookmarkLabel={translateDashboard("entry.addBookmark")}
-            isBookmarked={isBookmarked}
-            onToggle={() => onToggleBookmark(entry.id)}
-            removeBookmarkLabel={translateDashboard("entry.removeBookmark")}
-          />
-
-          <FormButton
-            aria-label={translateDashboard("entry.edit")}
-            iconOnly
-            onClick={() => onEditEntry(entry.id)}
-            type="button"
-          >
-            <Pencil className="h-4 w-4" aria-hidden="true" />
-          </FormButton>
-
-          <FormButton
-            aria-label={translateDashboard("entry.delete")}
-            className={cn(
-              "text-ds-danger",
-              "hover:border-ds-danger hover:bg-ds-danger/10",
-            )}
-            disabled={isDeleting}
-            iconOnly
-            onClick={handleDeleteClick}
-            type="button"
-          >
-            <Trash2 className="h-4 w-4" aria-hidden="true" />
-          </FormButton>
-
-          <FormButton
-            aria-label={isExpanded ? translateDashboard("entry.collapse") : translateDashboard("entry.expand")}
-            iconOnly
-            onClick={() => onToggleExpanded(entry.id)}
-            type="button"
-          >
-            <ChevronDown
-              className={cn("h-4 w-4 transition-transform", isExpanded && "rotate-180")}
-              aria-hidden="true"
+        {showActionButtons ? (
+          <div className="flex items-center gap-ds-xs">
+            <BookmarkToggleButton
+              addBookmarkLabel={translateDashboard("entry.addBookmark")}
+              isBookmarked={isBookmarked}
+              onToggle={
+                onToggleBookmark
+                  ? () => onToggleBookmark(entry.id)
+                  : undefined
+              }
+              removeBookmarkLabel={translateDashboard("entry.removeBookmark")}
             />
-          </FormButton>
-        </div>
+
+            <FormButton
+              aria-label={translateDashboard("entry.edit")}
+              iconOnly
+              onClick={() => onEditEntry?.(entry.id)}
+              type="button"
+            >
+              <Pencil className="h-4 w-4" aria-hidden="true" />
+            </FormButton>
+
+            <FormButton
+              aria-label={translateDashboard("entry.delete")}
+              className={cn(
+                "text-ds-danger",
+                "hover:border-ds-danger hover:bg-ds-danger/10",
+              )}
+              disabled={isDeleting || !onDeleteEntry}
+              iconOnly
+              onClick={handleDeleteClick}
+              type="button"
+            >
+              <Trash2 className="h-4 w-4" aria-hidden="true" />
+            </FormButton>
+
+            <FormButton
+              aria-label={isDetailExpanded ? translateDashboard("entry.collapse") : translateDashboard("entry.expand")}
+              disabled={!onToggleExpanded}
+              iconOnly
+              onClick={() => onToggleExpanded?.(entry.id)}
+              type="button"
+            >
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 transition-transform",
+                  isDetailExpanded && "rotate-180",
+                )}
+                aria-hidden="true"
+              />
+            </FormButton>
+          </div>
+        ) : null}
       </div>
 
       <div className="mt-ds-m flex flex-wrap gap-ds-xs">
@@ -144,7 +163,7 @@ export function DayEntryCard({
         )}
       </div>
 
-      {isExpanded ? (
+      {isDetailExpanded ? (
         <div className="grid gap-ds-xl border-t-1 border-ds-border-subtle pt-ds-xl">
           {entry.description.trim() && (
             <section>

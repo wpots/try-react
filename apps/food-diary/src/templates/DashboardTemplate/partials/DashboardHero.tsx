@@ -25,13 +25,32 @@ export function DashboardHero({
   translateDashboard,
 }: DashboardHeroProps): React.JSX.Element {
   const isMotionEnabled = useMotionEnabled();
-  const { tiltX, tiltY } = useDeviceTiltOffset({
+  const {
+    tiltX,
+    tiltY,
+    canRequestPermission,
+    permissionState,
+    requestPermission,
+  } = useDeviceTiltOffset({
     isEnabled: isMotionEnabled,
     maxGamma: 18,
   });
 
+  const handleHeroInteraction = (): void => {
+    if (
+      !isMotionEnabled ||
+      !canRequestPermission ||
+      permissionState !== "prompt"
+    ) {
+      return;
+    }
+
+    void requestPermission();
+  };
+
   return (
     <section
+      onClick={handleHeroInteraction}
       className={
         "relative min-h-80 overflow-hidden border-b-1 border-ds-border-subtle " +
         "bg-gradient-to-br from-ds-brand-primary/40 " +

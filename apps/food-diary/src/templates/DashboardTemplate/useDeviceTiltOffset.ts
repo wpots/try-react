@@ -60,7 +60,6 @@ export function useDeviceTiltOffset({
   const [requestedPermissionState, setRequestedPermissionState] = useState<
     "prompt" | "granted" | "denied"
   >("prompt");
-  const isRequestInFlightRef = useRef(false);
   const baselineRef = useRef<{ beta: number; gamma: number } | null>(
     null,
   );
@@ -99,53 +98,6 @@ export function useDeviceTiltOffset({
       setRequestedPermissionState("prompt");
     }
   }, []);
-
-  useEffect(() => {
-    if (
-      !isEnabled ||
-      !canRequestPermission ||
-      requestedPermissionState !== "prompt" ||
-      typeof window === "undefined"
-    ) {
-      return undefined;
-    }
-
-    const handleFirstInteraction = (): void => {
-      if (isRequestInFlightRef.current) {
-        return;
-      }
-
-      isRequestInFlightRef.current = true;
-      void requestPermission().finally(() => {
-        isRequestInFlightRef.current = false;
-      });
-    };
-
-    window.addEventListener("click", handleFirstInteraction, {
-      capture: true,
-    });
-    window.addEventListener("touchend", handleFirstInteraction, {
-      capture: true,
-    });
-    window.addEventListener("pointerup", handleFirstInteraction, {
-      capture: true,
-    });
-    window.addEventListener("keydown", handleFirstInteraction, {
-      capture: true,
-    });
-
-    return () => {
-      window.removeEventListener("click", handleFirstInteraction, true);
-      window.removeEventListener("touchend", handleFirstInteraction, true);
-      window.removeEventListener("pointerup", handleFirstInteraction, true);
-      window.removeEventListener("keydown", handleFirstInteraction, true);
-    };
-  }, [
-    canRequestPermission,
-    isEnabled,
-    requestPermission,
-    requestedPermissionState,
-  ]);
 
   useEffect(() => {
     if (

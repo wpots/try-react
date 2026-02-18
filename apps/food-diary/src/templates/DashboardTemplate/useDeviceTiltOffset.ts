@@ -19,6 +19,8 @@ export type DeviceTiltPermissionState =
   | "denied";
 
 export interface UseDeviceTiltOffsetResult {
+  tiltX: number;
+  tiltY: number;
   tiltOffset: number;
   hasTiltSignal: boolean;
   permissionState: DeviceTiltPermissionState;
@@ -53,7 +55,7 @@ export function useDeviceTiltOffset({
   maxBeta = 24,
   maxGamma = 24,
 }: UseDeviceTiltOffsetOptions = {}): UseDeviceTiltOffsetResult {
-  const [rawTiltOffset, setRawTiltOffset] = useState(0);
+  const [rawTilt, setRawTilt] = useState({ x: 0, y: 0 });
   const [hasTiltSignal, setHasTiltSignal] = useState(false);
   const [requestedPermissionState, setRequestedPermissionState] = useState<
     "prompt" | "granted" | "denied"
@@ -88,11 +90,11 @@ export function useDeviceTiltOffset({
         return;
       }
 
-      setRawTiltOffset(0);
+      setRawTilt({ x: 0, y: 0 });
       setHasTiltSignal(false);
       setRequestedPermissionState("denied");
     } catch {
-      setRawTiltOffset(0);
+      setRawTilt({ x: 0, y: 0 });
       setHasTiltSignal(false);
       setRequestedPermissionState("denied");
     }
@@ -136,16 +138,25 @@ export function useDeviceTiltOffset({
         -1,
         1,
       );
-      const combinedTilt = clamp(
-        normalizedGamma + normalizedBeta * 0.75,
-        -1,
-        1,
-      );
 
-      setRawTiltOffset((currentOffset) => {
-        return Math.abs(currentOffset - combinedTilt) < 0.01
-          ? currentOffset
-          : combinedTilt;
+      setRawTilt((currentTilt) => {
+        const nextTiltX =
+          Math.abs(currentTilt.x - normalizedGamma) < 0.01
+            ? currentTilt.x
+            : normalizedGamma;
+        const nextTiltY =
+          Math.abs(currentTilt.y - normalizedBeta) < 0.01
+            ? currentTilt.y
+            : normalizedBeta;
+
+        if (nextTiltX === currentTilt.x && nextTiltY === currentTilt.y) {
+          return currentTilt;
+        }
+
+        return {
+          x: nextTiltX,
+          y: nextTiltY,
+        };
       });
     };
 
@@ -158,10 +169,13 @@ export function useDeviceTiltOffset({
     };
   }, [isEnabled, maxBeta, maxGamma, permissionState]);
 
-  const tiltOffset =
-    isEnabled && permissionState === "granted" ? rawTiltOffset : 0;
+  const tiltX = isEnabled && permissionState === "granted" ? rawTilt.x : 0;
+  const tiltY = isEnabled && permissionState === "granted" ? rawTilt.y : 0;
+  const tiltOffset = clamp(tiltX + tiltY * 0.75, -1, 1);
 
   return {
+    tiltX,
+    tiltY,
     tiltOffset,
     hasTiltSignal,
     permissionState,

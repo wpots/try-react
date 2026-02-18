@@ -121,18 +121,28 @@ export function useDeviceTiltOffset({
       void requestPermission();
     };
 
-    window.addEventListener("touchstart", handleFirstInteraction, {
+    window.addEventListener("click", handleFirstInteraction, {
       once: true,
-      passive: true,
+      capture: true,
     });
-    window.addEventListener("pointerdown", handleFirstInteraction, {
+    window.addEventListener("touchend", handleFirstInteraction, {
       once: true,
-      passive: true,
+      capture: true,
+    });
+    window.addEventListener("pointerup", handleFirstInteraction, {
+      once: true,
+      capture: true,
+    });
+    window.addEventListener("keydown", handleFirstInteraction, {
+      once: true,
+      capture: true,
     });
 
     return () => {
-      window.removeEventListener("touchstart", handleFirstInteraction);
-      window.removeEventListener("pointerdown", handleFirstInteraction);
+      window.removeEventListener("click", handleFirstInteraction, true);
+      window.removeEventListener("touchend", handleFirstInteraction, true);
+      window.removeEventListener("pointerup", handleFirstInteraction, true);
+      window.removeEventListener("keydown", handleFirstInteraction, true);
     };
   }, [
     canRequestPermission,

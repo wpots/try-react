@@ -86,7 +86,8 @@ export function DashboardHero({
       {averageMood ? <AverageMoodAura zone={averageMood.zone} /> : null}
       <DashboardHeroWave
         zone={averageMood?.zone ?? null}
-        tiltOffset={tiltOffset}
+        tiltX={tiltX}
+        tiltY={tiltY}
         isMotionEnabled={isMotionEnabled}
       />
       <div className="relative z-10 grid gap-ds-l">

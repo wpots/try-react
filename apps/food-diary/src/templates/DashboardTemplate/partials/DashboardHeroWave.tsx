@@ -7,7 +7,8 @@ import type { MoodZone } from "../index";
 
 interface DashboardHeroWaveProps {
   isMotionEnabled: boolean;
-  tiltOffset: number;
+  tiltX: number;
+  tiltY: number;
   zone: MoodZone | null;
 }
 
@@ -16,6 +17,8 @@ interface WaveLayerProps {
   duration: number;
   path: string;
   tiltX: number;
+  tiltY: number;
+  tiltRotate: number;
   isMotionEnabled: boolean;
 }
 
@@ -31,9 +34,15 @@ const SECONDARY_WAVE_PATH =
   "M0 22C30 14 60 14 90 22C120 30 150 30 180 22C210 14 240 14 270 22C300 30 330 30 360 22V48H0Z";
 const TERTIARY_WAVE_PATH =
   "M0 20C24 12 48 12 72 20C96 28 120 28 144 20C168 12 192 12 216 20C240 28 264 28 288 20C312 12 336 12 360 20V48H0Z";
-const PRIMARY_TILT_MULTIPLIER = 68;
-const SECONDARY_TILT_MULTIPLIER = 40;
-const TERTIARY_TILT_MULTIPLIER = 24;
+const PRIMARY_TILT_X_MULTIPLIER = 68;
+const SECONDARY_TILT_X_MULTIPLIER = 40;
+const TERTIARY_TILT_X_MULTIPLIER = 24;
+const PRIMARY_TILT_Y_MULTIPLIER = 28;
+const SECONDARY_TILT_Y_MULTIPLIER = 18;
+const TERTIARY_TILT_Y_MULTIPLIER = 10;
+const PRIMARY_TILT_ROTATE_MULTIPLIER = 5;
+const SECONDARY_TILT_ROTATE_MULTIPLIER = 3;
+const TERTIARY_TILT_ROTATE_MULTIPLIER = 2;
 
 const WAVE_TONES: Record<MoodZone, WaveTone> = {
   1: {
@@ -82,12 +91,18 @@ function WaveLayer({
   duration,
   path,
   tiltX,
+  tiltY,
+  tiltRotate,
   isMotionEnabled,
 }: WaveLayerProps): React.JSX.Element {
   return (
     <motion.div
       className="absolute inset-0"
-      animate={{ x: tiltX }}
+      animate={{
+        rotate: tiltRotate,
+        x: tiltX,
+        y: tiltY,
+      }}
       transition={{
         type: "spring",
         stiffness: 70,
@@ -131,7 +146,8 @@ function WaveLayer({
 
 export function DashboardHeroWave({
   isMotionEnabled,
-  tiltOffset,
+  tiltX,
+  tiltY,
   zone,
 }: DashboardHeroWaveProps): React.JSX.Element {
   const waveTone = getWaveTone(zone);
@@ -145,21 +161,29 @@ export function DashboardHeroWave({
         className={waveTone.primary}
         duration={24}
         path={PRIMARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltOffset * PRIMARY_TILT_MULTIPLIER : 0}
+        tiltX={isMotionEnabled ? tiltX * PRIMARY_TILT_X_MULTIPLIER : 0}
+        tiltY={isMotionEnabled ? tiltY * PRIMARY_TILT_Y_MULTIPLIER : 0}
+        tiltRotate={isMotionEnabled ? tiltX * PRIMARY_TILT_ROTATE_MULTIPLIER : 0}
         isMotionEnabled={isMotionEnabled}
       />
       <WaveLayer
         className={waveTone.secondary}
         duration={32}
         path={SECONDARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltOffset * SECONDARY_TILT_MULTIPLIER : 0}
+        tiltX={isMotionEnabled ? tiltX * SECONDARY_TILT_X_MULTIPLIER : 0}
+        tiltY={isMotionEnabled ? tiltY * SECONDARY_TILT_Y_MULTIPLIER : 0}
+        tiltRotate={
+          isMotionEnabled ? tiltX * SECONDARY_TILT_ROTATE_MULTIPLIER : 0
+        }
         isMotionEnabled={isMotionEnabled}
       />
       <WaveLayer
         className={waveTone.tertiary}
         duration={40}
         path={TERTIARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltOffset * TERTIARY_TILT_MULTIPLIER : 0}
+        tiltX={isMotionEnabled ? tiltX * TERTIARY_TILT_X_MULTIPLIER : 0}
+        tiltY={isMotionEnabled ? tiltY * TERTIARY_TILT_Y_MULTIPLIER : 0}
+        tiltRotate={isMotionEnabled ? tiltX * TERTIARY_TILT_ROTATE_MULTIPLIER : 0}
         isMotionEnabled={isMotionEnabled}
       />
     </div>

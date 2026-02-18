@@ -13,6 +13,7 @@ interface DashboardHeroWaveProps {
 }
 
 interface WaveLayerProps {
+  baseY: number;
   className: string;
   duration: number;
   path: string;
@@ -43,6 +44,9 @@ const TERTIARY_TILT_Y_MULTIPLIER = 6;
 const PRIMARY_TILT_SKEW_Y_MULTIPLIER = 8;
 const SECONDARY_TILT_SKEW_Y_MULTIPLIER = 5.5;
 const TERTIARY_TILT_SKEW_Y_MULTIPLIER = 3.5;
+const PRIMARY_BASE_Y = 14;
+const SECONDARY_BASE_Y = 16;
+const TERTIARY_BASE_Y = 18;
 
 const WAVE_TONES: Record<MoodZone, WaveTone> = {
   1: {
@@ -87,6 +91,7 @@ function getWaveTone(zone: MoodZone | null): WaveTone {
 }
 
 function WaveLayer({
+  baseY,
   className,
   duration,
   path,
@@ -101,7 +106,7 @@ function WaveLayer({
       animate={{
         skewY: tiltSkewY,
         x: tiltX,
-        y: tiltY,
+        y: baseY + tiltY,
       }}
       transition={{
         type: "spring",
@@ -151,6 +156,7 @@ export function DashboardHeroWave({
   zone,
 }: DashboardHeroWaveProps): React.JSX.Element {
   const waveTone = getWaveTone(zone);
+  const resolvedTiltX = -tiltX;
 
   return (
     <div
@@ -158,35 +164,40 @@ export function DashboardHeroWave({
       className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-ds-3xl overflow-hidden opacity-60 md:h-ds-4xl"
     >
       <WaveLayer
+        baseY={PRIMARY_BASE_Y}
         className={waveTone.primary}
         duration={24}
         path={PRIMARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltX * PRIMARY_TILT_X_MULTIPLIER : 0}
+        tiltX={isMotionEnabled ? resolvedTiltX * PRIMARY_TILT_X_MULTIPLIER : 0}
         tiltY={isMotionEnabled ? tiltY * PRIMARY_TILT_Y_MULTIPLIER : 0}
         tiltSkewY={
-          isMotionEnabled ? tiltX * PRIMARY_TILT_SKEW_Y_MULTIPLIER : 0
+          isMotionEnabled ? resolvedTiltX * PRIMARY_TILT_SKEW_Y_MULTIPLIER : 0
         }
         isMotionEnabled={isMotionEnabled}
       />
       <WaveLayer
+        baseY={SECONDARY_BASE_Y}
         className={waveTone.secondary}
         duration={32}
         path={SECONDARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltX * SECONDARY_TILT_X_MULTIPLIER : 0}
+        tiltX={isMotionEnabled ? resolvedTiltX * SECONDARY_TILT_X_MULTIPLIER : 0}
         tiltY={isMotionEnabled ? tiltY * SECONDARY_TILT_Y_MULTIPLIER : 0}
         tiltSkewY={
-          isMotionEnabled ? tiltX * SECONDARY_TILT_SKEW_Y_MULTIPLIER : 0
+          isMotionEnabled
+            ? resolvedTiltX * SECONDARY_TILT_SKEW_Y_MULTIPLIER
+            : 0
         }
         isMotionEnabled={isMotionEnabled}
       />
       <WaveLayer
+        baseY={TERTIARY_BASE_Y}
         className={waveTone.tertiary}
         duration={40}
         path={TERTIARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltX * TERTIARY_TILT_X_MULTIPLIER : 0}
+        tiltX={isMotionEnabled ? resolvedTiltX * TERTIARY_TILT_X_MULTIPLIER : 0}
         tiltY={isMotionEnabled ? tiltY * TERTIARY_TILT_Y_MULTIPLIER : 0}
         tiltSkewY={
-          isMotionEnabled ? tiltX * TERTIARY_TILT_SKEW_Y_MULTIPLIER : 0
+          isMotionEnabled ? resolvedTiltX * TERTIARY_TILT_SKEW_Y_MULTIPLIER : 0
         }
         isMotionEnabled={isMotionEnabled}
       />

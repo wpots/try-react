@@ -60,6 +60,7 @@ export function useDeviceTiltOffset({
   const [requestedPermissionState, setRequestedPermissionState] = useState<
     "prompt" | "granted" | "denied"
   >("prompt");
+  const isRequestInFlightRef = useRef(false);
   const baselineRef = useRef<{ beta: number; gamma: number } | null>(
     null,
   );
@@ -94,9 +95,8 @@ export function useDeviceTiltOffset({
       setHasTiltSignal(false);
       setRequestedPermissionState("denied");
     } catch {
-      setRawTilt({ x: 0, y: 0 });
-      setHasTiltSignal(false);
-      setRequestedPermissionState("denied");
+      // Keep prompt state on runtime errors so we can retry on next interaction.
+      setRequestedPermissionState("prompt");
     }
   }, []);
 
@@ -110,31 +110,27 @@ export function useDeviceTiltOffset({
       return undefined;
     }
 
-    let hasRequestedPermission = false;
-
     const handleFirstInteraction = (): void => {
-      if (hasRequestedPermission) {
+      if (isRequestInFlightRef.current) {
         return;
       }
 
-      hasRequestedPermission = true;
-      void requestPermission();
+      isRequestInFlightRef.current = true;
+      void requestPermission().finally(() => {
+        isRequestInFlightRef.current = false;
+      });
     };
 
     window.addEventListener("click", handleFirstInteraction, {
-      once: true,
       capture: true,
     });
     window.addEventListener("touchend", handleFirstInteraction, {
-      once: true,
       capture: true,
     });
     window.addEventListener("pointerup", handleFirstInteraction, {
-      once: true,
       capture: true,
     });
     window.addEventListener("keydown", handleFirstInteraction, {
-      once: true,
       capture: true,
     });
 

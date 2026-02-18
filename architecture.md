@@ -1,263 +1,160 @@
-# Architecture: Food Diary Web Application
+# Architecture: Food Diary (Current State)
+
+Last updated: February 18, 2026.
+
+This document describes what is implemented today, not the originally planned
+target architecture.
 
 ## 1. Monorepo Architecture
 
-### 1.1. Monorepo Structure
+The repository uses Turborepo + pnpm workspaces.
 
-The project uses Turborepo with pnpm workspaces to manage multiple applications and shared packages:
-
-```
+```text
 try-react/
 ├── apps/
-│   └── food-diary/          # Next.js 15 application
-│       ├── src/
-│       ├── messages/        # i18n translation files (en.json, nl.json)
-│       ├── package.json
-│       └── next.config.ts
+│   ├── food-diary/          # Next.js 16 app
+│   └── storybook/           # Storybook app
 ├── packages/
-│   └── ui/                  # Shared component library
-│       ├── src/
-│       │   └── components/ # React Aria + Tailwind components
-│       ├── package.json
-│       └── tsconfig.json
-├── turbo.json               # Turborepo configuration
-├── pnpm-workspace.yaml      # pnpm workspace configuration
-├── package.json             # Root package.json
-└── docs/
-    └── stories/             # User stories
+│   └── ui/                  # Shared UI package (@repo/ui)
+├── docs/
+│   └── stories/             # Story specs + alignment roadmap
+├── architecture.md
+└── projectbrief.md
 ```
 
-### 1.2. Package Management
+## 2. Product Surface Implemented
 
-- **pnpm workspaces:** Used for managing dependencies across packages
-- **Turborepo:** Handles build orchestration, caching, and task running
-- **Shared UI Package:** Exported as `@repo/ui` for use across applications
+### 2.1 Main User Flows
 
-## 2. Frontend Architecture (React 19 with Next.js App Router)
+- Landing page with product marketing sections and localized content.
+- Authentication flow:
+  - Guest login (Firebase anonymous auth)
+  - Google login
+  - Guest-to-Google merge path
+- Dashboard:
+  - Day/Week/Month views
+  - Entry cards with mood badges
+  - Edit/delete entry flows
+  - Guest/profile dialogs for account actions
+- Entry creation/edit:
+  - Chat-first "coach" flow
+  - Traditional form mode
+  - Conditional question flow
+  - Save to Firestore
 
-### 2.1. Technology Stack
+### 2.2 Route Structure (`apps/food-diary/src/app`)
 
-- **React 19:** JavaScript library for building user interfaces with Server Actions support
-- **Next.js 15/16:** App Router for routing, Server Components, and Server Actions
-- **TypeScript:** Strict mode for type safety
-- **Tailwind CSS 4:** Utility-first CSS framework with `@theme` design tokens
-- **next-intl:** Internationalization library for Next.js App Router
-- **React Aria:** Accessible component primitives from Adobe
-- **Client-side State Management:** React's built-in `useState`, `useReducer`, and `useContext` for component-level and application-level state
+- `/[locale]/page.tsx` - landing/home.
+- `/[locale]/auth/login/page.tsx` - auth options.
+- `/[locale]/dashboard/page.tsx` - dashboard shell.
+- `/[locale]/entry/create/page.tsx` - create/edit entry.
+- `/[locale]/layout.tsx` - locale provider + auth provider.
+- `layout.tsx` - root html/body and font setup.
 
-### 2.2. Component Structure
+## 3. Frontend and i18n
 
-#### Shared UI Package (`packages/ui`)
+### 3.1 Stack
 
-- **Location:** `packages/ui/src/components/`
-- **Structure:** Each component follows the project rules pattern:
-  ```
-  ComponentName/
-  ├── ComponentName.tsx    # Component implementation
-  ├── ComponentName.test.tsx  # Jest unit tests
-  ├── ComponentName.stories.tsx  # Storybook stories
-  └── index.ts             # Types + exports
-  ```
-- **Components:** Built using React Aria primitives with Tailwind styling:
-  - `Button` - Accessible button component
-  - `TextField` - Text input with label and error states
-  - `Select` - Dropdown select component
-  - `TagGroup` - Multi-select chips/tags for emotions and behaviors
-  - `Switch` - Toggle switch for skipped meal
-  - `DatePicker` - Date selection component
-  - `Dialog` - Modal dialogs
-  - `ImageUpload` - Image upload component with preview
+- React 19
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS 4
+- next-intl
+- Firebase Web SDK
+- Shared components from `@repo/ui`
 
-#### Application Components (`apps/food-diary/src/components/`)
+### 3.2 Internationalization
 
-- `EntryForm.tsx`: Component for creating and editing food diary entries using shared UI components
-- `EntryCard.tsx`: Component to display a single diary entry in the overview screen
-- `EntryOverview.tsx`: Component to display all diary entries, grouped by day, using `EntryCard` components
-- `AuthButtons.tsx`: Component for Google login buttons, and guest login option
-- `LanguageSwitcher.tsx`: Component to switch between Dutch and English
-- `ImageUploader.tsx`: Component for uploading food photos with preview and AI analysis trigger
+- Locales: `nl` (default), `en`.
+- Locale prefix strategy: `"as-needed"` with locale detection disabled.
+- Message files are feature-split:
+  - `messages/nl/*.json`
+  - `messages/nl/entry/*.json`
+  - same shape for `en`.
 
-#### Application Routes (`apps/food-diary/src/app/`)
+## 4. Data Architecture (Current)
 
-- `page.tsx`: Main page component housing the `EntryOverview` component
-- `entry/create/page.tsx`: Page for creating a new diary entry, containing the `EntryForm` component
-- `auth/login/page.tsx`: Page for login options (`AuthButtons`)
-- `[locale]/layout.tsx`: Locale-aware layout wrapper for next-intl
+### 4.1 Firebase Services
 
-### 2.3. Internationalization (i18n)
+- Firebase Authentication: anonymous + Google sign-in.
+- Firestore: primary persistence for diary entries and quota records.
 
-- **Library:** next-intl
-- **Locales:** Dutch (nl) - default, English (en)
-- **Translation Files:** `apps/food-diary/messages/en.json` and `nl.json`
-- **Middleware:** Locale detection and routing via Next.js middleware
-- **Usage:** All user-facing strings extracted to JSON files, no hardcoded text in components
+### 4.2 Firestore Model
 
-### 2.4. Server Actions for Backend Interaction
+Implemented model and validation live under:
 
-Server Actions are defined in `apps/food-diary/src/app/actions.ts` or within components:
+- `apps/food-diary/src/lib/firestore/types.ts`
+- `apps/food-diary/src/lib/firestore/schemas.ts`
+- `apps/food-diary/src/lib/firestore/helpers.ts`
+- `apps/food-diary/src/lib/firestore/converters.ts`
 
-- `saveDiaryEntry(formData)`: Saves new diary entries to Firestore, including image URLs
-- `fetchDiaryEntries(userId)`: Fetches diary entries from Firestore for the overview screen
-- `uploadImageToCloudinary(file)`: Uploads resized image to Cloudinary, returns URL and public_id
-- `analyzeFoodImage(imageUrl)`: Calls Gemini Flash API to analyze food image, enforces 3/day limit
-- `checkAnalysisQuota(userId)`: Checks daily analysis count for user
-- `incrementAnalysisQuota(userId)`: Increments daily analysis count after successful analysis
+Collections currently modeled:
 
-## 3. Backend Architecture (Firebase + Cloudinary + Gemini)
+- `diaryEntries`
+- `userAnalysisQuota`
+- `users`
 
-### 3.1. Firebase Services
+### 4.3 Data Access Pattern (Important)
 
-#### Firebase Authentication
+Current writes/reads for entry CRUD are mainly performed through client-side
+helpers in `apps/food-diary/src/lib/diaryEntries.ts`, which call Firestore
+helpers directly from client components.
 
-- Used for user authentication:
-  - Google Login
-- Guest Authentication (anonymous auth)
-- Client-side implementation using Firebase SDK
+Server actions exist under `apps/food-diary/src/app/actions/`, but only some
+flows rely on them today:
 
-#### Google Firestore
+- Used: `mergeGuestEntries`, `wipeGuestEntries`, `wipeUserEntries`
+- Present but not the primary path for entry UI:
+  - `saveDiaryEntry`
+  - `fetchDiaryEntries`
 
-NoSQL document database for storing application data.
+## 5. Features Planned But Not Implemented
 
-**Collections:**
+Not implemented in the current UI flow:
 
-1. **Users Collection:**
+- Cloudinary image upload workflow
+- Gemini food analysis workflow
+- End-to-end quota-driven analysis UX
 
-   ```
-   /users/{userId}
-   ```
+Schema support for `imageUrl` and `imagePublicId` exists, but upload and
+analysis actions/UI are not wired as shipped features.
 
-   - `userId` (String): Firebase Authentication UID
+## 6. Known Gaps and Risks
 
-2. **Diary Entries Collection:**
+- Server-owned auth for diary mutations is not fully enforced yet.
+- Entry save/fetch architecture is split between client Firestore calls and
+  server actions.
+- Dashboard bookmark toggle is currently local UI state, not persisted.
+- Automated test coverage is minimal (`test` scripts are placeholders).
+- Workspace lint currently fails on several files.
+- Build can fail in offline environments because `next/font/google` fetches
+  external font resources at build time.
 
-   ```
-   /diaryEntries/{entryId}
-   ```
+## 7. Target Near-Term Architecture
 
-   - `userId` (String): User ID (Firebase UID or Guest User ID)
-   - `entryType` (String): "breakfast", "lunch", "dinner", "snack", "moment", "thought"
-   - `foodEaten` (String)
-   - `emotions` (Array of Strings): Selected emoticons
-   - `location` (String): "home", "work", "restaurant", "friend's house", "on the road", "family event"
-   - `company` (String): "family", "friends", "alone", "colleagues", "kids", "partner"
-   - `description` (String)
-   - `behavior` (Array of Strings): Selected behaviors
-   - `skippedMeal` (Boolean)
-   - `date` (Timestamp): Firestore Timestamp for date
-   - `time` (String): "HH:mm"
-   - `imageUrl` (String, optional): Cloudinary URL of food photo
-   - `imagePublicId` (String, optional): Cloudinary public_id for image management
-   - `createdAt` (Timestamp): Firestore Timestamp (auto-generated)
-   - `updatedAt` (Timestamp): Firestore Timestamp (auto-updated)
+### Phase 1: Stabilize Core Data Flow
 
-3. **User Analysis Quota Collection:**
+- Move entry CRUD to server actions as the default runtime path.
+- Resolve user identity from trusted server context for writes.
+- Remove fallback client-side mutation paths that bypass server boundaries.
 
-   ```
-   /userAnalysisQuota/{userId}
-   ```
+### Phase 2: Complete Media + AI Flow
 
-   - `date` (String): "YYYY-MM-DD" format
-   - `count` (Number): 0-3, number of AI analyses used today
-   - `lastReset` (Timestamp): Last time quota was reset (for daily reset logic)
+- Implement Cloudinary upload action + UI.
+- Implement Gemini analysis action + quota UX.
+- Persist image metadata in create/edit and dashboard display paths.
 
-### 3.2. Cloudinary Integration
+### Phase 3: Quality and Operations
 
-- **Purpose:** Store resized food images (max 400px width/height)
-- **Free Tier Limits:** 25GB storage, 25GB bandwidth/month
-- **Image Processing:** Client-side resize before upload to stay within limits
-- **Storage:** Images stored with user-specific folder structure for organization
-- **Response:** Returns `imageUrl` and `public_id` for Firestore storage
+- Add meaningful test coverage (unit + integration + key end-to-end paths).
+- Fix lint debt and codify CI quality gates.
+- Confirm deployment runbook and production checks.
 
-### 3.3. Google Gemini Flash API Integration
+## 8. User Story Alignment
 
-- **Purpose:** AI-powered food image analysis
-- **Model:** Gemini Flash (multimodal)
-- **Free Tier:** 15 requests per minute, 1M tokens per day
-- **Rate Limiting:** 3 analyses per user per day (enforced server-side)
-- **Analysis Output:** Structured JSON containing:
-  - `foodName` (String): Identified food items
-  - `mealType` (String): Suggested meal type (breakfast, lunch, dinner, snack)
-  - `description` (String): AI-generated description
-  - `estimatedPortion` (String, optional): Portion size estimate
-- **Flow:**
-  1. User uploads image → Cloudinary
-  2. Server Action checks daily quota in Firestore
-  3. If quota < 3, call Gemini API with image URL
-  4. Parse response and pre-fill form fields
-  5. Increment quota counter in Firestore
-  6. If quota >= 3, return image URL only (no analysis)
+Source of truth for implementation-vs-story status is now:
 
-### 3.4. API Endpoints (Server Actions)
-
-Server Actions in React components act as API endpoints:
-
-- `saveDiaryEntry(formData)` - Saves entry to Firestore
-- `fetchDiaryEntries(userId)` - Fetches entries for overview
-- `uploadImageToCloudinary(file)` - Uploads image, returns URL
-- `analyzeFoodImage(imageUrl, userId)` - Analyzes image via Gemini, enforces quota
-- `checkAnalysisQuota(userId)` - Checks current daily quota
-- `mergeGuestEntries(guestId, userId)` - Merges guest entries on account creation
-
-## 4. Image Upload + AI Analysis Flow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant NextApp as Next.js_Server_Action
-    participant Cloudinary
-    participant Gemini as Gemini_Flash_API
-    participant Firestore
-
-    User->>NextApp: Upload food photo
-    NextApp->>Cloudinary: Upload resized image (max 400px)
-    Cloudinary-->>NextApp: Image URL + public_id
-    NextApp->>Firestore: Check daily analysis count for user
-    Firestore-->>NextApp: Count (0-3)
-    alt count < 3
-        NextApp->>Gemini: Analyze image (identify food, estimate portions)
-        Gemini-->>NextApp: Structured JSON (food name, type, description)
-        NextApp->>Firestore: Increment daily analysis count
-        NextApp-->>User: Pre-filled form fields + image URL
-    else count >= 3
-        NextApp-->>User: Image URL only, manual entry (daily limit reached)
-    end
-```
-
-## 5. Deployment Architecture (Vercel)
-
-### 5.1. Vercel Platform
-
-- Application deployed on Vercel, optimized for Next.js applications
-- Vercel provides:
-  - Serverless functions (for Server Actions)
-  - Automatic deployments from Git repository
-  - Global CDN for fast content delivery
-  - Monorepo support via Turborepo integration
-
-### 5.2. Configuration
-
-#### Environment Variables
-
-Set in Vercel project settings:
-
-**Firebase:**
-
-- `NEXT_PUBLIC_FIREBASE_API_KEY`
-- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
-- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
-- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
-- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
-- `NEXT_PUBLIC_FIREBASE_APP_ID`
-
-**Cloudinary:**
-
-- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
-- `CLOUDINARY_API_KEY`
-- `CLOUDINARY_API_SECRET`
-
-**Google Gemini:**
-
-- `GEMINI_API_KEY`
+- `docs/stories/README.md`
 
 **next-intl:**
 

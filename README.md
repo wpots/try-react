@@ -87,3 +87,4 @@ try-react/
 
 - The main product requirements are documented in `projectbrief.md`.
 - Architectural notes are in `architecture.md`.
+- Story status and roadmap alignment are in `docs/stories/README.md`.

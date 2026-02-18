@@ -55,4 +55,5 @@ pnpm test
 
 - `projectbrief.md`
 - `architecture.md`
+- `docs/stories/README.md`
 - `apps/food-diary/.env.local.example`

@@ -8,10 +8,13 @@ export const cardDefaultArgs = {
   children: (
     <>
       <CardHeader
-        title="Meal summary"
-        description="Your daily snapshot."
+        title="Wednesday food diary"
+        description="A realistic day at home and work."
       />
-      <p className="text-ds-on-surface-secondary">Calories: 1840 kcal</p>
+      <p className="text-ds-on-surface-secondary">
+        Breakfast was yogurt with berries, lunch was a chicken wrap, and
+        dinner was vegetable soup with toast.
+      </p>
       <CardActions>
         <Button {...buttonDefaultArgs} size="sm" />
       </CardActions>

@@ -555,6 +555,7 @@ export function useCoachChatController({
 
   useEffect(() => {
     return () => {
+      isInitializedRef.current = false;
       coachSequenceIdRef.current += 1;
       clearPendingCoachTimeouts();
     };

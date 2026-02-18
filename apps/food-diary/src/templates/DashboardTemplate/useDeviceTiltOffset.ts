@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface DeviceOrientationPermissionEvent {
   requestPermission: () => Promise<string>;
@@ -11,8 +11,29 @@ interface UseDeviceTiltOffsetOptions {
   maxGamma?: number;
 }
 
+export type DeviceTiltPermissionState =
+  | "unsupported"
+  | "prompt"
+  | "granted"
+  | "denied";
+
+export interface UseDeviceTiltOffsetResult {
+  tiltOffset: number;
+  permissionState: DeviceTiltPermissionState;
+  canRequestPermission: boolean;
+  requestPermission: () => Promise<void>;
+}
+
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
+}
+
+function resolveOrientationApi(): unknown {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return window.DeviceOrientationEvent;
 }
 
 function supportsPermissionRequest(
@@ -28,21 +49,54 @@ function supportsPermissionRequest(
 export function useDeviceTiltOffset({
   isEnabled = true,
   maxGamma = 24,
-}: UseDeviceTiltOffsetOptions = {}): number {
-  const [tiltOffset, setTiltOffset] = useState(0);
+}: UseDeviceTiltOffsetOptions = {}): UseDeviceTiltOffsetResult {
+  const [rawTiltOffset, setRawTiltOffset] = useState(0);
+  const [requestedPermissionState, setRequestedPermissionState] = useState<
+    "prompt" | "granted" | "denied"
+  >("prompt");
+  const orientationApi = resolveOrientationApi();
+  const isOrientationSupported = orientationApi != null;
+  const canRequestPermission = supportsPermissionRequest(orientationApi);
+  const permissionState: DeviceTiltPermissionState = !isOrientationSupported
+    ? "unsupported"
+    : canRequestPermission
+      ? requestedPermissionState
+      : "granted";
+
+  const requestPermission = useCallback(async (): Promise<void> => {
+    const orientationApi = resolveOrientationApi();
+    if (orientationApi == null) {
+      return;
+    }
+
+    if (!supportsPermissionRequest(orientationApi)) {
+      return;
+    }
+
+    try {
+      const permissionResult = await orientationApi.requestPermission();
+
+      if (permissionResult === "granted") {
+        setRequestedPermissionState("granted");
+        return;
+      }
+
+      setRawTiltOffset(0);
+      setRequestedPermissionState("denied");
+    } catch {
+      setRawTiltOffset(0);
+      setRequestedPermissionState("denied");
+    }
+  }, []);
 
   useEffect(() => {
-    if (!isEnabled || typeof window === "undefined") {
+    if (
+      !isEnabled ||
+      permissionState !== "granted" ||
+      typeof window === "undefined"
+    ) {
       return undefined;
     }
-
-    const orientationApi: unknown = window.DeviceOrientationEvent;
-    if (orientationApi == null) {
-      return undefined;
-    }
-
-    let hasRequestedPermission = false;
-    let removeOrientationListener: (() => void) | undefined;
 
     const handleOrientation = (event: DeviceOrientationEvent): void => {
       if (event.gamma == null) {
@@ -50,74 +104,29 @@ export function useDeviceTiltOffset({
       }
 
       const normalizedGamma = clamp(event.gamma / maxGamma, -1, 1);
-      setTiltOffset((currentOffset) => {
+      setRawTiltOffset((currentOffset) => {
         return Math.abs(currentOffset - normalizedGamma) < 0.01
           ? currentOffset
           : normalizedGamma;
       });
     };
 
-    const attachOrientationListener = (): void => {
-      if (removeOrientationListener != null) {
-        return;
-      }
-
-      window.addEventListener("deviceorientation", handleOrientation, {
-        passive: true,
-      });
-      removeOrientationListener = () => {
-        window.removeEventListener("deviceorientation", handleOrientation);
-      };
-    };
-
-    const removePermissionListeners = (): void => {
-      window.removeEventListener("touchstart", handleFirstInteraction);
-      window.removeEventListener("pointerdown", handleFirstInteraction);
-    };
-
-    const handleFirstInteraction = (): void => {
-      if (hasRequestedPermission) {
-        return;
-      }
-
-      hasRequestedPermission = true;
-      removePermissionListeners();
-
-      if (!supportsPermissionRequest(orientationApi)) {
-        attachOrientationListener();
-        return;
-      }
-
-      void orientationApi
-        .requestPermission()
-        .then((permissionState) => {
-          if (permissionState === "granted") {
-            attachOrientationListener();
-          }
-        })
-        .catch(() => {
-          setTiltOffset(0);
-        });
-    };
-
-    if (supportsPermissionRequest(orientationApi)) {
-      window.addEventListener("touchstart", handleFirstInteraction, {
-        once: true,
-        passive: true,
-      });
-      window.addEventListener("pointerdown", handleFirstInteraction, {
-        once: true,
-        passive: true,
-      });
-    } else {
-      attachOrientationListener();
-    }
+    window.addEventListener("deviceorientation", handleOrientation, {
+      passive: true,
+    });
 
     return () => {
-      removePermissionListeners();
-      removeOrientationListener?.();
+      window.removeEventListener("deviceorientation", handleOrientation);
     };
-  }, [isEnabled, maxGamma]);
+  }, [isEnabled, maxGamma, permissionState]);
 
-  return tiltOffset;
+  const tiltOffset =
+    isEnabled && permissionState === "granted" ? rawTiltOffset : 0;
+
+  return {
+    tiltOffset,
+    permissionState,
+    canRequestPermission,
+    requestPermission,
+  };
 }

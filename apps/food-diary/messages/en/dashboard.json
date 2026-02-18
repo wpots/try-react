@@ -48,7 +48,16 @@
   "hero": {
     "affirmation": "Daily affirmation",
     "averageMood": "Average mood today",
-    "noMood": "No mood logged yet"
+    "noMood": "No mood logged yet",
+    "tilt": {
+      "label": "Wave tilt",
+      "enable": "Enable tilt motion",
+      "prompt": "Tap enable and tilt your phone to test.",
+      "enabled": "Tilt motion is active.",
+      "denied": "Tilt access is blocked. Allow Motion & Orientation Access in Safari settings.",
+      "motionDisabled": "Tilt motion is off because reduced motion is enabled.",
+      "unsupported": "Tilt motion is not available on this device."
+    }
   },
   "moodZones": {
     "negative": "Take a break",

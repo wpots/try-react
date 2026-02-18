@@ -48,7 +48,16 @@
   "hero": {
     "affirmation": "Dagelijkse affirmatie",
     "averageMood": "stemming",
-    "noMood": "Nog geen stemming vastgelegd"
+    "noMood": "Nog geen stemming vastgelegd",
+    "tilt": {
+      "label": "Golfbeweging",
+      "enable": "Kantelbeweging inschakelen",
+      "prompt": "Tik op inschakelen en kantel je telefoon om te testen.",
+      "enabled": "Kantelbeweging staat aan.",
+      "denied": "Toegang tot kantelen is geblokkeerd. Sta bewegings- en orientatietoegang toe in Safari-instellingen.",
+      "motionDisabled": "Kantelbeweging staat uit omdat verminderde beweging is ingeschakeld.",
+      "unsupported": "Kantelbeweging is niet beschikbaar op dit apparaat."
+    }
   },
   "moodZones": {
     "negative": "Neem even wat rust",

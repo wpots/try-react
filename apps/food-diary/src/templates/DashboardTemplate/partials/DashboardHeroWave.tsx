@@ -1,13 +1,13 @@
 "use client";
 
-import { cn, useMotionEnabled } from "@repo/ui";
+import { cn } from "@repo/ui";
 import { motion } from "framer-motion";
-
-import { useDeviceTiltOffset } from "../useDeviceTiltOffset";
 
 import type { MoodZone } from "../index";
 
 interface DashboardHeroWaveProps {
+  isMotionEnabled: boolean;
+  tiltOffset: number;
   zone: MoodZone | null;
 }
 
@@ -31,6 +31,9 @@ const SECONDARY_WAVE_PATH =
   "M0 22C30 14 60 14 90 22C120 30 150 30 180 22C210 14 240 14 270 22C300 30 330 30 360 22V48H0Z";
 const TERTIARY_WAVE_PATH =
   "M0 20C24 12 48 12 72 20C96 28 120 28 144 20C168 12 192 12 216 20C240 28 264 28 288 20C312 12 336 12 360 20V48H0Z";
+const PRIMARY_TILT_MULTIPLIER = 40;
+const SECONDARY_TILT_MULTIPLIER = 24;
+const TERTIARY_TILT_MULTIPLIER = 14;
 
 const WAVE_TONES: Record<MoodZone, WaveTone> = {
   1: {
@@ -127,10 +130,10 @@ function WaveLayer({
 }
 
 export function DashboardHeroWave({
+  isMotionEnabled,
+  tiltOffset,
   zone,
 }: DashboardHeroWaveProps): React.JSX.Element {
-  const isMotionEnabled = useMotionEnabled();
-  const tiltOffset = useDeviceTiltOffset({ isEnabled: isMotionEnabled });
   const waveTone = getWaveTone(zone);
 
   return (
@@ -142,21 +145,21 @@ export function DashboardHeroWave({
         className={waveTone.primary}
         duration={24}
         path={PRIMARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltOffset * 24 : 0}
+        tiltX={isMotionEnabled ? tiltOffset * PRIMARY_TILT_MULTIPLIER : 0}
         isMotionEnabled={isMotionEnabled}
       />
       <WaveLayer
         className={waveTone.secondary}
         duration={32}
         path={SECONDARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltOffset * 14 : 0}
+        tiltX={isMotionEnabled ? tiltOffset * SECONDARY_TILT_MULTIPLIER : 0}
         isMotionEnabled={isMotionEnabled}
       />
       <WaveLayer
         className={waveTone.tertiary}
         duration={40}
         path={TERTIARY_WAVE_PATH}
-        tiltX={isMotionEnabled ? tiltOffset * 8 : 0}
+        tiltX={isMotionEnabled ? tiltOffset * TERTIARY_TILT_MULTIPLIER : 0}
         isMotionEnabled={isMotionEnabled}
       />
     </div>

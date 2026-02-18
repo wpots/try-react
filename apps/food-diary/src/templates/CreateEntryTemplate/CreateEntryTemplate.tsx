@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { EntryForm, type EntryFormMode } from "@/components/EntryForm";
-import { EntryPageHeader } from "@/components/EntryPageHeader";
+import { PageHeader } from "@/components/PageHeader";
 
 interface CreateEntryTemplateProps {
   entryId?: string;
@@ -39,7 +39,7 @@ export function CreateEntryTemplate({
 
   return (
     <div className="flex h-dvh flex-col">
-      <EntryPageHeader
+      <PageHeader
         isBookmarked={isBookmarked}
         onBackClick={handleBackClick}
         onBookmarkClick={handleBookmarkClick}

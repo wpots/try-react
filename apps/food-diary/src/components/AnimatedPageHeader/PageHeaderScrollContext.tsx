@@ -27,7 +27,7 @@ export function PageHeaderScrollProvider({
 export function usePageHeaderScroll(): PageHeaderScrollContextValue {
   const ctx = useContext(PageHeaderScrollContext);
   if (ctx === null) {
-    throw new Error("usePageHeaderScroll must be used within a PageHeader");
+    throw new Error("usePageHeaderScroll must be used within an AnimatedPageHeader");
   }
   return ctx;
 }

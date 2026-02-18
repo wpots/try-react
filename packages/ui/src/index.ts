@@ -66,7 +66,11 @@ export { TextArea } from "./components/TextArea";
 export type { TextAreaProps } from "./components/TextArea";
 
 export { AnimatedLogo } from "./components/AnimatedLogo";
-export type { AnimatedLogoProps, AnimatedLogoVariant } from "./components/AnimatedLogo";
+export type {
+  AnimatedLogoMotionMode,
+  AnimatedLogoProps,
+  AnimatedLogoVariant,
+} from "./components/AnimatedLogo";
 
 export { Label } from "./components/Label";
 export type { LabelProps } from "./components/Label";

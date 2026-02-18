@@ -186,4 +186,9 @@
     line-height: var(--line-height-ds-heading-2xl);
     font-weight: var(--font-weight-ds-medium);
   }
+
+  .font-ds-script-fluid {
+    font-size: 20cqw;
+    line-height: 1;
+  }
 }

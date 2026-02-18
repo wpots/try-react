@@ -1,1 +1,0 @@
-export { getHomeSplashDisabledState } from "./getHomeSplashDisabledState";

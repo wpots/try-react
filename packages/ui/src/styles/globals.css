@@ -5,6 +5,8 @@
 @import "./tokens/typography.css";
 @import "./tokens/radius.css";
 @import "./tokens/shadows.css";
+@source "../**/*.{ts,tsx}";
+@source "../../../../apps/food-diary/src/**/*.{ts,tsx}";
 
 /* OpenMoji color font – emoji glyphs (CC BY-SA 4.0, https://openmoji.org) */
 @font-face {

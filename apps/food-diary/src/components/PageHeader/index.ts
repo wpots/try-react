@@ -1,7 +1,10 @@
 export interface PageHeaderProps extends React.ComponentProps<"header"> {
-  children?: React.ReactNode;
+  backHref?: string;
+  backAriaLabel?: string;
+  onBackClick?: React.MouseEventHandler<HTMLButtonElement>;
+  isBookmarked?: boolean;
+  showBookmarkButton?: boolean;
+  onBookmarkClick?: (isBookmarked: boolean) => void;
 }
 
 export { PageHeader } from "./PageHeader";
-export { usePageHeaderScroll } from "./PageHeaderScrollContext";
-export type { PageHeaderScrollContextValue } from "./PageHeaderScrollContext";

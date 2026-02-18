@@ -1,43 +1,81 @@
 "use client";
 
-import { cn, Section, Container } from "@repo/ui";
+import { ChevronLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { cn } from "@repo/ui";
+
+import { BookmarkToggleButton } from "@/components/BookmarkToggleButton";
+import { FormButton } from "@/components/FormButton";
+import { useRouter } from "@/i18n/navigation";
 
 import type { PageHeaderProps } from "./index";
-import { PageHeaderScrollProvider } from "./PageHeaderScrollContext";
-import { SCROLL_RANGE, useScrollProgress } from "./useScrollProgress";
 
-import { Logo } from "@/components/Logo";
+export function PageHeader({
+  backHref = "/dashboard",
+  backAriaLabel,
+  className,
+  id = "page-header",
+  isBookmarked = false,
+  onBackClick,
+  onBookmarkClick,
+  showBookmarkButton = true,
+  ...props
+}: PageHeaderProps): React.JSX.Element {
+  const router = useRouter();
+  const tBrand = useTranslations("common.brand");
+  const tNav = useTranslations("nav");
+  const tDashboard = useTranslations("dashboard");
+  const resolvedBackAriaLabel = backAriaLabel ?? tNav("dashboard");
 
-export function PageHeader({ className, id = "page-header", children, ...props }: PageHeaderProps): React.JSX.Element {
-  const scrollProgress = useScrollProgress(0, SCROLL_RANGE);
-  const isScrolled = scrollProgress >= 1;
+  const handleBackClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    onBackClick?.(event);
+
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    router.push(backHref);
+  };
 
   return (
-    <Section
-      spacing="none"
-      as="header"
+    <header
       data-component-type="PageHeader"
       id={id}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 w-full border-b border-transparent transition-all duration-300 text-ds-on-surface",
-        isScrolled ? "bg-ds-surface shadow-ds-sm" : "bg-transparent",
+        "grid grid-cols-3 items-center border-b",
+        "border-ds-border-subtle bg-ds-surface/80 px-ds-l py-ds-m",
         className,
       )}
       {...props}
     >
-      <Container
-        className="flex min-w-0 items-center justify-between gap-ds-s py-ds-m md:gap-ds-l"
+      <FormButton
+        aria-label={resolvedBackAriaLabel}
+        onClick={handleBackClick}
+        className={cn(
+          "h-8 w-8 border-transparent bg-transparent p-0",
+          "text-ds-on-surface-secondary hover:border-transparent",
+          "hover:bg-ds-surface-muted",
+          "hover:text-ds-on-surface",
+        )}
+        type="button"
+        iconOnly
       >
-        <Logo id="page-header-logo" scrollProgress={scrollProgress} href="#home" />
+        <ChevronLeft aria-hidden="true" className="h-4 w-4" />
+      </FormButton>
 
-        <PageHeaderScrollProvider value={{ isScrolled, scrollProgress }}>
-          {children ? (
-            <div className="ml-auto flex shrink-0 items-center gap-ds-xs md:gap-ds-m">
-              {children}
-            </div>
-          ) : null}
-        </PageHeaderScrollProvider>
-      </Container>
-    </Section>
+      <span className="font-ds-script-base text-ds-on-surface text-center">{tBrand("wordmark")}</span>
+
+      {showBookmarkButton ? (
+        <BookmarkToggleButton
+          addBookmarkLabel={tDashboard("entry.addBookmark")}
+          className="h-8 w-8 justify-self-end"
+          isBookmarked={isBookmarked}
+          onToggle={onBookmarkClick}
+          removeBookmarkLabel={tDashboard("entry.removeBookmark")}
+        />
+      ) : (
+        <span aria-hidden="true" className="h-8 w-8 justify-self-end" />
+      )}
+    </header>
   );
 }

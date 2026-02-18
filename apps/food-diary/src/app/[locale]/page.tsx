@@ -1,7 +1,7 @@
 "use client";
 
 import { HeaderNav } from "@/components/HeaderNav";
-import { PageHeader } from "@/components/PageHeader";
+import { AnimatedPageHeader } from "@/components/AnimatedPageHeader";
 import { PageFooter } from "@/components/PageFooter/PageFooter";
 import { useHomeAuthRedirect } from "@/hooks/useHomeAuthRedirect";
 import { LandingPage } from "@/templates/LandingPage";
@@ -28,9 +28,9 @@ export default function HomePage(): React.JSX.Element {
   }));
   return (
     <>
-      <PageHeader>
+      <AnimatedPageHeader>
         <HeaderNav navItems={navItems} cms={cms.headerNav} />
-      </PageHeader>
+      </AnimatedPageHeader>
       <LandingPage />
       <PageFooter>
         <SectionHeader

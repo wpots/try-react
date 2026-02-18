@@ -4,6 +4,7 @@ import { Label, Card } from "@repo/ui";
 import type { DashboardMoodSummary } from "../index";
 import { Quote } from "@/components/Quote";
 import { AverageMoodAura } from "./AverageMoodAura";
+import { DashboardHeroWave } from "./DashboardHeroWave";
 
 interface DashboardHeroProps {
   affirmation: string;
@@ -29,6 +30,7 @@ export function DashboardHero({
       }
     >
       {averageMood ? <AverageMoodAura zone={averageMood.zone} /> : null}
+      <DashboardHeroWave zone={averageMood?.zone ?? null} />
       <div className="relative z-10 grid gap-ds-l">
         <div>
           <Label>{dateLabel}</Label>

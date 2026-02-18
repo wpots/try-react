@@ -18,7 +18,8 @@ interface WaveLayerProps {
   path: string;
   tiltX: number;
   tiltY: number;
-  tiltRotate: number;
+  tiltRotateX: number;
+  tiltRotateZ: number;
   isMotionEnabled: boolean;
 }
 
@@ -34,15 +35,18 @@ const SECONDARY_WAVE_PATH =
   "M0 22C30 14 60 14 90 22C120 30 150 30 180 22C210 14 240 14 270 22C300 30 330 30 360 22V48H0Z";
 const TERTIARY_WAVE_PATH =
   "M0 20C24 12 48 12 72 20C96 28 120 28 144 20C168 12 192 12 216 20C240 28 264 28 288 20C312 12 336 12 360 20V48H0Z";
-const PRIMARY_TILT_X_MULTIPLIER = 68;
-const SECONDARY_TILT_X_MULTIPLIER = 40;
-const TERTIARY_TILT_X_MULTIPLIER = 24;
-const PRIMARY_TILT_Y_MULTIPLIER = 18;
-const SECONDARY_TILT_Y_MULTIPLIER = 12;
-const TERTIARY_TILT_Y_MULTIPLIER = 8;
-const PRIMARY_TILT_ROTATE_MULTIPLIER = 5;
-const SECONDARY_TILT_ROTATE_MULTIPLIER = 3;
-const TERTIARY_TILT_ROTATE_MULTIPLIER = 2;
+const PRIMARY_TILT_X_MULTIPLIER = 26;
+const SECONDARY_TILT_X_MULTIPLIER = 16;
+const TERTIARY_TILT_X_MULTIPLIER = 10;
+const PRIMARY_TILT_Y_MULTIPLIER = 22;
+const SECONDARY_TILT_Y_MULTIPLIER = 14;
+const TERTIARY_TILT_Y_MULTIPLIER = 9;
+const PRIMARY_TILT_ROTATE_X_MULTIPLIER = -8;
+const SECONDARY_TILT_ROTATE_X_MULTIPLIER = -5;
+const TERTIARY_TILT_ROTATE_X_MULTIPLIER = -3;
+const PRIMARY_TILT_ROTATE_Z_MULTIPLIER = 1.8;
+const SECONDARY_TILT_ROTATE_Z_MULTIPLIER = 1.1;
+const TERTIARY_TILT_ROTATE_Z_MULTIPLIER = 0.7;
 
 const WAVE_TONES: Record<MoodZone, WaveTone> = {
   1: {
@@ -92,14 +96,16 @@ function WaveLayer({
   path,
   tiltX,
   tiltY,
-  tiltRotate,
+  tiltRotateX,
+  tiltRotateZ,
   isMotionEnabled,
 }: WaveLayerProps): React.JSX.Element {
   return (
     <motion.div
-      className="absolute -inset-y-ds-xxl inset-x-0 origin-bottom"
+      className="absolute inset-x-0 -bottom-ds-xxl top-0 origin-bottom transform-gpu"
       animate={{
-        rotate: tiltRotate,
+        rotate: tiltRotateZ,
+        rotateX: tiltRotateX,
         x: tiltX,
         y: tiltY,
       }}
@@ -163,7 +169,12 @@ export function DashboardHeroWave({
         path={PRIMARY_WAVE_PATH}
         tiltX={isMotionEnabled ? tiltX * PRIMARY_TILT_X_MULTIPLIER : 0}
         tiltY={isMotionEnabled ? tiltY * PRIMARY_TILT_Y_MULTIPLIER : 0}
-        tiltRotate={isMotionEnabled ? tiltX * PRIMARY_TILT_ROTATE_MULTIPLIER : 0}
+        tiltRotateX={
+          isMotionEnabled ? tiltY * PRIMARY_TILT_ROTATE_X_MULTIPLIER : 0
+        }
+        tiltRotateZ={
+          isMotionEnabled ? tiltX * PRIMARY_TILT_ROTATE_Z_MULTIPLIER : 0
+        }
         isMotionEnabled={isMotionEnabled}
       />
       <WaveLayer
@@ -172,8 +183,11 @@ export function DashboardHeroWave({
         path={SECONDARY_WAVE_PATH}
         tiltX={isMotionEnabled ? tiltX * SECONDARY_TILT_X_MULTIPLIER : 0}
         tiltY={isMotionEnabled ? tiltY * SECONDARY_TILT_Y_MULTIPLIER : 0}
-        tiltRotate={
-          isMotionEnabled ? tiltX * SECONDARY_TILT_ROTATE_MULTIPLIER : 0
+        tiltRotateX={
+          isMotionEnabled ? tiltY * SECONDARY_TILT_ROTATE_X_MULTIPLIER : 0
+        }
+        tiltRotateZ={
+          isMotionEnabled ? tiltX * SECONDARY_TILT_ROTATE_Z_MULTIPLIER : 0
         }
         isMotionEnabled={isMotionEnabled}
       />
@@ -183,7 +197,12 @@ export function DashboardHeroWave({
         path={TERTIARY_WAVE_PATH}
         tiltX={isMotionEnabled ? tiltX * TERTIARY_TILT_X_MULTIPLIER : 0}
         tiltY={isMotionEnabled ? tiltY * TERTIARY_TILT_Y_MULTIPLIER : 0}
-        tiltRotate={isMotionEnabled ? tiltX * TERTIARY_TILT_ROTATE_MULTIPLIER : 0}
+        tiltRotateX={
+          isMotionEnabled ? tiltY * TERTIARY_TILT_ROTATE_X_MULTIPLIER : 0
+        }
+        tiltRotateZ={
+          isMotionEnabled ? tiltX * TERTIARY_TILT_ROTATE_Z_MULTIPLIER : 0
+        }
         isMotionEnabled={isMotionEnabled}
       />
     </div>

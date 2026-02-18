@@ -79,6 +79,7 @@ function getFilteredSteps(entry: WizardEntry): WizardStep[] {
       ? step.condition({
           entryType: entry.entryType,
           behavior: entry.behavior,
+          emotions: entry.emotions,
         })
       : true,
   );

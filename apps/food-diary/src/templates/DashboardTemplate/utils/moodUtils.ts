@@ -77,9 +77,6 @@ const ZONE_SUMMARY: Record<MoodZone, ZoneSummaryConfig> = {
   4: { emoji: "😌", labelKey: "moodZones.optimistic" },
   5: { emoji: "🙂", labelKey: "moodZones.positive" },
 };
-const HEAVY_ENTRY_MIN_EMOTIONS = 3;
-const HEAVY_ENTRY_WEIGHT = 2;
-const LIGHT_ENTRY_WEIGHT = 1;
 
 function createEmotionMoodMap(): Record<string, EmotionMoodConfig> {
   const moodMap: Record<string, EmotionMoodConfig> = {};
@@ -178,11 +175,7 @@ function getMoodConfig(emotionKey: string): EmotionMoodConfig {
 }
 
 function getEntryWeight(emotionCount: number): number {
-  if (emotionCount >= HEAVY_ENTRY_MIN_EMOTIONS) {
-    return HEAVY_ENTRY_WEIGHT;
-  }
-
-  return LIGHT_ENTRY_WEIGHT;
+  return Math.max(emotionCount, 0);
 }
 
 function roundMoodAverage(value: number): number {

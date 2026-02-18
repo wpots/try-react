@@ -52,7 +52,7 @@
     "tilt": {
       "label": "Golfbeweging",
       "enable": "Kantelbeweging inschakelen",
-      "prompt": "Tik op inschakelen en kantel je telefoon om te testen.",
+      "prompt": "Tik op inschakelen en kantel links/rechts of voor/achter om te testen.",
       "enabled": "Kantelbeweging staat aan.",
       "denied": "Toegang tot kantelen is geblokkeerd. Sta bewegings- en orientatietoegang toe in Safari-instellingen.",
       "motionDisabled": "Kantelbeweging staat uit omdat verminderde beweging is ingeschakeld.",

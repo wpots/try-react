@@ -52,7 +52,7 @@
     "tilt": {
       "label": "Wave tilt",
       "enable": "Enable tilt motion",
-      "prompt": "Tap enable and tilt your phone to test.",
+      "prompt": "Tap enable, then tilt left/right or forward/back to test.",
       "enabled": "Tilt motion is active.",
       "denied": "Tilt access is blocked. Allow Motion & Orientation Access in Safari settings.",
       "motionDisabled": "Tilt motion is off because reduced motion is enabled.",

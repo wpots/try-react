@@ -8,6 +8,7 @@ interface DeviceOrientationPermissionEvent {
 
 interface UseDeviceTiltOffsetOptions {
   isEnabled?: boolean;
+  maxBeta?: number;
   maxGamma?: number;
 }
 
@@ -48,6 +49,7 @@ function supportsPermissionRequest(
 
 export function useDeviceTiltOffset({
   isEnabled = true,
+  maxBeta = 24,
   maxGamma = 24,
 }: UseDeviceTiltOffsetOptions = {}): UseDeviceTiltOffsetResult {
   const [rawTiltOffset, setRawTiltOffset] = useState(0);
@@ -99,15 +101,24 @@ export function useDeviceTiltOffset({
     }
 
     const handleOrientation = (event: DeviceOrientationEvent): void => {
-      if (event.gamma == null) {
+      if (event.gamma == null && event.beta == null) {
         return;
       }
 
-      const normalizedGamma = clamp(event.gamma / maxGamma, -1, 1);
+      const gamma = event.gamma ?? 0;
+      const beta = event.beta ?? 0;
+      const normalizedGamma = clamp(gamma / maxGamma, -1, 1);
+      const normalizedBeta = clamp(beta / maxBeta, -1, 1);
+      const combinedTilt = clamp(
+        normalizedGamma + normalizedBeta * 0.55,
+        -1,
+        1,
+      );
+
       setRawTiltOffset((currentOffset) => {
-        return Math.abs(currentOffset - normalizedGamma) < 0.01
+        return Math.abs(currentOffset - combinedTilt) < 0.01
           ? currentOffset
-          : normalizedGamma;
+          : combinedTilt;
       });
     };
 
@@ -118,7 +129,7 @@ export function useDeviceTiltOffset({
     return () => {
       window.removeEventListener("deviceorientation", handleOrientation);
     };
-  }, [isEnabled, maxGamma, permissionState]);
+  }, [isEnabled, maxBeta, maxGamma, permissionState]);
 
   const tiltOffset =
     isEnabled && permissionState === "granted" ? rawTiltOffset : 0;

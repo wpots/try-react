@@ -23,10 +23,10 @@ export function HamburgerMenu({
           aria-label={buttonLabel}
           variant="default"
           size="icon"
-          className={buttonClassName}
+          className={cn("h-10 w-10 overflow-hidden p-0", buttonClassName)}
         >
           {triggerContent != null ? (
-            <span className="flex size-4 items-center justify-center">{triggerContent}</span>
+            <span className="flex size-full items-center justify-center">{triggerContent}</span>
           ) : (
             <span className="flex h-4 w-4 flex-col justify-between" aria-hidden>
               <span className="block h-0.5 w-4 bg-current" />

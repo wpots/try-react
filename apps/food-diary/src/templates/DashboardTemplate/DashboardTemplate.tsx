@@ -149,6 +149,11 @@ export function DashboardTemplate(): React.JSX.Element {
         {dashboardState.hasLoadError ? (
           <p className="font-ds-body-sm text-ds-danger">{tDashboard("loadError")}</p>
         ) : null}
+        {dashboardState.hasDeleteError ? (
+          <p className="font-ds-body-sm text-ds-danger">
+            {tDashboard("entry.deleteFailed")}
+          </p>
+        ) : null}
         <Section variant="neutral">
           <Container size="wide">
             <Typography variant="heading" size="base" className="mb-ds-xl">
@@ -159,7 +164,9 @@ export function DashboardTemplate(): React.JSX.Element {
                 entries={dashboardState.dayEntries}
                 getEntryMoods={resolveEntryMoods}
                 isBookmarked={dashboardState.isBookmarked}
+                isDeleting={dashboardState.isDeleting}
                 isExpanded={dashboardState.isExpanded}
+                onDeleteEntry={dashboardState.onDeleteEntry}
                 onEditEntry={dashboardState.onEditEntry}
                 onToggleBookmark={dashboardState.onToggleBookmark}
                 onToggleExpanded={dashboardState.onToggleExpanded}

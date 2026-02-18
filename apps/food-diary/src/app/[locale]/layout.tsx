@@ -11,6 +11,11 @@ import { SkipLink } from "@repo/ui";
 export const metadata: Metadata = {
   title: "Food Diary",
   description: "Track your food diary entries",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export function generateStaticParams() {

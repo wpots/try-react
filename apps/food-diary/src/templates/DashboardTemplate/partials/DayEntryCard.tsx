@@ -1,4 +1,11 @@
-import { ChevronDown, Pencil, ClockIcon, MapPin, Users } from "lucide-react";
+import {
+  ChevronDown,
+  Pencil,
+  ClockIcon,
+  MapPin,
+  Trash2,
+  Users,
+} from "lucide-react";
 import { Card, cn, Typography } from "@repo/ui";
 
 import { BookmarkToggleButton } from "@/components/BookmarkToggleButton";
@@ -17,7 +24,9 @@ interface DayEntryCardProps {
   entry: DiaryEntry;
   entryMoods: DashboardMood[];
   isBookmarked: boolean;
+  isDeleting: boolean;
   isExpanded: boolean;
+  onDeleteEntry: (entryId: string) => void;
   onEditEntry: (entryId: string) => void;
   onToggleBookmark: (entryId: string) => void;
   onToggleExpanded: (entryId: string) => void;
@@ -39,7 +48,9 @@ export function DayEntryCard({
   entry,
   entryMoods,
   isBookmarked,
+  isDeleting,
   isExpanded,
+  onDeleteEntry,
   onEditEntry,
   onToggleBookmark,
   onToggleExpanded,
@@ -53,6 +64,14 @@ export function DayEntryCard({
   const behaviorLabels = entry.behavior.map(behavior =>
     getBehaviorLabel(behavior, translateEntry, entry.behaviorOther),
   );
+
+  function handleDeleteClick(): void {
+    if (!window.confirm(translateDashboard("entry.deleteConfirm"))) {
+      return;
+    }
+
+    onDeleteEntry(entry.id);
+  }
 
   return (
     <Card
@@ -87,6 +106,20 @@ export function DayEntryCard({
             type="button"
           >
             <Pencil className="h-4 w-4" aria-hidden="true" />
+          </FormButton>
+
+          <FormButton
+            aria-label={translateDashboard("entry.delete")}
+            className={cn(
+              "text-ds-danger",
+              "hover:border-ds-danger hover:bg-ds-danger/10",
+            )}
+            disabled={isDeleting}
+            iconOnly
+            onClick={handleDeleteClick}
+            type="button"
+          >
+            <Trash2 className="h-4 w-4" aria-hidden="true" />
           </FormButton>
 
           <FormButton

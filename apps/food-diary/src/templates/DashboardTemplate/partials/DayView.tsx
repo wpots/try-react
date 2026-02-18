@@ -6,7 +6,9 @@ interface DayViewProps {
   entries: DiaryEntry[];
   getEntryMoods: (entry: DiaryEntry) => DashboardMood[];
   isBookmarked: (entryId: string) => boolean;
+  isDeleting: (entryId: string) => boolean;
   isExpanded: (entryId: string) => boolean;
+  onDeleteEntry: (entryId: string) => void;
   onEditEntry: (entryId: string) => void;
   onToggleBookmark: (entryId: string) => void;
   onToggleExpanded: (entryId: string) => void;
@@ -18,7 +20,9 @@ export function DayView({
   entries,
   getEntryMoods,
   isBookmarked,
+  isDeleting,
   isExpanded,
+  onDeleteEntry,
   onEditEntry,
   onToggleBookmark,
   onToggleExpanded,
@@ -42,7 +46,9 @@ export function DayView({
           entry={entry}
           entryMoods={getEntryMoods(entry)}
           isBookmarked={isBookmarked(entry.id)}
+          isDeleting={isDeleting(entry.id)}
           isExpanded={isExpanded(entry.id)}
+          onDeleteEntry={onDeleteEntry}
           onEditEntry={onEditEntry}
           onToggleBookmark={onToggleBookmark}
           onToggleExpanded={onToggleExpanded}

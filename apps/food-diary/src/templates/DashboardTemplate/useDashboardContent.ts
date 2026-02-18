@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import { fetchDiaryEntries } from "@/lib/diaryEntries";
+import { deleteDiaryEntry, fetchDiaryEntries } from "@/lib/diaryEntries";
 import type { DiaryEntry } from "@/lib/diaryEntries";
 
 import type { DashboardViewMode } from "./index";
@@ -21,11 +21,14 @@ export interface UseDashboardContentResult {
   canNavigateNext: boolean;
   dayEntries: DiaryEntry[];
   entriesByDate: Record<string, DiaryEntry[]>;
+  hasDeleteError: boolean;
   hasLoadError: boolean;
   isBookmarked: (entryId: string) => boolean;
+  isDeleting: (entryId: string) => boolean;
   isExpanded: (entryId: string) => boolean;
   isLoading: boolean;
   isUnauthenticated: boolean;
+  onDeleteEntry: (entryId: string) => void;
   monthGridDates: ReturnType<typeof getMonthGridDates>;
   onEditEntry: (entryId: string) => void;
   onGoToToday: () => void;
@@ -72,9 +75,11 @@ function mapEntriesByDate(entries: DiaryEntry[]): Record<string, DiaryEntry[]> {
 export function useDashboardContent(): UseDashboardContentResult {
   const router = useRouter();
   const { loading, user } = useAuth();
+  const userId = user?.uid;
 
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
   const [entriesLoading, setEntriesLoading] = useState(false);
+  const [hasDeleteError, setHasDeleteError] = useState(false);
   const [hasLoadError, setHasLoadError] = useState(false);
   const [viewMode, setViewMode] = useState<DashboardViewMode>("day");
   const [selectedDate, setSelectedDate] = useState<Date>(getToday);
@@ -84,6 +89,9 @@ export function useDashboardContent(): UseDashboardContentResult {
   const [bookmarkState, setBookmarkState] = useState<Record<string, boolean>>(
     {},
   );
+  const [deletingState, setDeletingState] = useState<Record<string, boolean>>(
+    {},
+  );
 
   const today = useMemo(() => getToday(), []);
 
@@ -91,18 +99,20 @@ export function useDashboardContent(): UseDashboardContentResult {
     let isCancelled = false;
 
     async function loadEntries(): Promise<void> {
-      if (!user?.uid) {
+      if (!userId) {
         setEntries([]);
         setEntriesLoading(false);
+        setHasDeleteError(false);
         setHasLoadError(false);
         return;
       }
 
       setEntriesLoading(true);
+      setHasDeleteError(false);
       setHasLoadError(false);
 
       try {
-        const nextEntries = await fetchDiaryEntries(user.uid);
+        const nextEntries = await fetchDiaryEntries(userId);
 
         if (!isCancelled) {
           setEntries(nextEntries);
@@ -124,7 +134,7 @@ export function useDashboardContent(): UseDashboardContentResult {
     return () => {
       isCancelled = true;
     };
-  }, [user?.uid]);
+  }, [userId]);
 
   useEffect(() => {
     setBookmarkState((previousState) => {
@@ -205,6 +215,55 @@ export function useDashboardContent(): UseDashboardContentResult {
     }));
   }, []);
 
+  const handleDeleteEntry = useCallback(
+    (entryId: string) => {
+      if (!userId) {
+        return;
+      }
+
+      setDeletingState((previousState) => ({
+        ...previousState,
+        [entryId]: true,
+      }));
+      setHasDeleteError(false);
+
+      void (async () => {
+        try {
+          const isDeleted = await deleteDiaryEntry(userId, entryId);
+
+          if (!isDeleted) {
+            setHasDeleteError(true);
+            return;
+          }
+
+          setEntries((previousEntries) =>
+            previousEntries.filter((entry) => entry.id !== entryId),
+          );
+
+          setExpandedState((previousState) => {
+            const nextState = { ...previousState };
+            delete nextState[entryId];
+            return nextState;
+          });
+          setBookmarkState((previousState) => {
+            const nextState = { ...previousState };
+            delete nextState[entryId];
+            return nextState;
+          });
+        } catch {
+          setHasDeleteError(true);
+        } finally {
+          setDeletingState((previousState) => {
+            const nextState = { ...previousState };
+            delete nextState[entryId];
+            return nextState;
+          });
+        }
+      })();
+    },
+    [userId],
+  );
+
   const handleEditEntry = useCallback(
     (entryId: string) => {
       const params = new URLSearchParams({
@@ -228,16 +287,24 @@ export function useDashboardContent(): UseDashboardContentResult {
     [bookmarkState],
   );
 
+  const isDeleting = useCallback(
+    (entryId: string) => Boolean(deletingState[entryId]),
+    [deletingState],
+  );
+
   return {
     canNavigateNext,
     dayEntries,
     entriesByDate,
+    hasDeleteError,
     hasLoadError,
     isBookmarked,
+    isDeleting,
     isExpanded,
     isLoading: loading || entriesLoading,
     isUnauthenticated: !loading && !user,
     monthGridDates,
+    onDeleteEntry: handleDeleteEntry,
     onEditEntry: handleEditEntry,
     onGoToToday: handleGoToToday,
     onNavigateNext: handleNavigateNext,

@@ -37,6 +37,9 @@ const ZONE_SUMMARY: Record<MoodZone, ZoneSummaryConfig> = {
   4: { emoji: "😌", labelKey: "moodZones.optimistic" },
   5: { emoji: "🙂", labelKey: "moodZones.positive" },
 };
+const HEAVY_ENTRY_MIN_EMOTIONS = 3;
+const HEAVY_ENTRY_WEIGHT = 2;
+const LIGHT_ENTRY_WEIGHT = 1;
 
 function createEmotionMoodMap(): Record<string, EmotionMoodConfig> {
   const moodMap: Record<string, EmotionMoodConfig> = {};
@@ -77,6 +80,37 @@ function getMoodConfig(emotionKey: string): EmotionMoodConfig {
   return EMOTION_MOOD[emotionKey] ?? FALLBACK_MOOD;
 }
 
+function getEntryAverageMoodScore(entry: DiaryEntry): number | null {
+  if (entry.emotions.length === 0) {
+    return null;
+  }
+
+  const total = entry.emotions.reduce((sum, emotionKey) => {
+    return sum + getMoodConfig(emotionKey).zone;
+  }, 0);
+
+  return total / entry.emotions.length;
+}
+
+function getEntryWeight(emotionCount: number): number {
+  if (emotionCount >= HEAVY_ENTRY_MIN_EMOTIONS) {
+    return HEAVY_ENTRY_WEIGHT;
+  }
+
+  return LIGHT_ENTRY_WEIGHT;
+}
+
+function roundMoodAverage(value: number): number {
+  const flooredValue = Math.floor(value);
+  const decimalPart = value - flooredValue;
+
+  if (decimalPart <= 0.5) {
+    return flooredValue;
+  }
+
+  return flooredValue + 1;
+}
+
 export function getEntryMoods(
   entry: DiaryEntry,
   resolveLabel: (emotionKey: string) => string,
@@ -94,18 +128,28 @@ export function getEntryMoods(
 }
 
 export function getAverageMoodZone(entries: DiaryEntry[]): MoodZone | null {
-  const scores = entries.flatMap((entry) =>
-    entry.emotions.map((emotionKey) => getMoodConfig(emotionKey).zone),
-  );
+  let weightedTotal = 0;
+  let totalWeight = 0;
 
-  if (scores.length === 0) {
+  for (const entry of entries) {
+    const entryAverage = getEntryAverageMoodScore(entry);
+
+    if (entryAverage == null) {
+      continue;
+    }
+
+    const entryWeight = getEntryWeight(entry.emotions.length);
+    weightedTotal += entryAverage * entryWeight;
+    totalWeight += entryWeight;
+  }
+
+  if (totalWeight === 0) {
     return null;
   }
 
-  const total = scores.reduce((sum, score) => sum + score, 0);
-  const average = total / scores.length;
+  const average = weightedTotal / totalWeight;
 
-  return toMoodZone(Math.round(average));
+  return toMoodZone(roundMoodAverage(average));
 }
 
 export function getMoodSummary(

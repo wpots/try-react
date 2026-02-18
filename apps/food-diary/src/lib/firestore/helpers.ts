@@ -2,6 +2,7 @@ import {
   Timestamp,
   addDoc,
   collection,
+  deleteDoc,
   deleteField,
   doc,
   getDoc,
@@ -237,6 +238,26 @@ export async function migrateGuestEntries(
   );
 
   await Promise.all(updates);
+
+  return querySnapshot.docs.length;
+}
+
+export async function deleteDiaryEntryById(entryId: string): Promise<void> {
+  await deleteDoc(doc(db, "diaryEntries", entryId));
+}
+
+export async function deleteDiaryEntriesByUser(userId: string): Promise<number> {
+  const entriesQuery = query(
+    collection(db, "diaryEntries"),
+    where("userId", "==", userId),
+  );
+  const querySnapshot = await getDocs(entriesQuery);
+
+  const deletions = querySnapshot.docs.map((snapshot) =>
+    deleteDoc(doc(db, "diaryEntries", snapshot.id)),
+  );
+
+  await Promise.all(deletions);
 
   return querySnapshot.docs.length;
 }

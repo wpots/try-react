@@ -51,6 +51,9 @@ export type { LinkProps, NextLinkLikeProps } from "./components/Link";
 export { Image } from "./components/Image";
 export type { ImageProps, NextImageLikeProps } from "./components/Image";
 
+export { Avatar } from "./components/Avatar";
+export type { AvatarProps } from "./components/Avatar";
+
 export { ChipSelector } from "./components/ChipSelector";
 export type { ChipSelectorProps, ChipSelectorOption } from "./components/ChipSelector";
 

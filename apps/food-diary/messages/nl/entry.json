@@ -11,7 +11,7 @@
     "bookmark": "Moment bewaren"
   },
   "coach": {
-    "entryType": "Hoi! Wat voor moment wil je vastleggen?",
+    "entryType": "Wat voor moment wil je vastleggen?",
     "datetime": "Op welk moment was dit?",
     "skippedMeal": "Heb je deze maaltijd overgeslagen?",
     "location": "Waar was je?",

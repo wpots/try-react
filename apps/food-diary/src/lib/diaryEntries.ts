@@ -1,5 +1,6 @@
 import {
   createDiaryEntry,
+  deleteDiaryEntryById,
   getDiaryEntryById,
   getDiaryEntriesByUser,
   updateDiaryEntry,
@@ -127,4 +128,26 @@ export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> 
   }
 
   await createDiaryEntry(createInput);
+}
+
+export async function deleteDiaryEntry(
+  userId: string,
+  entryId: string,
+): Promise<boolean> {
+  const normalizedUserId = userId.trim();
+  const normalizedEntryId = entryId.trim();
+
+  if (!normalizedUserId || !normalizedEntryId) {
+    return false;
+  }
+
+  const entry = await getDiaryEntryById(normalizedEntryId);
+
+  if (!entry || entry.userId !== normalizedUserId) {
+    return false;
+  }
+
+  await deleteDiaryEntryById(normalizedEntryId);
+
+  return true;
 }

@@ -9,13 +9,13 @@ interface MoodBadgeProps {
 }
 
 function renderMoodVisual(mood: DashboardMood): React.JSX.Element {
-  if (mood.iconName) {
+  if ("iconName" in mood) {
     return <Icon aria-hidden="true" className="h-4 w-4" name={mood.iconName} />;
   }
 
   return (
     <span aria-hidden="true" className="font-openmoji text-sm leading-none">
-      {mood.emoji ?? ""}
+      {mood.emoji}
     </span>
   );
 }

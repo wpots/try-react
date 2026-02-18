@@ -26,11 +26,11 @@ export function MoodDot({ mood, size }: MoodDotProps): React.JSX.Element {
       title={mood.label}
     >
       {size === "week" ? (
-        mood.iconName ? (
+        "iconName" in mood ? (
           <Icon aria-hidden="true" className="h-3 w-3" name={mood.iconName} />
         ) : (
           <span className="font-openmoji text-xs leading-none" aria-hidden="true">
-            {mood.emoji ?? ""}
+            {mood.emoji}
           </span>
         )
       ) : null}

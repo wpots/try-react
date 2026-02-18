@@ -1,4 +1,4 @@
-import { cn } from "@repo/ui";
+import { Icon, cn } from "@repo/ui";
 
 import { getMoodDotClass } from "../utils/moodClassUtils";
 
@@ -26,9 +26,13 @@ export function MoodDot({ mood, size }: MoodDotProps): React.JSX.Element {
       title={mood.label}
     >
       {size === "week" ? (
-        <span className="font-openmoji text-xs leading-none" aria-hidden="true">
-          {mood.emoji}
-        </span>
+        mood.iconName ? (
+          <Icon aria-hidden="true" className="h-3 w-3" name={mood.iconName} />
+        ) : (
+          <span className="font-openmoji text-xs leading-none" aria-hidden="true">
+            {mood.emoji ?? ""}
+          </span>
+        )
       ) : null}
     </span>
   );

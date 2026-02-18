@@ -14,6 +14,21 @@
     "confirm": "Hier is een overzicht van je moment. Klopt alles?",
     "complete": "Goed gedaan! Je moment is opgeslagen."
   },
+  "coachReplies": {
+    "default": "Dankjewel, ik heb het genoteerd.",
+    "entryType": "Helder, dankjewel.",
+    "datetime": "Top, ik heb het moment.",
+    "location": "Fijn, dat helpt om context te geven.",
+    "company": "Dankjewel, ik noteer met wie je was.",
+    "behavior": "Dankjewel dat je dit deelt.",
+    "foodEaten": "Dankjewel, dat is duidelijk.",
+    "emotions": "Dankjewel dat je aangeeft hoe je je voelde.",
+    "description": "Fijn dat je dit erbij zet.",
+    "bookmark": "Helemaal goed, ik zet dat zo neer.",
+    "confirm": "Dankjewel, dan slaan we dit op.",
+    "skip": "Helemaal goed, we slaan deze vraag over.",
+    "stepBack": "Je wilt iets aanpassen, helemaal goed. We kijken er opnieuw naar."
+  },
   "entryTypes": {
     "breakfast": "Ontbijt",
     "lunch": "Lunch",

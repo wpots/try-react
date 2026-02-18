@@ -81,6 +81,9 @@ export type { LabelProps } from "./components/Label";
 export { IconTile } from "./components/IconTile";
 export type { IconTileProps, IconTileVariant } from "./components/IconTile";
 
+export { Icon } from "./components/Icon";
+export type { IconName, IconProps } from "./components/Icon";
+
 export { PebbleIcon } from "./components/PebbleIcon";
 export type { PebbleIconProps } from "./components/PebbleIcon";
 

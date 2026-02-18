@@ -45,7 +45,7 @@ export function MonthView({
           );
           const averageMood: DashboardMood | null = averageMoodSummary
             ? {
-                emoji: averageMoodSummary.emoji,
+                iconName: averageMoodSummary.iconName,
                 key: `${cell.dateKey}-average`,
                 label: averageMoodSummary.label,
                 zone: averageMoodSummary.zone,

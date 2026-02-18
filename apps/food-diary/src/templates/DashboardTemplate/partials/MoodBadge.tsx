@@ -1,4 +1,4 @@
-import { cn } from "@repo/ui";
+import { Icon, cn } from "@repo/ui";
 
 import { getMoodBadgeClass } from "../utils/moodClassUtils";
 
@@ -6,6 +6,18 @@ import type { DashboardMood } from "../index";
 
 interface MoodBadgeProps {
   mood: DashboardMood;
+}
+
+function renderMoodVisual(mood: DashboardMood): React.JSX.Element {
+  if (mood.iconName) {
+    return <Icon aria-hidden="true" className="h-4 w-4" name={mood.iconName} />;
+  }
+
+  return (
+    <span aria-hidden="true" className="font-openmoji text-sm leading-none">
+      {mood.emoji ?? ""}
+    </span>
+  );
 }
 
 export function MoodBadge({ mood }: MoodBadgeProps): React.JSX.Element {
@@ -18,9 +30,7 @@ export function MoodBadge({ mood }: MoodBadgeProps): React.JSX.Element {
       )}
       title={mood.label}
     >
-      <span aria-hidden="true" className="font-openmoji text-sm leading-none">
-        {mood.emoji}
-      </span>
+      {renderMoodVisual(mood)}
       <span>{mood.label}</span>
     </span>
   );

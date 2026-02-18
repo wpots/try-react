@@ -1,6 +1,6 @@
 "use client";
 
-import { Label, Card } from "@repo/ui";
+import { Card, Icon, Label } from "@repo/ui";
 
 import { Quote } from "@/components/Quote";
 
@@ -45,14 +45,9 @@ export function DashboardHero({
             <>
               <Label>{translateDashboard("hero.averageMood")}</Label>
               <div className="mt-ds-xs flex w-full items-center p-ds-m">
-                <Card
-                  className={
-                    "h-12 w-fit flex-row gap-ds-xs bg-ds-surface " +
-                    "font-ds-display-base"
-                  }
-                >
-                  <span className="font-openmoji grayscale brightness-110 text-xl" aria-hidden="true">
-                    {averageMood.emoji}
+                <Card className={"h-12 w-fit flex-row gap-ds-xs bg-ds-surface " + "font-ds-display-base"}>
+                  <span className="grayscale brightness-110 text-xl" aria-hidden="true">
+                    <Icon name={averageMood.iconName} />
                   </span>
                   {averageMood.label}
                 </Card>

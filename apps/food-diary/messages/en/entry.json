@@ -14,6 +14,21 @@
     "confirm": "Here is a summary of your moment. Does everything look right?",
     "complete": "Well done! Your moment has been saved."
   },
+  "coachReplies": {
+    "default": "Thanks, I've noted that.",
+    "entryType": "Clear, thanks.",
+    "datetime": "Great, I've got the timing.",
+    "location": "Thanks, that helps with context.",
+    "company": "Thanks, I'll note who you were with.",
+    "behavior": "Thanks for sharing that.",
+    "foodEaten": "Thanks, that's clear.",
+    "emotions": "Thanks for sharing how you felt.",
+    "description": "Thanks for adding that.",
+    "bookmark": "Sounds good, I'll mark that.",
+    "confirm": "Thanks, we can save this.",
+    "skip": "Totally fine, we'll skip this question.",
+    "stepBack": "You want to change something, totally fine. Let's go over it again."
+  },
   "entryTypes": {
     "breakfast": "Breakfast",
     "lunch": "Lunch",

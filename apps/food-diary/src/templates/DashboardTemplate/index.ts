@@ -1,17 +1,27 @@
 import type { DiaryEntry } from "@/lib/diaryEntries";
+import type { IconName } from "@repo/ui";
 
 export type DashboardViewMode = "day" | "week" | "month";
 export type MoodZone = 1 | 2 | 3 | 4 | 5;
 
-export interface DashboardMood {
+interface EmojiMoodVisual {
   emoji: string;
+}
+
+interface IconMoodVisual {
+  iconName: IconName;
+}
+
+export type DashboardMoodVisual = EmojiMoodVisual | IconMoodVisual;
+
+export type DashboardMood = DashboardMoodVisual & {
   key: string;
   label: string;
   zone: MoodZone;
-}
+};
 
 export interface DashboardMoodSummary {
-  emoji: string;
+  iconName: IconName;
   label: string;
   zone: MoodZone;
 }

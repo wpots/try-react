@@ -23,7 +23,7 @@ import {
 import { STEPS } from "./utils/steps";
 
 import type { CoachChatProps, EntryFormMode, WizardEntry } from "./index";
-import type { WizardStep } from "./utils/steps";
+import type { WizardStep, WizardStepKey } from "./utils/steps";
 
 export interface CoachChatMessage {
   id: number;
@@ -85,6 +85,22 @@ function getFilteredSteps(entry: WizardEntry): WizardStep[] {
   );
 }
 
+const COACH_REPLY_KEYS: Record<WizardStepKey, string> = {
+  entryType: "coachReplies.entryType",
+  datetime: "coachReplies.datetime",
+  location: "coachReplies.location",
+  company: "coachReplies.company",
+  behavior: "coachReplies.behavior",
+  foodEaten: "coachReplies.foodEaten",
+  emotions: "coachReplies.emotions",
+  description: "coachReplies.description",
+  bookmark: "coachReplies.bookmark",
+  confirm: "coachReplies.confirm",
+};
+
+const MIN_TYPING_DELAY_MS = 550;
+const TYPING_DELAY_VARIANCE_MS = 350;
+
 export function useCoachChatController({
   entryId,
   initialMode = "chat",
@@ -110,6 +126,8 @@ export function useCoachChatController({
   const isInitializedRef = useRef(false);
   const messageIdRef = useRef(0);
   const messagesRef = useRef<CoachChatMessage[]>([]);
+  const coachSequenceIdRef = useRef(0);
+  const timeoutIdsRef = useRef<number[]>([]);
 
   const locale = useLocale();
   const t = useTranslations("entry");
@@ -140,30 +158,78 @@ export function useCoachChatController({
     [],
   );
 
-  const showCoachMessage = useCallback(
-    (stepIndex: number, steps: WizardStep[]) => {
-      if (stepIndex >= steps.length) {
-        setIsTyping(true);
-        window.setTimeout(() => {
-          setIsTyping(false);
-          addMessage("coach", t("coach.complete"));
-          setCompleted(true);
-        }, 800);
-        return;
-      }
+  const clearPendingCoachTimeouts = useCallback(() => {
+    timeoutIdsRef.current.forEach((timeoutId) => {
+      window.clearTimeout(timeoutId);
+    });
+    timeoutIdsRef.current = [];
+  }, []);
 
-      const step = steps[stepIndex];
-      if (!step) {
+  const startCoachSequence = useCallback(
+    (coachTexts: string[]) => {
+      const queue = coachTexts
+        .map((text) => text.trim())
+        .filter((text) => text.length > 0);
+
+      coachSequenceIdRef.current += 1;
+      const sequenceId = coachSequenceIdRef.current;
+      clearPendingCoachTimeouts();
+
+      if (queue.length === 0) {
+        setIsTyping(false);
         return;
       }
 
       setIsTyping(true);
-      window.setTimeout(() => {
-        setIsTyping(false);
-        addMessage("coach", t(step.messageKey));
-      }, 700 + Math.random() * 400);
+
+      const scheduleNext = (index: number): void => {
+        const timeoutId = window.setTimeout(() => {
+          timeoutIdsRef.current = timeoutIdsRef.current.filter(
+            (id) => id !== timeoutId,
+          );
+
+          if (coachSequenceIdRef.current !== sequenceId) {
+            return;
+          }
+
+          const text = queue[index];
+          if (!text) {
+            return;
+          }
+
+          addMessage("coach", text);
+
+          const isLast = index === queue.length - 1;
+          if (isLast) {
+            setIsTyping(false);
+            return;
+          }
+
+          scheduleNext(index + 1);
+        }, MIN_TYPING_DELAY_MS + Math.random() * TYPING_DELAY_VARIANCE_MS);
+
+        timeoutIdsRef.current.push(timeoutId);
+      };
+
+      scheduleNext(0);
     },
-    [addMessage, t],
+    [addMessage, clearPendingCoachTimeouts],
+  );
+
+  const getCoachReplyMessage = useCallback(
+    (step: WizardStep | undefined, wasSkipped: boolean): string => {
+      if (wasSkipped) {
+        return t("coachReplies.skip");
+      }
+
+      if (!step) {
+        return t("coachReplies.default");
+      }
+
+      const replyKey = step.replyKey ?? step.key;
+      return t(COACH_REPLY_KEYS[replyKey]);
+    },
+    [t],
   );
 
   useEffect(() => {
@@ -172,8 +238,21 @@ export function useCoachChatController({
     }
 
     isInitializedRef.current = true;
-    showCoachMessage(0, filteredSteps);
-  }, [filteredSteps, showCoachMessage]);
+    const firstStep = filteredSteps[0];
+    if (!firstStep) {
+      setIsTyping(false);
+      return;
+    }
+
+    startCoachSequence([t(firstStep.messageKey)]);
+  }, [filteredSteps, startCoachSequence, t]);
+
+  useEffect(() => {
+    return () => {
+      coachSequenceIdRef.current += 1;
+      clearPendingCoachTimeouts();
+    };
+  }, [clearPendingCoachTimeouts]);
 
   useEffect(() => {
     const currentStep = filteredSteps[currentStepIndex];
@@ -244,7 +323,13 @@ export function useCoachChatController({
   );
 
   const advanceStep = useCallback(
-    (updatedEntry: WizardEntry) => {
+    (
+      updatedEntry: WizardEntry,
+      options?: {
+        wasSkipped?: boolean;
+      },
+    ) => {
+      const answeredStep = filteredSteps[currentStepIndex];
       setHistory((previous) => [
         ...previous,
         { messages: [...messagesRef.current], entry },
@@ -261,14 +346,26 @@ export function useCoachChatController({
         return;
       }
 
-      showCoachMessage(nextIndex, nextSteps);
+      const nextStep = nextSteps[nextIndex];
+      if (!nextStep) {
+        return;
+      }
+
+      const acknowledgement = getCoachReplyMessage(
+        answeredStep,
+        options?.wasSkipped ?? false,
+      );
+      startCoachSequence([acknowledgement, t(nextStep.messageKey)]);
     },
     [
+      filteredSteps,
       currentStepIndex,
       entry,
+      getCoachReplyMessage,
       handlePersist,
       resetInputState,
-      showCoachMessage,
+      startCoachSequence,
+      t,
     ],
   );
 
@@ -283,21 +380,30 @@ export function useCoachChatController({
     }
 
     const previousIndex = currentStepIndex - 1;
+    const previousSteps = getFilteredSteps(previousSnapshot.entry);
+    const previousStep = previousSteps[previousIndex];
+
     setMessages(previousSnapshot.messages);
     setEntry(previousSnapshot.entry);
     setHistory((previous) => previous.slice(0, -1));
     setCurrentStepIndex(previousIndex);
     setCompleted(false);
     resetInputState();
-    showCoachMessage(
-      previousIndex,
-      getFilteredSteps(previousSnapshot.entry),
-    );
-  }, [currentStepIndex, history, isTyping, resetInputState, showCoachMessage]);
+
+    if (!previousStep) {
+      setIsTyping(false);
+      return;
+    }
+
+    startCoachSequence([
+      t("coachReplies.stepBack"),
+      t(previousStep.messageKey),
+    ]);
+  }, [currentStepIndex, history, isTyping, resetInputState, startCoachSequence, t]);
 
   const handleSkip = useCallback(() => {
     addMessage("user", t("form.skip"));
-    advanceStep(entry);
+    advanceStep(entry, { wasSkipped: true });
   }, [addMessage, advanceStep, entry, t]);
 
   const handleSubmitEntryType = useCallback(() => {

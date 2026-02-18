@@ -1,13 +1,9 @@
 import { emotions } from "@repo/ui";
 
 import type { DiaryEntry } from "@/lib/diaryEntries";
+import type { EmotionCategory, IconName } from "@repo/ui";
 
-import type {
-  DashboardMood,
-  DashboardMoodSummary,
-  MoodZone,
-} from "../index";
-import type { EmotionCategory } from "@repo/ui";
+import type { DashboardMood, DashboardMoodSummary, MoodZone } from "../index";
 
 interface EmotionMoodConfig {
   emoji: string;
@@ -15,7 +11,7 @@ interface EmotionMoodConfig {
 }
 
 interface ZoneSummaryConfig {
-  emoji: string;
+  iconName: IconName;
   labelKey: string;
 }
 
@@ -32,12 +28,20 @@ const CATEGORY_ZONE: Record<EmotionCategory, MoodZone> = {
   negative: 1,
 };
 
+const CATEGORY_EMOJI: Record<EmotionCategory, string> = {
+  positive: "🙂",
+  optimistic: "😌",
+  neutral: "😐",
+  worried: "😟",
+  negative: "😣",
+};
+
 const ZONE_SUMMARY: Record<MoodZone, ZoneSummaryConfig> = {
-  1: { emoji: "😣", labelKey: "moodZones.negative" },
-  2: { emoji: "😟", labelKey: "moodZones.worried" },
-  3: { emoji: "😐", labelKey: "moodZones.neutral" },
-  4: { emoji: "😌", labelKey: "moodZones.optimistic" },
-  5: { emoji: "🙂", labelKey: "moodZones.positive" },
+  1: { iconName: "hand-heart", labelKey: "moodZones.negative" },
+  2: { iconName: "heart", labelKey: "moodZones.worried" },
+  3: { iconName: "activity", labelKey: "moodZones.neutral" },
+  4: { iconName: "star", labelKey: "moodZones.optimistic" },
+  5: { iconName: "crown", labelKey: "moodZones.positive" },
 };
 
 function createEmotionMoodMap(): Record<string, EmotionMoodConfig> {
@@ -77,20 +81,14 @@ function toMoodZone(value: number): MoodZone {
 
 function isEmotionCategory(value: string): value is EmotionCategory {
   return (
-    value === "positive" ||
-    value === "optimistic" ||
-    value === "neutral" ||
-    value === "worried" ||
-    value === "negative"
+    value === "positive" || value === "optimistic" || value === "neutral" || value === "worried" || value === "negative"
   );
 }
 
 function getCategoryMoodConfig(category: EmotionCategory): EmotionMoodConfig {
-  const zone = CATEGORY_ZONE[category];
-
   return {
-    emoji: ZONE_SUMMARY[zone].emoji,
-    zone,
+    emoji: CATEGORY_EMOJI[category],
+    zone: CATEGORY_ZONE[category],
   };
 }
 
@@ -167,11 +165,8 @@ function computeAverageMood(entries: DiaryEntry[]): MoodZone | null {
   return toMoodZone(roundMoodAverage(average));
 }
 
-export function getEntryMoods(
-  entry: DiaryEntry,
-  resolveLabel: (emotionKey: string) => string,
-): DashboardMood[] {
-  return entry.emotions.map((emotionKey) => {
+export function getEntryMoods(entry: DiaryEntry, resolveLabel: (emotionKey: string) => string): DashboardMood[] {
+  return entry.emotions.map(emotionKey => {
     const mood = getMoodConfig(emotionKey);
 
     return {
@@ -198,7 +193,7 @@ export function getMoodSummary(
   const summary = ZONE_SUMMARY[zone];
 
   return {
-    emoji: summary.emoji,
+    iconName: summary.iconName,
     label: resolveLabel(summary.labelKey),
     zone,
   };

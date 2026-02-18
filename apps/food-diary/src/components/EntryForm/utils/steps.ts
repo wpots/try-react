@@ -14,9 +14,22 @@ export type WizardStepKey =
   | "bookmark"
   | "confirm";
 
+export type CoachReplyKey =
+  | "entryType"
+  | "datetime"
+  | "location"
+  | "company"
+  | "behavior"
+  | "foodEaten"
+  | "emotions"
+  | "description"
+  | "bookmark"
+  | "confirm";
+
 export interface WizardStep {
   key: WizardStepKey;
   messageKey: string;
+  replyKey?: CoachReplyKey;
   optional?: boolean;
   condition?: (context: {
     entryType: WizardEntry["entryType"];
@@ -56,32 +69,36 @@ function shouldAskBookmarkQuestion(context: {
 }
 
 export const STEPS: WizardStep[] = [
-  { key: "datetime", messageKey: "coach.datetime" },
-  { key: "entryType", messageKey: "coach.entryType" },
-  { key: "location", messageKey: "coach.location" },
-  { key: "company", messageKey: "coach.company" },
+  { key: "datetime", messageKey: "coach.datetime", replyKey: "datetime" },
+  { key: "entryType", messageKey: "coach.entryType", replyKey: "entryType" },
+  { key: "location", messageKey: "coach.location", replyKey: "location" },
+  { key: "company", messageKey: "coach.company", replyKey: "company" },
   {
     key: "behavior",
     messageKey: "coach.behavior",
+    replyKey: "behavior",
     optional: true,
   },
   {
     key: "foodEaten",
     messageKey: "coach.foodEaten",
+    replyKey: "foodEaten",
     condition: (context) =>
       context.entryType !== "moment" &&
       !context.behavior.includes("skipped meal"),
   },
-  { key: "emotions", messageKey: "coach.emotions" },
+  { key: "emotions", messageKey: "coach.emotions", replyKey: "emotions" },
   {
     key: "description",
     messageKey: "coach.description",
+    replyKey: "description",
     optional: true,
   },
   {
     key: "bookmark",
     messageKey: "coach.bookmark",
+    replyKey: "bookmark",
     condition: shouldAskBookmarkQuestion,
   },
-  { key: "confirm", messageKey: "coach.confirm" },
+  { key: "confirm", messageKey: "coach.confirm", replyKey: "confirm" },
 ];

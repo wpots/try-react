@@ -154,7 +154,6 @@ export function useCoachChatController({
     time: entry.time,
   });
   const replyRotationRef = useRef<Record<string, number>>({});
-  const didAutoSubmitDatetimeRef = useRef(false);
 
   const locale = useLocale();
   const t = useTranslations("entry");
@@ -876,42 +875,6 @@ export function useCoachChatController({
   const handleSubmitConfirm = useCallback(() => {
     void handlePersist(entry);
   }, [entry, handlePersist]);
-
-  useEffect(() => {
-    if (mode !== "chat" || isTyping || completed) {
-      return;
-    }
-    if (didAutoSubmitDatetimeRef.current) {
-      return;
-    }
-
-    const currentStep = filteredSteps[currentStepIndex];
-    if (!currentStep || currentStep.key !== "datetime") {
-      return;
-    }
-    if (!isDatetimeUnchanged(entry)) {
-      return;
-    }
-
-    didAutoSubmitDatetimeRef.current = true;
-
-    const timeoutId = window.setTimeout(() => {
-      handleSubmitDatetime();
-    }, 120);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [
-    completed,
-    currentStepIndex,
-    entry,
-    filteredSteps,
-    handleSubmitDatetime,
-    isDatetimeUnchanged,
-    isTyping,
-    mode,
-  ]);
 
   const handleTraditionalComplete = useCallback(
     (updatedEntry: WizardEntry) => {

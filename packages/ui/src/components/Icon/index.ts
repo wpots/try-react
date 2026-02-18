@@ -1,11 +1,6 @@
 import type React from "react";
 
-export type IconName =
-  | "activity"
-  | "crown"
-  | "hand-heart"
-  | "heart"
-  | "star";
+export type IconName = keyof typeof import("lucide-react").icons;
 
 export interface IconProps extends Omit<React.ComponentProps<"svg">, "name"> {
   name: IconName;

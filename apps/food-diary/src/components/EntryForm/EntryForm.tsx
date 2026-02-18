@@ -195,8 +195,8 @@ export function EntryForm({
   }, [controller.entry.isBookmarked, onBookmarkChange]);
 
   return (
-    <Section spacing="none" className="h-full ">
-      <Container size="narrow" className="flex h-full flex-col">
+    <Section spacing="none" className="min-h-0 flex-1">
+      <Container size="narrow" className="flex h-full min-h-0 flex-col">
         <EntryFormHeader
           currentStepIndex={controller.currentStepIndex}
           mode={controller.mode}

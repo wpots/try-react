@@ -37,11 +37,11 @@ const CATEGORY_EMOJI: Record<EmotionCategory, string> = {
 };
 
 const ZONE_SUMMARY: Record<MoodZone, ZoneSummaryConfig> = {
-  1: { iconName: "hand-heart", labelKey: "moodZones.negative" },
-  2: { iconName: "heart", labelKey: "moodZones.worried" },
-  3: { iconName: "activity", labelKey: "moodZones.neutral" },
-  4: { iconName: "star", labelKey: "moodZones.optimistic" },
-  5: { iconName: "crown", labelKey: "moodZones.positive" },
+  1: { iconName: "HandHeart", labelKey: "moodZones.negative" },
+  2: { iconName: "Heart", labelKey: "moodZones.worried" },
+  3: { iconName: "Activity", labelKey: "moodZones.neutral" },
+  4: { iconName: "Star", labelKey: "moodZones.optimistic" },
+  5: { iconName: "Crown", labelKey: "moodZones.positive" },
 };
 
 function createEmotionMoodMap(): Record<string, EmotionMoodConfig> {

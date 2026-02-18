@@ -24,6 +24,11 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    options: {
+      storySort: {
+        order: ["Foundations", "Components", "*"],
+      },
+    },
     layout: "centered",
     a11y: {
       test: "error",

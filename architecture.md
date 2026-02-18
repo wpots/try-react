@@ -22,6 +22,11 @@ try-react/
 └── projectbrief.md
 ```
 
+Storybook information architecture is currently being expanded with:
+
+- `Foundations/*` stories for semantic tokens and primitive galleries.
+- `Components/*` stories for reusable UI component documentation.
+
 ## 2. Product Surface Implemented
 
 ### 2.1 Main User Flows

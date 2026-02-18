@@ -17,13 +17,13 @@ Original story files are kept as historical implementation specs.
 | ID | Story | Status | Notes |
 | --- | --- | --- | --- |
 | 001 | Setup Turborepo + pnpm monorepo | done | Monorepo structure and turbo tasks are in place. |
-| 002 | Setup shared UI package | done | `@repo/ui` is active and used broadly in app flows. |
+| 002 | Setup shared UI package | done | `@repo/ui` is active and used broadly in app flows; Storybook foundations catalog is being expanded. |
 | 003 | Setup Firebase | done | Firebase auth and Firestore are integrated in app runtime. |
 | 004 | Setup next-intl | partial | i18n works, but routing behavior differs from original assumptions (as-needed locale prefix, no locale auto-detection). |
 | 005 | Implement guest auth | done | Guest auth exists and is used in auth and entry flows. |
 | 006 | Implement Google/Facebook login | partial | Google flow is implemented; Facebook is not in scope. Treat as Google-only going forward. |
 | 007 | Design Firestore data model | done | Model, schemas, converters, and helpers exist under `src/lib/firestore/`. |
-| 008 | Build shared form components | done | Equivalent component set exists (`DateInput`, `ChipSelector`, `EmotionPicker`, etc.). |
+| 008 | Build shared form components | done | Equivalent component set exists (`DateInput`, `ChipSelector`, `EmotionPicker`, etc.) and is showcased in Storybook foundation galleries. |
 | 009.1 | Diary entry form part 1 | superseded | Form exists, but product evolved to dual-mode chat + form architecture. |
 | 009.2 | Diary entry form part 2 | superseded | Complex fields exist, but flow/UX moved beyond original linear form spec. |
 | 010 | Image upload + Cloudinary | not-started | No wired upload UI/action path in entry flow. |
@@ -45,6 +45,26 @@ Original story files are kept as historical implementation specs.
   Firestore access.
 - Image and AI stories remained in planned state while schema support was added
   early.
+- Design-system documentation scope has grown beyond original stories via
+  Storybook foundation stories and ordered IA (`Foundations`, `Components`).
+
+## Active In-Progress Changes (Observed)
+
+- `apps/storybook/.storybook/preview.ts`
+  - Adds Storybook sort order with explicit grouping:
+    `Foundations` -> `Components` -> wildcard.
+- `packages/ui/src/stories/foundations/Primitives.stories.tsx`
+  - Adds visual gallery for core primitives (`Button`, `TextField`, `Select`,
+    `TextArea`, `Switch`, `Card`).
+- `packages/ui/src/stories/foundations/SemanticTokens.stories.tsx`
+  - Adds semantic token showcase for colors, spacing, radius, shadow, and
+    typography utilities.
+
+Impact on roadmap:
+
+- This work improves design-system clarity and onboarding.
+- It does not change product feature priorities (entry data architecture, media
+  flow, and production hardening remain top priorities).
 
 ## New Workstreams Needed (Beyond Original Stories)
 
@@ -92,4 +112,3 @@ Create a new story set after story 015 that reflects current architecture:
 - 017: Bookmark persistence and dashboard consistency.
 - 018: Test harness and CI quality gate.
 - 019: Deployment runbook and operational checks.
-

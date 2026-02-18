@@ -56,7 +56,8 @@
       "enabled": "Tilt motion is active.",
       "denied": "Tilt access is blocked. Allow Motion & Orientation Access in Safari settings.",
       "motionDisabled": "Tilt motion is off because reduced motion is enabled.",
-      "unsupported": "Tilt motion is not available on this device."
+      "unsupported": "Tilt motion is not available on this device.",
+      "noSignal": "Tilt is enabled, but no motion data is coming in. Check Safari Motion & Orientation Access and use HTTPS."
     }
   },
   "moodZones": {

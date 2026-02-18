@@ -56,7 +56,8 @@
       "enabled": "Kantelbeweging staat aan.",
       "denied": "Toegang tot kantelen is geblokkeerd. Sta bewegings- en orientatietoegang toe in Safari-instellingen.",
       "motionDisabled": "Kantelbeweging staat uit omdat verminderde beweging is ingeschakeld.",
-      "unsupported": "Kantelbeweging is niet beschikbaar op dit apparaat."
+      "unsupported": "Kantelbeweging is niet beschikbaar op dit apparaat.",
+      "noSignal": "Kantelen staat aan, maar er komt geen bewegingsdata binnen. Controleer Safari bewegings- en orientatietoegang en gebruik HTTPS."
     }
   },
   "moodZones": {

@@ -27,6 +27,7 @@ export function DashboardHero({
   const isMotionEnabled = useMotionEnabled();
   const {
     tiltOffset,
+    hasTiltSignal,
     permissionState,
     canRequestPermission,
     requestPermission,
@@ -51,7 +52,10 @@ export function DashboardHero({
     tiltStatusClassName = "font-ds-label-sm text-ds-danger";
   } else if (permissionState === "unsupported") {
     tiltStatusKey = "hero.tilt.unsupported";
-  } else if (canRequestPermission && permissionState === "granted") {
+  } else if (permissionState === "granted" && !hasTiltSignal) {
+    tiltStatusKey = "hero.tilt.noSignal";
+    tiltStatusClassName = "font-ds-label-sm text-ds-warning-strong";
+  } else if (permissionState === "granted") {
     tiltStatusKey = "hero.tilt.enabled";
     tiltStatusClassName = "font-ds-label-sm text-ds-success";
   } else if (showEnableTiltButton) {

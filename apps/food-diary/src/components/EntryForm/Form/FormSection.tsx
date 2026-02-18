@@ -1,5 +1,6 @@
-import type React from "react";
 import { FormLabel } from "@repo/ui";
+
+import type React from "react";
 
 export interface FormSectionProps {
   label: React.ReactNode;

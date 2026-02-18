@@ -1,6 +1,6 @@
+import { TextArea } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
-import { TextArea } from "@repo/ui";
 
 interface CoachChatTextInputProps {
   value: string;

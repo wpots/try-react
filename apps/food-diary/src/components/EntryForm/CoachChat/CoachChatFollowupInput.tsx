@@ -1,12 +1,13 @@
+import { ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
-import { ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 
-import { EntryFormButton } from "../partials/EntryFormButton";
-import { behaviorOptions, companyOptions, locationOptions } from "../utils/options";
-import type { WizardStep } from "../utils/steps";
 import { CoachChatActions } from "./CoachChatActions";
 import { CoachChatTextInput } from "./CoachChatTextInput";
+import { EntryFormButton } from "../partials/EntryFormButton";
+import { behaviorOptions, companyOptions, locationOptions } from "../utils/options";
+
+import type { WizardStep } from "../utils/steps";
 
 interface CoachChatFollowupInputProps {
   step: WizardStep;

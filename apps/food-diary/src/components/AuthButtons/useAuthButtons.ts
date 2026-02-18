@@ -1,10 +1,12 @@
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
 import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
 import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
+
 import { getAuthButtonsDisabledState } from "./utils";
 
 interface UseAuthButtonsInput {

@@ -1,10 +1,9 @@
 import { AnimatedLogo, Container, Label, Link, Section, Typography, cn } from "@repo/ui";
-import type { LinkProps } from "@repo/ui";
-
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { PageHeroProps } from "./index";
+import type { LinkProps } from "@repo/ui";
 
 export function PageHero({ className, id = "hero-section" }: PageHeroProps): React.JSX.Element {
   const t = useTranslations("landing.hero");

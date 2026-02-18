@@ -67,6 +67,12 @@ export function getFirebaseAuthErrorMessage(
     return "Network request failed during sign-in. Check your connection.";
   }
 
+  if (error.code === "auth/requires-recent-login") {
+    return (
+      "For security, please log in again and retry deleting your account."
+    );
+  }
+
   if (error.code === "auth/auth-domain-config-required") {
     return (
       "Firebase authDomain is missing in app config. " +

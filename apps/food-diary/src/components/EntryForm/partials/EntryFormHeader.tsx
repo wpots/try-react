@@ -1,6 +1,6 @@
+import { Button } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
-import { Button } from "@repo/ui";
 
 import { ProgressDots } from "./ProgressDots";
 

@@ -2,11 +2,13 @@
 
 import { useTranslations } from "next-intl";
 
-import type { WizardEntry } from "../index";
 import type { DiaryEntry } from "@/lib/diaryEntries";
 import { DayEntryCard } from "@/templates/DashboardTemplate/partials/DayEntryCard";
 import { getEntryMoods } from "@/templates/DashboardTemplate/utils/moodUtils";
+
 import { EntryFormButton } from "../partials/EntryFormButton";
+
+import type { WizardEntry } from "../index";
 
 interface CoachChatConfirmCardProps {
   entry: WizardEntry;

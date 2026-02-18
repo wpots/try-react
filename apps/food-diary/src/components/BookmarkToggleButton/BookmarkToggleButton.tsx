@@ -1,5 +1,5 @@
-import { Bookmark } from "lucide-react";
 import { cn, ToggleButton } from "@repo/ui";
+import { Bookmark } from "lucide-react";
 
 import type { BookmarkToggleButtonProps } from "./index";
 

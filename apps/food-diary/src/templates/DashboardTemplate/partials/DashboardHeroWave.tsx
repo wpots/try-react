@@ -1,9 +1,11 @@
 "use client";
 
-import { cn } from "@repo/ui";
-import { motion, useReducedMotion } from "framer-motion";
-import type { MoodZone } from "../index";
+import { cn, useMotionEnabled } from "@repo/ui";
+import { motion } from "framer-motion";
+
 import { useDeviceTiltOffset } from "../useDeviceTiltOffset";
+
+import type { MoodZone } from "../index";
 
 interface DashboardHeroWaveProps {
   zone: MoodZone | null;
@@ -127,8 +129,7 @@ function WaveLayer({
 export function DashboardHeroWave({
   zone,
 }: DashboardHeroWaveProps): React.JSX.Element {
-  const prefersReducedMotion = useReducedMotion();
-  const isMotionEnabled = !prefersReducedMotion;
+  const isMotionEnabled = useMotionEnabled();
   const tiltOffset = useDeviceTiltOffset({ isEnabled: isMotionEnabled });
   const waveTone = getWaveTone(zone);
 

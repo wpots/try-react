@@ -1,8 +1,9 @@
 import { cn } from "@repo/ui";
 
-import type { DashboardMood, DashboardWeekDay } from "../index";
-import { getEntryTypeLabel } from "../utils/entryDisplayUtils";
 import { MoodDot } from "./MoodDot";
+import { getEntryTypeLabel } from "../utils/entryDisplayUtils";
+
+import type { DashboardMood, DashboardWeekDay } from "../index";
 
 interface WeekViewProps {
   days: DashboardWeekDay[];

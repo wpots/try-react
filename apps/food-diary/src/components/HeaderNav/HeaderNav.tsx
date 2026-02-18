@@ -1,6 +1,7 @@
 "use client";
 
-import type { Key } from "react";
+import { HamburgerMenu, Link, Navigation, Text } from "@repo/ui";
+import { User } from "lucide-react";
 import {
   Button,
   Label,
@@ -12,8 +13,7 @@ import {
   Select,
   SelectValue,
 } from "react-aria-components";
-import { HamburgerMenu, Link, Navigation, Text } from "@repo/ui";
-import { User } from "lucide-react";
+
 import {
   useLanguageSwitcher,
   isLocale,
@@ -21,7 +21,9 @@ import {
 } from "@/components/LanguageSwitcher";
 import { locales } from "@/i18n/config";
 import { Link as I18nLink } from "@/i18n/navigation";
+
 import type { HeaderNavProps } from "./index";
+import type { Key } from "react";
 
 export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element {
   const { isPending, label, locale, handleLocaleChange } = useLanguageSwitcher();

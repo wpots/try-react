@@ -1,6 +1,7 @@
 "use server";
 
 import { migrateGuestEntries } from "@/lib/firestore/helpers";
+
 import type { MergeGuestEntriesResult } from "./index";
 
 export async function mergeGuestEntries(

@@ -1,10 +1,13 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { Button, GoogleIcon, Text } from "@repo/ui";
 import { User } from "lucide-react";
-import type { AuthButtonsProps } from "./index";
+import { useTranslations } from "next-intl";
+
 import { useAuthButtons } from "./useAuthButtons";
+
+import type { AuthButtonsProps } from "./index";
+
 
 export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps): React.JSX.Element {
   const t = useTranslations("auth");

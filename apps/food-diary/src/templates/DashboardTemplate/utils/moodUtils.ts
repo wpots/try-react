@@ -1,11 +1,13 @@
-import type { DiaryEntry } from "@/lib/diaryEntries";
-import type { EmotionCategory } from "@repo/ui";
 import { emotions } from "@repo/ui";
+
+import type { DiaryEntry } from "@/lib/diaryEntries";
+
 import type {
   DashboardMood,
   DashboardMoodSummary,
   MoodZone,
 } from "../index";
+import type { EmotionCategory } from "@repo/ui";
 
 interface EmotionMoodConfig {
   emoji: string;
@@ -15,6 +17,44 @@ interface EmotionMoodConfig {
 interface ZoneSummaryConfig {
   emoji: string;
   labelKey: string;
+}
+
+type MoodMappingSource =
+  | "exact-key"
+  | "normalized-key"
+  | "category-key"
+  | "fallback";
+
+interface ResolvedMoodConfig {
+  config: EmotionMoodConfig;
+  normalizedKey: string;
+  source: MoodMappingSource;
+}
+
+interface AverageMoodDebugEntry {
+  entryId: string;
+  entryType: DiaryEntry["entryType"];
+  date: string;
+  time: string;
+  emotionCount: number;
+  emotions: Array<{
+    key: string;
+    normalizedKey: string;
+    source: MoodMappingSource;
+    zone: MoodZone;
+  }>;
+  entryAverage: number | null;
+  weight: number;
+  weightedContribution: number;
+}
+
+interface AverageMoodDebug {
+  entries: AverageMoodDebugEntry[];
+  weightedTotal: number;
+  totalWeight: number;
+  average: number | null;
+  roundedAverage: number | null;
+  zone: MoodZone | null;
 }
 
 const FALLBACK_MOOD: EmotionMoodConfig = {
@@ -95,38 +135,46 @@ function getCategoryMoodConfig(category: EmotionCategory): EmotionMoodConfig {
   };
 }
 
-function getMoodConfig(emotionKey: string): EmotionMoodConfig {
+function resolveMoodConfig(emotionKey: string): ResolvedMoodConfig {
   const key = emotionKey.trim();
   const mappedByKey = EMOTION_MOOD[key];
 
   if (mappedByKey) {
-    return mappedByKey;
+    return {
+      config: mappedByKey,
+      normalizedKey: key,
+      source: "exact-key",
+    };
   }
 
   const normalizedKey = key.toLowerCase();
   const mappedByNormalizedKey = EMOTION_MOOD[normalizedKey];
 
   if (mappedByNormalizedKey) {
-    return mappedByNormalizedKey;
+    return {
+      config: mappedByNormalizedKey,
+      normalizedKey,
+      source: "normalized-key",
+    };
   }
 
   if (isEmotionCategory(normalizedKey)) {
-    return getCategoryMoodConfig(normalizedKey);
+    return {
+      config: getCategoryMoodConfig(normalizedKey),
+      normalizedKey,
+      source: "category-key",
+    };
   }
 
-  return FALLBACK_MOOD;
+  return {
+    config: FALLBACK_MOOD,
+    normalizedKey,
+    source: "fallback",
+  };
 }
 
-function getEntryAverageMoodScore(entry: DiaryEntry): number | null {
-  if (entry.emotions.length === 0) {
-    return null;
-  }
-
-  const total = entry.emotions.reduce((sum, emotionKey) => {
-    return sum + getMoodConfig(emotionKey).zone;
-  }, 0);
-
-  return total / entry.emotions.length;
+function getMoodConfig(emotionKey: string): EmotionMoodConfig {
+  return resolveMoodConfig(emotionKey).config;
 }
 
 function getEntryWeight(emotionCount: number): number {
@@ -148,6 +196,74 @@ function roundMoodAverage(value: number): number {
   return flooredValue + 1;
 }
 
+function computeAverageMood(entries: DiaryEntry[]): AverageMoodDebug {
+  let weightedTotal = 0;
+  let totalWeight = 0;
+  const debugEntries: AverageMoodDebugEntry[] = [];
+
+  for (const entry of entries) {
+    const resolvedEmotions = entry.emotions.map((emotionKey) => {
+      const resolved = resolveMoodConfig(emotionKey);
+
+      return {
+        key: emotionKey,
+        normalizedKey: resolved.normalizedKey,
+        source: resolved.source,
+        zone: resolved.config.zone,
+      };
+    });
+    const emotionCount = resolvedEmotions.length;
+    const weight = emotionCount > 0 ? getEntryWeight(emotionCount) : 0;
+    const entryAverage =
+      emotionCount > 0
+        ? resolvedEmotions.reduce((sum, emotion) => sum + emotion.zone, 0) /
+          emotionCount
+        : null;
+    const weightedContribution =
+      entryAverage == null ? 0 : entryAverage * weight;
+
+    if (weight > 0) {
+      weightedTotal += weightedContribution;
+      totalWeight += weight;
+    }
+
+    debugEntries.push({
+      entryId: entry.id,
+      entryType: entry.entryType,
+      date: entry.date,
+      time: entry.time,
+      emotionCount,
+      emotions: resolvedEmotions,
+      entryAverage,
+      weight,
+      weightedContribution,
+    });
+  }
+
+  if (totalWeight === 0) {
+    return {
+      entries: debugEntries,
+      weightedTotal,
+      totalWeight,
+      average: null,
+      roundedAverage: null,
+      zone: null,
+    };
+  }
+
+  const average = weightedTotal / totalWeight;
+  const roundedAverage = roundMoodAverage(average);
+
+  return {
+    entries: debugEntries,
+    weightedTotal,
+    totalWeight,
+    average,
+    roundedAverage,
+    zone: toMoodZone(roundedAverage),
+  };
+}
+
 export function getEntryMoods(
   entry: DiaryEntry,
   resolveLabel: (emotionKey: string) => string,
@@ -164,29 +280,12 @@ export function getEntryMoods(
   });
 }
 
+export function getAverageMoodDebug(entries: DiaryEntry[]): AverageMoodDebug {
+  return computeAverageMood(entries);
+}
+
 export function getAverageMoodZone(entries: DiaryEntry[]): MoodZone | null {
-  let weightedTotal = 0;
-  let totalWeight = 0;
-
-  for (const entry of entries) {
-    const entryAverage = getEntryAverageMoodScore(entry);
-
-    if (entryAverage == null) {
-      continue;
-    }
-
-    const entryWeight = getEntryWeight(entry.emotions.length);
-    weightedTotal += entryAverage * entryWeight;
-    totalWeight += entryWeight;
-  }
-
-  if (totalWeight === 0) {
-    return null;
-  }
-
-  const average = weightedTotal / totalWeight;
-
-  return toMoodZone(roundMoodAverage(average));
+  return computeAverageMood(entries).zone;
 }
 
 export function getMoodSummary(

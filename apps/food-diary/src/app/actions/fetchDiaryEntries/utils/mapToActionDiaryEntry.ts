@@ -1,6 +1,7 @@
-import type { DiaryEntry } from "../index";
 import type { DiaryEntry as FirestoreDiaryEntry } from "@/lib/firestore/types";
 import { getLocalDateKey } from "@/lib/getLocalDateKey";
+
+import type { DiaryEntry } from "../index";
 
 export function mapToActionDiaryEntry(
   entry: FirestoreDiaryEntry,

@@ -1,17 +1,19 @@
-import { ChevronDown, Pencil, ClockIcon, MapPin, Users } from "lucide-react";
 import { Card, cn, Typography } from "@repo/ui";
+import { ChevronDown, Pencil, ClockIcon, MapPin, Users } from "lucide-react";
 
 import { BookmarkToggleButton } from "@/components/BookmarkToggleButton";
 import { FormButton } from "@/components/FormButton";
 import type { DiaryEntry } from "@/lib/diaryEntries";
-import type { DashboardMood } from "../index";
+
+import { MoodBadge } from "./MoodBadge";
 import {
   getBehaviorLabel,
   getEntryCompanyLabel,
   getEntryLocationLabel,
   getEntryTypeLabel,
 } from "../utils/entryDisplayUtils";
-import { MoodBadge } from "./MoodBadge";
+
+import type { DashboardMood } from "../index";
 
 interface DayEntryCardProps {
   entry: DiaryEntry;

@@ -1,7 +1,8 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn, ToggleButtonGroup, Section, Container } from "@repo/ui";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { FormButton } from "@/components/FormButton";
+
 import type { DashboardViewMode } from "../index";
 
 interface DashboardToolbarProps {

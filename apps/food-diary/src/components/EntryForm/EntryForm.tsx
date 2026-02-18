@@ -1,22 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Container, Section } from "@repo/ui";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import {
-  deleteDiaryEntry,
-  fetchDiaryEntryById,
-  type DiaryEntry,
-} from "@/lib/diaryEntries";
+import { deleteDiaryEntry, fetchDiaryEntryById, type DiaryEntry } from "@/lib/diaryEntries";
 
-import type { EntryFormProps, WizardEntry } from "./index";
 import { CoachChat } from "./CoachChat/CoachChat";
 import { TraditionalForm } from "./Form/TraditionalForm";
 import { EntryFormHeader } from "./partials/EntryFormHeader";
 import { useCoachChatController } from "./useCoachChatController";
 import { hasUnsavedEntryChanges } from "./utils/hasUnsavedEntryChanges";
+
+import type { EntryFormProps, WizardEntry } from "./index";
+
 
 function mapDiaryEntryToWizardEntry(entry: DiaryEntry): WizardEntry {
   return {
@@ -115,10 +114,7 @@ export function EntryForm({
     let isCanceled = false;
 
     async function loadEntry(): Promise<void> {
-      const existingEntry = await fetchDiaryEntryById(
-        authenticatedUserId,
-        selectedEntryId,
-      );
+      const existingEntry = await fetchDiaryEntryById(authenticatedUserId, selectedEntryId);
 
       if (!existingEntry || isCanceled) {
         return;
@@ -200,27 +196,29 @@ export function EntryForm({
   }, [controller.entry.isBookmarked, onBookmarkChange]);
 
   return (
-    <div className="flex h-full flex-col">
-      <EntryFormHeader
-        currentStepIndex={controller.currentStepIndex}
-        mode={controller.mode}
-        totalSteps={controller.filteredSteps.length}
-        onSwitchMode={() => controller.setMode(controller.mode === "chat" ? "form" : "chat")}
-      />
-
-      {controller.mode === "form" ? (
-        <TraditionalForm
-          canDelete={Boolean(entryId)}
-          deleteError={deleteError}
-          initialEntry={controller.entry}
-          isDeleting={isDeleting}
-          onComplete={controller.handleTraditionalComplete}
-          onDelete={handleDelete}
-          onEntryChange={controller.setEntry}
+    <Section spacing="none">
+      <Container size="narrow" className="flex h-full flex-col">
+        <EntryFormHeader
+          currentStepIndex={controller.currentStepIndex}
+          mode={controller.mode}
+          totalSteps={controller.filteredSteps.length}
+          onSwitchMode={() => controller.setMode(controller.mode === "chat" ? "form" : "chat")}
         />
-      ) : (
-        <CoachChat controller={controller} />
-      )}
-    </div>
+
+        {controller.mode === "form" ? (
+          <TraditionalForm
+            canDelete={Boolean(entryId)}
+            deleteError={deleteError}
+            initialEntry={controller.entry}
+            isDeleting={isDeleting}
+            onComplete={controller.handleTraditionalComplete}
+            onDelete={handleDelete}
+            onEntryChange={controller.setEntry}
+          />
+        ) : (
+          <CoachChat controller={controller} />
+        )}
+      </Container>
+    </Section>
   );
 }

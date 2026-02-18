@@ -9,34 +9,40 @@ import {
   ModalOverlay,
 } from "react-aria-components";
 
-interface GuestModeDialogProps {
+interface ProfileDialogProps {
   error: string | null;
+  isDeletingAccount: boolean;
   isOpen: boolean;
-  isSigningIn: boolean;
-  isWiping: boolean;
+  isWipingData: boolean;
   onClose: () => void;
-  onLoginWithGoogle: () => Promise<void>;
+  onDeleteAccount: () => Promise<void>;
   onWipeData: () => Promise<void>;
 }
 
-export function GuestModeDialog({
+export function ProfileDialog({
   error,
+  isDeletingAccount,
   isOpen,
-  isSigningIn,
-  isWiping,
+  isWipingData,
   onClose,
-  onLoginWithGoogle,
+  onDeleteAccount,
   onWipeData,
-}: GuestModeDialogProps): React.JSX.Element {
-  const t = useTranslations("dashboard.guestMode");
-  const isBusy = isSigningIn || isWiping;
+}: ProfileDialogProps): React.JSX.Element {
+  const t = useTranslations("dashboard.profile");
+  const isBusy = isDeletingAccount || isWipingData;
 
-  const handleLoginClick = (): void => {
-    void onLoginWithGoogle();
+  const handleWipeDataClick = (): void => {
+    void onWipeData();
   };
 
-  const handleWipeClick = (): void => {
-    void onWipeData();
+  const handleDeleteAccountClick = (): void => {
+    const shouldDeleteAccount = window.confirm(t("deleteAccountConfirm"));
+
+    if (!shouldDeleteAccount) {
+      return;
+    }
+
+    void onDeleteAccount();
   };
 
   const handleOpenChange = (nextIsOpen: boolean): void => {
@@ -57,15 +63,15 @@ export function GuestModeDialog({
     >
       <Modal className="w-full max-w-xl rounded-ds-md border border-ds-border bg-ds-surface p-ds-l shadow-ds-lg outline-none">
         <Dialog className="grid gap-ds-m outline-none">
-          <Heading slot="title" className="font-ds-heading-sm text-ds-on-surface">
+          <Heading
+            slot="title"
+            className="font-ds-heading-sm text-ds-on-surface"
+          >
             {t("dialogTitle")}
           </Heading>
 
           <Text className="font-ds-body-base text-ds-on-surface-secondary">
             {t("dialogBody")}
-          </Text>
-          <Text className="font-ds-body-base text-ds-on-surface-secondary">
-            {t("mergeBody")}
           </Text>
 
           <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
@@ -74,6 +80,15 @@ export function GuestModeDialog({
             </Text>
             <Text className="font-ds-label-sm" tone="danger">
               {t("wipeWarning")}
+            </Text>
+          </div>
+
+          <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
+            <Text className="font-ds-body-sm text-ds-on-surface-secondary">
+              {t("deleteBody")}
+            </Text>
+            <Text className="font-ds-label-sm" tone="danger">
+              {t("deleteWarning")}
             </Text>
           </div>
 
@@ -87,21 +102,22 @@ export function GuestModeDialog({
             <Button
               className="w-full"
               disabled={isBusy}
-              onClick={handleLoginClick}
+              onClick={handleWipeDataClick}
               type="button"
+              variant="destructive"
             >
-              {isSigningIn
-                ? t("loginWithGoogleLoading")
-                : t("loginWithGoogle")}
+              {isWipingData ? t("wipeDataLoading") : t("wipeData")}
             </Button>
             <Button
               className="w-full"
               disabled={isBusy}
-              onClick={handleWipeClick}
+              onClick={handleDeleteAccountClick}
               type="button"
               variant="destructive"
             >
-              {isWiping ? t("wipeDataLoading") : t("wipeData")}
+              {isDeletingAccount
+                ? t("deleteAccountLoading")
+                : t("deleteAccount")}
             </Button>
           </div>
 

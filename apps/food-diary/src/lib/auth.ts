@@ -1,6 +1,6 @@
 import { FirebaseError } from "firebase/app";
-import type { User } from "firebase/auth";
 import {
+  deleteUser,
   GoogleAuthProvider,
   linkWithPopup,
   signInAnonymously as firebaseSignInAnonymously,
@@ -8,7 +8,10 @@ import {
   signInWithPopup,
   signOut as firebaseSignOut,
 } from "firebase/auth";
+
 import { auth } from "@/lib/firebase";
+
+import type { User } from "firebase/auth";
 
 const googleProvider = new GoogleAuthProvider();
 const credentialAlreadyInUseErrorCode = "auth/credential-already-in-use";
@@ -77,6 +80,15 @@ export async function signOut(): Promise<void> {
     await firebaseSignOut(auth);
   } catch (err) {
     console.error("Error signing out:", err);
+    throw err;
+  }
+}
+
+export async function deleteSignedInUser(user: User): Promise<void> {
+  try {
+    await deleteUser(user);
+  } catch (err) {
+    console.error("Error deleting account:", err);
     throw err;
   }
 }

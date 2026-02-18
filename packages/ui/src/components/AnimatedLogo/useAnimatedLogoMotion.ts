@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { RefObject } from "react";
+import { useMotionEnabled } from "../../hooks/useMotionEnabled";
 import type { AnimatedLogoMotionMode } from "./index";
 
 interface PebbleConfig {
@@ -18,7 +19,6 @@ interface UseAnimatedLogoMotionProps {
   svgRef: RefObject<SVGSVGElement | null>;
 }
 
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 const DEFAULT_GLOW_OPACITY = 0.08;
 
 function buildTransform(
@@ -63,6 +63,8 @@ export function useAnimatedLogoMotion({
   pebbles,
   svgRef,
 }: UseAnimatedLogoMotionProps): void {
+  const isMotionEnabled = useMotionEnabled(motionMode);
+
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) {
@@ -71,10 +73,6 @@ export function useAnimatedLogoMotion({
 
     let animationId: number | null = null;
     let time = 0;
-
-    const mediaQuery = typeof window.matchMedia === "function"
-      ? window.matchMedia(REDUCED_MOTION_QUERY)
-      : null;
 
     const animate = () => {
       time += 0.006;
@@ -125,37 +123,15 @@ export function useAnimatedLogoMotion({
       }
     };
 
-    const applyMotionPreference = () => {
-      const isReducedMotion = mediaQuery?.matches ?? false;
-      const shouldAnimate = motionMode === "always" || (
-        motionMode === "auto" &&
-        !isReducedMotion
-      );
-
-      if (shouldAnimate) {
-        startAnimation();
-        return;
-      }
-
+    if (isMotionEnabled) {
+      startAnimation();
+    } else {
       stopAnimation();
       resetPebbles(svg, pebbles);
-    };
-
-    const handleMediaChange = () => {
-      applyMotionPreference();
-    };
-
-    if (motionMode === "auto" && mediaQuery) {
-      mediaQuery.addEventListener("change", handleMediaChange);
     }
 
-    applyMotionPreference();
-
     return () => {
-      if (motionMode === "auto" && mediaQuery) {
-        mediaQuery.removeEventListener("change", handleMediaChange);
-      }
       stopAnimation();
     };
-  }, [motionMode, pebbles, svgRef]);
+  }, [isMotionEnabled, pebbles, svgRef]);
 }

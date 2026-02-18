@@ -1,8 +1,9 @@
 import { cn } from "@repo/ui";
 
-import type { DashboardMonthCell, DashboardMood } from "../index";
-import { getAverageMoodZone, getMoodSummary } from "../utils/moodUtils";
 import { MoodDot } from "./MoodDot";
+import { getAverageMoodZone, getMoodSummary } from "../utils/moodUtils";
+
+import type { DashboardMonthCell, DashboardMood } from "../index";
 
 interface MonthViewProps {
   cells: DashboardMonthCell[];

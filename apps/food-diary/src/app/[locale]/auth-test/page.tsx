@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import type { User } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { useTranslations } from "next-intl";
+import { useEffect, useMemo, useState } from "react";
+
 import { auth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@/lib/firebase";
 import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
+
+import type { User } from "firebase/auth";
 
 const AuthTestPage = () => {
   const t = useTranslations("auth");

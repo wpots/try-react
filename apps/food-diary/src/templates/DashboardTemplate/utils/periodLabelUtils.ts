@@ -1,5 +1,6 @@
-import type { DashboardViewMode } from "../index";
 import { getEndOfWeek, getStartOfWeek } from "./dateUtils";
+
+import type { DashboardViewMode } from "../index";
 
 export function getHeroDateLabel(date: Date, locale: string): string {
   return new Intl.DateTimeFormat(locale, {

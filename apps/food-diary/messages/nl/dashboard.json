@@ -18,6 +18,23 @@
     "close": "Sluiten",
     "wipeUnknownError": "Gastgegevens konden niet worden gewist."
   },
+  "profile": {
+    "menuLabel": "Profiel",
+    "dialogTitle": "Profiel",
+    "dialogBody": "Beheer je account en opgeslagen gegevens.",
+    "wipeBody": "Je kunt alle data van dit account verwijderen.",
+    "wipeWarning": "Dit kan niet ongedaan worden gemaakt.",
+    "wipeData": "Alle data verwijderen",
+    "wipeDataLoading": "Data verwijderen...",
+    "deleteBody": "Je kunt dit account permanent verwijderen.",
+    "deleteWarning": "Je account en data zijn daarna definitief weg.",
+    "deleteAccount": "Account verwijderen",
+    "deleteAccountLoading": "Account verwijderen...",
+    "deleteAccountConfirm": "Account verwijderen? Dit kan niet ongedaan worden gemaakt.",
+    "deleteAccountUnknownError": "Je account kon niet worden verwijderd.",
+    "close": "Sluiten",
+    "wipeUnknownError": "Je data kon niet worden verwijderd."
+  },
   "view": {
     "day": "Dag",
     "week": "Week",

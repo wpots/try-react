@@ -102,4 +102,6 @@ export type {
 export { Select } from "./components/Select";
 export type { SelectProps, SelectOption } from "./components/Select";
 
+export { useMotionEnabled } from "./hooks/useMotionEnabled";
+
 export { cn } from "./lib/utils";

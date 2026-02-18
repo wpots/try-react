@@ -1,9 +1,11 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import type { User } from "firebase/auth";
+
 import { auth, onAuthStateChanged } from "@/lib/firebase";
+
 import type { AuthContextValue, AuthProviderProps } from "./index";
+import type { User } from "firebase/auth";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 

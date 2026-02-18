@@ -1,7 +1,9 @@
-import type { IconTileVariant } from "@repo/ui";
 import { Activity, Bookmark, FileDown, Heart, Shield, UtensilsCrossed } from "lucide-react";
+
 import { BookmarkPreview, EmotionsPreview, ExportPreview, FoodEntryPreview } from "../partials/FeaturePreviews";
 import { BehaviorsPreview, TriggerFreePreview } from "../partials/FeaturePreviews";
+
+import type { IconTileVariant } from "@repo/ui";
 
 /** Feature option with icon and IconTile variant for background/icon color. */
 export interface FeatureOption {

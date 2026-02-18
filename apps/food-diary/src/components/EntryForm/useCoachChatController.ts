@@ -1,14 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously } from "@/lib/auth";
 import { saveDiaryEntry } from "@/lib/diaryEntries";
 
-import type { CoachChatProps, EntryFormMode, WizardEntry } from "./index";
 import { formatDatetimeHuman } from "./utils/formatDatetimeHuman";
 import { getDefaultEntryType } from "./utils/getDefaultEntryType";
 import { getInitialEntry } from "./utils/getInitialEntry";
@@ -21,8 +20,10 @@ import {
   isEntryType,
   locationOptions,
 } from "./utils/options";
-import type { WizardStep } from "./utils/steps";
 import { STEPS } from "./utils/steps";
+
+import type { CoachChatProps, EntryFormMode, WizardEntry } from "./index";
+import type { WizardStep } from "./utils/steps";
 
 export interface CoachChatMessage {
   id: number;

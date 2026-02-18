@@ -1,12 +1,13 @@
 "use client";
 
 import { Card, CardHeader, cn, Container, Link, Section, Typography } from "@repo/ui";
-
-import type { CallToActionProps } from "./index";
+import { ArrowRight } from "lucide-react";
 
 import { Link as I18nLink } from "@/i18n/navigation";
 
-import { ArrowRight } from "lucide-react";
+import type { CallToActionProps } from "./index";
+
+
 const ctaVariantNames = {
   default: "md:flex-row gap-ds-5xl md:items-end",
   knockout: "flex-col gap-ds-xl items-center text-center",

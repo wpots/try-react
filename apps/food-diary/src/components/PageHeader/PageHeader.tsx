@@ -1,8 +1,8 @@
 "use client";
 
+import { cn } from "@repo/ui";
 import { ChevronLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { cn } from "@repo/ui";
 
 import { BookmarkToggleButton } from "@/components/BookmarkToggleButton";
 import { FormButton } from "@/components/FormButton";

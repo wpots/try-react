@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { SkipLink } from "@repo/ui";
+import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
 
 import { AuthProvider } from "@/contexts/AuthContext";
 import { locales } from "@/i18n/config";
 
-import { SkipLink } from "@repo/ui";
+import type { Metadata } from "next";
+
 
 export const metadata: Metadata = {
   title: "Food Diary",

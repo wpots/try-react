@@ -1,10 +1,13 @@
 "use client";
 
 import { Label, Card } from "@repo/ui";
-import type { DashboardMoodSummary } from "../index";
+
 import { Quote } from "@/components/Quote";
+
 import { AverageMoodAura } from "./AverageMoodAura";
 import { DashboardHeroWave } from "./DashboardHeroWave";
+
+import type { DashboardMoodSummary } from "../index";
 
 interface DashboardHeroProps {
   affirmation: string;

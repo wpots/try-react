@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useCallback, useState } from "react";
 
 import { EntryForm, type EntryFormMode } from "@/components/EntryForm";
 import { PageHeader } from "@/components/PageHeader";
@@ -11,10 +11,7 @@ interface CreateEntryTemplateProps {
   initialMode?: EntryFormMode;
 }
 
-export function CreateEntryTemplate({
-  entryId,
-  initialMode = "chat",
-}: CreateEntryTemplateProps): React.JSX.Element {
+export function CreateEntryTemplate({ entryId, initialMode = "chat" }: CreateEntryTemplateProps): React.JSX.Element {
   const tEntry = useTranslations("entry");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -34,25 +31,19 @@ export function CreateEntryTemplate({
   );
 
   const handleBookmarkClick = useCallback(() => {
-    setIsBookmarked((previousState) => !previousState);
+    setIsBookmarked(previousState => !previousState);
   }, []);
 
   return (
-    <div className="flex h-dvh flex-col">
-      <PageHeader
+    <main className="flex h-dvh flex-col">
+      <PageHeader isBookmarked={isBookmarked} onBackClick={handleBackClick} onBookmarkClick={handleBookmarkClick} />
+      <EntryForm
+        entryId={entryId}
+        initialMode={initialMode}
         isBookmarked={isBookmarked}
-        onBackClick={handleBackClick}
-        onBookmarkClick={handleBookmarkClick}
+        onBookmarkChange={setIsBookmarked}
+        onDirtyChange={setHasUnsavedChanges}
       />
-      <div className="min-h-0 flex-1">
-        <EntryForm
-          entryId={entryId}
-          initialMode={initialMode}
-          isBookmarked={isBookmarked}
-          onBookmarkChange={setIsBookmarked}
-          onDirtyChange={setHasUnsavedChanges}
-        />
-      </div>
-    </div>
+    </main>
   );
 }

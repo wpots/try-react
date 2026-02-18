@@ -1,6 +1,8 @@
 import { cn } from "@repo/ui";
-import type { DashboardMood } from "../index";
+
 import { getMoodDotClass } from "../utils/moodClassUtils";
+
+import type { DashboardMood } from "../index";
 
 interface MoodDotProps {
   mood: DashboardMood;

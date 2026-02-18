@@ -5,7 +5,6 @@ import { useRouter } from "@/i18n/navigation";
 import { deleteDiaryEntry, fetchDiaryEntries } from "@/lib/diaryEntries";
 import type { DiaryEntry } from "@/lib/diaryEntries";
 
-import type { DashboardViewMode } from "./index";
 import {
   canNavigateForward,
   fromDateKey,
@@ -16,6 +15,8 @@ import {
   navigatePeriod,
 } from "./utils/dateUtils";
 import { sortEntriesByTime } from "./utils/entryDisplayUtils";
+
+import type { DashboardViewMode } from "./index";
 
 export interface UseDashboardContentResult {
   canNavigateNext: boolean;

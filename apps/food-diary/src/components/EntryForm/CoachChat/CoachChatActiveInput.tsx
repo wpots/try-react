@@ -1,15 +1,16 @@
+import { ChipSelector, DateInput, TimeInput } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
-import { ChipSelector, DateInput, TimeInput } from "@repo/ui";
 
+import { CoachChatActions } from "./CoachChatActions";
+import { CoachChatConfirmCard } from "./CoachChatConfirmCard";
+import { CoachChatFollowupInput } from "./CoachChatFollowupInput";
+import { EntryFormButton } from "../partials/EntryFormButton";
 import { getDefaultEntryType } from "../utils/getDefaultEntryType";
 import { entryTypeOptions } from "../utils/options";
-import type { WizardStep } from "../utils/steps";
+
 import type { UseCoachChatControllerResult } from "../useCoachChatController";
-import { CoachChatConfirmCard } from "./CoachChatConfirmCard";
-import { CoachChatActions } from "./CoachChatActions";
-import { EntryFormButton } from "../partials/EntryFormButton";
-import { CoachChatFollowupInput } from "./CoachChatFollowupInput";
+import type { WizardStep } from "../utils/steps";
 
 interface CoachChatActiveInputProps {
   controller: UseCoachChatControllerResult;

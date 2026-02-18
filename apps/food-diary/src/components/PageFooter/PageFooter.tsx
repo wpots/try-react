@@ -1,9 +1,9 @@
 import { Container, Section, Typography, cn } from "@repo/ui";
+import { AnimatedLogo } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
 import type { PageFooterProps } from "./index";
 
-import { AnimatedLogo } from "@repo/ui";
 
 export function PageFooter({ className, id = "page-footer", children, ...props }: PageFooterProps): React.JSX.Element {
   const t = useTranslations("common.footer");

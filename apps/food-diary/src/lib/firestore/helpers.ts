@@ -13,6 +13,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+
 import { db } from "@/lib/firebase";
 import {
   mapDiaryEntrySnapshot,
@@ -270,4 +271,13 @@ export async function deleteDiaryEntriesByUser(userId: string): Promise<number> 
   await Promise.all(deletions);
 
   return querySnapshot.docs.length;
+}
+
+export async function deleteUserDataByUser(userId: string): Promise<number> {
+  const [deletedEntriesCount] = await Promise.all([
+    deleteDiaryEntriesByUser(userId),
+    deleteDoc(getQuotaDocumentReference(userId)),
+  ]);
+
+  return deletedEntriesCount;
 }

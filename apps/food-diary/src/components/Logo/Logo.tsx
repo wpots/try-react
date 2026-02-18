@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-import { useTranslations } from "next-intl";
-import { motion, useSpring, useTransform } from "framer-motion";
 import { Image, cn } from "@repo/ui";
+import { motion, useSpring, useTransform } from "framer-motion";
 import NextImage from "next/image";
+import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 
 import type { LogoProps } from "./index";
 

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 
 import { CoachChatActiveInput } from "./CoachChatActiveInput";
 import { CoachChatMessages } from "./CoachChatMessages";
+
 import type { UseCoachChatControllerResult } from "../useCoachChatController";
 
 interface CoachChatProps {

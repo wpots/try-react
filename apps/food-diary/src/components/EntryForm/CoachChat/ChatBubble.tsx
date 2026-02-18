@@ -1,7 +1,9 @@
-import type React from "react";
+import { cn } from "@repo/ui";
 
 import { CoachAvatar } from "./CoachAvatar";
-import { cn } from "@repo/ui";
+
+import type React from "react";
+
 
 export interface ChatBubbleProps {
   role: "coach" | "user";

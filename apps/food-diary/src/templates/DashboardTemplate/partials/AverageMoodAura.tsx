@@ -1,13 +1,15 @@
 "use client";
 
-import { cn } from "@repo/ui";
-import { motion, useReducedMotion } from "framer-motion";
-import type { MoodZone } from "../index";
+import { cn, useMotionEnabled } from "@repo/ui";
+import { motion } from "framer-motion";
+
 import { getMoodAuraAnimationConfig } from "../utils/moodAuraAnimationConfig";
 import {
   getMoodAuraGlowClass,
   getMoodAuraParticleClass,
 } from "../utils/moodClassUtils";
+
+import type { MoodZone } from "../index";
 
 interface AverageMoodAuraProps {
   zone: MoodZone;
@@ -91,7 +93,7 @@ function getDotSpecs(zone: MoodZone): DotSpec[] {
 export function AverageMoodAura({
   zone,
 }: AverageMoodAuraProps): React.JSX.Element {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = !useMotionEnabled();
   const config = getMoodAuraAnimationConfig(zone);
   const dots = getDotSpecs(zone);
   const glowClassName = getMoodAuraGlowClass(zone);

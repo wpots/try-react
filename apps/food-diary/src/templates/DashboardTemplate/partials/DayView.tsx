@@ -1,6 +1,8 @@
 import type { DiaryEntry } from "@/lib/diaryEntries";
-import type { DashboardMood } from "../index";
+
 import { DayEntryCard } from "./DayEntryCard";
+
+import type { DashboardMood } from "../index";
 
 interface DayViewProps {
   entries: DiaryEntry[];

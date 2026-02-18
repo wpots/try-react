@@ -1,8 +1,10 @@
 "use server";
 
 import { getDiaryEntriesByUser } from "@/lib/firestore/helpers";
-import type { DiaryEntry } from "./index";
+
 import { mapToActionDiaryEntry } from "./utils/mapToActionDiaryEntry";
+
+import type { DiaryEntry } from "./index";
 
 export async function fetchDiaryEntries(
   userIdFromClient?: string,

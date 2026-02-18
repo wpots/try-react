@@ -2,14 +2,16 @@
 
 import { Card, Container, Label, Section, cn } from "@repo/ui";
 
-import type { ProductFeaturesProps } from "./index";
 import { PageIndicator } from "@/components/PageIndicator";
 import { SectionHeader } from "@/components/SectionHeader";
+
+import { useActiveFeatureIndex } from "./hooks/useActiveFeatureIndex";
 import { ActivePreviewWrapper } from "./partials/ActivePreviewWrapper";
 import { FeatureItemContent } from "./partials/FeatureItemContent";
 import { DesktopPhoneFrame, MobilePhoneFrame } from "./partials/Phoneframe";
-import { useActiveFeatureIndex } from "./hooks/useActiveFeatureIndex";
 import { getFeatureOption, hasAnyPreview } from "./utils/featureOptions";
+
+import type { ProductFeaturesProps } from "./index";
 
 export function ProductFeatures({
   eyebrow,

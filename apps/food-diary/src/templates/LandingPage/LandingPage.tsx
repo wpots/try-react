@@ -1,13 +1,16 @@
-import { useTranslations } from "next-intl";
-import type { LandingPageProps } from "./index";
-
 import { IconTile, Label } from "@repo/ui";
+import { MessageSquareText, MonitorSmartphone, ShieldCheck, Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+
 
 import { CallToAction } from "@/components/CallToAction";
 import { PageHero } from "@/components/PageHero";
 import { ProductFeatures } from "@/components/ProductFeatures";
 import { USPSection } from "@/components/USPSection";
-import { MessageSquareText, MonitorSmartphone, ShieldCheck, Sparkles } from "lucide-react";
+
+import type { LandingPageProps } from "./index";
+
 
 export function LandingPage({ id = "main-content", ...props }: LandingPageProps): React.JSX.Element {
   const t = useTranslations("landing");

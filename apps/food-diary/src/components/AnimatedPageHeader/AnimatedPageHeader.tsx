@@ -2,11 +2,13 @@
 
 import { cn, Section, Container } from "@repo/ui";
 
-import type { AnimatedPageHeaderProps } from "./index";
+import { Logo } from "@/components/Logo";
+
 import { PageHeaderScrollProvider } from "./PageHeaderScrollContext";
 import { SCROLL_RANGE, useScrollProgress } from "./useScrollProgress";
 
-import { Logo } from "@/components/Logo";
+import type { AnimatedPageHeaderProps } from "./index";
+
 
 export function AnimatedPageHeader({
   className,

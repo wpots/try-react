@@ -1,11 +1,13 @@
-import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { Timestamp } from "firebase/firestore";
-import type { DiaryEntry, User, UserAnalysisQuota } from "@/lib/firestore/types";
+
 import {
   firestoreUserSchema,
   storedDiaryEntrySchema,
   userAnalysisQuotaSchema,
 } from "@/lib/firestore/schemas";
+import type { DiaryEntry, User, UserAnalysisQuota } from "@/lib/firestore/types";
+
+import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 
 function parseTimestampInput(value: string): Timestamp {
   const timestampDate = new Date(value);

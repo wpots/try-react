@@ -18,6 +18,23 @@
     "close": "Close",
     "wipeUnknownError": "Could not wipe guest data."
   },
+  "profile": {
+    "menuLabel": "Profile",
+    "dialogTitle": "Profile",
+    "dialogBody": "Manage your account and stored data.",
+    "wipeBody": "You can remove all data saved for this account.",
+    "wipeWarning": "This cannot be undone.",
+    "wipeData": "Remove all data",
+    "wipeDataLoading": "Removing data...",
+    "deleteBody": "You can permanently delete this account.",
+    "deleteWarning": "Your account and data will be gone forever.",
+    "deleteAccount": "Delete account",
+    "deleteAccountLoading": "Deleting account...",
+    "deleteAccountConfirm": "Delete your account? This cannot be undone.",
+    "deleteAccountUnknownError": "Could not delete your account.",
+    "close": "Close",
+    "wipeUnknownError": "Could not remove your data."
+  },
   "view": {
     "day": "Day",
     "week": "Week",

@@ -5,7 +5,6 @@ import {
   getDiaryEntriesByUser,
   updateDiaryEntry,
 } from "@/lib/firestore/helpers";
-import { getLocalDateKey } from "@/lib/getLocalDateKey";
 import type {
   CreateDiaryEntryInput,
   DiaryEntry as FirestoreDiaryEntry,
@@ -14,6 +13,7 @@ import type {
   DiaryEntryLocation,
   DiaryEntryType,
 } from "@/lib/firestore/types";
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 
 export interface DiaryEntry {
   id: string;

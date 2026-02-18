@@ -1,6 +1,7 @@
 "use server";
 
-import { deleteDiaryEntriesByUser } from "@/lib/firestore/helpers";
+import { deleteUserDataByUser } from "@/lib/firestore/helpers";
+
 import type { WipeGuestEntriesResult } from "./index";
 
 export async function wipeGuestEntries(
@@ -15,7 +16,7 @@ export async function wipeGuestEntries(
   }
 
   try {
-    const deletedCount = await deleteDiaryEntriesByUser(guestId);
+    const deletedCount = await deleteUserDataByUser(guestId);
 
     return {
       success: true,

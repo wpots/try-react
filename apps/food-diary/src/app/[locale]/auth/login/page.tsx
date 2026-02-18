@@ -1,5 +1,6 @@
 import { Card, Container, Section, Typography } from "@repo/ui";
 import { useTranslations } from "next-intl";
+
 import { AuthButtons } from "@/components/AuthButtons";
 import { PageHeader } from "@/components/PageHeader";
 

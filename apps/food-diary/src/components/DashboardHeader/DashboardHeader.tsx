@@ -1,17 +1,22 @@
 "use client";
 
-import { Menu, MenuItem } from "react-aria-components";
-import { useTranslations } from "next-intl";
-import { User } from "lucide-react";
 import { Avatar, HamburgerMenu, Text, cn } from "@repo/ui";
-import type { DashboardHeaderProps } from "./index";
+import { User } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Menu, MenuItem } from "react-aria-components";
+
+
 import { GuestModeDialog } from "./partials/GuestModeDialog";
+import { ProfileDialog } from "./partials/ProfileDialog";
 import {
   guestModeActionKey,
   loginActionKey,
   logoutActionKey,
+  profileActionKey,
   useDashboardHeaderState,
 } from "./useDashboardHeaderState";
+
+import type { DashboardHeaderProps } from "./index";
 
 function getMenuItemClassName(): string {
   return cn(
@@ -30,15 +35,20 @@ export function DashboardHeader({
   const tGuestMode = useTranslations("dashboard.guestMode");
   const tLandingNav = useTranslations("landing.nav");
   const tNav = useTranslations("nav");
+  const tProfile = useTranslations("dashboard.profile");
   const {
     error,
     isAuthenticated,
     isAuthenticatedGuest,
     isGuestModeDialogOpen,
+    isProfileDialogOpen,
     onCloseGuestModeDialog,
+    onCloseProfileDialog,
     onGuestGoogleLogin,
     onGuestWipeData,
     onMenuAction,
+    onProfileDeleteAccount,
+    onProfileWipeData,
     submittingAction,
     userPhotoUrl,
   } = useDashboardHeaderState();
@@ -76,9 +86,14 @@ export function DashboardHeader({
                 </MenuItem>
               </>
             ) : isAuthenticated ? (
-              <MenuItem id={logoutActionKey} isDisabled={submittingAction !== null} className={getMenuItemClassName()}>
-                {submittingAction === "logout" ? tAuth("signingOut") : tAuth("signOut")}
-              </MenuItem>
+              <>
+                <MenuItem id={profileActionKey} className={getMenuItemClassName()}>
+                  {tProfile("menuLabel")}
+                </MenuItem>
+                <MenuItem id={logoutActionKey} isDisabled={submittingAction !== null} className={getMenuItemClassName()}>
+                  {submittingAction === "logout" ? tAuth("signingOut") : tAuth("signOut")}
+                </MenuItem>
+              </>
             ) : (
               <MenuItem id={loginActionKey} className={getMenuItemClassName()}>
                 {tNav("login")}
@@ -100,10 +115,19 @@ export function DashboardHeader({
         error={error}
         isOpen={isGuestModeDialogOpen}
         isSigningIn={submittingAction === "google"}
-        isWiping={submittingAction === "wipe"}
+        isWiping={submittingAction === "wipe-guest"}
         onClose={onCloseGuestModeDialog}
         onLoginWithGoogle={onGuestGoogleLogin}
         onWipeData={onGuestWipeData}
+      />
+      <ProfileDialog
+        error={error}
+        isDeletingAccount={submittingAction === "delete-account"}
+        isOpen={isProfileDialogOpen}
+        isWipingData={submittingAction === "wipe-user"}
+        onClose={onCloseProfileDialog}
+        onDeleteAccount={onProfileDeleteAccount}
+        onWipeData={onProfileWipeData}
       />
     </>
   );

@@ -6,6 +6,7 @@ import {
   updateDiaryEntry,
 } from "@/lib/firestore/helpers";
 import type {
+  ClientDiaryEntry,
   CreateDiaryEntryInput,
   DiaryEntry as FirestoreDiaryEntry,
   DiaryEntryBehavior,
@@ -15,27 +16,10 @@ import type {
 } from "@/lib/firestore/types";
 import { getLocalDateKey } from "@/lib/getLocalDateKey";
 
-export interface DiaryEntry {
-  id: string;
-  userId: string;
-  entryType: DiaryEntryType;
-  foodEaten: string;
-  emotions: string[];
-  location: DiaryEntryLocation;
-  company: DiaryEntryCompany;
-  description: string;
-  behavior: DiaryEntryBehavior[];
-  isBookmarked: boolean;
-  date: string;
-  time: string;
-  locationOther?: string;
-  companyOther?: string;
-  behaviorOther?: string;
-  createdAt: string;
-  updatedAt: string;
-  imageUrl?: string;
-  imagePublicId?: string;
-}
+export type { ClientDiaryEntry };
+
+/** @deprecated Use `ClientDiaryEntry` directly. Alias kept for backward compatibility. */
+export type DiaryEntry = ClientDiaryEntry;
 
 export interface SaveDiaryEntryInput {
   entryId?: string;
@@ -57,7 +41,7 @@ export interface SaveDiaryEntryInput {
   imagePublicId?: string;
 }
 
-function toClientEntry(entry: FirestoreDiaryEntry): DiaryEntry {
+function toClientEntry(entry: FirestoreDiaryEntry): ClientDiaryEntry {
   return {
     id: entry.entryId,
     userId: entry.userId,
@@ -81,7 +65,7 @@ function toClientEntry(entry: FirestoreDiaryEntry): DiaryEntry {
   };
 }
 
-export async function fetchDiaryEntries(userId: string): Promise<DiaryEntry[]> {
+export async function fetchDiaryEntries(userId: string): Promise<ClientDiaryEntry[]> {
   const entries = await getDiaryEntriesByUser(userId);
   return entries.map((entry) => toClientEntry(entry));
 }
@@ -89,7 +73,7 @@ export async function fetchDiaryEntries(userId: string): Promise<DiaryEntry[]> {
 export async function fetchDiaryEntryById(
   userId: string,
   entryId: string,
-): Promise<DiaryEntry | null> {
+): Promise<ClientDiaryEntry | null> {
   const entry = await getDiaryEntryById(entryId);
 
   if (!entry || entry.userId !== userId) {

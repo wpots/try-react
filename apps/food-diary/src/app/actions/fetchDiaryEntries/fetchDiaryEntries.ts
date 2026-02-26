@@ -1,14 +1,13 @@
 "use server";
 
 import { getDiaryEntriesByUser } from "@/lib/firestore/helpers";
+import type { ClientDiaryEntry } from "@/lib/firestore/types";
 
 import { mapToActionDiaryEntry } from "./utils/mapToActionDiaryEntry";
 
-import type { DiaryEntry } from "./index";
-
 export async function fetchDiaryEntries(
   userIdFromClient?: string,
-): Promise<DiaryEntry[]> {
+): Promise<ClientDiaryEntry[]> {
   const userId =
     typeof userIdFromClient === "string" ? userIdFromClient.trim() : "";
 

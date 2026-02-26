@@ -1,11 +1,12 @@
-import type { DiaryEntry as FirestoreDiaryEntry } from "@/lib/firestore/types";
+import type {
+  ClientDiaryEntry,
+  DiaryEntry as FirestoreDiaryEntry,
+} from "@/lib/firestore/types";
 import { getLocalDateKey } from "@/lib/getLocalDateKey";
-
-import type { DiaryEntry } from "../index";
 
 export function mapToActionDiaryEntry(
   entry: FirestoreDiaryEntry,
-): DiaryEntry {
+): ClientDiaryEntry {
   return {
     id: entry.entryId,
     userId: entry.userId,
@@ -16,6 +17,7 @@ export function mapToActionDiaryEntry(
     company: entry.company,
     description: entry.description,
     behavior: entry.behavior,
+    isBookmarked: entry.isBookmarked,
     date: getLocalDateKey(entry.date.toDate()),
     time: entry.time,
     locationOther: entry.locationOther,
@@ -23,5 +25,7 @@ export function mapToActionDiaryEntry(
     behaviorOther: entry.behaviorOther,
     createdAt: entry.createdAt.toDate().toISOString(),
     updatedAt: entry.updatedAt.toDate().toISOString(),
+    imageUrl: entry.imageUrl,
+    imagePublicId: entry.imagePublicId,
   };
 }

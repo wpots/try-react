@@ -83,6 +83,34 @@ export interface UserAnalysisQuota {
   lastAnalysisAt?: Timestamp;
 }
 
+/**
+ * Serializable diary entry for client consumption.
+ * All Timestamps are converted to ISO strings; entryId is mapped to id.
+ * This is the single canonical client-facing type — used by both
+ * server actions and client-side data helpers.
+ */
+export interface ClientDiaryEntry {
+  id: string;
+  userId: string;
+  entryType: DiaryEntryType;
+  foodEaten: string;
+  emotions: string[];
+  location: DiaryEntryLocation;
+  company: DiaryEntryCompany;
+  description: string;
+  behavior: DiaryEntryBehavior[];
+  isBookmarked: boolean;
+  date: string;
+  time: string;
+  locationOther?: string;
+  companyOther?: string;
+  behaviorOther?: string;
+  createdAt: string;
+  updatedAt: string;
+  imageUrl?: string;
+  imagePublicId?: string;
+}
+
 export interface CreateDiaryEntryInput {
   userId: string;
   entryType?: DiaryEntryType;

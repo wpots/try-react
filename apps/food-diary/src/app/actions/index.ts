@@ -1,5 +1,5 @@
 export { fetchDiaryEntries } from "./fetchDiaryEntries";
-export type { DiaryEntry } from "./fetchDiaryEntries";
+export type { ClientDiaryEntry, DiaryEntry } from "./fetchDiaryEntries";
 
 export { mergeGuestEntries } from "./mergeGuestEntries";
 export type { MergeGuestEntriesResult } from "./mergeGuestEntries";

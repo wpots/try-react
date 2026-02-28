@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { deleteDiaryEntry, fetchDiaryEntries } from "@/app/actions";
+import { deleteDiaryEntry } from "@/app/actions";
 import type { ClientDiaryEntry as DiaryEntry } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
+import { mapFirestoreDiaryEntryToClient } from "@/lib/diaryEntries";
+import { getDiaryEntriesByUser } from "@/lib/firestore/helpers";
 
 import {
   canNavigateForward,
@@ -107,7 +109,8 @@ export function useDashboardContent(): UseDashboardContentResult {
       setHasLoadError(false);
 
       try {
-        const nextEntries = await fetchDiaryEntries(userId);
+        const firestoreEntries = await getDiaryEntriesByUser(userId);
+        const nextEntries = firestoreEntries.map(mapFirestoreDiaryEntryToClient);
 
         if (!isCancelled) {
           setEntries(nextEntries);
@@ -143,131 +146,117 @@ export function useDashboardContent(): UseDashboardContentResult {
     });
   }, [entries]);
 
-  const entriesByDate = useMemo(() => mapEntriesByDate(entries), [entries]);
+  const entriesByDate = mapEntriesByDate(entries);
+  const dayEntries = entriesByDate[toDateKey(selectedDate)] ?? [];
+  const weekDates = getWeekDates(selectedDate);
+  const monthGridDates = getMonthGridDates(selectedDate);
+  const canNavigateNext = canNavigateForward(viewMode, selectedDate, today);
 
-  const dayEntries = useMemo(() => {
-    return entriesByDate[toDateKey(selectedDate)] ?? [];
-  }, [entriesByDate, selectedDate]);
-
-  const weekDates = useMemo(() => getWeekDates(selectedDate), [selectedDate]);
-
-  const monthGridDates = useMemo(() => getMonthGridDates(selectedDate), [selectedDate]);
-
-  const canNavigateNext = useMemo(() => {
-    return canNavigateForward(viewMode, selectedDate, today);
-  }, [selectedDate, today, viewMode]);
-
-  const handleNavigatePrevious = useCallback(() => {
+  function handleNavigatePrevious(): void {
     setSelectedDate(previousDate => navigatePeriod(viewMode, previousDate, "prev"));
-  }, [viewMode]);
+  }
 
-  const handleNavigateNext = useCallback(() => {
+  function handleNavigateNext(): void {
     if (!canNavigateNext) {
       return;
     }
-
     setSelectedDate(previousDate => navigatePeriod(viewMode, previousDate, "next"));
-  }, [canNavigateNext, viewMode]);
+  }
 
-  const handleGoToToday = useCallback(() => {
+  function handleGoToToday(): void {
     setSelectedDate(today);
-  }, [today]);
+  }
 
-  const handleSelectViewMode = useCallback((nextMode: DashboardViewMode) => {
+  function handleSelectViewMode(nextMode: DashboardViewMode): void {
     setViewMode(nextMode);
-  }, []);
+  }
 
-  const handleSelectDate = useCallback(
-    (date: Date) => {
-      if (isFutureDay(date, today)) {
-        return;
-      }
+  function handleSelectDate(date: Date): void {
+    if (isFutureDay(date, today)) {
+      return;
+    }
+    setSelectedDate(date);
+    setViewMode("day");
+  }
 
-      setSelectedDate(date);
-      setViewMode("day");
-    },
-    [today],
-  );
-
-  const handleToggleExpanded = useCallback((entryId: string) => {
+  function handleToggleExpanded(entryId: string): void {
     setExpandedState(previousState => ({
       ...previousState,
       [entryId]: !previousState[entryId],
     }));
-  }, []);
+  }
 
-  const handleToggleBookmark = useCallback((entryId: string) => {
+  function handleToggleBookmark(entryId: string): void {
     setBookmarkState(previousState => ({
       ...previousState,
       [entryId]: !previousState[entryId],
     }));
-  }, []);
+  }
 
-  const handleDeleteEntry = useCallback(
-    (entryId: string) => {
-      if (!userId) {
-        return;
-      }
+  function handleDeleteEntry(entryId: string): void {
+    if (!userId) {
+      return;
+    }
 
-      setDeletingState(previousState => ({
-        ...previousState,
-        [entryId]: true,
-      }));
-      setHasDeleteError(false);
+    setDeletingState(previousState => ({
+      ...previousState,
+      [entryId]: true,
+    }));
+    setHasDeleteError(false);
 
-      void (async () => {
-        try {
-          const result = await deleteDiaryEntry(userId, entryId);
+    void (async () => {
+      try {
+        const result = await deleteDiaryEntry(userId, entryId);
 
-          if (!result.success) {
-            setHasDeleteError(true);
-            return;
-          }
-
-          setEntries(previousEntries => previousEntries.filter(entry => entry.id !== entryId));
-
-          setExpandedState(previousState => {
-            const nextState = { ...previousState };
-            delete nextState[entryId];
-            return nextState;
-          });
-          setBookmarkState(previousState => {
-            const nextState = { ...previousState };
-            delete nextState[entryId];
-            return nextState;
-          });
-        } catch {
+        if (!result.success) {
           setHasDeleteError(true);
-        } finally {
-          setDeletingState(previousState => {
-            const nextState = { ...previousState };
-            delete nextState[entryId];
-            return nextState;
-          });
+          return;
         }
-      })();
-    },
-    [userId],
-  );
 
-  const handleEditEntry = useCallback(
-    (entryId: string) => {
-      const params = new URLSearchParams({
-        entryId,
-        from: "dashboard",
-        mode: "form",
-      });
+        setEntries(previousEntries => previousEntries.filter(entry => entry.id !== entryId));
 
-      router.push(`/entry/create?${params.toString()}`);
-    },
-    [router],
-  );
+        setExpandedState(previousState => {
+          const nextState = { ...previousState };
+          delete nextState[entryId];
+          return nextState;
+        });
+        setBookmarkState(previousState => {
+          const nextState = { ...previousState };
+          delete nextState[entryId];
+          return nextState;
+        });
+      } catch {
+        setHasDeleteError(true);
+      } finally {
+        setDeletingState(previousState => {
+          const nextState = { ...previousState };
+          delete nextState[entryId];
+          return nextState;
+        });
+      }
+    })();
+  }
 
-  const isExpanded = useCallback((entryId: string) => Boolean(expandedState[entryId]), [expandedState]);
+  function handleEditEntry(entryId: string): void {
+    const params = new URLSearchParams({
+      entryId,
+      from: "dashboard",
+      mode: "form",
+    });
+    router.push(`/entry/create?${params.toString()}`);
+  }
 
-  const isBookmarked = useCallback((entryId: string) => Boolean(bookmarkState[entryId]), [bookmarkState]);
+  function isExpanded(entryId: string): boolean {
+    return Boolean(expandedState[entryId]);
+  }
 
-  const isDeleting = useCallback((entryId: string) => Boolean(deletingState[entryId]), [deletingState]);
+  function isBookmarked(entryId: string): boolean {
+    return Boolean(bookmarkState[entryId]);
+  }
+
+  function isDeleting(entryId: string): boolean {
+    return Boolean(deletingState[entryId]);
+  }
 
   return {
     canNavigateNext,

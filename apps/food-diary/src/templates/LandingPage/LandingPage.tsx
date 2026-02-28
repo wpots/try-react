@@ -2,15 +2,12 @@ import { IconTile, Label } from "@repo/ui";
 import { MessageSquareText, MonitorSmartphone, ShieldCheck, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-
-
 import { CallToAction } from "@/components/CallToAction";
 import { PageHero } from "@/components/PageHero";
 import { ProductFeatures } from "@/components/ProductFeatures";
 import { USPSection } from "@/components/USPSection";
 
 import type { LandingPageProps } from "./index";
-
 
 export function LandingPage({ id = "main-content", ...props }: LandingPageProps): React.JSX.Element {
   const t = useTranslations("landing");
@@ -63,7 +60,7 @@ export function LandingPage({ id = "main-content", ...props }: LandingPageProps)
           title={t("cta.primary.title")}
           description={t("cta.primary.description")}
           linkLabel={t("cta.primary.button")}
-          linkHref="/auth/login"
+          linkHref="/dashboard"
           eyebrow={<IconTile icon={MonitorSmartphone} className="mx-auto" variant="strong" />}
         />
 

@@ -8,7 +8,7 @@ import type { LinkProps } from "@repo/ui";
 export function PageHero({ className, id = "hero-section" }: PageHeroProps): React.JSX.Element {
   const t = useTranslations("landing.hero");
   const ctaButtons: LinkProps[] = [
-    { href: "/entry/create", children: t("primaryCta"), variant: "default" },
+    { href: "/dashboard", children: t("primaryCta"), variant: "default" },
     { href: "#features", children: t("secondaryCta"), variant: "outline" },
   ];
   return (
@@ -33,7 +33,7 @@ export function PageHero({ className, id = "hero-section" }: PageHeroProps): Rea
           </Typography>
 
           <div className="mt-8 flex flex-col gap-ds-m sm:flex-row">
-            {ctaButtons.map((button) => {
+            {ctaButtons.map(button => {
               const isPrimary = button.variant === "default";
               return (
                 <Link

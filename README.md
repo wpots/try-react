@@ -13,7 +13,7 @@ It uses a Turborepo + pnpm workspace setup.
 ## Tech Stack
 
 - React 19
-- Next.js 15 (App Router)
+- Next.js 16 (App Router)
 - TypeScript (strict)
 - Tailwind CSS 4
 - Turborepo

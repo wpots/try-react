@@ -6,6 +6,7 @@ This file is the source of truth for story status against the current codebase.
 Original story files are kept as historical implementation specs.
 
 Story files are organized into two subdirectories:
+
 - `done/` — stories with status `done`
 - `todo/` — stories with status `partial`, `superseded`, or `not-started`
 
@@ -18,25 +19,26 @@ Story files are organized into two subdirectories:
 
 ## Story Status Matrix
 
-| ID | Story | Status | Notes |
-| --- | --- | --- | --- |
-| 001 | Setup Turborepo + pnpm monorepo | done | Monorepo structure and turbo tasks are in place. |
-| 002 | Setup shared UI package | done | `@repo/ui` is active and used broadly in app flows; Storybook foundations catalog is being expanded. |
-| 003 | Setup Firebase | done | Firebase auth and Firestore are integrated in app runtime. |
-| 004 | Setup next-intl | partial | i18n works, but routing behavior differs from original assumptions (as-needed locale prefix, no locale auto-detection). |
-| 005 | Implement guest auth | done | Guest auth exists and is used in auth and entry flows. |
-| 006 | Implement Google/Facebook login | partial | Google flow is implemented; Facebook is not in scope. Treat as Google-only going forward. |
-| 007 | Design Firestore data model | done | Model, schemas, converters, and helpers exist under `src/lib/firestore/`. |
-| 008 | Build shared form components | done | Equivalent component set exists (`DateInput`, `ChipSelector`, `EmotionPicker`, etc.) and is showcased in Storybook foundation galleries. |
-| 009.1 | Diary entry form part 1 | superseded | Form exists, but product evolved to dual-mode chat + form architecture. |
-| 009.2 | Diary entry form part 2 | superseded | Complex fields exist, but flow/UX moved beyond original linear form spec. |
-| 010 | Image upload + Cloudinary | not-started | No wired upload UI/action path in entry flow. |
-| 011 | Gemini food analysis | not-started | No analysis action/UI; quota helpers exist only at data-layer level. |
-| 012.1 | Save entry server action part 1 | partial | Server action exists, but primary entry save path still uses client Firestore helpers. |
-| 012.2 | Save entry server action part 2 | not-started | Advanced validation/error architecture from this story is not complete. |
-| 013 | Diary entry overview | partial | Dashboard is richer than original overview spec, but not all original requirements (for example image thumbnail flow) are delivered. |
-| 014 | Deploy to Vercel | partial | Story exists but deployment status/runbook evidence is not codified in repo docs. |
-| 015 | Cloudinary + Gemini end-to-end | not-started | Blocked by 010 + 011 not being implemented end-to-end. |
+| ID    | Story                           | Status      | Notes                                                                                                                                    |
+| ----- | ------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 001   | Setup Turborepo + pnpm monorepo | done        | Monorepo structure and turbo tasks are in place.                                                                                         |
+| 002   | Setup shared UI package         | done        | `@repo/ui` is active and used broadly in app flows; Storybook foundations catalog is being expanded.                                     |
+| 003   | Setup Firebase                  | done        | Firebase auth and Firestore are integrated in app runtime.                                                                               |
+| 004   | Setup next-intl                 | partial     | i18n works, but routing behavior differs from original assumptions (as-needed locale prefix, no locale auto-detection).                  |
+| 005   | Implement guest auth            | done        | Guest auth exists and is used in auth and entry flows.                                                                                   |
+| 006   | Implement Google/Facebook login | partial     | Google flow is implemented; Facebook is not in scope. Treat as Google-only going forward.                                                |
+| 007   | Design Firestore data model     | done        | Model, schemas, converters, and helpers exist under `src/lib/firestore/`.                                                                |
+| 008   | Build shared form components    | done        | Equivalent component set exists (`DateInput`, `ChipSelector`, `EmotionPicker`, etc.) and is showcased in Storybook foundation galleries. |
+| 009.1 | Diary entry form part 1         | superseded  | Form exists, but product evolved to dual-mode chat + form architecture.                                                                  |
+| 009.2 | Diary entry form part 2         | superseded  | Complex fields exist, but flow/UX moved beyond original linear form spec.                                                                |
+| 010   | Image upload + Cloudinary       | not-started | No wired upload UI/action path in entry flow.                                                                                            |
+| 011   | Gemini food analysis            | not-started | No analysis action/UI; quota helpers exist only at data-layer level.                                                                     |
+| 012.1 | Save entry server action part 1 | partial     | Server action exists, but primary entry save path still uses client Firestore helpers.                                                   |
+| 012.2 | Save entry server action part 2 | not-started | Advanced validation/error architecture from this story is not complete.                                                                  |
+| 013   | Diary entry overview            | partial     | Dashboard is richer than original overview spec, but not all original requirements (for example image thumbnail flow) are delivered.     |
+| 014   | Deploy to Vercel                | partial     | Story exists but deployment status/runbook evidence is not codified in repo docs.                                                        |
+| 015   | Cloudinary + Gemini end-to-end  | not-started | Blocked by 010 + 011 not being implemented end-to-end.                                                                                   |
+| 020   | GDPR compliance                 | not-started | Privacy policy page, cookie consent banner (tied to 016), data export, and complete account deletion flow.                               |
 
 ## Major Drift From Original Story Set
 
@@ -107,6 +109,7 @@ Impact on roadmap:
   - create/edit/delete entry,
   - dashboard rendering and state transitions,
   - media/AI edge cases.
+- Implement story 020 (GDPR compliance): privacy policy, cookie consent, data export, account deletion.
 
 ## Suggested Story Refactor
 

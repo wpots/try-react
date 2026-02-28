@@ -1,10 +1,10 @@
 "use client";
 import { Container, Section, Typography } from "@repo/ui";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
+import { useEffect } from "react";
 
-import { AuthButtons } from "@/components/AuthButtons";
 import { DashboardHeader } from "@/components/DashboardHeader";
+import { useRouter } from "@/i18n/navigation";
 import type { DiaryEntry } from "@/lib/diaryEntries";
 
 import { DashboardHero } from "./partials/DashboardHero";
@@ -21,7 +21,6 @@ import { getAverageMoodZone, getEntryMoods, getMoodSummary } from "./utils/moodU
 import { getHeroDateLabel, getPeriodLabel } from "./utils/periodLabelUtils";
 
 import type { DashboardMonthCell, DashboardMood, DashboardWeekDay } from "./index";
-
 
 function getWeekdayLabels(translate: (key: string) => string): string[] {
   return [
@@ -40,75 +39,63 @@ export function DashboardTemplate(): React.JSX.Element {
   const tDashboard = useTranslations("dashboard");
   const tEntry = useTranslations("entry");
   const dashboardState = useDashboardContent();
-  const translateDashboard = useCallback((key: string): string => tDashboard(key), [tDashboard]);
-  const getDashboardRawMessage = useCallback(
-    (key: string): unknown => tDashboard.raw(key),
-    [tDashboard],
-  );
-  const translateEntry = useCallback((key: string): string => tEntry(key), [tEntry]);
-  const resolveEmotionLabel = useCallback(
-    (emotionKey: string): string => {
-      try {
-        return tEntry(`emotions.${emotionKey}`);
-      } catch {
-        return emotionKey;
-      }
-    },
-    [tEntry],
-  );
-  const resolveEntryMoods = useCallback(
-    (entry: DiaryEntry): DashboardMood[] => getEntryMoods(entry, resolveEmotionLabel),
-    [resolveEmotionLabel],
-  );
-  const averageMood = useMemo(
-    () => getMoodSummary(getAverageMoodZone(dashboardState.dayEntries), translateDashboard),
-    [dashboardState.dayEntries, translateDashboard],
-  );
-  const affirmationPool = useMemo(
-    () => getAffirmationPool(translateDashboard, getDashboardRawMessage),
-    [translateDashboard, getDashboardRawMessage],
-  );
-  const affirmation = useMemo(
-    () => pickAffirmation(toDateKey(dashboardState.selectedDate), affirmationPool),
-    [affirmationPool, dashboardState.selectedDate],
-  );
-  const heroDateLabel = useMemo(
-    () => getHeroDateLabel(dashboardState.selectedDate, locale),
-    [dashboardState.selectedDate, locale],
-  );
-  const periodLabel = useMemo(
-    () => getPeriodLabel(dashboardState.viewMode, dashboardState.selectedDate, locale),
-    [dashboardState.selectedDate, dashboardState.viewMode, locale],
-  );
-  const weekdayLabels = useMemo(() => getWeekdayLabels(translateDashboard), [translateDashboard]);
-  const weekDays = useMemo<DashboardWeekDay[]>(() => {
-    return dashboardState.weekDates.map(date => {
-      const dateKey = toDateKey(date);
-      return {
-        date,
-        dateKey,
-        entries: dashboardState.entriesByDate[dateKey] ?? [],
-        isFuture: isFutureDay(date, dashboardState.today),
-        isToday: isSameDay(date, dashboardState.today),
-      };
-    });
-  }, [dashboardState.entriesByDate, dashboardState.today, dashboardState.weekDates]);
+  function translateDashboard(key: string): string {
+    return tDashboard(key);
+  }
+  function getDashboardRawMessage(key: string): unknown {
+    return tDashboard.raw(key);
+  }
+  function translateEntry(key: string): string {
+    return tEntry(key);
+  }
+  function resolveEmotionLabel(emotionKey: string): string {
+    try {
+      return tEntry(`emotions.${emotionKey}`);
+    } catch {
+      return emotionKey;
+    }
+  }
+  function resolveEntryMoods(entry: DiaryEntry): DashboardMood[] {
+    return getEntryMoods(entry, resolveEmotionLabel);
+  }
+  const averageMood = getMoodSummary(getAverageMoodZone(dashboardState.dayEntries), translateDashboard);
+  const affirmationPool = getAffirmationPool(translateDashboard, getDashboardRawMessage);
+  const affirmation = pickAffirmation(toDateKey(dashboardState.selectedDate), affirmationPool);
+  const heroDateLabel = getHeroDateLabel(dashboardState.selectedDate, locale);
+  const periodLabel = getPeriodLabel(dashboardState.viewMode, dashboardState.selectedDate, locale);
+  const weekdayLabels = getWeekdayLabels(translateDashboard);
+  const router = useRouter();
 
-  const monthCells = useMemo<DashboardMonthCell[]>(() => {
-    return dashboardState.monthGridDates.map(gridDate => {
-      const dateKey = toDateKey(gridDate.date);
-      const entries = dashboardState.entriesByDate[dateKey] ?? [];
-      return {
-        date: gridDate.date,
-        dateKey,
-        entries,
-        isCurrentMonth: gridDate.isCurrentMonth,
-        isFuture: isFutureDay(gridDate.date, dashboardState.today),
-        isToday: isSameDay(gridDate.date, dashboardState.today),
-        moods: entries.flatMap(entry => resolveEntryMoods(entry)),
-      };
-    });
-  }, [dashboardState.entriesByDate, dashboardState.monthGridDates, dashboardState.today, resolveEntryMoods]);
+  useEffect(() => {
+    if (dashboardState.isUnauthenticated) {
+      router.replace("/auth/login");
+    }
+  }, [dashboardState.isUnauthenticated, router]);
+
+  const weekDays: DashboardWeekDay[] = dashboardState.weekDates.map(date => {
+    const dateKey = toDateKey(date);
+    return {
+      date,
+      dateKey,
+      entries: dashboardState.entriesByDate[dateKey] ?? [],
+      isFuture: isFutureDay(date, dashboardState.today),
+      isToday: isSameDay(date, dashboardState.today),
+    };
+  });
+
+  const monthCells: DashboardMonthCell[] = dashboardState.monthGridDates.map(gridDate => {
+    const dateKey = toDateKey(gridDate.date);
+    const entries = dashboardState.entriesByDate[dateKey] ?? [];
+    return {
+      date: gridDate.date,
+      dateKey,
+      entries,
+      isCurrentMonth: gridDate.isCurrentMonth,
+      isFuture: isFutureDay(gridDate.date, dashboardState.today),
+      isToday: isSameDay(gridDate.date, dashboardState.today),
+      moods: entries.flatMap(entry => resolveEntryMoods(entry)),
+    };
+  });
 
   if (dashboardState.isLoading) {
     return (
@@ -118,18 +105,9 @@ export function DashboardTemplate(): React.JSX.Element {
       </>
     );
   }
+
   if (dashboardState.isUnauthenticated) {
-    return (
-      <>
-        <DashboardHeader />
-        <section className="grid gap-ds-m pb-32">
-          <h1 className="font-ds-heading-sm text-ds-on-surface">{tDashboard("title")}</h1>
-          <p className="font-ds-body-base text-ds-on-surface-secondary">{tDashboard("authRequired")}</p>
-          <AuthButtons redirectPath="/dashboard" />
-        </section>
-        <FloatingAddButton ariaLabel={tDashboard("addEntry")} />
-      </>
-    );
+    return <DashboardHeader />;
   }
   return (
     <>
@@ -156,9 +134,7 @@ export function DashboardTemplate(): React.JSX.Element {
           <p className="font-ds-body-sm text-ds-danger">{tDashboard("loadError")}</p>
         ) : null}
         {dashboardState.hasDeleteError ? (
-          <p className="font-ds-body-sm text-ds-danger">
-            {tDashboard("entry.deleteFailed")}
-          </p>
+          <p className="font-ds-body-sm text-ds-danger">{tDashboard("entry.deleteFailed")}</p>
         ) : null}
         <Section variant="neutral">
           <Container size="wide">

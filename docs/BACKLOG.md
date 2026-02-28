@@ -16,3 +16,9 @@ Items identified during architecture review (2026-02-26).
 ## Developer Experience
 
 - [x] **Add CI quality checks** — Add `pnpm lint`, `pnpm typecheck`, `pnpm build` as pre-commit hooks or CI pipeline steps. Ensure all PRs pass quality gates before merge. _(PR #12, open)_
+
+## Observability & Security
+
+- [ ] **Google Analytics** — Add GA4 tracking with cookie consent gate, page-view and key custom events. _(Story 016)_
+- [ ] **Aikido security scanning** — Connect Aikido GitHub App for SAST, SCA, and secrets detection on every PR. _(Story 017)_
+- [ ] **Monitoring & health checks** — `/api/health` endpoint, UptimeRobot uptime checks, Sentry error tracking, Vercel Analytics for Web Vitals. Optional: Grafana Cloud for custom metrics dashboards. _(Story 018)_

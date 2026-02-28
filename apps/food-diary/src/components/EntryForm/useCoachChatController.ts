@@ -594,7 +594,7 @@ export function useCoachChatController({
           finalEntry.entryType ??
           getDefaultEntryType(finalEntry.date, finalEntry.time || "00:00");
 
-        await saveDiaryEntryFromInput({
+        const result = await saveDiaryEntryFromInput({
           entryId,
           userId: activeUser.uid,
           entryType,
@@ -613,6 +613,10 @@ export function useCoachChatController({
           imageUrl: finalEntry.imageUrl,
           imagePublicId: finalEntry.imagePublicId,
         });
+
+        if (!result.success) {
+          throw new Error(result.error ?? t("errors.saveFailed"));
+        }
 
         setCompleted(true);
         if (onComplete) {

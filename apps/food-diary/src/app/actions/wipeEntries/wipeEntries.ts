@@ -1,20 +1,22 @@
 "use server";
 
-import { deleteUserDataByUser } from "@/lib/firestore/helpers";
+import { extractUidFromIdToken, restDeleteUserData } from "@/lib/firestore/rest-helpers";
 
 import type { WipeEntriesResult } from "./index";
 
-export async function wipeEntries(userId: string): Promise<WipeEntriesResult> {
+export async function wipeEntries(idToken: string): Promise<WipeEntriesResult> {
+  const userId = extractUidFromIdToken(idToken);
+
   if (!userId) {
     return {
       success: false,
       deletedCount: 0,
-      error: "User ID is required.",
+      error: "User not authenticated.",
     };
   }
 
   try {
-    const deletedCount = await deleteUserDataByUser(userId);
+    const deletedCount = await restDeleteUserData(idToken, userId);
 
     return {
       success: true,

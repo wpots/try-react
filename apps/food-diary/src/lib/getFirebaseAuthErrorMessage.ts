@@ -4,10 +4,7 @@ import { FirebaseError } from "firebase/app";
  * Maps Firebase Auth error codes to translation keys under the `auth` namespace.
  * Returns `fallbackKey` when the error is not a recognised Firebase Auth error.
  */
-export function getFirebaseAuthErrorKey(
-  error: unknown,
-  fallbackKey: string,
-): string {
+export function getFirebaseAuthErrorKey(error: unknown, fallbackKey: string): string {
   if (!(error instanceof FirebaseError)) {
     return fallbackKey;
   }
@@ -31,6 +28,8 @@ export function getFirebaseAuthErrorKey(
       return "firebase.authDomainConfigRequired";
     case "auth/invalid-api-key":
       return "firebase.invalidApiKey";
+    case "auth/invalid-action-code":
+      return "firebase.invalidActionCode";
     default:
       return fallbackKey;
   }

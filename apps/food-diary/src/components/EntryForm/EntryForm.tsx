@@ -83,7 +83,7 @@ export function EntryForm({
       return;
     }
 
-    if (!userId) {
+    if (!user) {
       setDeleteError(t("errors.notAuthenticated"));
       return;
     }
@@ -92,7 +92,8 @@ export function EntryForm({
     setIsDeleting(true);
 
     try {
-      const result = await deleteDiaryEntry(userId, selectedEntryId);
+      const idToken = await user.getIdToken();
+      const result = await deleteDiaryEntry(idToken, selectedEntryId);
 
       if (!result.success) {
         setDeleteError(t("errors.deleteFailed"));
@@ -105,19 +106,20 @@ export function EntryForm({
     } finally {
       setIsDeleting(false);
     }
-  }, [entryId, handleComplete, t, userId]);
+  }, [entryId, handleComplete, t, user]);
 
   useEffect(() => {
-    if (!entryId || isAuthLoading || !userId) {
+    if (!entryId || isAuthLoading || !userId || !user) {
       return;
     }
 
-    const authenticatedUserId = userId;
     const selectedEntryId = entryId;
+    const authenticatedUser = user;
     let isCanceled = false;
 
     async function loadEntry(): Promise<void> {
-      const result = await fetchDiaryEntryById(authenticatedUserId, selectedEntryId);
+      const idToken = await authenticatedUser.getIdToken();
+      const result = await fetchDiaryEntryById(idToken, selectedEntryId);
 
       if (!result.entry || isCanceled) {
         return;
@@ -133,7 +135,7 @@ export function EntryForm({
     return () => {
       isCanceled = true;
     };
-  }, [controllerSetEntry, entryId, isAuthLoading, userId]);
+  }, [controllerSetEntry, entryId, isAuthLoading, user, userId]);
 
   const isDirty = useMemo(
     () =>

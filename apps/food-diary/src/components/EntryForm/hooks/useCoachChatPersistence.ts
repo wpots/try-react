@@ -44,8 +44,8 @@ export function useCoachChatPersistence({
         const entryType = finalEntry.entryType ?? getDefaultEntryType(finalEntry.date, finalEntry.time ?? "00:00");
 
         const result = await saveDiaryEntryFromInput({
-          entryId,
-          userId: activeUser.uid,
+          ...(entryId ? { entryId } : {}),
+          idToken: await activeUser.getIdToken(),
           entryType,
           foodEaten: finalEntry.foodEaten,
           description: finalEntry.description,

@@ -7,6 +7,7 @@ import { wipeEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { deleteSignedInUser, signInWithGoogle, signOut } from "@/lib/auth";
+import { getGuestEntryIds } from "@/lib/firestore/helpers";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
 
@@ -17,13 +18,7 @@ export const loginActionKey = "login";
 export const logoutActionKey = "logout";
 export const profileActionKey = "profile";
 
-export type SubmitAction =
-  | "delete-account"
-  | "google"
-  | "logout"
-  | "wipe-guest"
-  | "wipe-user"
-  | null;
+export type SubmitAction = "delete-account" | "google" | "logout" | "wipe-guest" | "wipe-user" | null;
 
 export interface UseDashboardHeaderStateResult {
   error: string | null;
@@ -92,12 +87,16 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     setSubmittingAction("google");
 
     try {
+      // Pre-fetch entry IDs while still authenticated as the anonymous guest
+      const guestEntryIds = user.isAnonymous ? await getGuestEntryIds(user.uid) : [];
+
       const result = await signInWithGoogle(user);
 
       if (result.mergedFromGuestId) {
         const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(
           result.mergedFromGuestId,
-          result.user.uid,
+          result.user,
+          guestEntryIds,
         );
 
         if (!mergeResult.success) {
@@ -122,7 +121,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     setSubmittingAction("wipe-guest");
 
     try {
-      const wipeResult = await wipeEntries(user.uid);
+      const wipeResult = await wipeEntries(await user.getIdToken());
 
       if (!wipeResult.success) {
         throw new Error(wipeResult.error ?? tGuestMode("wipeUnknownError"));
@@ -132,8 +131,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       setIsGuestModeDialogOpen(false);
       router.push("/auth/login");
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : tGuestMode("wipeUnknownError");
+      const message = err instanceof Error ? err.message : tGuestMode("wipeUnknownError");
       setError(message);
     } finally {
       setSubmittingAction(null);
@@ -149,7 +147,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     setSubmittingAction("wipe-user");
 
     try {
-      const wipeResult = await wipeEntries(user.uid);
+      const wipeResult = await wipeEntries(await user.getIdToken());
 
       if (!wipeResult.success) {
         throw new Error(wipeResult.error ?? tProfile("wipeUnknownError"));
@@ -158,8 +156,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       setIsProfileDialogOpen(false);
       router.refresh();
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : tProfile("wipeUnknownError");
+      const message = err instanceof Error ? err.message : tProfile("wipeUnknownError");
       setError(message);
     } finally {
       setSubmittingAction(null);
@@ -175,10 +172,10 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     setSubmittingAction("delete-account");
 
     try {
-      const userId = user.uid;
+      const idToken = await user.getIdToken();
       await deleteSignedInUser(user);
 
-      const wipeResult = await wipeEntries(userId);
+      const wipeResult = await wipeEntries(idToken);
       if (!wipeResult.success) {
         console.error(wipeResult.error ?? tProfile("wipeUnknownError"));
       }
@@ -186,9 +183,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       setIsProfileDialogOpen(false);
       router.push("/auth/login");
     } catch (err) {
-      setError(
-        tAuth(getFirebaseAuthErrorKey(err, "deleteAccountUnknownError")),
-      );
+      setError(tAuth(getFirebaseAuthErrorKey(err, "deleteAccountUnknownError")));
     } finally {
       setSubmittingAction(null);
     }
@@ -228,8 +223,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
         await signOut();
         router.push("/auth/login");
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : tAuth("signOutError");
+        const message = err instanceof Error ? err.message : tAuth("signOutError");
         setError(message);
       } finally {
         setSubmittingAction(null);

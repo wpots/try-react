@@ -1,18 +1,17 @@
 "use server";
 
-import { migrateGuestEntries } from "@/lib/firestore/helpers";
+import { extractUidFromIdToken, restMigrateGuestEntries } from "@/lib/firestore/rest-helpers";
 
 import type { MergeGuestEntriesResult } from "./index";
 
-export async function mergeGuestEntries(
-  guestId: string,
-  userId: string,
-): Promise<MergeGuestEntriesResult> {
+export async function mergeGuestEntries(guestId: string, idToken: string): Promise<MergeGuestEntriesResult> {
+  const userId = extractUidFromIdToken(idToken);
+
   if (!guestId || !userId) {
     return {
       success: false,
       mergedCount: 0,
-      error: "Guest ID and user ID are required.",
+      error: "Guest ID and authentication token are required.",
     };
   }
 
@@ -24,7 +23,11 @@ export async function mergeGuestEntries(
   }
 
   try {
-    const mergedCount = await migrateGuestEntries(guestId, userId);
+    // restMigrateGuestEntries queries for guestId documents and reassigns them.
+    // Requires Firestore rules that allow the new authenticated user to read
+    // entries owned by the anonymous guestId.  Falls back to 0 (client handles
+    // migration) when security rules block cross-user reads.
+    const mergedCount = await restMigrateGuestEntries(guestId, idToken, userId);
 
     return {
       success: true,

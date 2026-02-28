@@ -1,5 +1,6 @@
-import { mergeGuestEntries } from "@/app/actions";
-import { migrateGuestEntries } from "@/lib/firestore/helpers";
+import { migrateGuestEntriesByIds } from "@/lib/firestore/helpers";
+
+import type { User } from "firebase/auth";
 
 export interface MergeGuestEntriesAfterGoogleSignInResult {
   success: boolean;
@@ -7,64 +8,40 @@ export interface MergeGuestEntriesAfterGoogleSignInResult {
   error?: string;
 }
 
-function getErrorMessage(error: unknown): string {
-  if (!(error instanceof Error)) {
-    return "";
-  }
-
-  const message = error.message.trim();
-  if (!message) {
-    return "";
-  }
-
-  return message;
-}
-
+/**
+ * Transfers ownership of pre-fetched guest diary entries to the new Google user.
+ *
+ * `guestEntryIds` must be collected *before* the Google sign-in popup so the
+ * anonymous user's read permissions are used for the query.  After sign-in the
+ * Firestore update rule (`request.resource.data.userId == request.auth.uid`)
+ * allows the new user to claim the entries without read access.
+ */
 export async function mergeGuestEntriesAfterGoogleSignIn(
   guestId: string,
-  userId: string,
+  newUser: User,
+  guestEntryIds: string[],
 ): Promise<MergeGuestEntriesAfterGoogleSignInResult> {
-  if (!guestId || !userId || guestId === userId) {
+  if (!guestId || !newUser.uid || guestId === newUser.uid || guestEntryIds.length === 0) {
     return {
       success: true,
       mergedCount: 0,
     };
   }
 
-  let serverError = "";
-
   try {
-    const serverResult = await mergeGuestEntries(guestId, userId);
-
-    if (serverResult.success) {
-      return {
-        success: true,
-        mergedCount: serverResult.mergedCount,
-      };
-    }
-
-    serverError = serverResult.error?.trim() ?? "";
-  } catch (error) {
-    serverError = getErrorMessage(error);
-  }
-
-  try {
-    const mergedCount = await migrateGuestEntries(guestId, userId);
+    const mergedCount = await migrateGuestEntriesByIds(guestEntryIds, newUser.uid);
 
     return {
       success: true,
       mergedCount,
     };
   } catch (error) {
-    const fallbackError = getErrorMessage(error);
-    const errorMessage = [serverError, fallbackError]
-      .filter((message) => message.length > 0)
-      .join(" ");
+    const message = error instanceof Error ? error.message.trim() : "";
 
     return {
       success: false,
       mergedCount: 0,
-      error: errorMessage || "Failed to merge guest entries.",
+      error: message || "Failed to merge guest entries.",
     };
   }
 }

@@ -33,7 +33,7 @@ export function PageHero({ className, id = "hero-section" }: PageHeroProps): Rea
           </Typography>
 
           <div className="mt-8 flex flex-col gap-ds-m sm:flex-row">
-            {ctaButtons.map((button) => {
+            {ctaButtons.map(button => {
               const isPrimary = button.variant === "default";
               return (
                 <Link

@@ -15,20 +15,9 @@ import {
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
-import {
-  mapDiaryEntrySnapshot,
-  toDiaryEntryWriteData,
-} from "@/lib/firestore/converters";
-import {
-  createDiaryEntrySchema,
-  storedDiaryEntrySchema,
-  userAnalysisQuotaSchema,
-} from "@/lib/firestore/schemas";
-import type {
-  CreateDiaryEntryInput,
-  DiaryEntry,
-  UserAnalysisQuota,
-} from "@/lib/firestore/types";
+import { mapDiaryEntrySnapshot, toDiaryEntryWriteData } from "@/lib/firestore/converters";
+import { createDiaryEntrySchema, storedDiaryEntrySchema, userAnalysisQuotaSchema } from "@/lib/firestore/schemas";
+import type { CreateDiaryEntryInput, DiaryEntry, UserAnalysisQuota } from "@/lib/firestore/types";
 import { parseEntryDate, withLegacySkippedMealBehavior } from "@/lib/firestore/utils";
 import { getLocalDateKey } from "@/lib/getLocalDateKey";
 
@@ -36,9 +25,7 @@ function getQuotaDocumentReference(userId: string) {
   return doc(db, "userAnalysisQuota", userId);
 }
 
-export async function createDiaryEntry(
-  input: CreateDiaryEntryInput,
-): Promise<string> {
+export async function createDiaryEntry(input: CreateDiaryEntryInput): Promise<string> {
   const parsed = createDiaryEntrySchema.parse(input);
   const payload = toDiaryEntryWriteData(parsed);
   const documentReference = await addDoc(collection(db, "diaryEntries"), payload);
@@ -79,10 +66,7 @@ export async function getDiaryEntryById(entryId: string): Promise<DiaryEntry | n
   };
 }
 
-export async function updateDiaryEntry(
-  entryId: string,
-  input: CreateDiaryEntryInput,
-): Promise<void> {
+export async function updateDiaryEntry(entryId: string, input: CreateDiaryEntryInput): Promise<void> {
   const parsed = createDiaryEntrySchema.parse(input);
   const entryReference = doc(db, "diaryEntries", entryId);
 
@@ -109,15 +93,10 @@ export async function updateDiaryEntry(
 }
 
 export async function getDiaryEntriesByUser(userId: string): Promise<DiaryEntry[]> {
-  const entriesQuery = query(
-    collection(db, "diaryEntries"),
-    where("userId", "==", userId),
-  );
+  const entriesQuery = query(collection(db, "diaryEntries"), where("userId", "==", userId));
   const querySnapshot = await getDocs(entriesQuery);
 
-  const entries = querySnapshot.docs.map((snapshot) =>
-    mapDiaryEntrySnapshot(snapshot),
-  );
+  const entries = querySnapshot.docs.map(snapshot => mapDiaryEntrySnapshot(snapshot));
 
   return entries.sort((first, second) => {
     return second.date.toMillis() - first.date.toMillis();
@@ -138,12 +117,10 @@ export async function getDiaryEntriesByDateRange(
   );
   const querySnapshot = await getDocs(entriesQuery);
 
-  return querySnapshot.docs.map((snapshot) => mapDiaryEntrySnapshot(snapshot));
+  return querySnapshot.docs.map(snapshot => mapDiaryEntrySnapshot(snapshot));
 }
 
-export async function getAnalysisQuota(
-  userId: string,
-): Promise<UserAnalysisQuota> {
+export async function getAnalysisQuota(userId: string): Promise<UserAnalysisQuota> {
   const quotaDocRef = getQuotaDocumentReference(userId);
   const snapshot = await getDoc(quotaDocRef);
 
@@ -164,12 +141,10 @@ export async function getAnalysisQuota(
   return parsed;
 }
 
-export async function incrementAnalysisQuota(
-  userId: string,
-): Promise<UserAnalysisQuota> {
+export async function incrementAnalysisQuota(userId: string): Promise<UserAnalysisQuota> {
   const quotaDocRef = getQuotaDocumentReference(userId);
 
-  return runTransaction(db, async (transaction) => {
+  return runTransaction(db, async transaction => {
     const snapshot = await transaction.get(quotaDocRef);
     const now = new Date();
     const dateKey = getLocalDateKey(now);
@@ -211,17 +186,11 @@ export async function incrementAnalysisQuota(
   });
 }
 
-export async function migrateGuestEntries(
-  guestId: string,
-  userId: string,
-): Promise<number> {
-  const entriesQuery = query(
-    collection(db, "diaryEntries"),
-    where("userId", "==", guestId),
-  );
+export async function migrateGuestEntries(guestId: string, userId: string): Promise<number> {
+  const entriesQuery = query(collection(db, "diaryEntries"), where("userId", "==", guestId));
   const querySnapshot = await getDocs(entriesQuery);
 
-  const updates = querySnapshot.docs.map((snapshot) =>
+  const updates = querySnapshot.docs.map(snapshot =>
     updateDoc(doc(db, "diaryEntries", snapshot.id), {
       userId,
     }),
@@ -238,13 +207,10 @@ export async function migrateGuestEntries(
  * guest) so Firestore read rules are satisfied.
  */
 export async function getGuestEntryIds(userId: string): Promise<string[]> {
-  const entriesQuery = query(
-    collection(db, "diaryEntries"),
-    where("userId", "==", userId),
-  );
+  const entriesQuery = query(collection(db, "diaryEntries"), where("userId", "==", userId));
   const querySnapshot = await getDocs(entriesQuery);
 
-  return querySnapshot.docs.map((snapshot) => snapshot.id);
+  return querySnapshot.docs.map(snapshot => snapshot.id);
 }
 
 /**
@@ -252,13 +218,10 @@ export async function getGuestEntryIds(userId: string): Promise<string[]> {
  * The Firestore update rule allows setting `userId` to `request.auth.uid`,
  * so the new (Google) user can update entries without needing read access.
  */
-export async function migrateGuestEntriesByIds(
-  entryIds: string[],
-  newUserId: string,
-): Promise<number> {
+export async function migrateGuestEntriesByIds(entryIds: string[], newUserId: string): Promise<number> {
   if (entryIds.length === 0) return 0;
 
-  const updates = entryIds.map((entryId) =>
+  const updates = entryIds.map(entryId =>
     updateDoc(doc(db, "diaryEntries", entryId), {
       userId: newUserId,
     }),
@@ -274,15 +237,10 @@ export async function deleteDiaryEntryById(entryId: string): Promise<void> {
 }
 
 export async function deleteDiaryEntriesByUser(userId: string): Promise<number> {
-  const entriesQuery = query(
-    collection(db, "diaryEntries"),
-    where("userId", "==", userId),
-  );
+  const entriesQuery = query(collection(db, "diaryEntries"), where("userId", "==", userId));
   const querySnapshot = await getDocs(entriesQuery);
 
-  const deletions = querySnapshot.docs.map((snapshot) =>
-    deleteDoc(doc(db, "diaryEntries", snapshot.id)),
-  );
+  const deletions = querySnapshot.docs.map(snapshot => deleteDoc(doc(db, "diaryEntries", snapshot.id)));
 
   await Promise.all(deletions);
 

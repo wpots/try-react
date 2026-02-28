@@ -93,7 +93,11 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       const result = await signInWithGoogle(user);
 
       if (result.mergedFromGuestId) {
-        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(result.mergedFromGuestId, result.user, guestEntryIds);
+        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(
+          result.mergedFromGuestId,
+          result.user,
+          guestEntryIds,
+        );
 
         if (!mergeResult.success) {
           console.error(mergeResult.error ?? tAuth("mergeUnknownError"));

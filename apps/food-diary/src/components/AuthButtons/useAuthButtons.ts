@@ -58,7 +58,11 @@ export function useAuthButtons({ redirectPath }: UseAuthButtonsInput): UseAuthBu
       const result = await signInWithGoogle(user);
 
       if (result.mergedFromGuestId) {
-        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(result.mergedFromGuestId, result.user, guestEntryIds);
+        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(
+          result.mergedFromGuestId,
+          result.user,
+          guestEntryIds,
+        );
 
         if (!mergeResult.success) {
           console.error(mergeResult.error ?? t("mergeUnknownError"));

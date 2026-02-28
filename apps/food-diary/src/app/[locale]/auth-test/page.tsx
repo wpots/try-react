@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { signInWithGoogle, signOut } from "@/lib/auth";
 import { subscribeToAuthState } from "@/lib/firebase";
-import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
+import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 
 import type { User } from "firebase/auth";
 
@@ -28,7 +28,7 @@ const AuthTestPage = () => {
     try {
       await signInWithGoogle();
     } catch (err) {
-      const message = getFirebaseAuthErrorMessage(err, "Google login failed.");
+      const message = t(getFirebaseAuthErrorKey(err, "googleLoginUnknownError"));
       setError(message);
     } finally {
       setLoading(false);

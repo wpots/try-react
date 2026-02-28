@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
-import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
+import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
 
 import { getAuthButtonsDisabledState } from "./utils";
@@ -71,10 +71,7 @@ export function useAuthButtons({
 
       router.push(redirectPath);
     } catch (err) {
-      const message = getFirebaseAuthErrorMessage(
-        err,
-        t("googleLoginUnknownError"),
-      );
+      const message = t(getFirebaseAuthErrorKey(err, "googleLoginUnknownError"));
       setError(message);
     } finally {
       setSubmittingMethod(null);

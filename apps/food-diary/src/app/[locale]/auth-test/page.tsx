@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 
 import { auth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@/lib/firebase";
-import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
+import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 
 import type { User } from "firebase/auth";
 
@@ -30,7 +30,7 @@ const AuthTestPage = () => {
     try {
       await signInWithPopup(auth, googleProvider);
     } catch (err) {
-      const message = getFirebaseAuthErrorMessage(err, "Google login failed.");
+      const message = t(getFirebaseAuthErrorKey(err, "googleLoginUnknownError"));
       setError(message);
     } finally {
       setLoading(false);

@@ -7,7 +7,7 @@ import { wipeGuestEntries, wipeUserEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { deleteSignedInUser, signInWithGoogle, signOut } from "@/lib/auth";
-import { getFirebaseAuthErrorMessage } from "@/lib/getFirebaseAuthErrorMessage";
+import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
 
 import type { Key } from "react";
@@ -107,7 +107,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
 
       setIsGuestModeDialogOpen(false);
     } catch (err) {
-      setError(getFirebaseAuthErrorMessage(err, tAuth("googleLoginUnknownError")));
+      setError(tAuth(getFirebaseAuthErrorKey(err, "googleLoginUnknownError")));
     } finally {
       setSubmittingAction(null);
     }
@@ -187,7 +187,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       router.push("/auth/login");
     } catch (err) {
       setError(
-        getFirebaseAuthErrorMessage(err, tProfile("deleteAccountUnknownError")),
+        tAuth(getFirebaseAuthErrorKey(err, "deleteAccountUnknownError")),
       );
     } finally {
       setSubmittingAction(null);

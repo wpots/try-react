@@ -1,6 +1,8 @@
 import { mergeGuestEntries } from "@/app/actions";
 import { migrateGuestEntries } from "@/lib/firestore/helpers";
 
+import type { User } from "firebase/auth";
+
 export interface MergeGuestEntriesAfterGoogleSignInResult {
   success: boolean;
   mergedCount: number;
@@ -22,9 +24,9 @@ function getErrorMessage(error: unknown): string {
 
 export async function mergeGuestEntriesAfterGoogleSignIn(
   guestId: string,
-  userId: string,
+  newUser: User,
 ): Promise<MergeGuestEntriesAfterGoogleSignInResult> {
-  if (!guestId || !userId || guestId === userId) {
+  if (!guestId || !newUser.uid || guestId === newUser.uid) {
     return {
       success: true,
       mergedCount: 0,
@@ -34,7 +36,8 @@ export async function mergeGuestEntriesAfterGoogleSignIn(
   let serverError = "";
 
   try {
-    const serverResult = await mergeGuestEntries(guestId, userId);
+    const idToken = await newUser.getIdToken();
+    const serverResult = await mergeGuestEntries(guestId, idToken);
 
     if (serverResult.success) {
       return {
@@ -49,7 +52,7 @@ export async function mergeGuestEntriesAfterGoogleSignIn(
   }
 
   try {
-    const mergedCount = await migrateGuestEntries(guestId, userId);
+    const mergedCount = await migrateGuestEntries(guestId, newUser.uid);
 
     return {
       success: true,
@@ -57,9 +60,7 @@ export async function mergeGuestEntriesAfterGoogleSignIn(
     };
   } catch (error) {
     const fallbackError = getErrorMessage(error);
-    const errorMessage = [serverError, fallbackError]
-      .filter((message) => message.length > 0)
-      .join(" ");
+    const errorMessage = [serverError, fallbackError].filter(message => message.length > 0).join(" ");
 
     return {
       success: false,

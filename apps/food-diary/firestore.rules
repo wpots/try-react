@@ -1,0 +1,37 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Diary entries ──────────────────────────────────────────────────────
+    match /diaryEntries/{entryId} {
+      // Read / delete: document must belong to the requesting user
+      allow read, delete: if request.auth != null
+                          && resource.data.userId == request.auth.uid;
+
+      // Create: the new document's userId must equal the requesting user's uid
+      allow create: if request.auth != null
+                    && request.resource.data.userId == request.auth.uid;
+
+      // Update: either you already own the document, OR you are taking
+      // ownership by setting userId to your own uid (anonymous → Google
+      // sign-in migration).
+      allow update: if request.auth != null
+                    && (
+                      resource.data.userId == request.auth.uid
+                      || request.resource.data.userId == request.auth.uid
+                    );
+    }
+
+    // ─── User analysis quota ────────────────────────────────────────────────
+    match /userAnalysisQuota/{userId} {
+      allow read, write, delete: if request.auth != null
+                                 && request.auth.uid == userId;
+    }
+
+    // ─── Deny everything else ───────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

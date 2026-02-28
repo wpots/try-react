@@ -1,28 +1,28 @@
 "use server";
 
-import { deleteDiaryEntryById, getDiaryEntryById } from "@/lib/firestore/helpers";
+import { extractUidFromIdToken, restDeleteDiaryEntry, restGetDiaryEntryById } from "@/lib/firestore/rest-helpers";
 
 export interface DeleteDiaryEntryResult {
   success?: boolean;
   error?: string;
 }
 
-export async function deleteDiaryEntry(userId: string, entryId: string): Promise<DeleteDiaryEntryResult> {
-  const normalizedUserId = typeof userId === "string" ? userId.trim() : "";
+export async function deleteDiaryEntry(idToken: string, entryId: string): Promise<DeleteDiaryEntryResult> {
+  const userId = extractUidFromIdToken(idToken);
   const normalizedEntryId = typeof entryId === "string" ? entryId.trim() : "";
 
-  if (!normalizedUserId || !normalizedEntryId) {
-    return { error: "Missing userId or entryId" };
+  if (!userId || !normalizedEntryId) {
+    return { error: "Missing authentication or entryId" };
   }
 
   try {
-    const entry = await getDiaryEntryById(normalizedEntryId);
+    const entry = await restGetDiaryEntryById(idToken, normalizedEntryId);
 
-    if (!entry || entry.userId !== normalizedUserId) {
+    if (!entry || entry.userId !== userId) {
       return { error: "Entry not found or access denied" };
     }
 
-    await deleteDiaryEntryById(normalizedEntryId);
+    await restDeleteDiaryEntry(idToken, normalizedEntryId);
 
     return { success: true };
   } catch (error) {

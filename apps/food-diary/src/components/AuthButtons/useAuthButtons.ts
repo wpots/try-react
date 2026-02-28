@@ -24,16 +24,12 @@ export interface UseAuthButtonsResult {
   userUid: string | null;
 }
 
-export function useAuthButtons({
-  redirectPath,
-}: UseAuthButtonsInput): UseAuthButtonsResult {
+export function useAuthButtons({ redirectPath }: UseAuthButtonsInput): UseAuthButtonsResult {
   const t = useTranslations("auth");
   const router = useRouter();
   const { isGuest, loading, user } = useAuth();
   const [error, setError] = useState<string | null>(null);
-  const [submittingMethod, setSubmittingMethod] = useState<
-    "guest" | "google" | null
-  >(null);
+  const [submittingMethod, setSubmittingMethod] = useState<"guest" | "google" | null>(null);
 
   const handleGuestLogin = async (): Promise<void> => {
     setError(null);
@@ -43,8 +39,7 @@ export function useAuthButtons({
       await signInAnonymously();
       router.push(redirectPath);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : t("guestLoginUnknownError");
+      const message = err instanceof Error ? err.message : t("guestLoginUnknownError");
       setError(message);
     } finally {
       setSubmittingMethod(null);
@@ -59,10 +54,7 @@ export function useAuthButtons({
       const result = await signInWithGoogle(user);
 
       if (result.mergedFromGuestId) {
-        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(
-          result.mergedFromGuestId,
-          result.user.uid,
-        );
+        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(result.mergedFromGuestId, result.user);
 
         if (!mergeResult.success) {
           console.error(mergeResult.error ?? t("mergeUnknownError"));

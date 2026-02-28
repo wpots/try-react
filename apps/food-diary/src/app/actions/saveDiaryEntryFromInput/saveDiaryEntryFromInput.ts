@@ -1,11 +1,11 @@
 "use server";
 
-import { createDiaryEntry, updateDiaryEntry } from "@/lib/firestore/helpers";
+import { extractUidFromIdToken, restCreateDiaryEntry, restUpdateDiaryEntry } from "@/lib/firestore/rest-helpers";
 import type { CreateDiaryEntryInput } from "@/lib/firestore/types";
 
 export interface SaveDiaryEntryFromInputData {
   entryId?: string;
-  userId: string;
+  idToken: string;
   entryType?: string;
   foodEaten: string;
   description?: string;
@@ -31,7 +31,7 @@ export interface SaveDiaryEntryFromInputResult {
 export async function saveDiaryEntryFromInput(
   input: SaveDiaryEntryFromInputData,
 ): Promise<SaveDiaryEntryFromInputResult> {
-  const userId = typeof input.userId === "string" ? input.userId.trim() : "";
+  const userId = extractUidFromIdToken(input.idToken);
 
   if (!userId) {
     return { error: "User not authenticated" };
@@ -57,10 +57,15 @@ export async function saveDiaryEntryFromInput(
       imagePublicId: input.imagePublicId,
     };
 
-    if (input.entryId) {
-      await updateDiaryEntry(input.entryId, createInput);
+    const normalizedEntryId =
+      typeof input.entryId === "string" && input.entryId.trim() && input.entryId.trim() !== "$undefined"
+        ? input.entryId.trim()
+        : undefined;
+
+    if (normalizedEntryId) {
+      await restUpdateDiaryEntry(input.idToken, normalizedEntryId, createInput);
     } else {
-      await createDiaryEntry(createInput);
+      await restCreateDiaryEntry(input.idToken, createInput);
     }
 
     return { success: true };

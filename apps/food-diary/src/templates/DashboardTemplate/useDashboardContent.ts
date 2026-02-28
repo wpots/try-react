@@ -194,7 +194,7 @@ export function useDashboardContent(): UseDashboardContentResult {
   }
 
   function handleDeleteEntry(entryId: string): void {
-    if (!userId) {
+    if (!user) {
       return;
     }
 
@@ -206,7 +206,8 @@ export function useDashboardContent(): UseDashboardContentResult {
 
     void (async () => {
       try {
-        const result = await deleteDiaryEntry(userId, entryId);
+        const idToken = await user!.getIdToken();
+        const result = await deleteDiaryEntry(idToken, entryId);
 
         if (!result.success) {
           setHasDeleteError(true);

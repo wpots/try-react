@@ -1,9 +1,13 @@
 # User Story Alignment and Roadmap
 
-Last updated: February 18, 2026.
+Last updated: February 28, 2026.
 
 This file is the source of truth for story status against the current codebase.
 Original story files are kept as historical implementation specs.
+
+Story files are organized into two subdirectories:
+- `done/` — stories with status `done`
+- `todo/` — stories with status `partial`, `superseded`, or `not-started`
 
 ## Status Legend
 

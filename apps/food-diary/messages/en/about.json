@@ -1,0 +1,68 @@
+{
+  "chapters": {
+    "whatIsTRY": {
+      "title": "What is TRY?",
+      "intro": "This tool is a helping hand in letting go of your eating disorder and finding the real you."
+    },
+    "whatCanTRYDo": {
+      "title": "What TRY can do?",
+      "intro": "",
+      "articles": {
+        "track": {
+          "heading": "Track:",
+          "body": "Add a picture, location, the company you were with, your emotions and behaviour. This app is web-based and your entries will be stored in your browser even if you do not have an account."
+        },
+        "export": {
+          "heading": "Export:",
+          "body": "Choose which entries you want to export and download your overview in PDF format."
+        },
+        "anytimeAnywhere": {
+          "heading": "Anytime and anywhere:",
+          "body": "You can create an account with Google if you want to access your data from anywhere."
+        },
+        "improve": {
+          "heading": "Improve:",
+          "body": "If you feel you are missing a feature you can let us know. We value feedback on how to improve this app."
+        },
+        "share": {
+          "heading": "Share:",
+          "body": "Recommend or share this app with someone you think might benefit from it, or because it helped you out."
+        }
+      }
+    },
+    "workingOn": {
+      "title": "What TRY is still working on?",
+      "intro": "Our aim is to keep it simple, but there are some new features and improvements that we will keep implementing over time.",
+      "articles": {
+        "copingSkills": {
+          "heading": "Coping skills:",
+          "body": "Having an off day or need some inspiration to get out of your own head? We will be adding tips pages and a meditation tool."
+        },
+        "flagsFilters": {
+          "heading": "Flags and filters:",
+          "body": "Flag a moment so you can discuss it later with your physician."
+        },
+        "notifications": {
+          "heading": "Notifications:",
+          "body": "Want a friendly reminder to track your lunch? Maybe a weekly summary of your progress?"
+        },
+        "buddies": {
+          "heading": "Buddies:",
+          "body": "With flags and filters in place, you can connect a buddy (likely your physician, but it can be anyone you grant access). Your buddy can respond to your moments with messages, and you can ask for help directly."
+        },
+        "statistics": {
+          "heading": "Statistics:",
+          "body": "See an overview of good and bad days, with graphs that show your progress toward your goals."
+        },
+        "epiphanies": {
+          "heading": "Epiphanies:",
+          "body": "Alongside motivational quotes, your own healing thoughts can become part of your journey. Think yours might help others? Make them public."
+        },
+        "customization": {
+          "heading": "Customization:",
+          "body": "Would it not be helpful if you could add your own locations and company?"
+        }
+      }
+    }
+  }
+}

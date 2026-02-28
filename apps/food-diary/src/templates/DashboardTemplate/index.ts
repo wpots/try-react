@@ -1,4 +1,5 @@
 import type { DiaryEntry } from "@/lib/diaryEntries";
+
 import type { IconName } from "@repo/ui";
 
 export type DashboardViewMode = "day" | "week" | "month";

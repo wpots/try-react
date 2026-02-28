@@ -1,9 +1,7 @@
+/* eslint-disable import/order */
 import { emotions } from "@repo/ui";
-
-import type { DiaryEntry } from "@/lib/diaryEntries";
-import type { EmotionCategory, IconName } from "@repo/ui";
-
-import type { DashboardMood, DashboardMoodSummary, MoodZone } from "../index";
+import type { DashboardMood, DashboardMoodSummary, DiaryEntry, EmotionCategory, IconName, MoodZone } from "./types";
+/* eslint-enable import/order */
 
 interface EmotionMoodConfig {
   emoji: string;

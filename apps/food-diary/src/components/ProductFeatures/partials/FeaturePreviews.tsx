@@ -274,7 +274,8 @@ export function BehaviorsPreview() {
   }, [phase]);
 
   useEffect(() => {
-    resetAndAnimate();
+    const id = requestAnimationFrame(resetAndAnimate);
+    return () => cancelAnimationFrame(id);
   }, [resetAndAnimate]);
 
   return (

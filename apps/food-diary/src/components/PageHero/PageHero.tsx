@@ -8,7 +8,7 @@ import type { LinkProps } from "@repo/ui";
 export function PageHero({ className, id = "hero-section" }: PageHeroProps): React.JSX.Element {
   const t = useTranslations("landing.hero");
   const ctaButtons: LinkProps[] = [
-    { href: "/entry/create", children: t("primaryCta"), variant: "default" },
+    { href: "/dashboard", children: t("primaryCta"), variant: "default" },
     { href: "#features", children: t("secondaryCta"), variant: "outline" },
   ];
   return (

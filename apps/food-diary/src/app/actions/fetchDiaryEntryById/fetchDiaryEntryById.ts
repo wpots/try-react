@@ -9,10 +9,7 @@ export interface FetchDiaryEntryByIdResult {
   error?: string;
 }
 
-export async function fetchDiaryEntryById(
-  userId: string,
-  entryId: string,
-): Promise<FetchDiaryEntryByIdResult> {
+export async function fetchDiaryEntryById(userId: string, entryId: string): Promise<FetchDiaryEntryByIdResult> {
   const normalizedUserId = typeof userId === "string" ? userId.trim() : "";
   const normalizedEntryId = typeof entryId === "string" ? entryId.trim() : "";
 

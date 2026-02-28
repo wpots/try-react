@@ -1,14 +1,9 @@
 import { getLocalDateKey } from "@/lib/getLocalDateKey";
-import type {
-  ClientDiaryEntry,
-  DiaryEntry as FirestoreDiaryEntry,
-} from "@/lib/firestore/types";
+import type { ClientDiaryEntry, DiaryEntry as FirestoreDiaryEntry } from "@/lib/firestore/types";
 
 export type { ClientDiaryEntry as DiaryEntry } from "@/lib/firestore/types";
 
-export function mapFirestoreDiaryEntryToClient(
-  entry: FirestoreDiaryEntry,
-): ClientDiaryEntry {
+export function mapFirestoreDiaryEntryToClient(entry: FirestoreDiaryEntry): ClientDiaryEntry {
   return {
     id: entry.entryId,
     userId: entry.userId,
@@ -32,8 +27,6 @@ export function mapFirestoreDiaryEntryToClient(
   };
 }
 
-export function mapFirestoreDiaryEntriesToClient(
-  entries: FirestoreDiaryEntry[],
-): ClientDiaryEntry[] {
+export function mapFirestoreDiaryEntriesToClient(entries: FirestoreDiaryEntry[]): ClientDiaryEntry[] {
   return entries.map(mapFirestoreDiaryEntryToClient);
 }

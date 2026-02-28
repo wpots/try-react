@@ -4,13 +4,10 @@ import { Container, Section } from "@repo/ui";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { deleteDiaryEntry, fetchDiaryEntryById } from "@/app/actions";
+import type { ClientDiaryEntry as DiaryEntry } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import {
-  deleteDiaryEntry,
-  fetchDiaryEntryById,
-} from "@/app/actions";
-import type { ClientDiaryEntry as DiaryEntry } from "@/app/actions";
 
 import { CoachChat } from "./CoachChat/CoachChat";
 import { TraditionalForm } from "./Form/TraditionalForm";
@@ -117,10 +114,7 @@ export function EntryForm({
     let isCanceled = false;
 
     async function loadEntry(): Promise<void> {
-      const result = await fetchDiaryEntryById(
-        authenticatedUserId,
-        selectedEntryId,
-      );
+      const result = await fetchDiaryEntryById(authenticatedUserId, selectedEntryId);
 
       if (!result.entry || isCanceled) {
         return;

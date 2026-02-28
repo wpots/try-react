@@ -11,10 +11,7 @@ export { saveDiaryEntry } from "./saveDiaryEntry";
 export type { SaveDiaryEntryResult } from "./saveDiaryEntry";
 
 export { saveDiaryEntryFromInput } from "./saveDiaryEntryFromInput";
-export type {
-	SaveDiaryEntryFromInputData,
-	SaveDiaryEntryFromInputResult,
-} from "./saveDiaryEntryFromInput";
+export type { SaveDiaryEntryFromInputData, SaveDiaryEntryFromInputResult } from "./saveDiaryEntryFromInput";
 
 export { deleteDiaryEntry } from "./deleteDiaryEntry";
 export type { DeleteDiaryEntryResult } from "./deleteDiaryEntry";

@@ -5,9 +5,9 @@ import { useLocale } from "next-intl";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { saveDiaryEntryFromInput } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously } from "@/lib/auth";
-import { saveDiaryEntryFromInput } from "@/app/actions";
 
 import { formatDatetimeHuman } from "./utils/formatDatetimeHuman";
 import { getDefaultEntryType } from "./utils/getDefaultEntryType";
@@ -75,7 +75,7 @@ export interface UseCoachChatControllerResult {
 }
 
 function getFilteredSteps(entry: WizardEntry): WizardStep[] {
-  return STEPS.filter((step) =>
+  return STEPS.filter(step =>
     step.condition
       ? step.condition({
           entryType: entry.entryType,
@@ -102,16 +102,11 @@ const COACH_REPLY_KEYS: Record<WizardStepKey, string> = {
 const MIN_TYPING_DELAY_MS = 550;
 const TYPING_DELAY_VARIANCE_MS = 350;
 const negativeEmotionKeys = new Set(
-  emotionDefinitions
-    .filter((emotion) => emotion.category === "negative")
-    .map((emotion) => emotion.key),
+  emotionDefinitions.filter(emotion => emotion.category === "negative").map(emotion => emotion.key),
 );
 
 function isStringArray(value: unknown): value is string[] {
-  return (
-    Array.isArray(value) &&
-    value.every((item) => typeof item === "string")
-  );
+  return Array.isArray(value) && value.every(item => typeof item === "string");
 }
 
 function isStringArrayMap(value: unknown): value is Record<string, string[]> {
@@ -119,7 +114,7 @@ function isStringArrayMap(value: unknown): value is Record<string, string[]> {
     return false;
   }
 
-  return Object.values(value).every((entry) => isStringArray(entry));
+  return Object.values(value).every(entry => isStringArray(entry));
 }
 
 export function useCoachChatController({
@@ -172,20 +167,17 @@ export function useCoachChatController({
     setInputOtherText("");
   }, []);
 
-  const addMessage = useCallback(
-    (role: CoachChatMessage["role"], text: string) => {
-      setMessages((previous) => {
-        const next = [...previous, { id: messageIdRef.current + 1, role, text }];
-        messageIdRef.current += 1;
-        messagesRef.current = next;
-        return next;
-      });
-    },
-    [],
-  );
+  const addMessage = useCallback((role: CoachChatMessage["role"], text: string) => {
+    setMessages(previous => {
+      const next = [...previous, { id: messageIdRef.current + 1, role, text }];
+      messageIdRef.current += 1;
+      messagesRef.current = next;
+      return next;
+    });
+  }, []);
 
   const clearPendingCoachTimeouts = useCallback(() => {
-    timeoutIdsRef.current.forEach((timeoutId) => {
+    timeoutIdsRef.current.forEach(timeoutId => {
       window.clearTimeout(timeoutId);
     });
     timeoutIdsRef.current = [];
@@ -193,9 +185,7 @@ export function useCoachChatController({
 
   const startCoachSequence = useCallback(
     (coachTexts: string[]) => {
-      const queue = coachTexts
-        .map((text) => text.trim())
-        .filter((text) => text.length > 0);
+      const queue = coachTexts.map(text => text.trim()).filter(text => text.length > 0);
 
       coachSequenceIdRef.current += 1;
       const sequenceId = coachSequenceIdRef.current;
@@ -209,30 +199,31 @@ export function useCoachChatController({
       setIsTyping(true);
 
       const scheduleNext = (index: number): void => {
-        const timeoutId = window.setTimeout(() => {
-          timeoutIdsRef.current = timeoutIdsRef.current.filter(
-            (id) => id !== timeoutId,
-          );
+        const timeoutId = window.setTimeout(
+          () => {
+            timeoutIdsRef.current = timeoutIdsRef.current.filter(id => id !== timeoutId);
 
-          if (coachSequenceIdRef.current !== sequenceId) {
-            return;
-          }
+            if (coachSequenceIdRef.current !== sequenceId) {
+              return;
+            }
 
-          const text = queue[index];
-          if (!text) {
-            return;
-          }
+            const text = queue[index];
+            if (!text) {
+              return;
+            }
 
-          addMessage("coach", text);
+            addMessage("coach", text);
 
-          const isLast = index === queue.length - 1;
-          if (isLast) {
-            setIsTyping(false);
-            return;
-          }
+            const isLast = index === queue.length - 1;
+            if (isLast) {
+              setIsTyping(false);
+              return;
+            }
 
-          scheduleNext(index + 1);
-        }, MIN_TYPING_DELAY_MS + Math.random() * TYPING_DELAY_VARIANCE_MS);
+            scheduleNext(index + 1);
+          },
+          MIN_TYPING_DELAY_MS + Math.random() * TYPING_DELAY_VARIANCE_MS,
+        );
 
         timeoutIdsRef.current.push(timeoutId);
       };
@@ -250,9 +241,7 @@ export function useCoachChatController({
           return [];
         }
 
-        return rawValue
-          .map((message) => message.trim())
-          .filter((message) => message.length > 0);
+        return rawValue.map(message => message.trim()).filter(message => message.length > 0);
       } catch {
         return [];
       }
@@ -270,9 +259,7 @@ export function useCoachChatController({
 
         const replyMap: Record<string, string[]> = {};
         Object.entries(rawValue).forEach(([replyKey, messages]) => {
-          const sanitizedMessages = messages
-            .map((message) => message.trim())
-            .filter((message) => message.length > 0);
+          const sanitizedMessages = messages.map(message => message.trim()).filter(message => message.length > 0);
 
           if (sanitizedMessages.length > 0) {
             replyMap[replyKey] = sanitizedMessages;
@@ -287,29 +274,22 @@ export function useCoachChatController({
     [t],
   );
 
-  const getRotatingReply = useCallback(
-    (
-      messages: string[],
-      rotationKey: string,
-      fallbackMessage: string,
-    ): string => {
-      if (messages.length === 0) {
-        return fallbackMessage;
-      }
+  const getRotatingReply = useCallback((messages: string[], rotationKey: string, fallbackMessage: string): string => {
+    if (messages.length === 0) {
+      return fallbackMessage;
+    }
 
-      const index = replyRotationRef.current[rotationKey] ?? 0;
-      const normalizedIndex = index % messages.length;
-      const selectedMessage = messages[normalizedIndex];
-      replyRotationRef.current[rotationKey] = normalizedIndex + 1;
+    const index = replyRotationRef.current[rotationKey] ?? 0;
+    const normalizedIndex = index % messages.length;
+    const selectedMessage = messages[normalizedIndex];
+    replyRotationRef.current[rotationKey] = normalizedIndex + 1;
 
-      if (!selectedMessage) {
-        return fallbackMessage;
-      }
+    if (!selectedMessage) {
+      return fallbackMessage;
+    }
 
-      return selectedMessage;
-    },
-    [],
-  );
+    return selectedMessage;
+  }, []);
 
   const getSingleValueReplyMessage = useCallback(
     ({
@@ -332,20 +312,12 @@ export function useCoachChatController({
       const repliesByType = getReplyArrayMap(byTypeKey);
       const scopedReplies = repliesByType[value];
       if (scopedReplies && scopedReplies.length > 0) {
-        return getRotatingReply(
-          scopedReplies,
-          `${rotationPrefix}.${value}`,
-          fallback,
-        );
+        return getRotatingReply(scopedReplies, `${rotationPrefix}.${value}`, fallback);
       }
 
       const defaultReplies = getReplyArray(defaultKey);
       if (defaultReplies.length > 0) {
-        return getRotatingReply(
-          defaultReplies,
-          `${rotationPrefix}.default`,
-          fallback,
-        );
+        return getRotatingReply(defaultReplies, `${rotationPrefix}.default`, fallback);
       }
 
       return fallback;
@@ -394,63 +366,37 @@ export function useCoachChatController({
   const getBehaviorReplyMessage = useCallback(
     (targetEntry: WizardEntry): string => {
       const behaviorReplyMap = getReplyArrayMap("coachReplies.behaviorByType");
-      const scopedReplies = targetEntry.behavior.reduce<string[]>(
-        (allReplies, behavior) => {
-          const mappedReplies = behaviorReplyMap[behavior];
-          if (!mappedReplies || mappedReplies.length === 0) {
-            return allReplies;
-          }
+      const scopedReplies = targetEntry.behavior.reduce<string[]>((allReplies, behavior) => {
+        const mappedReplies = behaviorReplyMap[behavior];
+        if (!mappedReplies || mappedReplies.length === 0) {
+          return allReplies;
+        }
 
-          return [...allReplies, ...mappedReplies];
-        },
-        [],
-      );
+        return [...allReplies, ...mappedReplies];
+      }, []);
 
       if (scopedReplies.length > 0) {
-        const rotationKey =
-          targetEntry.behavior.join("|") || "behavior.scoped";
-        return getRotatingReply(
-          scopedReplies,
-          `behavior.${rotationKey}`,
-          t("coachReplies.behavior"),
-        );
+        const rotationKey = targetEntry.behavior.join("|") || "behavior.scoped";
+        return getRotatingReply(scopedReplies, `behavior.${rotationKey}`, t("coachReplies.behavior"));
       }
 
       const defaultReplies = getReplyArray("coachReplies.behaviorDefaults");
-      return getRotatingReply(
-        defaultReplies,
-        "behavior.default",
-        t("coachReplies.behavior"),
-      );
+      return getRotatingReply(defaultReplies, "behavior.default", t("coachReplies.behavior"));
     },
     [getReplyArray, getReplyArrayMap, getRotatingReply, t],
   );
 
   const getEmotionReplyMessage = useCallback(
     (targetEntry: WizardEntry): string => {
-      const hasNegativeEmotion = targetEntry.emotions.some((emotion) =>
-        negativeEmotionKeys.has(emotion),
-      );
+      const hasNegativeEmotion = targetEntry.emotions.some(emotion => negativeEmotionKeys.has(emotion));
       if (hasNegativeEmotion) {
-        const supportiveReplies = getReplyArray(
-          "coachReplies.emotionsSupportive",
-        );
-        return getRotatingReply(
-          supportiveReplies,
-          "emotions.supportive",
-          t("coachReplies.emotions"),
-        );
+        const supportiveReplies = getReplyArray("coachReplies.emotionsSupportive");
+        return getRotatingReply(supportiveReplies, "emotions.supportive", t("coachReplies.emotions"));
       }
 
       if (targetEntry.emotions.length > 0) {
-        const motivationalReplies = getReplyArray(
-          "coachReplies.emotionsMotivational",
-        );
-        return getRotatingReply(
-          motivationalReplies,
-          "emotions.motivational",
-          t("coachReplies.emotions"),
-        );
+        const motivationalReplies = getReplyArray("coachReplies.emotionsMotivational");
+        return getRotatingReply(motivationalReplies, "emotions.motivational", t("coachReplies.emotions"));
       }
 
       return t("coachReplies.emotions");
@@ -460,19 +406,11 @@ export function useCoachChatController({
 
   const getThoughtsReplyMessage = useCallback((): string => {
     const thoughtsReplies = getReplyArray("coachReplies.thoughtsReflective");
-    return getRotatingReply(
-      thoughtsReplies,
-      "thoughts.reflective",
-      t("coachReplies.description"),
-    );
+    return getRotatingReply(thoughtsReplies, "thoughts.reflective", t("coachReplies.description"));
   }, [getReplyArray, getRotatingReply, t]);
 
   const getCoachReplyMessage = useCallback(
-    (
-      step: WizardStep | undefined,
-      wasSkipped: boolean,
-      targetEntry: WizardEntry,
-    ): string => {
+    (step: WizardStep | undefined, wasSkipped: boolean, targetEntry: WizardEntry): string => {
       if (wasSkipped) {
         return t("coachReplies.skip");
       }
@@ -521,11 +459,7 @@ export function useCoachChatController({
       }
 
       return t(step.messageKey, {
-        moment: formatDatetimeHuman(
-          targetEntry.date,
-          targetEntry.time || "00:00",
-          locale,
-        ),
+        moment: formatDatetimeHuman(targetEntry.date, targetEntry.time || "00:00", locale),
       });
     },
     [locale, t],
@@ -533,8 +467,7 @@ export function useCoachChatController({
 
   const isDatetimeUnchanged = useCallback(
     (targetEntry: WizardEntry): boolean =>
-      targetEntry.date === initialDatetimeRef.current.date &&
-      targetEntry.time === initialDatetimeRef.current.time,
+      targetEntry.date === initialDatetimeRef.current.date && targetEntry.time === initialDatetimeRef.current.time,
     [],
   );
 
@@ -573,10 +506,7 @@ export function useCoachChatController({
       setInputOtherText(entry.locationOther ?? "");
     } else if (currentStep.key === "company" && entry.company === "anders") {
       setInputOtherText(entry.companyOther ?? "");
-    } else if (
-      currentStep.key === "behavior" &&
-      entry.behavior?.includes("anders")
-    ) {
+    } else if (currentStep.key === "behavior" && entry.behavior?.includes("anders")) {
       setInputOtherText(entry.behaviorOther ?? "");
     } else {
       setInputOtherText("");
@@ -590,11 +520,9 @@ export function useCoachChatController({
         setSaveError(null);
 
         const activeUser = user ?? (await signInAnonymously());
-        const entryType =
-          finalEntry.entryType ??
-          getDefaultEntryType(finalEntry.date, finalEntry.time || "00:00");
+        const entryType = finalEntry.entryType ?? getDefaultEntryType(finalEntry.date, finalEntry.time || "00:00");
 
-        await saveDiaryEntryFromInput({
+        const result = await saveDiaryEntryFromInput({
           entryId,
           userId: activeUser.uid,
           entryType,
@@ -614,13 +542,16 @@ export function useCoachChatController({
           imagePublicId: finalEntry.imagePublicId,
         });
 
+        if (!result.success) {
+          throw new Error(result.error ?? t("errors.saveFailed"));
+        }
+
         setCompleted(true);
         if (onComplete) {
           onComplete();
         }
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : t("errors.saveFailed");
+        const message = error instanceof Error ? error.message : t("errors.saveFailed");
         setSaveError(message);
       } finally {
         setIsSaving(false);
@@ -638,10 +569,7 @@ export function useCoachChatController({
       },
     ) => {
       const answeredStep = filteredSteps[currentStepIndex];
-      setHistory((previous) => [
-        ...previous,
-        { messages: [...messagesRef.current], entry },
-      ]);
+      setHistory(previous => [...previous, { messages: [...messagesRef.current], entry }]);
       setEntry(updatedEntry);
 
       const nextIndex = currentStepIndex + 1;
@@ -664,15 +592,8 @@ export function useCoachChatController({
         return;
       }
 
-      const acknowledgement = getCoachReplyMessage(
-        answeredStep,
-        options?.wasSkipped ?? false,
-        updatedEntry,
-      );
-      startCoachSequence([
-        acknowledgement,
-        getCoachStepMessage(nextStep, updatedEntry),
-      ]);
+      const acknowledgement = getCoachReplyMessage(answeredStep, options?.wasSkipped ?? false, updatedEntry);
+      startCoachSequence([acknowledgement, getCoachStepMessage(nextStep, updatedEntry)]);
     },
     [
       filteredSteps,
@@ -702,7 +623,7 @@ export function useCoachChatController({
 
     setMessages(previousSnapshot.messages);
     setEntry(previousSnapshot.entry);
-    setHistory((previous) => previous.slice(0, -1));
+    setHistory(previous => previous.slice(0, -1));
     setCurrentStepIndex(previousIndex);
     setCompleted(false);
     resetInputState();
@@ -712,19 +633,8 @@ export function useCoachChatController({
       return;
     }
 
-    startCoachSequence([
-      t("coachReplies.stepBack"),
-      getCoachStepMessage(previousStep, previousSnapshot.entry),
-    ]);
-  }, [
-    currentStepIndex,
-    getCoachStepMessage,
-    history,
-    isTyping,
-    resetInputState,
-    startCoachSequence,
-    t,
-  ]);
+    startCoachSequence([t("coachReplies.stepBack"), getCoachStepMessage(previousStep, previousSnapshot.entry)]);
+  }, [currentStepIndex, getCoachStepMessage, history, isTyping, resetInputState, startCoachSequence, t]);
 
   const handleSkip = useCallback(() => {
     addMessage("user", t("form.skip"));
@@ -733,10 +643,7 @@ export function useCoachChatController({
 
   const handleSubmitEntryType = useCallback(() => {
     const fallbackTime = new Date().toTimeString().slice(0, 5);
-    const suggestedType = getDefaultEntryType(
-      entry.date,
-      entry.time || fallbackTime,
-    );
+    const suggestedType = getDefaultEntryType(entry.date, entry.time || fallbackTime);
     const selected = inputChips[0] ?? entry.entryType ?? suggestedType;
     if (!selected || !isEntryType(selected)) {
       return;
@@ -748,9 +655,7 @@ export function useCoachChatController({
 
   const handleSubmitDatetime = useCallback(() => {
     const unchangedDatetime = isDatetimeUnchanged(entry);
-    const message = unchangedDatetime
-      ? t("form.ok")
-      : formatDatetimeHuman(entry.date, entry.time || "00:00", locale);
+    const message = unchangedDatetime ? t("form.ok") : formatDatetimeHuman(entry.date, entry.time || "00:00", locale);
 
     addMessage("user", message);
     advanceStep(entry, { skipAcknowledgement: unchangedDatetime });
@@ -782,7 +687,7 @@ export function useCoachChatController({
       const label =
         selected === "anders"
           ? inputOtherText.trim()
-          : t(locationOptions.find((o) => o.value === selected)?.labelKey ?? "locations.anders");
+          : t(locationOptions.find(o => o.value === selected)?.labelKey ?? "locations.anders");
       addMessage("user", label);
       advanceStep({
         ...entry,
@@ -807,7 +712,7 @@ export function useCoachChatController({
       const label =
         selected === "anders"
           ? inputOtherText.trim()
-          : t(companyOptions.find((o) => o.value === selected)?.labelKey ?? "company.anders");
+          : t(companyOptions.find(o => o.value === selected)?.labelKey ?? "company.anders");
       addMessage("user", label);
       advanceStep({
         ...entry,
@@ -834,7 +739,7 @@ export function useCoachChatController({
       return;
     }
 
-    const label = inputEmotions.map((key) => t(`emotions.${key}`)).join(", ");
+    const label = inputEmotions.map(key => t(`emotions.${key}`)).join(", ");
     addMessage("user", label);
     advanceStep({ ...entry, emotions: inputEmotions });
   }, [addMessage, advanceStep, entry, inputEmotions, t]);
@@ -856,10 +761,10 @@ export function useCoachChatController({
     const label =
       inputChips.length > 0
         ? inputChips
-            .map((key) =>
+            .map(key =>
               key === "anders"
                 ? inputOtherText.trim()
-                : t(behaviorOptions.find((o) => o.value === key)?.labelKey ?? "behaviors.anders"),
+                : t(behaviorOptions.find(o => o.value === key)?.labelKey ?? "behaviors.anders"),
             )
             .join(", ")
         : t("hints.behaviorNone");

@@ -1,19 +1,13 @@
 "use server";
 
-import {
-  deleteDiaryEntryById,
-  getDiaryEntryById,
-} from "@/lib/firestore/helpers";
+import { deleteDiaryEntryById, getDiaryEntryById } from "@/lib/firestore/helpers";
 
 export interface DeleteDiaryEntryResult {
   success?: boolean;
   error?: string;
 }
 
-export async function deleteDiaryEntry(
-  userId: string,
-  entryId: string,
-): Promise<DeleteDiaryEntryResult> {
+export async function deleteDiaryEntry(userId: string, entryId: string): Promise<DeleteDiaryEntryResult> {
   const normalizedUserId = typeof userId === "string" ? userId.trim() : "";
   const normalizedEntryId = typeof entryId === "string" ? entryId.trim() : "";
 

@@ -84,15 +84,9 @@ export function useDashboardContent(): UseDashboardContentResult {
   const [hasLoadError, setHasLoadError] = useState(false);
   const [viewMode, setViewMode] = useState<DashboardViewMode>("day");
   const [selectedDate, setSelectedDate] = useState<Date>(getToday);
-  const [expandedState, setExpandedState] = useState<Record<string, boolean>>(
-    {},
-  );
-  const [bookmarkState, setBookmarkState] = useState<Record<string, boolean>>(
-    {},
-  );
-  const [deletingState, setDeletingState] = useState<Record<string, boolean>>(
-    {},
-  );
+  const [expandedState, setExpandedState] = useState<Record<string, boolean>>({});
+  const [bookmarkState, setBookmarkState] = useState<Record<string, boolean>>({});
+  const [deletingState, setDeletingState] = useState<Record<string, boolean>>({});
 
   const today = useMemo(() => getToday(), []);
 
@@ -138,7 +132,7 @@ export function useDashboardContent(): UseDashboardContentResult {
   }, [userId]);
 
   useEffect(() => {
-    setBookmarkState((previousState) => {
+    setBookmarkState(previousState => {
       const nextState: Record<string, boolean> = {};
 
       for (const entry of entries) {
@@ -157,19 +151,14 @@ export function useDashboardContent(): UseDashboardContentResult {
 
   const weekDates = useMemo(() => getWeekDates(selectedDate), [selectedDate]);
 
-  const monthGridDates = useMemo(
-    () => getMonthGridDates(selectedDate),
-    [selectedDate],
-  );
+  const monthGridDates = useMemo(() => getMonthGridDates(selectedDate), [selectedDate]);
 
   const canNavigateNext = useMemo(() => {
     return canNavigateForward(viewMode, selectedDate, today);
   }, [selectedDate, today, viewMode]);
 
   const handleNavigatePrevious = useCallback(() => {
-    setSelectedDate((previousDate) =>
-      navigatePeriod(viewMode, previousDate, "prev"),
-    );
+    setSelectedDate(previousDate => navigatePeriod(viewMode, previousDate, "prev"));
   }, [viewMode]);
 
   const handleNavigateNext = useCallback(() => {
@@ -177,9 +166,7 @@ export function useDashboardContent(): UseDashboardContentResult {
       return;
     }
 
-    setSelectedDate((previousDate) =>
-      navigatePeriod(viewMode, previousDate, "next"),
-    );
+    setSelectedDate(previousDate => navigatePeriod(viewMode, previousDate, "next"));
   }, [canNavigateNext, viewMode]);
 
   const handleGoToToday = useCallback(() => {
@@ -203,14 +190,14 @@ export function useDashboardContent(): UseDashboardContentResult {
   );
 
   const handleToggleExpanded = useCallback((entryId: string) => {
-    setExpandedState((previousState) => ({
+    setExpandedState(previousState => ({
       ...previousState,
       [entryId]: !previousState[entryId],
     }));
   }, []);
 
   const handleToggleBookmark = useCallback((entryId: string) => {
-    setBookmarkState((previousState) => ({
+    setBookmarkState(previousState => ({
       ...previousState,
       [entryId]: !previousState[entryId],
     }));
@@ -222,7 +209,7 @@ export function useDashboardContent(): UseDashboardContentResult {
         return;
       }
 
-      setDeletingState((previousState) => ({
+      setDeletingState(previousState => ({
         ...previousState,
         [entryId]: true,
       }));
@@ -237,16 +224,14 @@ export function useDashboardContent(): UseDashboardContentResult {
             return;
           }
 
-          setEntries((previousEntries) =>
-            previousEntries.filter((entry) => entry.id !== entryId),
-          );
+          setEntries(previousEntries => previousEntries.filter(entry => entry.id !== entryId));
 
-          setExpandedState((previousState) => {
+          setExpandedState(previousState => {
             const nextState = { ...previousState };
             delete nextState[entryId];
             return nextState;
           });
-          setBookmarkState((previousState) => {
+          setBookmarkState(previousState => {
             const nextState = { ...previousState };
             delete nextState[entryId];
             return nextState;
@@ -254,7 +239,7 @@ export function useDashboardContent(): UseDashboardContentResult {
         } catch {
           setHasDeleteError(true);
         } finally {
-          setDeletingState((previousState) => {
+          setDeletingState(previousState => {
             const nextState = { ...previousState };
             delete nextState[entryId];
             return nextState;
@@ -278,20 +263,11 @@ export function useDashboardContent(): UseDashboardContentResult {
     [router],
   );
 
-  const isExpanded = useCallback(
-    (entryId: string) => Boolean(expandedState[entryId]),
-    [expandedState],
-  );
+  const isExpanded = useCallback((entryId: string) => Boolean(expandedState[entryId]), [expandedState]);
 
-  const isBookmarked = useCallback(
-    (entryId: string) => Boolean(bookmarkState[entryId]),
-    [bookmarkState],
-  );
+  const isBookmarked = useCallback((entryId: string) => Boolean(bookmarkState[entryId]), [bookmarkState]);
 
-  const isDeleting = useCallback(
-    (entryId: string) => Boolean(deletingState[entryId]),
-    [deletingState],
-  );
+  const isDeleting = useCallback((entryId: string) => Boolean(deletingState[entryId]), [deletingState]);
 
   return {
     canNavigateNext,

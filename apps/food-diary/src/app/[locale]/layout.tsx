@@ -4,6 +4,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ReactAriaProvider } from "@/contexts/ReactAriaProvider/ReactAriaProvider";
 import { locales } from "@/i18n/config";
 
 import type { Metadata } from "next";
@@ -41,10 +42,12 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
-      <AuthProvider>
-        <SkipLink>{tCommon("skipToContent")}</SkipLink>
-        {children}
-      </AuthProvider>
+      <ReactAriaProvider>
+        <AuthProvider>
+          <SkipLink>{tCommon("skipToContent")}</SkipLink>
+          {children}
+        </AuthProvider>
+      </ReactAriaProvider>
     </NextIntlClientProvider>
   );
 }

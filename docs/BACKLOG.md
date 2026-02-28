@@ -22,3 +22,4 @@ Items identified during architecture review (2026-02-26).
 - [ ] **Google Analytics** — Add GA4 tracking with cookie consent gate, page-view and key custom events. _(Story 016)_
 - [ ] **Aikido security scanning** — Connect Aikido GitHub App for SAST, SCA, and secrets detection on every PR. _(Story 017)_
 - [ ] **Monitoring & health checks** — `/api/health` endpoint, UptimeRobot uptime checks, Sentry error tracking, Vercel Analytics for Web Vitals. Optional: Grafana Cloud for custom metrics dashboards. _(Story 018)_
+- [ ] **GDPR compliance** — Privacy policy page, cookie consent banner (gates GA4), data export (right to portability), and complete account deletion flow for authenticated users. _(Story 020)_

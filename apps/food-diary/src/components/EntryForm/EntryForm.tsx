@@ -6,7 +6,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import { deleteDiaryEntry, fetchDiaryEntryById, type DiaryEntry } from "@/lib/diaryEntries";
+import {
+  deleteDiaryEntry,
+  fetchDiaryEntryById,
+} from "@/app/actions";
+import type { ClientDiaryEntry as DiaryEntry } from "@/app/actions";
 
 import { CoachChat } from "./CoachChat/CoachChat";
 import { TraditionalForm } from "./Form/TraditionalForm";
@@ -88,9 +92,9 @@ export function EntryForm({
     setIsDeleting(true);
 
     try {
-      const hasDeleted = await deleteDiaryEntry(userId, selectedEntryId);
+      const result = await deleteDiaryEntry(userId, selectedEntryId);
 
-      if (!hasDeleted) {
+      if (!result.success) {
         setDeleteError(t("errors.deleteFailed"));
         return;
       }
@@ -113,13 +117,16 @@ export function EntryForm({
     let isCanceled = false;
 
     async function loadEntry(): Promise<void> {
-      const existingEntry = await fetchDiaryEntryById(authenticatedUserId, selectedEntryId);
+      const result = await fetchDiaryEntryById(
+        authenticatedUserId,
+        selectedEntryId,
+      );
 
-      if (!existingEntry || isCanceled) {
+      if (!result.entry || isCanceled) {
         return;
       }
 
-      const mappedEntry = mapDiaryEntryToWizardEntry(existingEntry);
+      const mappedEntry = mapDiaryEntryToWizardEntry(result.entry);
       initialEntryRef.current = mappedEntry;
       controller.setEntry(mappedEntry);
     }

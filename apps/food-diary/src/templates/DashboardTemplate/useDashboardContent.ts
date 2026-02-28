@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import { deleteDiaryEntry, fetchDiaryEntries } from "@/lib/diaryEntries";
-import type { DiaryEntry } from "@/lib/diaryEntries";
+import { deleteDiaryEntry, fetchDiaryEntries } from "@/app/actions";
+import type { ClientDiaryEntry as DiaryEntry } from "@/app/actions";
 
 import {
   canNavigateForward,
@@ -230,9 +230,9 @@ export function useDashboardContent(): UseDashboardContentResult {
 
       void (async () => {
         try {
-          const isDeleted = await deleteDiaryEntry(userId, entryId);
+          const result = await deleteDiaryEntry(userId, entryId);
 
-          if (!isDeleted) {
+          if (!result.success) {
             setHasDeleteError(true);
             return;
           }

@@ -1,47 +1,14 @@
-import {
-  createDiaryEntry,
-  deleteDiaryEntryById,
-  getDiaryEntryById,
-  getDiaryEntriesByUser,
-  updateDiaryEntry,
-} from "@/lib/firestore/helpers";
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 import type {
   ClientDiaryEntry,
-  CreateDiaryEntryInput,
   DiaryEntry as FirestoreDiaryEntry,
-  DiaryEntryBehavior,
-  DiaryEntryCompany,
-  DiaryEntryLocation,
-  DiaryEntryType,
 } from "@/lib/firestore/types";
-import { getLocalDateKey } from "@/lib/getLocalDateKey";
 
-export type { ClientDiaryEntry };
+export type { ClientDiaryEntry as DiaryEntry } from "@/lib/firestore/types";
 
-/** @deprecated Use `ClientDiaryEntry` directly. Alias kept for backward compatibility. */
-export type DiaryEntry = ClientDiaryEntry;
-
-export interface SaveDiaryEntryInput {
-  entryId?: string;
-  userId: string;
-  entryType?: DiaryEntryType;
-  foodEaten: string;
-  description?: string;
-  emotions?: string[];
-  location?: DiaryEntryLocation;
-  company?: DiaryEntryCompany;
-  behavior?: DiaryEntryBehavior[];
-  isBookmarked?: boolean;
-  date: string;
-  time: string;
-  locationOther?: string;
-  companyOther?: string;
-  behaviorOther?: string;
-  imageUrl?: string;
-  imagePublicId?: string;
-}
-
-function toClientEntry(entry: FirestoreDiaryEntry): ClientDiaryEntry {
+export function mapFirestoreDiaryEntryToClient(
+  entry: FirestoreDiaryEntry,
+): ClientDiaryEntry {
   return {
     id: entry.entryId,
     userId: entry.userId,
@@ -65,70 +32,8 @@ function toClientEntry(entry: FirestoreDiaryEntry): ClientDiaryEntry {
   };
 }
 
-export async function fetchDiaryEntries(userId: string): Promise<ClientDiaryEntry[]> {
-  const entries = await getDiaryEntriesByUser(userId);
-  return entries.map((entry) => toClientEntry(entry));
-}
-
-export async function fetchDiaryEntryById(
-  userId: string,
-  entryId: string,
-): Promise<ClientDiaryEntry | null> {
-  const entry = await getDiaryEntryById(entryId);
-
-  if (!entry || entry.userId !== userId) {
-    return null;
-  }
-
-  return toClientEntry(entry);
-}
-
-export async function saveDiaryEntry(input: SaveDiaryEntryInput): Promise<void> {
-  const createInput: CreateDiaryEntryInput = {
-    userId: input.userId,
-    entryType: input.entryType ?? "moment",
-    foodEaten: input.foodEaten,
-    emotions: input.emotions,
-    location: input.location,
-    company: input.company,
-    description: input.description ?? "",
-    behavior: input.behavior,
-    isBookmarked: input.isBookmarked ?? false,
-    date: input.date,
-    time: input.time,
-    locationOther: input.locationOther,
-    companyOther: input.companyOther,
-    behaviorOther: input.behaviorOther,
-    imageUrl: input.imageUrl,
-    imagePublicId: input.imagePublicId,
-  };
-
-  if (input.entryId) {
-    await updateDiaryEntry(input.entryId, createInput);
-    return;
-  }
-
-  await createDiaryEntry(createInput);
-}
-
-export async function deleteDiaryEntry(
-  userId: string,
-  entryId: string,
-): Promise<boolean> {
-  const normalizedUserId = userId.trim();
-  const normalizedEntryId = entryId.trim();
-
-  if (!normalizedUserId || !normalizedEntryId) {
-    return false;
-  }
-
-  const entry = await getDiaryEntryById(normalizedEntryId);
-
-  if (!entry || entry.userId !== normalizedUserId) {
-    return false;
-  }
-
-  await deleteDiaryEntryById(normalizedEntryId);
-
-  return true;
+export function mapFirestoreDiaryEntriesToClient(
+  entries: FirestoreDiaryEntry[],
+): ClientDiaryEntry[] {
+  return entries.map(mapFirestoreDiaryEntryToClient);
 }

@@ -16,8 +16,5 @@ export type { SaveDiaryEntryFromInputData, SaveDiaryEntryFromInputResult } from 
 export { deleteDiaryEntry } from "./deleteDiaryEntry";
 export type { DeleteDiaryEntryResult } from "./deleteDiaryEntry";
 
-export { wipeGuestEntries } from "./wipeGuestEntries";
-export type { WipeGuestEntriesResult } from "./wipeGuestEntries";
-
-export { wipeUserEntries } from "./wipeUserEntries";
-export type { WipeUserEntriesResult } from "./wipeUserEntries";
+export { wipeEntries } from "./wipeEntries";
+export type { WipeEntriesResult } from "./wipeEntries";

@@ -2,11 +2,9 @@
 
 import { deleteUserDataByUser } from "@/lib/firestore/helpers";
 
-import type { WipeUserEntriesResult } from "./index";
+import type { WipeEntriesResult } from "./index";
 
-export async function wipeUserEntries(
-  userId: string,
-): Promise<WipeUserEntriesResult> {
+export async function wipeEntries(userId: string): Promise<WipeEntriesResult> {
   if (!userId) {
     return {
       success: false,
@@ -23,11 +21,11 @@ export async function wipeUserEntries(
       deletedCount,
     };
   } catch (err) {
-    console.error("Error wiping user entries:", err);
+    console.error("Error wiping entries:", err);
     return {
       success: false,
       deletedCount: 0,
-      error: "Failed to wipe user entries.",
+      error: "Failed to wipe entries.",
     };
   }
 }

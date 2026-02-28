@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
-import { wipeGuestEntries, wipeUserEntries } from "@/app/actions";
+import { wipeEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { deleteSignedInUser, signInWithGoogle, signOut } from "@/lib/auth";
@@ -122,7 +122,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     setSubmittingAction("wipe-guest");
 
     try {
-      const wipeResult = await wipeGuestEntries(user.uid);
+      const wipeResult = await wipeEntries(user.uid);
 
       if (!wipeResult.success) {
         throw new Error(wipeResult.error ?? tGuestMode("wipeUnknownError"));
@@ -149,7 +149,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     setSubmittingAction("wipe-user");
 
     try {
-      const wipeResult = await wipeUserEntries(user.uid);
+      const wipeResult = await wipeEntries(user.uid);
 
       if (!wipeResult.success) {
         throw new Error(wipeResult.error ?? tProfile("wipeUnknownError"));
@@ -178,7 +178,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       const userId = user.uid;
       await deleteSignedInUser(user);
 
-      const wipeResult = await wipeUserEntries(userId);
+      const wipeResult = await wipeEntries(userId);
       if (!wipeResult.success) {
         console.error(wipeResult.error ?? tProfile("wipeUnknownError"));
       }

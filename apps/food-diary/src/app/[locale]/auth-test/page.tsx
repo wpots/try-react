@@ -1,10 +1,10 @@
 "use client";
 
-import { signOut } from "firebase/auth";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { auth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@/lib/firebase";
+import { signInWithGoogle, signOut } from "@/lib/auth";
+import { subscribeToAuthState } from "@/lib/firebase";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 
 import type { User } from "firebase/auth";
@@ -15,10 +15,8 @@ const AuthTestPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const googleProvider = useMemo(() => new GoogleAuthProvider(), []);
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+    const unsubscribe = subscribeToAuthState(currentUser => {
       setUser(currentUser);
     });
     return () => unsubscribe();
@@ -28,7 +26,7 @@ const AuthTestPage = () => {
     setError(null);
     setLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
+      await signInWithGoogle();
     } catch (err) {
       const message = t(getFirebaseAuthErrorKey(err, "googleLoginUnknownError"));
       setError(message);
@@ -41,7 +39,7 @@ const AuthTestPage = () => {
     setError(null);
     setLoading(true);
     try {
-      await signOut(auth);
+      await signOut();
     } catch (err) {
       const message = err instanceof Error ? err.message : "Sign out failed.";
       setError(message);

@@ -15,6 +15,7 @@
     "build:storybook": "turbo build --filter=@repo/storybook",
     "build:food-diary": "turbo build --filter=@repo/food-diary",
     "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
     "test": "turbo test"
   },
   "devDependencies": {

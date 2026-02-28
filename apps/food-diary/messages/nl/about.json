@@ -1,0 +1,68 @@
+{
+  "chapters": {
+    "whatIsTRY": {
+      "title": "Wat is TRY?",
+      "intro": "Deze app is er om je te helpen inzicht te krijgen in je eetprobleem en uiteindelijk je echte zelf terug te vinden."
+    },
+    "whatCanTRYDo": {
+      "title": "Wat kan TRY?",
+      "intro": "",
+      "articles": {
+        "track": {
+          "heading": "Bijhouden:",
+          "body": "Voeg een foto toe, locatie, het gezelschap waar je mee was. Hoe voelde je je en heb je nog iets gedaan als gevolg van je eetmoment?"
+        },
+        "export": {
+          "heading": "Exporteren:",
+          "body": "Kies welke dagen je wilt exporteren en download het overzicht in PDF-formaat."
+        },
+        "anytimeAnywhere": {
+          "heading": "Altijd en overal:",
+          "body": "Je kunt meteen beginnen met het bijhouden van je dagboek. Als je je gegevens altijd bij je wilt hebben, kun je eenvoudig een account aanmaken met Google."
+        },
+        "improve": {
+          "heading": "Feedback geven:",
+          "body": "Heb je een voorstel voor een verbetering of werkt er iets niet goed? Laat het ons weten."
+        },
+        "share": {
+          "heading": "Delen of aanbevelen:",
+          "body": "Deze app kun je aanbevelen aan iemand die hem kan gebruiken, of delen met mensen omdat je er zelf iets aan hebt gehad."
+        }
+      }
+    },
+    "workingOn": {
+      "title": "Waar werken we nog aan voor TRY?",
+      "intro": "We willen het graag simpel houden, maar er zijn wat verbeteringen die we binnenkort gaan doorvoeren.",
+      "articles": {
+        "copingSkills": {
+          "heading": "Hulp / handvatten:",
+          "body": "Heb je een slechte dag of afleiding nodig? We zullen een tipspagina maken en misschien zelf een meditatietool."
+        },
+        "flagsFilters": {
+          "heading": "Vlaggen en filteren:",
+          "body": "Zet een vlag bij dagen die je met je begeleider of maatje wilt bespreken."
+        },
+        "notifications": {
+          "heading": "Notificaties:",
+          "body": "Wil je een notificatie krijgen dat je nog even je lunch moet noteren? Misschien vind je het fijn om een weekoverzicht te ontvangen."
+        },
+        "buddies": {
+          "heading": "Begeleiding:",
+          "body": "Als we de vlaggen- en filterfunctie af hebben, is het handig als er voor je begeleider ook een inlogmogelijkheid is in jouw dagboek, zodat jullie directer contact kunnen hebben over moeilijke momenten."
+        },
+        "statistics": {
+          "heading": "Statistieken:",
+          "body": "In een overzicht je goede en slechte dagen. Grafieken met je vooruitgang."
+        },
+        "epiphanies": {
+          "heading": "Inzichten:",
+          "body": "Op de overzichtspagina willen we je meer verschillende helende gedachten toefluisteren. Eigen inzichten kunnen toevoegen die jou helpen bij het bereiken van je doel."
+        },
+        "customization": {
+          "heading": "Personaliseren:",
+          "body": "Zou het niet handig zijn als je bij bestaand gezelschap en locaties je eigen opties kunt toevoegen?"
+        }
+      }
+    }
+  }
+}

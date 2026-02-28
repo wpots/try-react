@@ -1,6 +1,8 @@
 import { getApp, getApps, initializeApp, type FirebaseOptions } from "firebase/app";
-import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInAnonymously, signInWithPopup } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+
+import type { User } from "firebase/auth";
 
 interface RuntimeEnv {
   NEXT_PUBLIC_FIREBASE_API_KEY?: string;
@@ -149,13 +151,13 @@ const app =
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export { GoogleAuthProvider, onAuthStateChanged, signInAnonymously, signInWithPopup };
+/** Subscribe to Firebase Auth state changes. Returns an unsubscribe function. */
+export function subscribeToAuthState(
+  callback: (user: User | null) => void,
+): () => void {
+  return onAuthStateChanged(auth, callback);
+}
 
 export const getCurrentUser = () => auth.currentUser;
-
-export const signInGuestUser = async () => {
-  const userCredential = await signInAnonymously(auth);
-  return userCredential.user;
-};
 
 export default app;

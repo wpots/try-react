@@ -30,7 +30,6 @@ export function useCoachChatController({
   const messaging = useCoachChatMessaging({ locale, t });
   const persistence = useCoachChatPersistence({ entryId, user, t });
   const flow = useCoachChatFlow({
-    entryId,
     initialMode,
     onComplete,
     locale,

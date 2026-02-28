@@ -66,7 +66,10 @@ export function EntryForm({
     initialMode,
     onComplete: handleComplete,
   });
-  const initialEntryRef = useRef<WizardEntry>(controller.entry);
+  const controllerEntry = controller.entry;
+  const controllerSetEntry = controller.setEntry;
+  const controllerBookmarkState = controllerEntry.isBookmarked;
+  const initialEntryRef = useRef<WizardEntry>(controllerEntry);
   const previousBookmarkedPropRef = useRef(isBookmarked);
 
   const handleDelete = useCallback(async (): Promise<void> => {
@@ -122,7 +125,7 @@ export function EntryForm({
 
       const mappedEntry = mapDiaryEntryToWizardEntry(result.entry);
       initialEntryRef.current = mappedEntry;
-      controller.setEntry(mappedEntry);
+      controllerSetEntry(mappedEntry);
     }
 
     void loadEntry();
@@ -130,7 +133,7 @@ export function EntryForm({
     return () => {
       isCanceled = true;
     };
-  }, [controller.setEntry, entryId, isAuthLoading, userId]);
+  }, [controllerSetEntry, entryId, isAuthLoading, userId]);
 
   const isDirty = useMemo(
     () =>
@@ -177,23 +180,23 @@ export function EntryForm({
 
     previousBookmarkedPropRef.current = isBookmarked;
 
-    if (controller.entry.isBookmarked === isBookmarked) {
+    if (controllerEntry.isBookmarked === isBookmarked) {
       return;
     }
 
-    controller.setEntry({
-      ...controller.entry,
+    controllerSetEntry({
+      ...controllerEntry,
       isBookmarked,
     });
-  }, [controller.entry, controller.setEntry, isBookmarked]);
+  }, [controllerEntry, controllerSetEntry, isBookmarked]);
 
   useEffect(() => {
     if (!onBookmarkChange) {
       return;
     }
 
-    onBookmarkChange(controller.entry.isBookmarked);
-  }, [controller.entry.isBookmarked, onBookmarkChange]);
+    onBookmarkChange(controllerBookmarkState);
+  }, [controllerBookmarkState, onBookmarkChange]);
 
   return (
     <Section spacing="none" className="min-h-0 flex-1">

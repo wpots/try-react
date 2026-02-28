@@ -1,5 +1,5 @@
-import { getLocalDateKey } from "@/lib/getLocalDateKey";
 import type { ClientDiaryEntry, DiaryEntry as FirestoreDiaryEntry } from "@/lib/firestore/types";
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 
 export type { ClientDiaryEntry as DiaryEntry } from "@/lib/firestore/types";
 

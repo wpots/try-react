@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from "@/i18n/navigation";
 import { deleteDiaryEntry, fetchDiaryEntries } from "@/app/actions";
 import type { ClientDiaryEntry as DiaryEntry } from "@/app/actions";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "@/i18n/navigation";
 
 import {
   canNavigateForward,

@@ -8,18 +8,25 @@ export interface ActivePreviewWrapperProps {
 }
 
 /** Mounts/unmounts preview on active change to reset animations. */
-export function ActivePreviewWrapper({
-  Preview,
-  isActive,
-}: ActivePreviewWrapperProps): React.JSX.Element | null {
+export function ActivePreviewWrapper({ Preview, isActive }: ActivePreviewWrapperProps): React.JSX.Element | null {
   const [mounted, setMounted] = useState(isActive);
 
   useEffect(() => {
-    if (isActive) {
-      setMounted(false);
-      const id = requestAnimationFrame(() => setMounted(true));
-      return () => cancelAnimationFrame(id);
+    if (!isActive) {
+      return;
     }
+
+    let showId: number | undefined;
+    const hideId = requestAnimationFrame(() => {
+      setMounted(false);
+      showId = requestAnimationFrame(() => setMounted(true));
+    });
+    return () => {
+      cancelAnimationFrame(hideId);
+      if (showId != null) {
+        cancelAnimationFrame(showId);
+      }
+    };
   }, [isActive]);
 
   if (!mounted) return null;

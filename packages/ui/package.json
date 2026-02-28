@@ -6,6 +6,7 @@
   "scripts": {
     "build": "echo \"@repo/ui build placeholder\"",
     "lint": "echo \"@repo/ui lint placeholder\"",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"@repo/ui test placeholder\""
   },
   "exports": {
@@ -22,12 +23,13 @@
     "@react-aria/label": "^3.7.18",
     "@react-aria/textfield": "^3.17.0",
     "classnames": "^2.5.1",
-    "tailwind-merge": "^2.6.0",
     "lucide-react": "^0.468.0",
     "react-aria-components": "^1.15.1",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
+    "@types/node": "^20",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "typescript": "^5.7.3"

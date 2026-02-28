@@ -14,13 +14,11 @@ import {
   where,
 } from "firebase/firestore";
 
-import { getLocalDateKey } from "@/lib/getLocalDateKey";
 import { db } from "@/lib/firebase";
 import {
   mapDiaryEntrySnapshot,
   toDiaryEntryWriteData,
 } from "@/lib/firestore/converters";
-import { parseEntryDate, withLegacySkippedMealBehavior } from "@/lib/firestore/utils";
 import {
   createDiaryEntrySchema,
   storedDiaryEntrySchema,
@@ -31,6 +29,8 @@ import type {
   DiaryEntry,
   UserAnalysisQuota,
 } from "@/lib/firestore/types";
+import { parseEntryDate, withLegacySkippedMealBehavior } from "@/lib/firestore/utils";
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 
 function getQuotaDocumentReference(userId: string) {
   return doc(db, "userAnalysisQuota", userId);

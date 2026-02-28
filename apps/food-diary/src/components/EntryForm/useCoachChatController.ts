@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { signInAnonymously } from "@/lib/auth";
-import { saveDiaryEntry } from "@/lib/diaryEntries";
+import { saveDiaryEntryFromInput } from "@/app/actions";
 
 import { formatDatetimeHuman } from "./utils/formatDatetimeHuman";
 import { getDefaultEntryType } from "./utils/getDefaultEntryType";
@@ -594,7 +594,7 @@ export function useCoachChatController({
           finalEntry.entryType ??
           getDefaultEntryType(finalEntry.date, finalEntry.time || "00:00");
 
-        await saveDiaryEntry({
+        await saveDiaryEntryFromInput({
           entryId,
           userId: activeUser.uid,
           entryType,

@@ -5,8 +5,8 @@ import {
   storedDiaryEntrySchema,
   userAnalysisQuotaSchema,
 } from "@/lib/firestore/schemas";
-import { parseEntryDate, withLegacySkippedMealBehavior } from "@/lib/firestore/utils";
 import type { DiaryEntry, User, UserAnalysisQuota } from "@/lib/firestore/types";
+import { parseEntryDate, withLegacySkippedMealBehavior } from "@/lib/firestore/utils";
 
 import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 

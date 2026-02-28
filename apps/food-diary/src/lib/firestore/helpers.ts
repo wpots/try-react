@@ -14,11 +14,13 @@ import {
   where,
 } from "firebase/firestore";
 
+import { getLocalDateKey } from "@/lib/getLocalDateKey";
 import { db } from "@/lib/firebase";
 import {
   mapDiaryEntrySnapshot,
   toDiaryEntryWriteData,
 } from "@/lib/firestore/converters";
+import { parseEntryDate, withLegacySkippedMealBehavior } from "@/lib/firestore/utils";
 import {
   createDiaryEntrySchema,
   storedDiaryEntrySchema,
@@ -30,31 +32,8 @@ import type {
   UserAnalysisQuota,
 } from "@/lib/firestore/types";
 
-function toDateKey(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
-
 function getQuotaDocumentReference(userId: string) {
   return doc(db, "userAnalysisQuota", userId);
-}
-
-function parseEntryDate(date: string, time: string): Timestamp {
-  return Timestamp.fromDate(new Date(`${date}T${time}:00`));
-}
-
-function withLegacySkippedMealBehavior(
-  behavior: DiaryEntry["behavior"],
-  skippedMeal?: boolean,
-): DiaryEntry["behavior"] {
-  if (!skippedMeal || behavior.includes("skipped meal")) {
-    return behavior;
-  }
-
-  return [...behavior, "skipped meal"];
 }
 
 export async function createDiaryEntry(
@@ -171,7 +150,7 @@ export async function getAnalysisQuota(
   if (!snapshot.exists()) {
     return {
       userId,
-      date: toDateKey(new Date()),
+      date: getLocalDateKey(new Date()),
       count: 0,
       lastReset: Timestamp.now(),
     };
@@ -193,7 +172,7 @@ export async function incrementAnalysisQuota(
   return runTransaction(db, async (transaction) => {
     const snapshot = await transaction.get(quotaDocRef);
     const now = new Date();
-    const dateKey = toDateKey(now);
+    const dateKey = getLocalDateKey(now);
 
     if (!snapshot.exists()) {
       const quota: UserAnalysisQuota = {

@@ -5,23 +5,11 @@ import {
   storedDiaryEntrySchema,
   userAnalysisQuotaSchema,
 } from "@/lib/firestore/schemas";
+import { parseEntryDate, withLegacySkippedMealBehavior } from "@/lib/firestore/utils";
 import type { DiaryEntry, User, UserAnalysisQuota } from "@/lib/firestore/types";
 
 import type { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 
-function parseTimestampInput(value: string): Timestamp {
-  const timestampDate = new Date(value);
-  if (Number.isNaN(timestampDate.getTime())) {
-    return Timestamp.now();
-  }
-
-  return Timestamp.fromDate(timestampDate);
-}
-
-function parseEntryDate(date: string, time: string): Timestamp {
-  const combined = `${date}T${time}:00`;
-  return parseTimestampInput(combined);
-}
 
 function getOptionalDiaryEntryFields(input: {
   locationOther?: string;
@@ -49,17 +37,6 @@ function getOptionalDiaryEntryFields(input: {
   }
 
   return optionalFields;
-}
-
-function withLegacySkippedMealBehavior(
-  behavior: DiaryEntry["behavior"],
-  skippedMeal?: boolean,
-): DiaryEntry["behavior"] {
-  if (!skippedMeal || behavior.includes("skipped meal")) {
-    return behavior;
-  }
-
-  return [...behavior, "skipped meal"];
 }
 
 export function mapUserSnapshot(snapshot: QueryDocumentSnapshot<DocumentData>): User {

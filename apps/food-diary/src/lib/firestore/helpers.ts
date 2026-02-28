@@ -232,6 +232,43 @@ export async function migrateGuestEntries(
   return querySnapshot.docs.length;
 }
 
+/**
+ * Fetches document IDs of diary entries owned by the given user.
+ * Call this while still authenticated as that user (e.g. as the anonymous
+ * guest) so Firestore read rules are satisfied.
+ */
+export async function getGuestEntryIds(userId: string): Promise<string[]> {
+  const entriesQuery = query(
+    collection(db, "diaryEntries"),
+    where("userId", "==", userId),
+  );
+  const querySnapshot = await getDocs(entriesQuery);
+
+  return querySnapshot.docs.map((snapshot) => snapshot.id);
+}
+
+/**
+ * Transfers ownership of diary entries by document ID.
+ * The Firestore update rule allows setting `userId` to `request.auth.uid`,
+ * so the new (Google) user can update entries without needing read access.
+ */
+export async function migrateGuestEntriesByIds(
+  entryIds: string[],
+  newUserId: string,
+): Promise<number> {
+  if (entryIds.length === 0) return 0;
+
+  const updates = entryIds.map((entryId) =>
+    updateDoc(doc(db, "diaryEntries", entryId), {
+      userId: newUserId,
+    }),
+  );
+
+  await Promise.all(updates);
+
+  return entryIds.length;
+}
+
 export async function deleteDiaryEntryById(entryId: string): Promise<void> {
   await deleteDoc(doc(db, "diaryEntries", entryId));
 }

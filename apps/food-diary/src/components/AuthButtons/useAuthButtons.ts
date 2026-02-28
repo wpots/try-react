@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
+import { getGuestEntryIds } from "@/lib/firestore/helpers";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
 
@@ -51,10 +52,13 @@ export function useAuthButtons({ redirectPath }: UseAuthButtonsInput): UseAuthBu
     setSubmittingMethod("google");
 
     try {
+      // Pre-fetch entry IDs while still authenticated as the anonymous guest
+      const guestEntryIds = user?.isAnonymous ? await getGuestEntryIds(user.uid) : [];
+
       const result = await signInWithGoogle(user);
 
       if (result.mergedFromGuestId) {
-        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(result.mergedFromGuestId, result.user);
+        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(result.mergedFromGuestId, result.user, guestEntryIds);
 
         if (!mergeResult.success) {
           console.error(mergeResult.error ?? t("mergeUnknownError"));

@@ -6,6 +6,7 @@ import {
   DateInput,
   EmotionPicker,
   Select,
+  Text,
   TextArea,
   TimeInput,
   ToggleButtonGroup,
@@ -121,7 +122,7 @@ export function TraditionalForm({
           selectionMode="single"
         />
         {validationErrors.entryType ? (
-          <p className="text-sm text-ds-danger" role="alert">{validationErrors.entryType}</p>
+          <Text tone="danger" className="text-sm" role="alert">{validationErrors.entryType}</Text>
         ) : null}
       </FormSection>
 
@@ -139,7 +140,7 @@ export function TraditionalForm({
             aria-label={t("form.foodEaten")}
           />
           {validationErrors.foodEaten ? (
-            <p className="text-sm text-ds-danger" role="alert">{validationErrors.foodEaten}</p>
+            <Text tone="danger" className="text-sm" role="alert">{validationErrors.foodEaten}</Text>
           ) : null}
         </FormSection>
       ) : null}

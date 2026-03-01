@@ -95,6 +95,7 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
         return;
       }
       if (!result.success) {
+        console.error("[FoodPhotoAnalyzer] analysis error:", result.error, result.message);
         setStatus("error");
         return;
       }

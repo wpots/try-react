@@ -5,7 +5,11 @@ import { GoogleGenerativeAI, type Content } from "@google/generative-ai";
 import { extractUidFromIdToken } from "@/lib/firestore/rest-helpers";
 import { checkAnalysisQuota, incrementAnalysisQuota } from "@/lib/quota";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+function getGenAI() {
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) throw new Error("GEMINI_API_KEY environment variable is not set");
+  return new GoogleGenerativeAI(key);
+}
 
 export type AnalysisErrorCode = "NOT_AUTHENTICATED" | "DAILY_LIMIT_REACHED" | "ANALYSIS_FAILED";
 
@@ -89,7 +93,8 @@ export async function analyzeFoodImage(idToken: string, base64Image: string): Pr
 
   try {
     // 3. Call Gemini Flash
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const genAI = getGenAI();
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const result = await model.generateContent([
       ANALYSIS_PROMPT,
@@ -122,11 +127,12 @@ export async function analyzeFoodImage(idToken: string, base64Image: string): Pr
       initialModelResponse: rawText,
     };
   } catch (error) {
-    console.error("Gemini analysis failed:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Gemini analysis failed:", message);
     return {
       success: false,
       error: "ANALYSIS_FAILED",
-      message: "Failed to analyze image. Please try again.",
+      message: `Failed to analyze image: ${message}`,
     };
   }
 }
@@ -150,7 +156,8 @@ export async function chatAboutPhoto(
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const genAI = getGenAI();
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     // Reconstruct the Gemini session:
     //   turn 0 (user)  → original image + analysis prompt
@@ -195,7 +202,8 @@ export async function chatAboutPhoto(
       },
     };
   } catch (error) {
-    console.error("Chat failed:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Chat failed:", message);
     return { success: false, error: "ANALYSIS_FAILED" };
   }
 }

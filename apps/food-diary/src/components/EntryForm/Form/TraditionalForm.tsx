@@ -11,7 +11,7 @@ import {
   ToggleButtonGroup,
 } from "@repo/ui";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { type SubmitEvent, useEffect, useState } from "react";
 
 import { FormButton } from "@/components/FormButton";
 
@@ -28,6 +28,7 @@ import {
   isEntryType,
   locationOptions,
 } from "../utils/options";
+import { validateEntry, applyPrefill } from "../utils/validation";
 
 import type { TraditionalFormProps } from "../index";
 
@@ -49,7 +50,7 @@ export function TraditionalForm({
   onComplete,
   onDelete,
   onEntryChange,
-}: TraditionalFormProps): React.JSX.Element {
+}: Readonly<TraditionalFormProps>): React.JSX.Element {
   const t = useTranslations("entry");
   const [entry, setEntry] = useState(initialEntry);
   const [submitted, setSubmitted] = useState(false);
@@ -67,18 +68,23 @@ export function TraditionalForm({
     onEntryChange(entry);
   }, [entry, onEntryChange]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const errors: Record<string, string> = {};
+  useEffect(() => {
+    setValidationErrors({});
+  }, [entry]);
 
-    if (!entry.entryType) {
-      errors.entryType = t("errors.validationEntryType");
-    }
-    const hasSkippedMealBehavior = entry.behavior.includes("skipped meal");
-    const needsFoodEaten = entry.entryType !== "moment" && !hasSkippedMealBehavior;
-    if (needsFoodEaten && !entry.foodEaten.trim()) {
-      errors.foodEaten = t("errors.validationFoodEaten");
-    }
+  const handleEntryTypeChange = (values: string[]) => {
+    const selected = values[0];
+    const entryType = selected && isEntryType(selected) ? selected : null;
+    setEntry({ ...entry, entryType });
+  };
+
+  const handleFoodEatenChange = (value: string) => {
+    setEntry({ ...entry, foodEaten: value });
+  };
+
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const errors = validateEntry(entry, t);
 
     if (Object.keys(errors).length > 0) {
       setValidationErrors(errors);
@@ -105,15 +111,9 @@ export function TraditionalForm({
     );
   }
 
-  function handlePrefill(data: { foodName: string; mealType: string; description: string }): void {
-    const newEntryType = isEntryType(data.mealType) ? data.mealType : entry.entryType;
-    setEntry(prev => ({
-      ...prev,
-      entryType: newEntryType,
-      foodEaten: data.foodName || prev.foodEaten,
-      description: data.description || prev.description,
-    }));
-  }
+  const handlePrefill = (data: { foodName: string; mealType: string; description: string }): void => {
+    setEntry(prev => applyPrefill(prev, data));
+  };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-ds-l pt-ds-xl">
@@ -123,14 +123,7 @@ export function TraditionalForm({
         <ChipSelector
           options={toOptions(entryTypeOptions, t)}
           selectedValues={entry.entryType ? [entry.entryType] : []}
-          onSelectedValuesChange={values => {
-            const selected = values[0];
-            const entryType = selected && isEntryType(selected) ? selected : null;
-            setEntry({ ...entry, entryType });
-            if (validationErrors.entryType) {
-              setValidationErrors(prev => ({ ...prev, entryType: "" }));
-            }
-          }}
+          onSelectedValuesChange={handleEntryTypeChange}
           selectionMode="single"
           aria-describedby={validationErrors.entryType ? "entry-type-error" : undefined}
         />
@@ -145,12 +138,7 @@ export function TraditionalForm({
         <FormSection label={t("form.foodEaten")} required>
           <TextArea
             value={entry.foodEaten}
-            onChange={value => {
-              setEntry({ ...entry, foodEaten: value });
-              if (validationErrors.foodEaten) {
-                setValidationErrors(prev => ({ ...prev, foodEaten: "" }));
-              }
-            }}
+            onChange={handleFoodEatenChange}
             placeholder={t("placeholders.foodEaten")}
             aria-label={t("form.foodEaten")}
             aria-invalid={!!validationErrors.foodEaten}
@@ -186,13 +174,12 @@ export function TraditionalForm({
               placeholder={t("placeholders.location")}
               options={toOptions(locationOptions, t)}
               selectedKey={entry.location ?? null}
-              onSelectedKeyChange={key => {
-                const selected = key ?? "";
-                const location = selected && isEntryLocation(selected) ? selected : null;
+              onSelectedKeyChange={(key = "") => {
+                const location = key && isEntryLocation(key) ? key : null;
                 setEntry({
                   ...entry,
                   location,
-                  locationOther: selected === "anders" ? entry.locationOther : undefined,
+                  locationOther: key === "anders" ? entry.locationOther : undefined,
                 });
               }}
               aria-label={t("coach.location")}
@@ -217,13 +204,12 @@ export function TraditionalForm({
               placeholder={t("placeholders.company")}
               options={toOptions(companyOptions, t)}
               selectedKey={entry.company ?? null}
-              onSelectedKeyChange={key => {
-                const selected = key ?? "";
-                const company = selected && isEntryCompany(selected) ? selected : null;
+              onSelectedKeyChange={(key = "") => {
+                const company = key && isEntryCompany(key) ? key : null;
                 setEntry({
                   ...entry,
                   company,
-                  companyOther: selected === "anders" ? entry.companyOther : undefined,
+                  companyOther: key === "anders" ? entry.companyOther : undefined,
                 });
               }}
               aria-label={t("coach.company")}

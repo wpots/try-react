@@ -16,11 +16,7 @@ import {
   Button as AriaButton,
 } from "react-aria-components";
 
-import {
-  useLanguageSwitcher,
-  isLocale,
-  localeLabels,
-} from "@/components/LanguageSwitcher";
+import { useLanguageSwitcher, isLocale, localeLabels } from "@/components/LanguageSwitcher";
 import { locales } from "@/i18n/config";
 
 import type { Key } from "react";
@@ -80,17 +76,11 @@ export function ProfileDialog({
       isDismissable
       isOpen={isOpen}
       onOpenChange={handleOpenChange}
-      className={
-        "fixed inset-0 z-50 flex items-center justify-center " +
-        "bg-ds-on-surface/40 p-ds-m"
-      }
+      className={"fixed inset-0 z-50 flex items-center justify-center " + "bg-ds-on-surface/40 p-ds-m"}
     >
       <Modal className="w-full max-w-xl rounded-ds-md border border-ds-border bg-ds-surface p-ds-l shadow-ds-lg outline-none">
         <Dialog className="grid gap-ds-m outline-none">
-          <Heading
-            slot="title"
-            className="font-ds-heading-sm text-ds-on-surface"
-          >
+          <Heading slot="title" className="font-ds-heading-sm text-ds-on-surface">
             {t("dialogTitle")}
           </Heading>
 
@@ -106,15 +96,13 @@ export function ProfileDialog({
               onSelectionChange={handleSelectionChange}
               selectedKey={locale}
             >
-              <Label className="font-ds-label-sm text-ds-on-surface-secondary">
-                {t("languageLabel")}
-              </Label>
+              <Label className="font-ds-label-sm text-ds-on-surface-secondary">{t("languageLabel")}</Label>
               <AriaButton className="flex min-h-9 items-center justify-between rounded-ds-sm border border-ds-border bg-ds-surface px-ds-s py-ds-xxs font-ds-body-sm text-ds-on-surface">
                 <SelectValue />
               </AriaButton>
               <Popover className="rounded-ds-sm border border-ds-border bg-ds-surface shadow-ds-md">
                 <ListBox className="grid gap-1 p-1">
-                  {locales.map((option) => (
+                  {locales.map(option => (
                     <ListBoxItem
                       className="cursor-pointer rounded-ds-sm px-ds-s py-ds-xxs font-ds-body-sm text-ds-on-surface hover:bg-ds-surface-muted"
                       id={option}
@@ -169,19 +157,11 @@ export function ProfileDialog({
               type="button"
               variant="destructive"
             >
-              {isDeletingAccount
-                ? t("deleteAccountLoading")
-                : t("deleteAccount")}
+              {isDeletingAccount ? t("deleteAccountLoading") : t("deleteAccount")}
             </Button>
           </div>
 
-          <Button
-            disabled={isBusy}
-            onClick={onClose}
-            size="link"
-            type="button"
-            variant="link"
-          >
+          <Button disabled={isBusy} onClick={onClose} size="link" type="button" variant="link">
             {t("close")}
           </Button>
         </Dialog>

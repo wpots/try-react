@@ -14,11 +14,7 @@ import {
   SelectValue,
 } from "react-aria-components";
 
-import {
-  useLanguageSwitcher,
-  isLocale,
-  localeLabels,
-} from "@/components/LanguageSwitcher";
+import { useLanguageSwitcher, isLocale, localeLabels } from "@/components/LanguageSwitcher";
 import { locales } from "@/i18n/config";
 import { Link as I18nLink } from "@/i18n/navigation";
 
@@ -49,10 +45,7 @@ export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element 
         buttonLabel={cms("accountMenuLabel")}
         triggerContent={
           <>
-            <span
-              className="flex h-4 w-4 flex-col justify-between md:hidden"
-              aria-hidden
-            >
+            <span className="flex h-4 w-4 flex-col justify-between md:hidden" aria-hidden>
               <span className="block h-0.5 w-4 bg-current" />
               <span className="block h-0.5 w-4 bg-current" />
               <span className="block h-0.5 w-4 bg-current" />
@@ -83,14 +76,16 @@ export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element 
               selectedKey={locale}
             >
               <Label className="text-sm font-medium text-ds-text-strong">
-                <Typography variant="body" className="text-sm text-ds-text-strong">{label}</Typography>
+                <Typography variant="body" className="text-sm text-ds-text-strong">
+                  {label}
+                </Typography>
               </Label>
               <Button className="flex min-h-9 min-w-40 items-center justify-between rounded-md border border-ds-border bg-ds-surface px-3 py-2 text-sm text-ds-text-strong">
                 <SelectValue />
               </Button>
               <Popover className="rounded-md border border-ds-border bg-ds-surface shadow-lg">
                 <ListBox className="grid gap-1 p-1">
-                  {locales.map((option) => (
+                  {locales.map(option => (
                     <ListBoxItem
                       className="cursor-pointer rounded-sm px-2 py-1 text-sm text-ds-text-strong"
                       id={option}

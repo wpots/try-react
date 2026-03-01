@@ -15,7 +15,7 @@ Items identified during architecture review (2026-02-26).
 
 ## Bugs
 
-- [ ] **Favicon shows Vercel branding** — The browser tab still displays the default Vercel favicon instead of the Pebbles app icon. Replace `public/favicon.ico` (and any `icon.*` / `apple-icon.*` files) in `apps/food-diary/public/` with the correct Pebbles branding assets.
+- [x] **Favicon shows Vercel branding** — Regenerated `src/app/favicon.ico` (16×16 + 32×32) from the existing Pebbles PNG assets in `public/img/icons/`. `icon.png` and `apple-icon.png` were already correct.
 
 ## Developer Experience
 

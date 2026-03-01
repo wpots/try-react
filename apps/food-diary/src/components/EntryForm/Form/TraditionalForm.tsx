@@ -67,7 +67,9 @@ export function TraditionalForm({
     onEntryChange(entry);
   }, [entry, onEntryChange]);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+  const handleSubmit = (
+    event: Parameters<JSX.IntrinsicElements['form']['onSubmit']>[0],
+  ) => {
     event.preventDefault();
     const errors: Record<string, string> = {};
 

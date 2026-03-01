@@ -31,9 +31,7 @@ function getSingleParam(value: string | string[] | undefined): string | undefine
   return value;
 }
 
-export default async function CreateEntryPage({
-  searchParams,
-}: CreateEntryPageProps): Promise<React.JSX.Element> {
+export default async function CreateEntryPage({ searchParams }: CreateEntryPageProps): Promise<React.JSX.Element> {
   const resolvedSearchParams = await searchParams;
   const modeParam = getSingleParam(resolvedSearchParams.mode);
   const fromParam = getSingleParam(resolvedSearchParams.from);
@@ -46,10 +44,5 @@ export default async function CreateEntryPage({
         ? "form"
         : "chat";
 
-  return (
-    <CreateEntryTemplate
-      entryId={entryIdParam}
-      initialMode={initialMode}
-    />
-  );
+  return <CreateEntryTemplate entryId={entryIdParam} initialMode={initialMode} />;
 }

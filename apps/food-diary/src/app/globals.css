@@ -36,11 +36,7 @@
   }
 
   .dashboard-hero-orb-a {
-    background: color-mix(
-      in srgb,
-      var(--color-ds-brand-primary) 35%,
-      transparent
-    );
+    background: color-mix(in srgb, var(--color-ds-brand-primary) 35%, transparent);
     height: 8rem;
     width: 8rem;
     right: 1rem;
@@ -48,11 +44,7 @@
   }
 
   .dashboard-hero-orb-b {
-    background: color-mix(
-      in srgb,
-      var(--color-ds-success) 35%,
-      transparent
-    );
+    background: color-mix(in srgb, var(--color-ds-success) 35%, transparent);
     height: 6rem;
     width: 6rem;
     left: 1rem;

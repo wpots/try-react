@@ -13,14 +13,10 @@ Items identified during architecture review (2026-02-26).
 
 - [x] **Cleanup** — Remove empty `src/utils/classnames/` directory. Move `lib/aboutContent.ts` to content/i18n message files. _(PR #6, merged)_
 
+## Bugs
+
+- [ ] **Favicon shows Vercel branding** — The browser tab still displays the default Vercel favicon instead of the Pebbles app icon. Replace `public/favicon.ico` (and any `icon.*` / `apple-icon.*` files) in `apps/food-diary/public/` with the correct Pebbles branding assets.
+
 ## Developer Experience
 
 - [x] **Add CI quality checks** — Add `pnpm lint`, `pnpm typecheck`, `pnpm build` as pre-commit hooks or CI pipeline steps. Ensure all PRs pass quality gates before merge. _(PR #12, open)_
-
-## Observability & Security
-
-- [ ] **Google Analytics** — Add GA4 tracking with cookie consent gate, page-view and key custom events. _(Story 016)_
-- [ ] **Aikido security scanning** — Connect Aikido GitHub App for SAST, SCA, and secrets detection on every PR. _(Story 017)_
-- [ ] **Monitoring & health checks** — `/api/health` endpoint, UptimeRobot uptime checks, Sentry error tracking, Vercel Analytics for Web Vitals. Optional: Grafana Cloud for custom metrics dashboards. _(Story 018)_
-- [ ] **GDPR compliance (core data rights)** — Cookie consent banner (gates GA4), data export (right to portability), complete account deletion flow for authenticated users, and retention policy. _(Story 020)_
-- [ ] **Profile Privacy & Help tabs** — Add Privacy and Help tabs to both profile and guest dialogs, including privacy-page access, issue reporting, and donation link. _(Story 023)_

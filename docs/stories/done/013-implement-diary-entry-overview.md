@@ -24,51 +24,43 @@ As a developer, I need to create the diary entry overview screen, which is avail
 ## 5. Steps to Implement
 
 1. **Fetch Entries for Authenticated User:**
-
-- Use Firestore helper `getDiaryEntriesByUser(userId)`.
-- Keep server action support available, but dashboard flow may load via client helper.
+  - Use Firestore helper `getDiaryEntriesByUser(userId)`.
+  - Keep server action support available, but dashboard flow may load via client helper.
 
 2. **Display Entry Cards in Day View:**
-
-- Use `DayEntryCard` to display entry information:
-  - Entry type and time
-  - Moods/emotions
-  - Location and company
-  - Notes/description
-  - Behavior state
-- Support edit/delete and card expansion interactions.
+  - Use `DayEntryCard` to display entry information:
+    - Entry type and time
+    - Moods/emotions
+    - Location and company
+    - Notes/description
+    - Behavior state
+  - Support edit/delete and card expansion interactions.
 
 3. **Render Overview in Dashboard Template:**
-
-- Use `DashboardTemplate` as overview surface.
-- Provide day/week/month view modes.
-- Group entries by local date key.
+  - Use `DashboardTemplate` as overview surface.
+  - Provide day/week/month view modes.
+  - Group entries by local date key.
 
 4. **Add Loading and Empty States:**
-
-- Show loading state while entries are fetched.
-- Show empty state messaging when no entries exist in selected period/day.
+  - Show loading state while entries are fetched.
+  - Show empty state messaging when no entries exist in selected period/day.
 
 5. **Add Translations:**
-
-- Ensure all dashboard and card text is translated in Dutch and English.
+  - Ensure all dashboard and card text is translated in Dutch and English.
 
 6. **Add Date Formatting:**
-
-- Use locale-aware formatting via `Intl.DateTimeFormat`.
-- Show date labels for selected day/week/month periods.
+  - Use locale-aware formatting via `Intl.DateTimeFormat`.
+  - Show date labels for selected day/week/month periods.
 
 7. **Routing and Main Access:**
-
-- Overview is accessed via authenticated `/[locale]/dashboard` route.
-- Home route may redirect authenticated users to dashboard.
+  - Overview is accessed via authenticated `/[locale]/dashboard` route.
+  - Home route may redirect authenticated users to dashboard.
 
 8. **Testing:**
-
-- Verify entries are fetched correctly.
-- Verify grouping by date and period navigation.
-- Test empty and loading states.
-- Verify translations work.
+  - Verify entries are fetched correctly.
+  - Verify grouping by date and period navigation.
+  - Test empty and loading states.
+  - Verify translations work.
 
 ## 6. Acceptance Criteria
 

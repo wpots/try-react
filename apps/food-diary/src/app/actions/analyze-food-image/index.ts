@@ -1,6 +1,6 @@
 "use server";
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, type Content } from "@google/generative-ai";
 
 import { extractUidFromIdToken } from "@/lib/firestore/rest-helpers";
 import { checkAnalysisQuota, incrementAnalysisQuota } from "@/lib/quota";
@@ -156,10 +156,7 @@ export async function chatAboutPhoto(
     //   turn 0 (user)  → original image + analysis prompt
     //   turn 1 (model) → initial JSON analysis
     //   turn 2+ (user/model) → subsequent conversation turns
-    const geminiHistory: {
-      role: "user" | "model";
-      parts: { text?: string; inlineData?: { data: string; mimeType: string } }[];
-    }[] = [
+    const geminiHistory: Content[] = [
       {
         role: "user",
         parts: [{ text: ANALYSIS_PROMPT }, { inlineData: { data: base64Image, mimeType: "image/jpeg" } }],

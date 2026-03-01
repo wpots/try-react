@@ -2,7 +2,6 @@
 
 import { Button, Typography } from "@repo/ui";
 import { useTranslations } from "next-intl";
-import type { Key } from "react";
 import {
   Dialog,
   Heading,
@@ -23,6 +22,8 @@ import {
   localeLabels,
 } from "@/components/LanguageSwitcher";
 import { locales } from "@/i18n/config";
+
+import type { Key } from "react";
 
 interface ProfileDialogProps {
   error: string | null;

@@ -22,6 +22,7 @@
     "menuLabel": "Profile",
     "dialogTitle": "Profile",
     "dialogBody": "Manage your account and stored data.",
+    "languageLabel": "Language",
     "wipeBody": "You can remove all data saved for this account.",
     "wipeWarning": "This cannot be undone.",
     "wipeData": "Remove all data",

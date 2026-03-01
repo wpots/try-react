@@ -89,7 +89,7 @@ export async function analyzeFoodImage(idToken: string, base64Image: string): Pr
 
   try {
     // 3. Call Gemini Flash
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const result = await model.generateContent([
       ANALYSIS_PROMPT,
@@ -150,7 +150,7 @@ export async function chatAboutPhoto(
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     // Reconstruct the Gemini session:
     //   turn 0 (user)  → original image + analysis prompt

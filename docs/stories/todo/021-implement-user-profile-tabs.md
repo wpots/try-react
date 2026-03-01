@@ -1,8 +1,8 @@
-# User Story 021: Implement User Profile with Tabs
+# User Story 021: Implement User Profile with Core Tabs
 
 ## 1. Title
 
-Rebuild the profile and guest mode dialogs into tabbed interfaces with Settings, Data & Account, and Affirmations tabs.
+Rebuild the profile and guest mode dialogs into tabbed interfaces with Settings, Data & Account, and Affirmations tabs (core tab foundation).
 
 ## 2. Goal
 
@@ -243,11 +243,11 @@ As a developer, I need a reusable, accessible `Tabs` component built with React 
 
 ## 7. Notes
 
-- Both `ProfileDialog` and `GuestModeDialog` currently use flat layouts. This refactor gives them a consistent tabbed structure, separates concerns, and makes both dialogs extensible for future tabs (e.g., notification preferences, export data for GDPR story 020).
+- Both `ProfileDialog` and `GuestModeDialog` currently use flat layouts. This refactor gives them a consistent tabbed structure, separates concerns, and makes both dialogs extensible for follow-up tabs.
 - The `SettingsTab` (language selector) is shared between both dialogs. This also means guest users gain the ability to switch language from their dialog — currently only available in the profile dialog.
 - The `AffirmationsTab` uses an `isGuest` prop to toggle between full CRUD and a locked prompt, keeping it a single component with two modes.
 - React Aria's `Tabs` from `react-aria-components` provides full keyboard and screen reader support out of the box.
 - The 20-affirmation limit and 280-char max are intentionally modest to keep Firestore document size small and prevent abuse.
 - Guest users don't have a `/users/{userId}` document, so the Affirmations tab shows a locked state with a prompt to log in with Google. This is intentional — it serves as a gentle nudge to convert.
 - The affirmation merge logic should be deterministic — `pickAffirmation` already uses a hash-based index, so it will naturally distribute across the larger pool.
-- This story pairs well with story 020 (GDPR compliance) since the Data & Account tab could later include a "Download my data" button.
+- Privacy and Help tabs are intentionally out of scope here and are tracked in Story 023 to avoid duplicate implementation scope.

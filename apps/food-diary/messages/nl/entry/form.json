@@ -1,4 +1,10 @@
 {
+  "analyzePhoto": "Foto analyseren",
+  "analyzing": "Analyseren…",
+  "analysisComplete": "Analyse klaar! Controleer de voorgestelde waarden hieronder.",
+  "analysisError": "Kon de foto niet analyseren. Probeer het opnieuw of vul de gegevens zelf in.",
+  "quotaLimitReached": "Je hebt vandaag alle 3 AI-analyses gebruikt. Je kunt de gegevens nog steeds handmatig invullen.",
+  "quotaRemaining": "{count, plural, one {# analyse} other {# analyses}} resterend vandaag",
   "entryType": "Wat voor moment wil je vastleggen?",
   "datetime": "Wanneer was dit?",
   "location": "Waar en met wie was je?",

@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { FormButton } from "@/components/FormButton";
 
 import { FormSection } from "./FormSection";
+import { FoodPhotoAnalyzer } from "../FoodPhotoAnalyzer";
 import { EntryFormButton } from "../partials/EntryFormButton";
 import {
   areEntryBehaviors,
@@ -104,8 +105,20 @@ export function TraditionalForm({
     );
   }
 
+  function handlePrefill(data: { foodName: string; mealType: string; description: string }): void {
+    const newEntryType = isEntryType(data.mealType) ? data.mealType : entry.entryType;
+    setEntry(prev => ({
+      ...prev,
+      entryType: newEntryType,
+      foodEaten: data.foodName || prev.foodEaten,
+      description: data.description || prev.description,
+    }));
+  }
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-ds-l pt-ds-xl">
+      <FoodPhotoAnalyzer onPrefill={handlePrefill} />
+
       <FormSection label={t("form.entryType")} required>
         <ChipSelector
           options={toOptions(entryTypeOptions, t)}

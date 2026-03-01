@@ -33,7 +33,7 @@ export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element 
 
   return (
     <>
-      <Navigation className="hidden md:block">
+      <Navigation aria-label={cms("mainNavLabel")} className="hidden md:block">
         {navItems.map(item => (
           <Navigation.Item key={item.id} id={item.id} href={item.href} className="text-ds-on-surface">
             {item.children}
@@ -75,19 +75,19 @@ export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element 
               onSelectionChange={handleSelectionChange}
               selectedKey={locale}
             >
-              <Label className="text-sm font-medium text-ds-text-strong">
-                <Typography variant="body" className="text-sm text-ds-text-strong">
+              <Label className="text-sm font-medium text-ds-on-surface">
+                <Typography variant="body" className="text-sm text-ds-on-surface">
                   {label}
                 </Typography>
               </Label>
-              <Button className="flex min-h-9 min-w-40 items-center justify-between rounded-md border border-ds-border bg-ds-surface px-3 py-2 text-sm text-ds-text-strong">
+              <Button className="flex min-h-9 min-w-40 items-center justify-between rounded-md border border-ds-border bg-ds-surface px-3 py-2 text-sm text-ds-on-surface">
                 <SelectValue />
               </Button>
               <Popover className="rounded-md border border-ds-border bg-ds-surface shadow-lg">
                 <ListBox className="grid gap-1 p-1">
                   {locales.map(option => (
                     <ListBoxItem
-                      className="cursor-pointer rounded-sm px-2 py-1 text-sm text-ds-text-strong"
+                      className="cursor-pointer rounded-sm px-2 py-1 text-sm text-ds-on-surface"
                       id={option}
                       key={option}
                     >

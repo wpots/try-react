@@ -1,8 +1,20 @@
 import { Card, Container, Section, Typography } from "@repo/ui";
 import { useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { AuthButtons } from "@/components/AuthButtons";
 import { PageHeader } from "@/components/PageHeader";
+
+import type { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: "auth" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
+  return {
+    title: `${t("loginTitle")} — ${tCommon("brand.tagline")}`,
+  };
+}
 
 export default function LoginPage(): React.JSX.Element {
   const t = useTranslations("auth");

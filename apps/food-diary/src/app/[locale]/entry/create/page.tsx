@@ -1,5 +1,18 @@
+import { getLocale, getTranslations } from "next-intl/server";
+
 import type { EntryFormMode } from "@/components/EntryForm";
 import { CreateEntryTemplate } from "@/templates/CreateEntryTemplate";
+
+import type { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: "dashboard" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
+  return {
+    title: `${t("addEntry")} — ${tCommon("brand.tagline")}`,
+  };
+}
 
 interface CreateEntryPageSearchParams {
   mode?: string | string[];
@@ -19,9 +32,7 @@ function getSingleParam(value: string | string[] | undefined): string | undefine
   return value;
 }
 
-export default async function CreateEntryPage({
-  searchParams,
-}: CreateEntryPageProps): Promise<React.JSX.Element> {
+export default async function CreateEntryPage({ searchParams }: CreateEntryPageProps): Promise<React.JSX.Element> {
   const resolvedSearchParams = await searchParams;
   const modeParam = getSingleParam(resolvedSearchParams.mode);
   const fromParam = getSingleParam(resolvedSearchParams.from);
@@ -34,10 +45,5 @@ export default async function CreateEntryPage({
         ? "form"
         : "chat";
 
-  return (
-    <CreateEntryTemplate
-      entryId={entryIdParam}
-      initialMode={initialMode}
-    />
-  );
+  return <CreateEntryTemplate entryId={entryIdParam} initialMode={initialMode} />;
 }

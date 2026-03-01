@@ -187,7 +187,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     } finally {
       setSubmittingAction(null);
     }
-  }, [isGuest, router, submittingAction, tProfile, user]);
+  }, [isGuest, router, submittingAction, tAuth, tProfile, user]);
 
   const handleMenuAction = useCallback(
     async (key: Key): Promise<void> => {

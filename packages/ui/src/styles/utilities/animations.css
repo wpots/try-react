@@ -63,3 +63,15 @@
 .animate-slide-up {
   animation: slide-up 0.6s ease-out forwards;
 }
+
+/* Respect prefers-reduced-motion: disable all CSS animations/transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

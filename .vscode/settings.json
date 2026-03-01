@@ -1,0 +1,8 @@
+{
+  "chat.tools.terminal.autoApprove": {
+    "git checkout": true,
+    "pnpm": true,
+    "git restore": true,
+    "git add": true
+  }
+}

@@ -67,7 +67,7 @@ export function TraditionalForm({
     onEntryChange(entry);
   }, [entry, onEntryChange]);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const errors: Record<string, string> = {};
 
@@ -88,7 +88,7 @@ export function TraditionalForm({
     setValidationErrors({});
     onComplete(entry);
     setSubmitted(true);
-  }
+  };
 
   if (submitted) {
     return (
@@ -132,9 +132,12 @@ export function TraditionalForm({
             }
           }}
           selectionMode="single"
+          aria-describedby={validationErrors.entryType ? "entry-type-error" : undefined}
         />
         {validationErrors.entryType ? (
-          <Typography variant="body" size="sm" className="text-danger" role="alert">{validationErrors.entryType}</Typography>
+          <Typography id="entry-type-error" variant="body" size="sm" className="text-danger" role="alert">
+            {validationErrors.entryType}
+          </Typography>
         ) : null}
       </FormSection>
 
@@ -150,9 +153,13 @@ export function TraditionalForm({
             }}
             placeholder={t("placeholders.foodEaten")}
             aria-label={t("form.foodEaten")}
+            aria-invalid={!!validationErrors.foodEaten}
+            aria-describedby={validationErrors.foodEaten ? "food-eaten-error" : undefined}
           />
           {validationErrors.foodEaten ? (
-            <Typography variant="body" size="sm" className="text-danger" role="alert">{validationErrors.foodEaten}</Typography>
+            <Typography id="food-eaten-error" variant="body" size="sm" className="text-danger" role="alert">
+              {validationErrors.foodEaten}
+            </Typography>
           ) : null}
         </FormSection>
       ) : null}

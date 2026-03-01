@@ -35,7 +35,7 @@ export function CreateEntryTemplate({ entryId, initialMode = "chat" }: CreateEnt
   }, []);
 
   return (
-    <main className="flex h-dvh flex-col">
+    <main id="main-content" className="flex h-dvh flex-col">
       <PageHeader isBookmarked={isBookmarked} onBackClick={handleBackClick} onBookmarkClick={handleBookmarkClick} />
       <EntryForm
         entryId={entryId}

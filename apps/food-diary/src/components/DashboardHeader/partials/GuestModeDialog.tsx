@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Text } from "@repo/ui";
+import { Button, Typography } from "@repo/ui";
 import { useTranslations } from "next-intl";
 import {
   Dialog,
@@ -61,26 +61,26 @@ export function GuestModeDialog({
             {t("dialogTitle")}
           </Heading>
 
-          <Text className="font-ds-body-base text-ds-on-surface-secondary">
+          <Typography variant="body" className="font-ds-body-base text-ds-on-surface-secondary">
             {t("dialogBody")}
-          </Text>
-          <Text className="font-ds-body-base text-ds-on-surface-secondary">
+          </Typography>
+          <Typography variant="body" className="font-ds-body-base text-ds-on-surface-secondary">
             {t("mergeBody")}
-          </Text>
+          </Typography>
 
           <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
-            <Text className="font-ds-body-sm text-ds-on-surface-secondary">
+            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
               {t("wipeBody")}
-            </Text>
-            <Text className="font-ds-label-sm" tone="danger">
+            </Typography>
+            <Typography variant="body" className="font-ds-label-sm text-danger">
               {t("wipeWarning")}
-            </Text>
+            </Typography>
           </div>
 
           {error ? (
-            <Text className="font-ds-body-sm" tone="danger">
+            <Typography variant="body" className="font-ds-body-sm text-danger">
               {error}
-            </Text>
+            </Typography>
           ) : null}
 
           <div className="grid gap-ds-xs sm:grid-cols-2">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, HamburgerMenu, Text, cn } from "@repo/ui";
+import { Avatar, HamburgerMenu, Typography, cn } from "@repo/ui";
 import { User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Menu, MenuItem } from "react-aria-components";
@@ -102,9 +102,9 @@ export function DashboardHeader({
 
             {error ? (
               <MenuItem id="auth-error" isDisabled className="cursor-default px-ds-s py-ds-xs">
-                <Text className="text-xs" tone="danger">
+                <Typography variant="body" className="text-xs text-danger">
                   {error}
-                </Text>
+                </Typography>
               </MenuItem>
             ) : null}
           </Menu>

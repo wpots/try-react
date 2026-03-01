@@ -17,6 +17,13 @@
   "errors": {
     "notAuthenticated": "User not authenticated",
     "saveFailed": "Failed to save entry",
-    "deleteFailed": "Failed to delete entry"
+    "deleteFailed": "Failed to delete entry",
+    "invalidSession": "Your session expired. Please sign in again.",
+    "networkError": "Network error. Please check your connection.",
+    "unknownError": "An unexpected error occurred.",
+    "validationFoodEaten": "Please enter what you ate or drank.",
+    "validationDate": "Please enter a date.",
+    "validationTime": "Please enter a time.",
+    "validationEntryType": "Please select an entry type."
   }
 }

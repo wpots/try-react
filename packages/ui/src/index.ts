@@ -13,9 +13,6 @@ export type { TimeInputProps } from "./components/TimeInput";
 export { OverviewCard } from "./components/OverviewCard";
 export type { OverviewCardProps } from "./components/OverviewCard";
 
-export { Text } from "./components/Text";
-export type { TextProps } from "./components/Text";
-
 export { Card, CardActions, CardHeader } from "./components/Card";
 export type {
   CardActionsProps,

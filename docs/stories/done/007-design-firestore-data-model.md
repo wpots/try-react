@@ -35,10 +35,9 @@ As a developer, I need to design the Firestore data model that will store all ap
 
 3. **Image and AI Analysis UX:**
    - `FileTrigger` from React Aria Components as the default image picker
-   - `DropZone` is optional and only for enhanced desktop drag-and-drop UX
    - `Button` for AI analyze trigger
    - `TextField` or read-only text display for AI result preview before save
-   - Existing app-level upload component (introduced in Story 010) should populate `imageUrl` and `imagePublicId`
+   - The photo is used transiently for Gemini analysis only — no image is uploaded or persisted (see Story 010)
 
 4. **Validation and Feedback:**
    - RAC form validation wiring for client-side required/format constraints

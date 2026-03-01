@@ -1,7 +1,7 @@
 "use client";
 
 import imageCompression from "browser-image-compression";
-import { CameraIcon, Loader2Icon, SendHorizonalIcon, SparklesIcon } from "lucide-react";
+import { CameraIcon, Loader2Icon, SendHorizonalIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
@@ -303,52 +303,56 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
   const showChat = status === "success" && initialModelResponseRef.current !== null;
 
   return (
-    <div className="flex flex-col gap-ds-s rounded-ds-lg border border-ds-border-subtle bg-ds-surface-muted p-ds-m">
-      <div className="flex items-center gap-ds-s">
-        <SparklesIcon className="size-4 text-ds-interactive shrink-0" aria-hidden="true" />
-        <span className="font-ds-label-base text-ds-text text-sm">{t("analyzePhoto")}</span>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-ds-m">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          disabled={isDisabled}
-          onChange={e => void handleFileSelect(e.target.files)}
-        />
-        <button
-          type="button"
-          disabled={isDisabled}
-          onClick={() => fileInputRef.current?.click()}
-          className="inline-flex items-center gap-ds-s rounded-ds-md border border-ds-border-subtle bg-ds-surface px-ds-l py-ds-s font-ds-label-base text-sm text-ds-text transition-colors hover:bg-ds-surface-strong disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-        >
-          {status === "analyzing" ? (
-            <>
-              <Loader2Icon className="size-4 animate-spin" aria-hidden="true" />
-              <span>{t("analyzing")}</span>
-            </>
-          ) : (
-            <>
-              <CameraIcon className="size-4" aria-hidden="true" />
-              <span>{t("analyzePhoto")}</span>
-            </>
-          )}
-        </button>
-
-        {remaining !== null && status !== "quota-reached" && (
-          <span className="text-xs text-ds-text-muted">{t("quotaRemaining", { count: remaining })}</span>
+    <div className="flex flex-col gap-1">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        disabled={isDisabled}
+        onChange={e => void handleFileSelect(e.target.files)}
+      />
+      <button
+        type="button"
+        disabled={isDisabled}
+        onClick={() => fileInputRef.current?.click()}
+        className="self-start inline-flex items-center gap-1.5 rounded-ds-md border border-ds-border-subtle bg-ds-surface px-ds-s py-1 text-xs text-ds-text transition-colors hover:bg-ds-surface-strong disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+      >
+        {status === "analyzing" ? (
+          <>
+            <Loader2Icon className="size-3.5 animate-spin" aria-hidden="true" />
+            <span>{t("analyzing")}</span>
+          </>
+        ) : (
+          <>
+            <CameraIcon className="size-3.5" aria-hidden="true" />
+            <span>{t("analyzePhoto")}</span>
+          </>
         )}
-      </div>
+      </button>
+
+      {/* Scans remaining */}
+      {status === "quota-reached" ? (
+        <p className="text-xs text-ds-text-muted">{t("quotaLimitReached")}</p>
+      ) : null}
+      {status !== "quota-reached" && remaining !== null ? (
+        <p className="text-xs text-ds-text-muted">{t("quotaRemaining", { count: remaining })}</p>
+      ) : null}
+
+      {/* Error */}
+      {status === "error" ? (
+        <p className="text-xs text-ds-danger" role="alert">
+          {t("analysisError")}
+        </p>
+      ) : null}
 
       {/* Image preview during analysis */}
       {previewUrl && status === "analyzing" ? (
-        <div className="relative w-24 h-24 rounded-ds-md overflow-hidden border border-ds-border-subtle">
+        <div className="relative mt-ds-s w-20 h-20 rounded-ds-md overflow-hidden border border-ds-border-subtle">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={previewUrl} alt="" className="w-full h-full object-cover" aria-hidden="true" />
           <div className="absolute inset-0 flex items-center justify-center bg-ds-surface/60">
-            <Loader2Icon className="size-6 animate-spin text-ds-interactive" aria-hidden="true" />
+            <Loader2Icon className="size-5 animate-spin text-ds-interactive" aria-hidden="true" />
           </div>
         </div>
       ) : null}
@@ -365,17 +369,6 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
           onSend={() => void handleChatSend()}
           onPrefill={onPrefill}
         />
-      ) : null}
-
-      {/* Non-success status messages */}
-      {status === "error" ? (
-        <p className="text-sm text-ds-danger" role="alert">
-          {t("analysisError")}
-        </p>
-      ) : null}
-
-      {status === "quota-reached" ? (
-        <output className="text-sm text-ds-text-muted">{t("quotaLimitReached")}</output>
       ) : null}
     </div>
   );

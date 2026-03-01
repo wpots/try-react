@@ -7,30 +7,7 @@ import { FoodPhotoAnalyzer } from "../FoodPhotoAnalyzer";
 import { EntryFormButton } from "../partials/EntryFormButton";
 import { behaviorOptions, companyOptions, locationOptions } from "../utils/options";
 
-import type { WizardStep } from "../utils/steps";
-
-interface CoachChatFollowupInputProps {
-  step: WizardStep;
-  inputChips: string[];
-  inputEmotions: string[];
-  inputBookmarked: boolean | null;
-  inputOtherText: string;
-  inputText: string;
-  setInputChips: (value: string[]) => void;
-  setInputEmotions: (value: string[]) => void;
-  setInputBookmarked: (value: boolean | null) => void;
-  setInputOtherText: (value: string) => void;
-  setInputText: (value: string) => void;
-  onSkip: () => void;
-  onStepBack: () => void;
-  onSubmitBehavior: () => void;
-  onSubmitBookmark: (override?: boolean | null) => void;
-  onSubmitCompany: (override?: string) => void;
-  onSubmitDescription: () => void;
-  onSubmitEmotions: () => void;
-  onSubmitFood: () => void;
-  onSubmitLocation: (override?: string) => void;
-}
+import type { CoachChatFollowupInputProps } from ".";
 
 function toOptions(
   options: { value: string; labelKey: string }[],

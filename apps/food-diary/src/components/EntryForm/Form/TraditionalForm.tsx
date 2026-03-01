@@ -73,8 +73,6 @@ export function TraditionalForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-ds-l pt-ds-xl">
-      <FoodPhotoAnalyzer onPrefill={handlePrefill} />
-
       <FormSection label={t("form.entryType")} required>
         <ChipSelector
           options={toOptions(entryTypeOptions, t)}
@@ -105,6 +103,9 @@ export function TraditionalForm({
               {validationErrors.foodEaten}
             </Typography>
           ) : null}
+          <div className="flex justify-end">
+            <FoodPhotoAnalyzer onPrefill={handlePrefill} />
+          </div>
         </FormSection>
       ) : null}
 

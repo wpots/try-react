@@ -1,10 +1,10 @@
 {
-  "analyzePhoto": "Foto analyseren",
+  "analyzePhoto": "AI-analyse",
   "analyzing": "Analyseren…",
   "analysisComplete": "Analyse klaar! Controleer de voorgestelde waarden hieronder.",
   "analysisError": "Kon de foto niet analyseren. Probeer het opnieuw of vul de gegevens zelf in.",
-  "quotaLimitReached": "Je hebt vandaag alle 3 AI-analyses gebruikt. Je kunt de gegevens nog steeds handmatig invullen.",
-  "quotaRemaining": "{count, plural, one {# analyse} other {# analyses}} resterend vandaag",
+  "quotaLimitReached": "Je hebt vandaag alle 10 AI-analyses gebruikt. Je kunt de gegevens nog steeds handmatig invullen.",
+  "quotaRemaining": "{count, plural, one {# scan} other {# scans}} resterend",
   "chatPlaceholder": "Stel een vervolgvraag…",
   "chatSend": "Versturen",
   "chatApplySuggestions": "Suggesties toepassen",

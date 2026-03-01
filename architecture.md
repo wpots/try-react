@@ -117,12 +117,8 @@ flows rely on them today:
 
 Not implemented in the current UI flow:
 
-- Cloudinary image upload workflow
 - Gemini food analysis workflow
 - End-to-end quota-driven analysis UX
-
-Schema support for `imageUrl` and `imagePublicId` exists, but upload and
-analysis actions/UI are not wired as shipped features.
 
 ## 6. Known Gaps and Risks
 
@@ -143,9 +139,8 @@ analysis actions/UI are not wired as shipped features.
 - Resolve user identity from trusted server context for writes.
 - Remove fallback client-side mutation paths that bypass server boundaries.
 
-### Phase 2: Complete Media + AI Flow
+### Phase 2: Complete AI Flow
 
-- Implement Cloudinary upload action + UI.
 - Implement Gemini analysis action + quota UX.
 - Persist image metadata in create/edit and dashboard display paths.
 

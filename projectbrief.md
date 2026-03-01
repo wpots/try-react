@@ -57,7 +57,6 @@ People who want to:
 
 ## 4. Roadmap Scope (Not Fully Implemented Yet)
 
-- Cloudinary image upload flow (UI + action + metadata lifecycle).
 - Gemini image analysis flow with daily quota UX.
 - Unified server-action-first data mutation architecture.
 - Production hardening:

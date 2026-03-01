@@ -10,7 +10,7 @@ To deploy the Food Diary monorepo application to Vercel, ensuring Turborepo buil
 
 ## 3. Description
 
-As a developer, I need to deploy the React Food Diary application to Vercel. This involves configuring the monorepo for Vercel deployment, setting up Turborepo build settings, configuring all environment variables (Firebase, Cloudinary, Gemini), and ensuring the deployment process works correctly.
+As a developer, I need to deploy the React Food Diary application to Vercel. This involves configuring the monorepo for Vercel deployment, setting up Turborepo build settings, configuring all environment variables (Firebase, Gemini), and ensuring the deployment process works correctly.
 
 ## 4. Technical Details
 
@@ -18,7 +18,7 @@ As a developer, I need to deploy the React Food Diary application to Vercel. Thi
 - **Monorepo:** Turborepo with pnpm workspaces
 - **Build Command:** Turborepo build command
 - **Output Directory:** `apps/food-diary/.next`
-- **Environment Variables:** Firebase, Cloudinary, Gemini API keys
+- **Environment Variables:** Firebase, Gemini API keys
 - **Framework Preset:** Next.js
 
 ## 5. Steps to Implement
@@ -61,10 +61,6 @@ As a developer, I need to deploy the React Food Diary application to Vercel. Thi
      - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
      - `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
      - `NEXT_PUBLIC_FIREBASE_APP_ID`
-   - Add Cloudinary variables:
-     - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
-     - `CLOUDINARY_API_KEY`
-     - `CLOUDINARY_API_SECRET`
    - Add Gemini variable:
      - `GEMINI_API_KEY`
    - Add next-intl variable:
@@ -109,7 +105,7 @@ As a developer, I need to deploy the React Food Diary application to Vercel. Thi
 12. **Test Production Environment:**
     - Test all features in production environment
     - Verify environment variables are loaded correctly
-    - Test image uploads to Cloudinary
+
     - Test Gemini API calls
     - Verify translations work
     - Check performance and loading times
@@ -120,7 +116,6 @@ As a developer, I need to deploy the React Food Diary application to Vercel. Thi
 - Monorepo builds correctly using Turborepo
 - All environment variables are configured in Vercel:
   - Firebase variables (6 variables)
-  - Cloudinary variables (3 variables)
   - Gemini API key
   - Default locale
 - Application is accessible via Vercel-provided URL
@@ -144,4 +139,4 @@ As a developer, I need to deploy the React Food Diary application to Vercel. Thi
 - Monitor Vercel usage and costs (stays within free tier)
 - Consider setting up error monitoring (e.g., Sentry) for production
 - Vercel provides analytics and performance monitoring - use these tools
-- Ensure Cloudinary and Gemini free tier limits are not exceeded
+- Ensure Gemini free tier limits are not exceeded

@@ -24,10 +24,7 @@ export interface SaveDiaryEntryFromInputData {
   imagePublicId?: string;
 }
 
-export type SaveDiaryEntryErrorCode =
-  | "NOT_AUTHENTICATED"
-  | "VALIDATION_ERROR"
-  | "UNKNOWN_ERROR";
+export type SaveDiaryEntryErrorCode = "NOT_AUTHENTICATED" | "VALIDATION_ERROR" | "UNKNOWN_ERROR";
 
 export interface SaveDiaryEntryFromInputResult {
   success?: boolean;
@@ -120,4 +117,3 @@ export async function saveDiaryEntryFromInput(
     return { error: "Failed to save entry", errorCode: "UNKNOWN_ERROR" };
   }
 }
-

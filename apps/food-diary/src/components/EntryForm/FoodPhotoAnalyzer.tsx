@@ -4,18 +4,16 @@ import { Button, Icon, Image } from "@repo/ui";
 import imageCompression from "browser-image-compression";
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FileTrigger } from "react-aria-components";
 
-import type { ChatMessage } from "@/app/actions/analyze-food-image";
-import { analyzeFoodImage, chatAboutPhoto } from "@/app/actions/analyze-food-image";
+import { analyzeFoodImage } from "@/app/actions/analyze-food-image";
 import { useAuth } from "@/contexts/AuthContext";
 import { readAsBase64 } from "@/utils/readAsBase64";
 
-import { ChatPanel } from "./ChatPanel";
 import { PhotoAnalyzerStatus } from "./partials/PhotoAnalyzerStatus";
 
-import type { AnalysisStatus, ChatEntry, FoodPhotoAnalyzerProps } from "./index";
+import type { AnalysisStatus, FoodPhotoAnalyzerProps } from "./index";
 
 const COMPRESSION_OPTIONS = {
   maxSizeMB: 1,
@@ -31,24 +29,8 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [remaining, setRemaining] = useState<number | null>(null);
 
-  // Chat state
-  const [chatMessages, setChatMessages] = useState<ChatEntry[]>([]);
-  const [chatInput, setChatInput] = useState("");
-  const [isSending, setIsSending] = useState(false);
-  const [chatError, setChatError] = useState(false);
-
-  // Refs for stateless session reconstruction
+  // Refs
   const previewObjectUrlRef = useRef<string | null>(null);
-  const base64Ref = useRef<string | null>(null);
-  const initialModelResponseRef = useRef<string | null>(null);
-  const chatScrollRef = useRef<HTMLDivElement>(null);
-
-  // Keep chat scrolled to bottom
-  useEffect(() => {
-    if (chatScrollRef.current) {
-      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight;
-    }
-  }, [chatMessages]);
 
   const revokePreviewUrl = (): void => {
     if (previewObjectUrlRef.current) {
@@ -63,13 +45,6 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
     const file = files[0];
     if (!file?.type.startsWith("image/")) return;
 
-    // Reset chat whenever a new photo is selected
-    setChatMessages([]);
-    setChatInput("");
-    setChatError(false);
-    base64Ref.current = null;
-    initialModelResponseRef.current = null;
-
     // Create object URL for preview
     revokePreviewUrl();
     const objectUrl = URL.createObjectURL(file);
@@ -81,7 +56,6 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
       // Compress image client-side, then convert to base64
       const compressed = await imageCompression(file, COMPRESSION_OPTIONS);
       const base64 = await readAsBase64(compressed);
-      base64Ref.current = base64;
 
       // Get ID token and call server action
       const idToken = await user.getIdToken();
@@ -101,7 +75,6 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
       }
 
       setRemaining(result.remaining ?? null);
-      initialModelResponseRef.current = result.initialModelResponse ?? null;
       setStatus("success");
 
       if (result.data) {
@@ -117,52 +90,7 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
     }
   };
 
-  const handleChatSend = async (): Promise<void> => {
-    const message = chatInput.trim();
-    if (!message || !user || !base64Ref.current || !initialModelResponseRef.current) return;
-
-    setChatInput("");
-    setChatError(false);
-    const userEntry: ChatEntry = { id: crypto.randomUUID(), role: "user", text: message };
-    setChatMessages(prev => [...prev, userEntry]);
-    setIsSending(true);
-
-    try {
-      const idToken = await user.getIdToken();
-      // Build history from previous chat entries (exclude updatedData ‑ server doesn't need it)
-      const history: ChatMessage[] = chatMessages.map(m => ({ role: m.role, text: m.text }));
-
-      const result = await chatAboutPhoto(
-        idToken,
-        base64Ref.current,
-        initialModelResponseRef.current,
-        history,
-        message,
-      );
-
-      if (!result.success || !result.data) {
-        setChatError(true);
-        return;
-      }
-
-      setChatMessages(prev => [
-        ...prev,
-        {
-          id: crypto.randomUUID(),
-          role: "model",
-          text: result.data!.reply,
-          updatedData: result.data!.updatedData,
-        },
-      ]);
-    } catch {
-      setChatError(true);
-    } finally {
-      setIsSending(false);
-    }
-  };
-
   const isDisabled = status === "analyzing" || status === "quota-reached";
-  const showChat = status === "success" && initialModelResponseRef.current !== null;
 
   return (
     <div className="flex flex-col gap-1">
@@ -200,20 +128,6 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
             <Icon name="LoaderCircle" className="size-5 animate-spin text-ds-interactive" aria-hidden="true" />
           </div>
         </div>
-      ) : null}
-
-      {/* Analysis success → chat panel */}
-      {showChat ? (
-        <ChatPanel
-          messages={chatMessages}
-          chatScrollRef={chatScrollRef}
-          isSending={isSending}
-          chatInput={chatInput}
-          chatError={chatError}
-          onInputChange={setChatInput}
-          onSend={() => void handleChatSend()}
-          onPrefill={onPrefill}
-        />
       ) : null}
     </div>
   );

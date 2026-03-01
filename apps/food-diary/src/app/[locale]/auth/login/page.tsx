@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import { Card, Container, Section, Typography } from "@repo/ui";
-import { getLocale, getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { AuthButtons } from "@/components/AuthButtons";
 import { PageHeader } from "@/components/PageHeader";
+
+import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();

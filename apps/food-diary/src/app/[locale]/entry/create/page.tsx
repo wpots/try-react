@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import type { EntryFormMode } from "@/components/EntryForm";
 import { CreateEntryTemplate } from "@/templates/CreateEntryTemplate";
+
+import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();

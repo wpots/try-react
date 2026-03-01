@@ -67,9 +67,7 @@ export function TraditionalForm({
     onEntryChange(entry);
   }, [entry, onEntryChange]);
 
-  const handleSubmit = (
-    event: Parameters<JSX.IntrinsicElements['form']['onSubmit']>[0],
-  ) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const errors: Record<string, string> = {};
 
@@ -90,7 +88,7 @@ export function TraditionalForm({
     setValidationErrors({});
     onComplete(entry);
     setSubmitted(true);
-  }
+  };
 
   if (submitted) {
     return (
@@ -137,7 +135,9 @@ export function TraditionalForm({
           aria-describedby={validationErrors.entryType ? "entry-type-error" : undefined}
         />
         {validationErrors.entryType ? (
-          <Typography id="entry-type-error" variant="body" size="sm" className="text-danger" role="alert">{validationErrors.entryType}</Typography>
+          <Typography id="entry-type-error" variant="body" size="sm" className="text-danger" role="alert">
+            {validationErrors.entryType}
+          </Typography>
         ) : null}
       </FormSection>
 
@@ -157,7 +157,9 @@ export function TraditionalForm({
             aria-describedby={validationErrors.foodEaten ? "food-eaten-error" : undefined}
           />
           {validationErrors.foodEaten ? (
-            <Typography id="food-eaten-error" variant="body" size="sm" className="text-danger" role="alert">{validationErrors.foodEaten}</Typography>
+            <Typography id="food-eaten-error" variant="body" size="sm" className="text-danger" role="alert">
+              {validationErrors.foodEaten}
+            </Typography>
           ) : null}
         </FormSection>
       ) : null}

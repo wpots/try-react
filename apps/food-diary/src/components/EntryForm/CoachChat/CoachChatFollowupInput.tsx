@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { CoachChatActions } from "./CoachChatActions";
 import { CoachChatTextInput } from "./CoachChatTextInput";
+import { FoodPhotoAnalyzer } from "../FoodPhotoAnalyzer";
 import { EntryFormButton } from "../partials/EntryFormButton";
 import { behaviorOptions, companyOptions, locationOptions } from "../utils/options";
 
@@ -202,6 +203,13 @@ export function CoachChatFollowupInput({
   if (step.key === "foodEaten") {
     return (
       <>
+        <div className="mb-ds-s">
+          <FoodPhotoAnalyzer
+            onPrefill={data => {
+              setInputText(data.foodName);
+            }}
+          />
+        </div>
         <CoachChatTextInput
           value={inputText}
           onChange={setInputText}

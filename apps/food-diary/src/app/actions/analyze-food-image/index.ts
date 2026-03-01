@@ -21,6 +21,24 @@ export interface AnalyzeFoodImageResult {
   message?: string;
   data?: AnalyzeFoodImageData;
   remaining?: number;
+  /** Raw JSON text returned by Gemini — carry this as the first model turn when opening chat. */
+  initialModelResponse?: string;
+}
+
+export interface ChatMessage {
+  role: "user" | "model";
+  text: string;
+}
+
+export interface ChatAboutPhotoData {
+  reply: string;
+  updatedData?: Partial<AnalyzeFoodImageData>;
+}
+
+export interface ChatAboutPhotoResult {
+  success: boolean;
+  error?: AnalysisErrorCode;
+  data?: ChatAboutPhotoData;
 }
 
 const ANALYSIS_PROMPT = `Analyze this food image and return a JSON object with:
@@ -35,10 +53,19 @@ Rules:
 
 Return only valid JSON, no markdown.`;
 
-export async function analyzeFoodImage(
-  idToken: string,
-  base64Image: string,
-): Promise<AnalyzeFoodImageResult> {
+const CHAT_PROMPT = `You are a helpful food diary assistant continuing a conversation about a food photo.
+Respond in valid JSON (no markdown) with this shape:
+{
+  "reply": "your conversational response — friendly and brief",
+  "updatedData": { "foodName": "...", "mealType": "...", "description": "..." }
+}
+Only include "updatedData" when the user is asking you to correct or change one of those fields.
+Rules for all field values:
+- Never mention amounts, quantities, weights, portion sizes, or calorie estimates.
+- Keep descriptions factual and short (one sentence).
+- mealType must be one of: breakfast, lunch, dinner, snack.`;
+
+export async function analyzeFoodImage(idToken: string, base64Image: string): Promise<AnalyzeFoodImageResult> {
   // 1. Verify authentication
   const userId = extractUidFromIdToken(idToken);
   if (!userId) {
@@ -83,6 +110,7 @@ export async function analyzeFoodImage(
         description: analysis.description ?? "",
       },
       remaining: quota.remaining - 1,
+      initialModelResponse: text,
     };
   } catch (error) {
     console.error("Gemini analysis failed:", error);
@@ -91,5 +119,77 @@ export async function analyzeFoodImage(
       error: "ANALYSIS_FAILED",
       message: "Failed to analyze image. Please try again.",
     };
+  }
+}
+
+/**
+ * Send a follow-up chat message about an already-analysed food photo.
+ * The caller must pass the compressed base64 image and the full conversation
+ * history (starting from the initial model response) so the server can
+ * reconstruct the Gemini chat session statelessly.
+ */
+export async function chatAboutPhoto(
+  idToken: string,
+  base64Image: string,
+  initialModelResponse: string,
+  history: ChatMessage[],
+  message: string,
+): Promise<ChatAboutPhotoResult> {
+  const userId = extractUidFromIdToken(idToken);
+  if (!userId) {
+    return { success: false, error: "NOT_AUTHENTICATED" };
+  }
+
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    // Reconstruct the Gemini session:
+    //   turn 0 (user)  → original image + analysis prompt
+    //   turn 1 (model) → initial JSON analysis
+    //   turn 2+ (user/model) → subsequent conversation turns
+    const geminiHistory: {
+      role: "user" | "model";
+      parts: { text?: string; inlineData?: { data: string; mimeType: string } }[];
+    }[] = [
+      {
+        role: "user",
+        parts: [{ text: ANALYSIS_PROMPT }, { inlineData: { data: base64Image, mimeType: "image/jpeg" } }],
+      },
+      {
+        role: "model",
+        parts: [{ text: initialModelResponse }],
+      },
+      ...history.map(msg => ({
+        role: msg.role,
+        parts: [{ text: msg.text }],
+      })),
+    ];
+
+    const chat = model.startChat({ history: geminiHistory });
+    const result = await chat.sendMessage([{ text: `${CHAT_PROMPT}\n\nUser: ${message}` }]);
+    const text = result.response.text();
+
+    let parsed: { reply?: string; updatedData?: Partial<AnalyzeFoodImageData> };
+    try {
+      parsed = JSON.parse(text) as typeof parsed;
+    } catch {
+      // Gemini sometimes wraps JSON in markdown; strip fences and retry
+      const stripped = text
+        .replace(/^```(?:json)?\n?/i, "")
+        .replace(/\n?```$/, "")
+        .trim();
+      parsed = JSON.parse(stripped) as typeof parsed;
+    }
+
+    return {
+      success: true,
+      data: {
+        reply: parsed.reply ?? text,
+        updatedData: parsed.updatedData,
+      },
+    };
+  } catch (error) {
+    console.error("Chat failed:", error);
+    return { success: false, error: "ANALYSIS_FAILED" };
   }
 }

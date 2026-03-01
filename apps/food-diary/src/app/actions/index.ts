@@ -20,5 +20,12 @@ export type { DeleteDiaryEntryResult } from "./deleteDiaryEntry";
 export { wipeEntries } from "./wipeEntries";
 export type { WipeEntriesResult } from "./wipeEntries";
 
-export { analyzeFoodImage } from "./analyze-food-image";
-export type { AnalyzeFoodImageResult, AnalyzeFoodImageData, AnalysisErrorCode } from "./analyze-food-image";
+export { analyzeFoodImage, chatAboutPhoto } from "./analyze-food-image";
+export type {
+  AnalyzeFoodImageResult,
+  AnalyzeFoodImageData,
+  AnalysisErrorCode,
+  ChatMessage,
+  ChatAboutPhotoResult,
+  ChatAboutPhotoData,
+} from "./analyze-food-image";

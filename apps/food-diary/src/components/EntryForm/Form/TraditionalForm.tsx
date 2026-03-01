@@ -10,25 +10,14 @@ import {
   TimeInput,
   ToggleButtonGroup,
 } from "@repo/ui";
-import { useTranslations } from "next-intl";
-import { type SubmitEvent, useEffect, useState } from "react";
 
 import { FormButton } from "@/components/FormButton";
 
 import { FormSection } from "./FormSection";
+import { useTraditionalForm } from "./useTraditionalForm";
 import { FoodPhotoAnalyzer } from "../FoodPhotoAnalyzer";
 import { EntryFormButton } from "../partials/EntryFormButton";
-import {
-  areEntryBehaviors,
-  behaviorOptions,
-  companyOptions,
-  entryTypeOptions,
-  isEntryCompany,
-  isEntryLocation,
-  isEntryType,
-  locationOptions,
-} from "../utils/options";
-import { validateEntry, applyPrefill } from "../utils/validation";
+import { behaviorOptions, companyOptions, entryTypeOptions, locationOptions } from "../utils/options";
 
 import type { TraditionalFormProps } from "../index";
 
@@ -51,50 +40,21 @@ export function TraditionalForm({
   onDelete,
   onEntryChange,
 }: Readonly<TraditionalFormProps>): React.JSX.Element {
-  const t = useTranslations("entry");
-  const [entry, setEntry] = useState(initialEntry);
-  const [submitted, setSubmitted] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    setEntry(initialEntry);
-  }, [initialEntry]);
-
-  useEffect(() => {
-    if (!onEntryChange) {
-      return;
-    }
-
-    onEntryChange(entry);
-  }, [entry, onEntryChange]);
-
-  useEffect(() => {
-    setValidationErrors({});
-  }, [entry]);
-
-  const handleEntryTypeChange = (values: string[]) => {
-    const selected = values[0];
-    const entryType = selected && isEntryType(selected) ? selected : null;
-    setEntry({ ...entry, entryType });
-  };
-
-  const handleFoodEatenChange = (value: string) => {
-    setEntry({ ...entry, foodEaten: value });
-  };
-
-  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const errors = validateEntry(entry, t);
-
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors);
-      return;
-    }
-
-    setValidationErrors({});
-    onComplete(entry);
-    setSubmitted(true);
-  };
+  const {
+    t,
+    entry,
+    setEntry,
+    submitted,
+    validationErrors,
+    handleEntryTypeChange,
+    handleFoodEatenChange,
+    handleLocationChange,
+    handleCompanyChange,
+    handleBehaviorChange,
+    handleBookmarkChange,
+    handlePrefill,
+    handleSubmit,
+  } = useTraditionalForm({ initialEntry, onComplete, onEntryChange });
 
   if (submitted) {
     return (
@@ -110,10 +70,6 @@ export function TraditionalForm({
       </div>
     );
   }
-
-  const handlePrefill = (data: { foodName: string; mealType: string; description: string }): void => {
-    setEntry(prev => applyPrefill(prev, data));
-  };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-ds-l pt-ds-xl">
@@ -174,14 +130,7 @@ export function TraditionalForm({
               placeholder={t("placeholders.location")}
               options={toOptions(locationOptions, t)}
               selectedKey={entry.location ?? null}
-              onSelectedKeyChange={(key = "") => {
-                const location = key && isEntryLocation(key) ? key : null;
-                setEntry({
-                  ...entry,
-                  location,
-                  locationOther: key === "anders" ? entry.locationOther : undefined,
-                });
-              }}
+              onSelectedKeyChange={handleLocationChange}
               aria-label={t("coach.location")}
             />
             {entry.location === "anders" ? (
@@ -204,14 +153,7 @@ export function TraditionalForm({
               placeholder={t("placeholders.company")}
               options={toOptions(companyOptions, t)}
               selectedKey={entry.company ?? null}
-              onSelectedKeyChange={(key = "") => {
-                const company = key && isEntryCompany(key) ? key : null;
-                setEntry({
-                  ...entry,
-                  company,
-                  companyOther: key === "anders" ? entry.companyOther : undefined,
-                });
-              }}
+              onSelectedKeyChange={handleCompanyChange}
               aria-label={t("coach.company")}
             />
             {entry.company === "anders" ? (
@@ -252,14 +194,7 @@ export function TraditionalForm({
         <ChipSelector
           options={toOptions(behaviorOptions, t)}
           selectedValues={entry.behavior}
-          onSelectedValuesChange={values => {
-            const behavior = areEntryBehaviors(values) ? values : [];
-            setEntry({
-              ...entry,
-              behavior,
-              behaviorOther: behavior.includes("anders") ? entry.behaviorOther : undefined,
-            });
-          }}
+          onSelectedValuesChange={handleBehaviorChange}
           selectionMode="multiple"
         />
         {entry.behavior.includes("anders") ? (
@@ -286,9 +221,7 @@ export function TraditionalForm({
             { value: "no", label: t("form.no") },
           ]}
           selectedValue={entry.isBookmarked ? "yes" : "no"}
-          onSelectedValueChange={value => {
-            setEntry({ ...entry, isBookmarked: value === "yes" });
-          }}
+          onSelectedValueChange={handleBookmarkChange}
           aria-label={t("form.bookmark")}
         />
       </FormSection>
@@ -298,7 +231,7 @@ export function TraditionalForm({
       </div>
 
       {canDelete ? (
-        <div className="flex justify-end pt-ds-xl border-t-1 border-ds-border-subtle">
+        <div className="flex justify-end pt-ds-xl border-t border-ds-border-subtle">
           <FormButton
             className="h-auto px-0 py-0 text-ds-danger hover:bg-transparent hover:text-ds-danger"
             disabled={isDeleting}

@@ -82,7 +82,7 @@ export async function analyzeFoodImage(idToken: string, base64Image: string): Pr
     return {
       success: false,
       error: "DAILY_LIMIT_REACHED",
-      message: "You have reached your daily limit of 10 AI analyses.",
+      message: "You have reached your daily limit of 6 AI analyses.",
       remaining: 0,
     };
   }

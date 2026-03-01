@@ -1,13 +1,16 @@
 /**
  * Analysis quota helpers — server-side Firestore access using the user's
- * Firebase ID token as Bearer auth. Limits users to 10 AI analyses per day.
+ * Firebase ID token as Bearer auth. Limits users to 6 AI analyses per day.
+ *
+ * Gemini free tier: 1,500 requests/day (RPD)
+ * 1,500 RPD ÷ 6 analyses/user = ~250 active users/day
  */
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!;
 const FS_ROOT = `projects/${PROJECT_ID}/databases/(default)/documents`;
 const FS_API = `https://firestore.googleapis.com/v1/${FS_ROOT}`;
 
-export const DAILY_ANALYSIS_LIMIT = 10;
+export const DAILY_ANALYSIS_LIMIT = 6;
 
 interface QuotaDoc {
   date: string;

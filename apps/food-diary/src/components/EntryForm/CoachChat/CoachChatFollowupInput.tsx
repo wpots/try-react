@@ -1,7 +1,6 @@
 import { ChipSelector, EmotionPicker, TextArea } from "@repo/ui";
 import { useTranslations } from "next-intl";
 
-
 import { CoachChatActions } from "./CoachChatActions";
 import { CoachChatTextInput } from "./CoachChatTextInput";
 import { FoodPhotoAnalyzer } from "../FoodPhotoAnalyzer";
@@ -80,9 +79,7 @@ export function CoachChatFollowupInput({
 }: CoachChatFollowupInputProps): React.JSX.Element | null {
   const t = useTranslations("entry");
 
-  const skipAction = step.optional ? (
-    <SkipButton label={t("form.skip")} onSkip={onSkip} />
-  ) : null;
+  const skipAction = step.optional ? <SkipButton label={t("form.skip")} onSkip={onSkip} /> : null;
 
   if (step.key === "bookmark") {
     return (
@@ -120,16 +117,14 @@ export function CoachChatFollowupInput({
 
   if (step.key === "location") {
     const isOtherSelected = inputChips[0] === "anders";
-    const isConfirmDisabled =
-      inputChips.length === 0 ||
-      (isOtherSelected && !inputOtherText.trim());
+    const isConfirmDisabled = inputChips.length === 0 || (isOtherSelected && !inputOtherText.trim());
 
     return (
       <>
         <ChipSelector
           options={toOptions(locationOptions, t)}
           selectedValues={inputChips}
-          onSelectedValuesChange={(values) => {
+          onSelectedValuesChange={values => {
             setInputChips(values);
             if (values[0] && values[0] !== "anders") {
               onSubmitLocation(values[0]);
@@ -141,18 +136,14 @@ export function CoachChatFollowupInput({
           <div className="mt-ds-s">
             <TextArea
               value={inputOtherText}
-              onChange={(value) => setInputOtherText(value)}
+              onChange={value => setInputOtherText(value)}
               placeholder={t("placeholders.other")}
               aria-label={t("coach.location")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
           </div>
         ) : null}
-        <CoachChatActions
-          onBack={onStepBack}
-          onConfirm={() => onSubmitLocation()}
-          confirmDisabled={isConfirmDisabled}
-        >
+        <CoachChatActions onBack={onStepBack} onConfirm={() => onSubmitLocation()} confirmDisabled={isConfirmDisabled}>
           {skipAction}
         </CoachChatActions>
       </>
@@ -161,16 +152,14 @@ export function CoachChatFollowupInput({
 
   if (step.key === "company") {
     const isOtherSelected = inputChips[0] === "anders";
-    const isConfirmDisabled =
-      inputChips.length === 0 ||
-      (isOtherSelected && !inputOtherText.trim());
+    const isConfirmDisabled = inputChips.length === 0 || (isOtherSelected && !inputOtherText.trim());
 
     return (
       <>
         <ChipSelector
           options={toOptions(companyOptions, t)}
           selectedValues={inputChips}
-          onSelectedValuesChange={(values) => {
+          onSelectedValuesChange={values => {
             setInputChips(values);
             if (values[0] && values[0] !== "anders") {
               onSubmitCompany(values[0]);
@@ -182,18 +171,14 @@ export function CoachChatFollowupInput({
           <div className="mt-ds-s">
             <TextArea
               value={inputOtherText}
-              onChange={(value) => setInputOtherText(value)}
+              onChange={value => setInputOtherText(value)}
               placeholder={t("placeholders.other")}
               aria-label={t("coach.company")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
           </div>
         ) : null}
-        <CoachChatActions
-          onBack={onStepBack}
-          onConfirm={() => onSubmitCompany()}
-          confirmDisabled={isConfirmDisabled}
-        >
+        <CoachChatActions onBack={onStepBack} onConfirm={() => onSubmitCompany()} confirmDisabled={isConfirmDisabled}>
           {skipAction}
         </CoachChatActions>
       </>
@@ -216,11 +201,7 @@ export function CoachChatFollowupInput({
           placeholderKey="placeholders.foodEaten"
           helperTextKey="placeholders.foodEatenAi"
         />
-        <CoachChatActions
-          onBack={onStepBack}
-          onConfirm={onSubmitFood}
-          confirmDisabled={!inputText.trim()}
-        >
+        <CoachChatActions onBack={onStepBack} onConfirm={onSubmitFood} confirmDisabled={!inputText.trim()}>
           {skipAction}
         </CoachChatActions>
       </>
@@ -233,13 +214,9 @@ export function CoachChatFollowupInput({
         <EmotionPicker
           selectedKeys={inputEmotions}
           onSelectedKeysChange={setInputEmotions}
-          getLabel={(key) => t(`emotions.${key}`)}
+          getLabel={key => t(`emotions.${key}`)}
         />
-        <CoachChatActions
-          onBack={onStepBack}
-          onConfirm={onSubmitEmotions}
-          confirmDisabled={inputEmotions.length === 0}
-        >
+        <CoachChatActions onBack={onStepBack} onConfirm={onSubmitEmotions} confirmDisabled={inputEmotions.length === 0}>
           {skipAction}
         </CoachChatActions>
       </>
@@ -249,16 +226,8 @@ export function CoachChatFollowupInput({
   if (step.key === "description") {
     return (
       <>
-        <CoachChatTextInput
-          value={inputText}
-          onChange={setInputText}
-          placeholderKey="placeholders.description"
-        />
-        <CoachChatActions
-          onBack={onStepBack}
-          onConfirm={onSubmitDescription}
-          confirmDisabled={!inputText.trim()}
-        >
+        <CoachChatTextInput value={inputText} onChange={setInputText} placeholderKey="placeholders.description" />
+        <CoachChatActions onBack={onStepBack} onConfirm={onSubmitDescription} confirmDisabled={!inputText.trim()}>
           {skipAction}
         </CoachChatActions>
       </>
@@ -266,8 +235,7 @@ export function CoachChatFollowupInput({
   }
 
   if (step.key === "behavior") {
-    const isConfirmDisabled =
-      inputChips.includes("anders") && !inputOtherText.trim();
+    const isConfirmDisabled = inputChips.includes("anders") && !inputOtherText.trim();
 
     return (
       <>
@@ -281,18 +249,14 @@ export function CoachChatFollowupInput({
           <div className="mt-ds-s">
             <TextArea
               value={inputOtherText}
-              onChange={(value) => setInputOtherText(value)}
+              onChange={value => setInputOtherText(value)}
               placeholder={t("placeholders.other")}
               aria-label={t("coach.behavior")}
               className="min-h-[80px] w-full rounded-md border border-ds-border bg-ds-surface px-ds-m py-ds-s text-ds-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring/20"
             />
           </div>
         ) : null}
-        <CoachChatActions
-          onBack={onStepBack}
-          onConfirm={onSubmitBehavior}
-          confirmDisabled={isConfirmDisabled}
-        >
+        <CoachChatActions onBack={onStepBack} onConfirm={onSubmitBehavior} confirmDisabled={isConfirmDisabled}>
           {skipAction}
         </CoachChatActions>
       </>

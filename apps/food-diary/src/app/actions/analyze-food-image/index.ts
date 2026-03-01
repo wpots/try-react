@@ -96,9 +96,18 @@ export async function analyzeFoodImage(idToken: string, base64Image: string): Pr
       { inlineData: { data: base64Image, mimeType: "image/jpeg" } },
     ]);
 
-    const text = result.response.text();
-    const analysis = JSON.parse(text) as { foodName?: string; mealType?: string; description?: string };
-
+    const rawText = result.response.text();
+    let analysis: { foodName?: string; mealType?: string; description?: string };
+    try {
+      analysis = JSON.parse(rawText) as typeof analysis;
+    } catch {
+      // Gemini sometimes wraps JSON in markdown fences; strip and retry
+      const stripped = rawText
+        .replace(/^```(?:json)?\n?/i, "")
+        .replace(/\n?```$/, "")
+        .trim();
+      analysis = JSON.parse(stripped) as typeof analysis;
+    }
     // 4. Increment quota only on success
     await incrementAnalysisQuota(idToken, userId);
 
@@ -110,7 +119,7 @@ export async function analyzeFoodImage(idToken: string, base64Image: string): Pr
         description: analysis.description ?? "",
       },
       remaining: quota.remaining - 1,
-      initialModelResponse: text,
+      initialModelResponse: rawText,
     };
   } catch (error) {
     console.error("Gemini analysis failed:", error);

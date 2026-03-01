@@ -95,11 +95,9 @@ Impact on roadmap:
 - Add missing persistence for bookmark toggles.
 - Clear lint errors and enforce lint in CI.
 
-### Phase 2: Deliver Media + AI Scope
+### Phase 2: Deliver AI Analysis
 
-- Implement story 010 (Cloudinary upload).
-- Implement story 011 (Gemini analysis + quota UX).
-- Implement story 015 (full photo-to-entry flow and failure states).
+- Implement story 010 (Gemini food image analysis + quota UX). Replaces former stories 010, 011, and 015 — Cloudinary upload removed.
 
 ### Phase 3: Production Readiness
 
@@ -113,7 +111,7 @@ Impact on roadmap:
 
 ## Suggested Story Refactor
 
-Create a new story set after story 015 that reflects current architecture:
+Create a new story set after story 010 that reflects current architecture:
 
 - 016: Server-owned entry CRUD and auth trust boundary.
 - 017: Bookmark persistence and dashboard consistency.

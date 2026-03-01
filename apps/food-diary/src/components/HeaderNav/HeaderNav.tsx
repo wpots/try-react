@@ -1,6 +1,6 @@
 "use client";
 
-import { HamburgerMenu, Link, Navigation, Text } from "@repo/ui";
+import { HamburgerMenu, Link, Navigation, Typography } from "@repo/ui";
 import { User } from "lucide-react";
 import {
   Button,
@@ -83,7 +83,7 @@ export function HeaderNav({ navItems, cms }: HeaderNavProps): React.JSX.Element 
               selectedKey={locale}
             >
               <Label className="text-sm font-medium text-ds-text-strong">
-                <Text className="text-sm text-ds-text-strong">{label}</Text>
+                <Typography variant="body" className="text-sm text-ds-text-strong">{label}</Typography>
               </Label>
               <Button className="flex min-h-9 min-w-40 items-center justify-between rounded-md border border-ds-border bg-ds-surface px-3 py-2 text-sm text-ds-text-strong">
                 <SelectValue />

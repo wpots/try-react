@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, GoogleIcon, Text } from "@repo/ui";
+import { Button, GoogleIcon, Typography } from "@repo/ui";
 import { User } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -17,9 +17,9 @@ export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps): 
   return (
     <>
       {userUid ? (
-        <Text className="font-ds-body-sm text-ds-on-surface-secondary">
+        <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
           {isGuest ? t("signedInGuest") : t("signedInUser", { uid: userUid })}
-        </Text>
+        </Typography>
       ) : null}
 
       <Button className="w-full" disabled={isGuestDisabled} onClick={onGuestLogin} type="button" variant="secondary">
@@ -33,9 +33,9 @@ export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps): 
       </Button>
 
       {error ? (
-        <Text className="font-ds-body-sm" tone="danger">
+        <Typography variant="body" className="font-ds-body-sm text-danger">
           {error}
-        </Text>
+        </Typography>
       ) : null}
     </>
   );

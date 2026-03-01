@@ -49,8 +49,11 @@ export function TraditionalForm({
     handleEntryTypeChange,
     handleFoodEatenChange,
     handleLocationChange,
+    handleLocationOtherChange,
     handleCompanyChange,
+    handleCompanyOtherChange,
     handleBehaviorChange,
+    handleBehaviorOtherChange,
     handleBookmarkChange,
     handlePrefill,
     handleSubmit,
@@ -137,12 +140,7 @@ export function TraditionalForm({
             {entry.location === "anders" ? (
               <TextArea
                 value={entry.locationOther ?? ""}
-                onChange={value =>
-                  setEntry({
-                    ...entry,
-                    locationOther: value,
-                  })
-                }
+                onChange={handleLocationOtherChange}
                 placeholder={t("placeholders.other")}
                 aria-label={t("coach.location")}
               />
@@ -160,12 +158,7 @@ export function TraditionalForm({
             {entry.company === "anders" ? (
               <TextArea
                 value={entry.companyOther ?? ""}
-                onChange={value =>
-                  setEntry({
-                    ...entry,
-                    companyOther: value,
-                  })
-                }
+                onChange={handleCompanyOtherChange}
                 placeholder={t("placeholders.other")}
                 aria-label={t("coach.company")}
               />
@@ -202,12 +195,7 @@ export function TraditionalForm({
           <div className="mt-ds-s">
             <TextArea
               value={entry.behaviorOther ?? ""}
-              onChange={value =>
-                setEntry({
-                  ...entry,
-                  behaviorOther: value,
-                })
-              }
+              onChange={handleBehaviorOtherChange}
               placeholder={t("placeholders.other")}
               aria-label={t("form.behavior")}
             />

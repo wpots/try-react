@@ -14,6 +14,7 @@ export interface NextImageLikeProps {
   id?: string;
   role?: string;
   "aria-hidden"?: boolean | "true" | "false";
+  unoptimized?: boolean;
 }
 
 export interface ImageProps extends React.ComponentProps<"img"> {
@@ -22,6 +23,7 @@ export interface ImageProps extends React.ComponentProps<"img"> {
   priority?: boolean;
   sizes?: string;
   quality?: number;
+  unoptimized?: boolean;
 }
 
 export { Image } from "./Image";

@@ -1,9 +1,4 @@
-import type {
-  DiaryEntryBehavior,
-  DiaryEntryCompany,
-  DiaryEntryLocation,
-  DiaryEntryType,
-} from "@/lib/firestore/types";
+import type { DiaryEntryBehavior, DiaryEntryCompany, DiaryEntryLocation, DiaryEntryType } from "@/lib/firestore/types";
 
 interface SelectOptionDefinition<TValue extends string> {
   value: TValue;
@@ -49,21 +44,19 @@ export const behaviorOptions: SelectOptionDefinition<DiaryEntryBehavior>[] = [
 ];
 
 export function isEntryType(value: string): value is DiaryEntryType {
-  return entryTypeOptions.some((option) => option.value === value);
+  return entryTypeOptions.some(option => option.value === value);
 }
 
-export function isEntryLocation(value: string): value is DiaryEntryLocation {
-  return locationOptions.some((option) => option.value === value);
+export function isEntryLocation(value: string | null): value is DiaryEntryLocation {
+  if (value === null) return false;
+  return locationOptions.some(option => option.value === value);
 }
 
-export function isEntryCompany(value: string): value is DiaryEntryCompany {
-  return companyOptions.some((option) => option.value === value);
+export function isEntryCompany(value: string | null): value is DiaryEntryCompany {
+  if (value === null) return false;
+  return companyOptions.some(option => option.value === value);
 }
 
-export function areEntryBehaviors(
-  values: string[],
-): values is DiaryEntryBehavior[] {
-  return values.every((value) =>
-    behaviorOptions.some((option) => option.value === value),
-  );
+export function areEntryBehaviors(values: string[]): values is DiaryEntryBehavior[] {
+  return values.every(value => behaviorOptions.some(option => option.value === value));
 }

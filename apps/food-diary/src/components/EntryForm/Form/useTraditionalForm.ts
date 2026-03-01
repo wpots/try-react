@@ -68,6 +68,18 @@ export function useTraditionalForm({ initialEntry, onComplete, onEntryChange }: 
     });
   };
 
+  const handleLocationOtherChange = (value: string) => {
+    setEntry({ ...entry, locationOther: value });
+  };
+
+  const handleCompanyOtherChange = (value: string) => {
+    setEntry({ ...entry, companyOther: value });
+  };
+
+  const handleBehaviorOtherChange = (value: string) => {
+    setEntry({ ...entry, behaviorOther: value });
+  };
+
   const handleBookmarkChange = (value: string) => {
     setEntry({ ...entry, isBookmarked: value === "yes" });
   };
@@ -99,8 +111,11 @@ export function useTraditionalForm({ initialEntry, onComplete, onEntryChange }: 
     handleEntryTypeChange,
     handleFoodEatenChange,
     handleLocationChange,
+    handleLocationOtherChange,
     handleCompanyChange,
+    handleCompanyOtherChange,
     handleBehaviorChange,
+    handleBehaviorOtherChange,
     handleBookmarkChange,
     handlePrefill,
     handleSubmit,

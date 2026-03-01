@@ -11,9 +11,10 @@ export function Image({
   sizes,
   priority,
   quality,
+  unoptimized,
   style,
   ...props
-}: ImageProps): React.JSX.Element {
+}: Readonly<ImageProps>): React.JSX.Element {
   if (ImageComponent) {
     const componentProps: NextImageLikeProps = {
       src: typeof src === "string" ? (src ?? "") : "",
@@ -25,6 +26,7 @@ export function Image({
       sizes,
       priority,
       quality,
+      unoptimized,
       style,
       ...props,
     };
@@ -43,3 +45,4 @@ export function Image({
     />
   );
 }
+

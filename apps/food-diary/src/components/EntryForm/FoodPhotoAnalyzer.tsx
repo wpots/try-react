@@ -1,166 +1,27 @@
 "use client";
 
+import { Button, Icon, Image } from "@repo/ui";
 import imageCompression from "browser-image-compression";
-import { CameraIcon, Loader2Icon, SendHorizonalIcon } from "lucide-react";
+import NextImage from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { FileTrigger } from "react-aria-components";
 
+import type { ChatMessage } from "@/app/actions/analyze-food-image";
 import { analyzeFoodImage, chatAboutPhoto } from "@/app/actions/analyze-food-image";
 import { useAuth } from "@/contexts/AuthContext";
+import { readAsBase64 } from "@/utils/readAsBase64";
 
-import type { ChatMessage, AnalyzeFoodImageData } from "@/app/actions/analyze-food-image";
+import { ChatPanel } from "./ChatPanel";
+import { PhotoAnalyzerStatus } from "./partials/PhotoAnalyzerStatus";
+
+import type { AnalysisStatus, ChatEntry, FoodPhotoAnalyzerProps } from "./index";
 
 const COMPRESSION_OPTIONS = {
   maxSizeMB: 1,
   maxWidthOrHeight: 400,
   useWebWorker: true,
 };
-
-function readAsBase64(file: File): Promise<string> {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64Data = (reader.result as string).split(",")[1];
-      if (base64Data) resolve(base64Data);
-      else reject(new Error("Failed to read file as base64"));
-    };
-    reader.onerror = () => reject(new Error(String(reader.error)));
-    reader.readAsDataURL(file);
-  });
-}
-
-export interface FoodAnalysisPrefill {
-  foodName: string;
-  mealType: string;
-  description: string;
-}
-
-export interface FoodPhotoAnalyzerProps {
-  readonly onPrefill: (data: FoodAnalysisPrefill) => void;
-}
-
-type AnalysisStatus = "idle" | "analyzing" | "success" | "quota-reached" | "error";
-
-interface ChatEntry {
-  role: "user" | "model";
-  text: string;
-  updatedData?: Partial<AnalyzeFoodImageData>;
-}
-
-// ---------------------------------------------------------------------------
-// ChatPanel — extracted to keep FoodPhotoAnalyzer's cognitive complexity down
-// ---------------------------------------------------------------------------
-
-interface ChatPanelProps {
-  readonly messages: ChatEntry[];
-  readonly chatScrollRef: React.RefObject<HTMLDivElement | null>;
-  readonly isSending: boolean;
-  readonly chatInput: string;
-  readonly chatError: boolean;
-  readonly onInputChange: (value: string) => void;
-  readonly onSend: () => void;
-  readonly onPrefill: (data: FoodAnalysisPrefill) => void;
-}
-
-function ChatPanel({
-  messages,
-  chatScrollRef,
-  isSending,
-  chatInput,
-  chatError,
-  onInputChange,
-  onSend,
-  onPrefill,
-}: Readonly<ChatPanelProps>): React.JSX.Element {
-  const t = useTranslations("entry.form");
-
-  return (
-    <div className="flex flex-col gap-ds-s">
-      <output className="text-sm text-ds-success">{t("analysisComplete")}</output>
-
-      {messages.length > 0 ? (
-        <div
-          ref={chatScrollRef}
-          className="flex max-h-48 flex-col gap-ds-s overflow-y-auto rounded-ds-md border border-ds-border-subtle bg-ds-surface p-ds-s"
-        >
-          {messages.map((msg, i) => (
-            <div
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
-              className={`flex flex-col gap-1 ${msg.role === "user" ? "items-end" : "items-start"}`}
-            >
-              <p
-                className={`max-w-[85%] rounded-ds-md px-ds-m py-ds-s text-sm ${
-                  msg.role === "user" ? "bg-ds-interactive text-ds-on-interactive" : "bg-ds-surface-muted text-ds-text"
-                }`}
-              >
-                {msg.text}
-              </p>
-              {msg.role === "model" && msg.updatedData ? (
-                <button
-                  type="button"
-                  className="text-xs text-ds-interactive underline underline-offset-2 hover:text-ds-interactive-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-                  onClick={() => {
-                    onPrefill({
-                      foodName: msg.updatedData?.foodName ?? "",
-                      mealType: msg.updatedData?.mealType ?? "",
-                      description: msg.updatedData?.description ?? "",
-                    });
-                  }}
-                >
-                  {t("chatApplySuggestions")}
-                </button>
-              ) : null}
-            </div>
-          ))}
-
-          {isSending ? (
-            <div className="flex items-start">
-              <Loader2Icon className="size-4 animate-spin text-ds-text-muted" aria-hidden="true" />
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-
-      {/* Chat input */}
-      <div className="flex gap-ds-s">
-        <input
-          type="text"
-          value={chatInput}
-          onChange={e => onInputChange(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              onSend();
-            }
-          }}
-          placeholder={t("chatPlaceholder")}
-          disabled={isSending}
-          className="min-w-0 flex-1 rounded-ds-md border border-ds-border-subtle bg-ds-surface px-ds-m py-ds-s text-sm text-ds-text placeholder:text-ds-text-muted disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-        />
-        <button
-          type="button"
-          disabled={isSending || !chatInput.trim()}
-          onClick={onSend}
-          aria-label={t("chatSend")}
-          className="inline-flex items-center justify-center rounded-ds-md border border-ds-border-subtle bg-ds-surface px-ds-m py-ds-s text-ds-interactive transition-colors hover:bg-ds-surface-strong disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-        >
-          {isSending ? (
-            <Loader2Icon className="size-4 animate-spin" aria-hidden="true" />
-          ) : (
-            <SendHorizonalIcon className="size-4" aria-hidden="true" />
-          )}
-        </button>
-      </div>
-
-      {chatError ? (
-        <p className="text-xs text-ds-danger" role="alert">
-          {t("chatError")}
-        </p>
-      ) : null}
-    </div>
-  );
-}
 
 export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps>): React.JSX.Element {
   const t = useTranslations("entry.form");
@@ -177,7 +38,6 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
   const [chatError, setChatError] = useState(false);
 
   // Refs for stateless session reconstruction
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const previewObjectUrlRef = useRef<string | null>(null);
   const base64Ref = useRef<string | null>(null);
   const initialModelResponseRef = useRef<string | null>(null);
@@ -190,14 +50,14 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
     }
   }, [chatMessages]);
 
-  function revokePreviewUrl(): void {
+  const revokePreviewUrl = (): void => {
     if (previewObjectUrlRef.current) {
       URL.revokeObjectURL(previewObjectUrlRef.current);
       previewObjectUrlRef.current = null;
     }
-  }
+  };
 
-  async function handleFileSelect(files: FileList | null): Promise<void> {
+  const handleFileSelect = async (files: FileList | null): Promise<void> => {
     if (!files || files.length === 0 || !user) return;
 
     const file = files[0];
@@ -254,15 +114,15 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
     } catch {
       setStatus("error");
     }
-  }
+  };
 
-  async function handleChatSend(): Promise<void> {
+  const handleChatSend = async (): Promise<void> => {
     const message = chatInput.trim();
     if (!message || !user || !base64Ref.current || !initialModelResponseRef.current) return;
 
     setChatInput("");
     setChatError(false);
-    const userEntry: ChatEntry = { role: "user", text: message };
+    const userEntry: ChatEntry = { id: crypto.randomUUID(), role: "user", text: message };
     setChatMessages(prev => [...prev, userEntry]);
     setIsSending(true);
 
@@ -287,6 +147,7 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
       setChatMessages(prev => [
         ...prev,
         {
+          id: crypto.randomUUID(),
           role: "model",
           text: result.data!.reply,
           updatedData: result.data!.updatedData,
@@ -297,62 +158,37 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
     } finally {
       setIsSending(false);
     }
-  }
+  };
 
   const isDisabled = status === "analyzing" || status === "quota-reached";
   const showChat = status === "success" && initialModelResponseRef.current !== null;
 
   return (
     <div className="flex flex-col gap-1">
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        disabled={isDisabled}
-        onChange={e => void handleFileSelect(e.target.files)}
-      />
-      <button
-        type="button"
-        disabled={isDisabled}
-        onClick={() => fileInputRef.current?.click()}
-        className="self-start inline-flex items-center gap-1.5 rounded-ds-md border border-ds-border-subtle bg-ds-surface px-ds-s py-1 text-xs text-ds-text transition-colors hover:bg-ds-surface-strong disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-      >
-        {status === "analyzing" ? (
-          <>
-            <Loader2Icon className="size-3.5 animate-spin" aria-hidden="true" />
-            <span>{t("analyzing")}</span>
-          </>
-        ) : (
-          <>
-            <CameraIcon className="size-3.5" aria-hidden="true" />
-            <span>{t("analyzePhoto")}</span>
-          </>
-        )}
-      </button>
+      <FileTrigger acceptedFileTypes={["image/*"]} onSelect={files => void handleFileSelect(files)}>
+        <Button type="button" variant="outline" size="sm" disabled={isDisabled} className="self-start">
+          {status === "analyzing" ? (
+            <>
+              <Icon name="LoaderCircle" className="animate-spin" aria-hidden="true" />
+              <span>{t("analyzing")}</span>
+            </>
+          ) : (
+            <>
+              <Icon name="Camera" aria-hidden="true" />
+              <span>{t("analyzePhoto")}</span>
+            </>
+          )}
+        </Button>
+      </FileTrigger>
 
-      {/* Scans remaining */}
-      {status === "quota-reached" ? (
-        <p className="text-xs text-ds-text-muted">{t("quotaLimitReached")}</p>
-      ) : null}
-      {status !== "quota-reached" && remaining !== null ? (
-        <p className="text-xs text-ds-text-muted">{t("quotaRemaining", { count: remaining })}</p>
-      ) : null}
-
-      {/* Error */}
-      {status === "error" ? (
-        <p className="text-xs text-ds-danger" role="alert">
-          {t("analysisError")}
-        </p>
-      ) : null}
+      <PhotoAnalyzerStatus status={status} remaining={remaining} />
 
       {/* Image preview during analysis */}
       {previewUrl && status === "analyzing" ? (
         <div className="relative mt-ds-s w-20 h-20 rounded-ds-md overflow-hidden border border-ds-border-subtle">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={previewUrl} alt="" className="w-full h-full object-cover" aria-hidden="true" />
+          <Image component={NextImage} fill unoptimized src={previewUrl} alt="" aria-hidden="true" className="object-cover" />
           <div className="absolute inset-0 flex items-center justify-center bg-ds-surface/60">
-            <Loader2Icon className="size-5 animate-spin text-ds-interactive" aria-hidden="true" />
+            <Icon name="LoaderCircle" className="size-5 animate-spin text-ds-interactive" aria-hidden="true" />
           </div>
         </div>
       ) : null}

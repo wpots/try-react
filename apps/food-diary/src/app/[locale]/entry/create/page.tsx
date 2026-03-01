@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
+import { getLocale, getTranslations } from "next-intl/server";
+
 import type { EntryFormMode } from "@/components/EntryForm";
 import { CreateEntryTemplate } from "@/templates/CreateEntryTemplate";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: "dashboard" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
+  return {
+    title: `${t("addEntry")} — ${tCommon("brand.tagline")}`,
+  };
+}
 
 interface CreateEntryPageSearchParams {
   mode?: string | string[];

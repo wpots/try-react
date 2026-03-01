@@ -71,4 +71,11 @@
   .dashboard-behavior-left-border {
     border-left-width: 3px;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dashboard-hero-float,
+    .dashboard-hero-float-delay {
+      animation: none;
+    }
+  }
 }

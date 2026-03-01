@@ -10,7 +10,7 @@ export type ButtonVariantClassKey = NonNullable<ButtonProps["variant"]> | "link"
 export const buttonBaseClasses =
   "group inline-flex items-center justify-center gap-ds-s whitespace-nowrap rounded-ds-md font-ds-label-base";
 export const buttonFocusClasses =
-  "ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
+  "ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-focus-ring focus-visible:ring-offset-2";
 export const buttonDisabledClasses = "disabled:pointer-events-none disabled:opacity-50";
 export const buttonTransitionClasses = "transition-colors";
 export const buttonIconClasses = "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0";

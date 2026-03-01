@@ -63,7 +63,7 @@ export function ProductFeatures({
                   );
                 })}
               </DesktopPhoneFrame>
-              <PageIndicator count={items.length} activeIndex={activeIdx} />
+              <PageIndicator count={items.length} activeIndex={activeIdx} aria-label={heading} />
             </div>
           ) : null}
 

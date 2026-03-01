@@ -6,12 +6,13 @@ export function PageIndicator({
   count,
   activeIndex,
   className,
+  "aria-label": ariaLabel,
   ...props
 }: PageIndicatorProps): React.JSX.Element {
   return (
     <div
       className={cn("mt-ds-m flex items-center justify-center gap-ds-s", className)}
-      aria-label="Page indicator"
+      aria-label={ariaLabel}
       {...props}
     >
       {Array.from({ length: count }, (_, idx) => (

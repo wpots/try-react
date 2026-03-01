@@ -186,7 +186,15 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
       {/* Image preview during analysis */}
       {previewUrl && status === "analyzing" ? (
         <div className="relative mt-ds-s w-20 h-20 rounded-ds-md overflow-hidden border border-ds-border-subtle">
-          <Image component={NextImage} fill unoptimized src={previewUrl} alt="" aria-hidden="true" className="object-cover" />
+          <Image
+            component={NextImage}
+            fill
+            unoptimized
+            src={previewUrl}
+            alt=""
+            aria-hidden="true"
+            className="object-cover"
+          />
           <div className="absolute inset-0 flex items-center justify-center bg-ds-surface/60">
             <Icon name="LoaderCircle" className="size-5 animate-spin text-ds-interactive" aria-hidden="true" />
           </div>

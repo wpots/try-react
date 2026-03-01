@@ -33,16 +33,5 @@ export function Image({
     return <ImageComponent {...componentProps} />;
   }
 
-  return (
-    <img
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      className={className}
-      style={style}
-      {...props}
-    />
-  );
+  return <img src={src} alt={alt} width={width} height={height} className={className} style={style} {...props} />;
 }
-

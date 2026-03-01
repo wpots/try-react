@@ -17,6 +17,13 @@
   "errors": {
     "notAuthenticated": "Gebruiker niet geauthenticeerd",
     "saveFailed": "Opslaan van invoer mislukt",
-    "deleteFailed": "Verwijderen van invoer mislukt"
+    "deleteFailed": "Verwijderen van invoer mislukt",
+    "invalidSession": "Je sessie is verlopen. Meld je opnieuw aan.",
+    "networkError": "Netwerkfout. Controleer je internetverbinding.",
+    "unknownError": "Er is een onverwachte fout opgetreden.",
+    "validationFoodEaten": "Vul in wat je hebt gegeten of gedronken.",
+    "validationDate": "Vul een datum in.",
+    "validationTime": "Vul een tijdstip in.",
+    "validationEntryType": "Selecteer een type invoer."
   }
 }

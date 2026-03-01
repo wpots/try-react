@@ -52,6 +52,7 @@ export function TraditionalForm({
   const t = useTranslations("entry");
   const [entry, setEntry] = useState(initialEntry);
   const [submitted, setSubmitted] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     setEntry(initialEntry);
@@ -67,15 +68,23 @@ export function TraditionalForm({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    const errors: Record<string, string> = {};
+
     if (!entry.entryType) {
-      return;
+      errors.entryType = t("errors.validationEntryType");
     }
     const hasSkippedMealBehavior = entry.behavior.includes("skipped meal");
     const needsFoodEaten = entry.entryType !== "moment" && !hasSkippedMealBehavior;
     if (needsFoodEaten && !entry.foodEaten.trim()) {
+      errors.foodEaten = t("errors.validationFoodEaten");
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
       return;
     }
 
+    setValidationErrors({});
     onComplete(entry);
     setSubmitted(true);
   }
@@ -105,19 +114,33 @@ export function TraditionalForm({
             const selected = values[0];
             const entryType = selected && isEntryType(selected) ? selected : null;
             setEntry({ ...entry, entryType });
+            if (validationErrors.entryType) {
+              setValidationErrors(prev => ({ ...prev, entryType: "" }));
+            }
           }}
           selectionMode="single"
         />
+        {validationErrors.entryType ? (
+          <p className="text-sm text-ds-danger" role="alert">{validationErrors.entryType}</p>
+        ) : null}
       </FormSection>
 
       {entry.entryType !== "moment" && !entry.behavior.includes("skipped meal") ? (
         <FormSection label={t("form.foodEaten")} required>
           <TextArea
             value={entry.foodEaten}
-            onChange={value => setEntry({ ...entry, foodEaten: value })}
+            onChange={value => {
+              setEntry({ ...entry, foodEaten: value });
+              if (validationErrors.foodEaten) {
+                setValidationErrors(prev => ({ ...prev, foodEaten: "" }));
+              }
+            }}
             placeholder={t("placeholders.foodEaten")}
             aria-label={t("form.foodEaten")}
           />
+          {validationErrors.foodEaten ? (
+            <p className="text-sm text-ds-danger" role="alert">{validationErrors.foodEaten}</p>
+          ) : null}
         </FormSection>
       ) : null}
 

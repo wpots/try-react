@@ -5,7 +5,6 @@ import { User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Menu, MenuItem } from "react-aria-components";
 
-
 import { GuestModeDialog } from "./partials/GuestModeDialog";
 import { ProfileDialog } from "./partials/ProfileDialog";
 import {
@@ -91,7 +90,11 @@ export function DashboardHeader({
                 <MenuItem id={profileActionKey} className={getMenuItemClassName()}>
                   {tProfile("menuLabel")}
                 </MenuItem>
-                <MenuItem id={logoutActionKey} isDisabled={submittingAction !== null} className={getMenuItemClassName()}>
+                <MenuItem
+                  id={logoutActionKey}
+                  isDisabled={submittingAction !== null}
+                  className={getMenuItemClassName()}
+                >
                   {submittingAction === "logout" ? tAuth("signingOut") : tAuth("signOut")}
                 </MenuItem>
               </>

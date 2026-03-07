@@ -14,7 +14,7 @@ export function FloatingAddButton({
     <Link
       aria-label={ariaLabel}
       className={cn(
-        "dashboard-fab fixed bottom-8 right-8",
+        "dashboard-fab fixed bottom-8 right-8 z-10",
         "inline-flex h-14 w-14 items-center justify-center rounded-ds-full",
         "bg-ds-brand-primary text-ds-on-primary shadow-ds-lg",
         "transition duration-200 hover:-translate-y-1 hover:scale-105",

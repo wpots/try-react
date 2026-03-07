@@ -28,3 +28,9 @@ export type { ExportUserDataResult } from "./exportUserData";
 
 export { deleteUserAccount } from "./deleteUserAccount";
 export type { DeleteUserAccountResult } from "./deleteUserAccount";
+
+export { saveCustomAffirmations } from "./saveCustomAffirmations";
+export type { SaveCustomAffirmationsResult } from "./saveCustomAffirmations";
+
+export { fetchCustomAffirmations } from "./fetchCustomAffirmations";
+export type { FetchCustomAffirmationsResult } from "./fetchCustomAffirmations";

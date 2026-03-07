@@ -1,6 +1,7 @@
 import aboutMessages from "./about.json";
 import authMessages from "./auth.json";
 import commonMessages from "./common.json";
+import consentMessages from "./consent.json";
 import dashboardMessages from "./dashboard.json";
 import entryMessages from "./entry";
 import homeMessages from "./home.json";
@@ -11,6 +12,7 @@ const messages = {
   about: aboutMessages,
   auth: authMessages,
   common: commonMessages,
+  consent: consentMessages,
   dashboard: dashboardMessages,
   entry: entryMessages,
   home: homeMessages,

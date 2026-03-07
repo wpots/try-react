@@ -27,7 +27,8 @@ export interface AnalyzeFoodImageResult {
   remaining?: number;
 }
 
-const ANALYSIS_PROMPT = `Analyze this food image and return a JSON object with:
+function buildAnalysisPrompt(locale: string): string {
+  return `Analyze this food image and return a JSON object with:
 - foodName: name of the food item(s)
 - mealType: one of "breakfast", "lunch", "dinner", "snack"
 - description: brief, neutral description of the food
@@ -36,10 +37,12 @@ Rules:
 - Do NOT mention amounts, quantities, weights, portion sizes, or calorie estimates.
 - Keep the description factual and short (one sentence).
 - If multiple items are visible, list them by name without counting.
+- Return ALL text values (foodName, description) in the language with BCP 47 locale code "${locale}".
 
 Return only valid JSON, no markdown.`;
+}
 
-export async function analyzeFoodImage(idToken: string, base64Image: string): Promise<AnalyzeFoodImageResult> {
+export async function analyzeFoodImage(idToken: string, base64Image: string, locale = "en"): Promise<AnalyzeFoodImageResult> {
   // 1. Verify authentication
   const userId = extractUidFromIdToken(idToken);
   if (!userId) {
@@ -67,7 +70,7 @@ export async function analyzeFoodImage(idToken: string, base64Image: string): Pr
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const result = await model.generateContent([
-      ANALYSIS_PROMPT,
+      buildAnalysisPrompt(locale),
       { inlineData: { data: base64Image, mimeType: "image/jpeg" } },
     ]);
 

@@ -3,7 +3,7 @@
 import { Button, Icon, Image } from "@repo/ui";
 import imageCompression from "browser-image-compression";
 import NextImage from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { FileTrigger } from "react-aria-components";
 
@@ -23,6 +23,7 @@ const COMPRESSION_OPTIONS = {
 
 export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps>): React.JSX.Element {
   const t = useTranslations("entry.form");
+  const locale = useLocale();
   const { user } = useAuth();
 
   const [status, setStatus] = useState<AnalysisStatus>("idle");
@@ -59,7 +60,7 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
 
       // Get ID token and call server action
       const idToken = await user.getIdToken();
-      const result = await analyzeFoodImage(idToken, base64);
+      const result = await analyzeFoodImage(idToken, base64, locale);
 
       if (!result.success && result.error === "DAILY_LIMIT_REACHED") {
         setRemaining(0);

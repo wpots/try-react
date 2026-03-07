@@ -28,3 +28,9 @@ export type { ExportUserDataResult } from "./exportUserData";
 
 export { deleteUserAccount } from "./deleteUserAccount";
 export type { DeleteUserAccountResult } from "./deleteUserAccount";
+
+export { saveUserContext } from "./saveUserContext";
+export type { SaveUserContextResult } from "./saveUserContext";
+
+export { fetchUserContext } from "./fetchUserContext";
+export type { FetchUserContextResult } from "./fetchUserContext";

@@ -92,3 +92,6 @@ export type { SelectProps, SelectOption } from "./components/Select";
 export { useMotionEnabled } from "./hooks/useMotionEnabled";
 
 export { cn } from "./lib/utils";
+
+export { Tabs } from "./components/Tabs";
+export type { TabsProps, TabItem } from "./components/Tabs";

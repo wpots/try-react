@@ -9,6 +9,10 @@
     "dialogTitle": "Gastmodus is actief",
     "dialogBody": "Je entries worden opgeslagen in deze browsersessie.",
     "mergeBody": "Log in met Google om je entries op meerdere apparaten te bewaren. Je gastentries worden samengevoegd en blijven veilig.",
+    "tabs": {
+      "data": "Gegevens & Account",
+      "context": "Context"
+    },
     "wipeBody": "Je kunt je gastgegevens ook wissen.",
     "wipeWarning": "Dit kan niet ongedaan worden gemaakt.",
     "retentionBody": "Gastgegevens blijven in deze browsersessie staan totdat je ze wist of de sessie verlaat.",
@@ -23,6 +27,11 @@
     "menuLabel": "Profiel",
     "dialogTitle": "Profiel",
     "dialogBody": "Beheer je account en opgeslagen gegevens.",
+    "tabs": {
+      "settings": "Instellingen",
+      "data": "Gegevens & Account",
+      "context": "Context"
+    },
     "languageLabel": "Taal",
     "wipeBody": "Je kunt alle data van dit account verwijderen.",
     "wipeWarning": "Dit kan niet ongedaan worden gemaakt.",
@@ -41,7 +50,29 @@
     "deleteAccountConfirmCancel": "Annuleren",
     "deleteAccountUnknownError": "Je account kon niet worden verwijderd.",
     "close": "Sluiten",
-    "wipeUnknownError": "Je data kon niet worden verwijderd."
+    "wipeUnknownError": "Je data kon niet worden verwijderd.",
+    "context": {
+      "title": "Jouw context",
+      "description": "Help je voedingsanalyse te personaliseren door iets over jezelf te delen.",
+      "company": {
+        "label": "Bedrijf / werkplek",
+        "placeholder": "bijv. tech startup, ziekenhuis, remote freelancer"
+      },
+      "location": {
+        "label": "Locatie",
+        "placeholder": "bijv. Amsterdam, Nederland"
+      },
+      "behaviour": {
+        "label": "Eetgedrag",
+        "placeholder": "bijv. vegetarisch, intermittent fasting, eiwitrijk"
+      },
+      "save": "Context opslaan",
+      "saving": "Opslaan...",
+      "saved": "Opgeslagen",
+      "saveError": "Context kon niet worden opgeslagen.",
+      "tooLong": "{field} mag maximaal {max} tekens bevatten.",
+      "guestPrompt": "Log in om persoonlijke context op te slaan en je voedingsanalyse te personaliseren."
+    }
   },
   "view": {
     "day": "Dag",

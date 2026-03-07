@@ -9,6 +9,10 @@
     "dialogTitle": "Guest mode is active",
     "dialogBody": "Your entries are saved to this browser session.",
     "mergeBody": "Log in with Google to keep your entries across devices. Your guest entries will be merged and stay safe.",
+    "tabs": {
+      "data": "Data & Account",
+      "context": "Context"
+    },
     "wipeBody": "You can also wipe your guest data.",
     "wipeWarning": "This cannot be undone.",
     "retentionBody": "Guest entries stay in this browser session until you wipe them or abandon the session.",
@@ -23,6 +27,11 @@
     "menuLabel": "Profile",
     "dialogTitle": "Profile",
     "dialogBody": "Manage your account and stored data.",
+    "tabs": {
+      "settings": "Settings",
+      "data": "Data & Account",
+      "context": "Context"
+    },
     "languageLabel": "Language",
     "wipeBody": "You can remove all data saved for this account.",
     "wipeWarning": "This cannot be undone.",
@@ -41,7 +50,29 @@
     "deleteAccountConfirmCancel": "Cancel",
     "deleteAccountUnknownError": "Could not delete your account.",
     "close": "Close",
-    "wipeUnknownError": "Could not remove your data."
+    "wipeUnknownError": "Could not remove your data.",
+    "context": {
+      "title": "Your context",
+      "description": "Help personalise your food analysis by sharing a bit about yourself.",
+      "company": {
+        "label": "Company / workplace",
+        "placeholder": "e.g. tech startup, hospital, remote freelancer"
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "e.g. Amsterdam, Netherlands"
+      },
+      "behaviour": {
+        "label": "Eating behaviour",
+        "placeholder": "e.g. vegetarian, intermittent fasting, high-protein"
+      },
+      "save": "Save context",
+      "saving": "Saving...",
+      "saved": "Saved",
+      "saveError": "Could not save context.",
+      "tooLong": "{field} must be {max} characters or fewer.",
+      "guestPrompt": "Log in to save personal context and personalise your food analysis."
+    }
   },
   "view": {
     "day": "Day",

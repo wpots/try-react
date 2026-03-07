@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import createNextIntlPlugin from "next-intl/plugin";
 
 import type { NextConfig } from "next";
@@ -9,4 +10,9 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
 };
 
-export default withNextIntl(nextConfig);
+export default withSentryConfig(withNextIntl(nextConfig), {
+  // Suppresses source map upload logs during build
+  silent: true,
+  // Automatically tree-shake Sentry logger statements to reduce bundle size
+  disableLogger: true,
+});

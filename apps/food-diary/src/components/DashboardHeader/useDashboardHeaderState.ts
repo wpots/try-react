@@ -1,13 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { deleteUserAccount, exportUserData, wipeEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { trackAuthMethodUsed } from "@/lib/analytics";
-import { signInWithGoogle, signOut } from "@/lib/auth";
+import { completeGoogleRedirectSignIn, signInWithGoogle, signOut } from "@/lib/auth";
 import { getGuestEntryIds } from "@/lib/firestore/helpers";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
@@ -58,6 +58,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
   const tProfile = useTranslations("dashboard.profile");
   const router = useRouter();
   const { isGuest, loading, user } = useAuth();
+  const hasHandledRedirectRef = useRef(false);
 
   const [error, setError] = useState<string | null>(null);
   const [isGuestModeDialogOpen, setIsGuestModeDialogOpen] = useState(false);
@@ -80,6 +81,61 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     }
   }, [isAuthenticatedRegistered, isProfileDialogOpen]);
 
+  useEffect(() => {
+    if (hasHandledRedirectRef.current) {
+      return;
+    }
+
+    hasHandledRedirectRef.current = true;
+
+    let isMounted = true;
+
+    async function handleRedirectResult(): Promise<void> {
+      setSubmittingAction("google");
+
+      try {
+        const result = await completeGoogleRedirectSignIn();
+
+        if (!isMounted || !result?.user) {
+          return;
+        }
+
+        trackAuthMethodUsed("google");
+
+        if (result.mergedFromGuestId) {
+          const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(
+            result.mergedFromGuestId,
+            result.user,
+            result.guestEntryIds,
+          );
+
+          if (!mergeResult.success) {
+            console.error(mergeResult.error ?? tAuth("mergeUnknownError"));
+          }
+        }
+
+        setIsGuestModeDialogOpen(false);
+        router.refresh();
+      } catch (err) {
+        if (!isMounted) {
+          return;
+        }
+
+        setError(tAuth(getFirebaseAuthErrorKey(err, "googleLoginUnknownError")));
+      } finally {
+        if (isMounted) {
+          setSubmittingAction(null);
+        }
+      }
+    }
+
+    void handleRedirectResult();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [router, tAuth]);
+
   const handleGuestGoogleLogin = useCallback(async (): Promise<void> => {
     if (!user || !isGuest || submittingAction !== null) {
       return;
@@ -92,7 +148,11 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       // Pre-fetch entry IDs while still authenticated as the anonymous guest
       const guestEntryIds = user.isAnonymous ? await getGuestEntryIds(user.uid) : [];
 
-      const result = await signInWithGoogle(user);
+      const result = await signInWithGoogle(user, guestEntryIds);
+
+      if (result.redirectStarted || !result.user) {
+        return;
+      }
 
       trackAuthMethodUsed("google");
 
@@ -100,7 +160,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
         const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(
           result.mergedFromGuestId,
           result.user,
-          guestEntryIds,
+          result.guestEntryIds,
         );
 
         if (!mergeResult.success) {

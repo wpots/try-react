@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-import { signInWithGoogle, signOut } from "@/lib/auth";
+import { completeGoogleRedirectSignIn, signInWithGoogle, signOut } from "@/lib/auth";
 import { subscribeToAuthState } from "@/lib/firebase";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 
@@ -21,6 +21,37 @@ const AuthTestPage = () => {
     });
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function handleRedirectResult(): Promise<void> {
+      setLoading(true);
+
+      try {
+        const result = await completeGoogleRedirectSignIn();
+
+        if (isMounted && result?.user) {
+          setUser(result.user);
+        }
+      } catch (err) {
+        if (isMounted) {
+          const message = t(getFirebaseAuthErrorKey(err, "googleLoginUnknownError"));
+          setError(message);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void handleRedirectResult();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [t]);
 
   const handleGoogleLogin = async () => {
     setError(null);

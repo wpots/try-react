@@ -55,6 +55,12 @@ export interface FoodPhotoAnalyzerProps {
   readonly onPrefill: (data: FoodAnalysisPrefill) => void;
 }
 
+export interface FoodPhotoCameraCaptureProps {
+  readonly disabled: boolean;
+  readonly onCapture: (file: File) => Promise<void>;
+  readonly onClose: () => void;
+}
+
 export type AnalysisStatus = "idle" | "analyzing" | "success" | "quota-reached" | "error";
 
 export { EntryForm } from "./EntryForm";

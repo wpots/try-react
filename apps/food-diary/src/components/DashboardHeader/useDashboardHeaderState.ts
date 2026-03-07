@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { deleteUserAccount, exportUserData, wipeEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
+import { trackAuthMethodUsed } from "@/lib/analytics";
 import { signInWithGoogle, signOut } from "@/lib/auth";
 import { getGuestEntryIds } from "@/lib/firestore/helpers";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
@@ -92,6 +93,8 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
       const guestEntryIds = user.isAnonymous ? await getGuestEntryIds(user.uid) : [];
 
       const result = await signInWithGoogle(user);
+
+      trackAuthMethodUsed("google");
 
       if (result.mergedFromGuestId) {
         const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(

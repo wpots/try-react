@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
+import { trackAuthMethodUsed } from "@/lib/analytics";
 import { signInAnonymously, signInWithGoogle } from "@/lib/auth";
 import { getGuestEntryIds } from "@/lib/firestore/helpers";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
@@ -38,6 +39,7 @@ export function useAuthButtons({ redirectPath }: UseAuthButtonsInput): UseAuthBu
 
     try {
       await signInAnonymously();
+      trackAuthMethodUsed("guest");
       router.push(redirectPath);
     } catch (err) {
       const message = err instanceof Error ? err.message : t("guestLoginUnknownError");
@@ -56,6 +58,8 @@ export function useAuthButtons({ redirectPath }: UseAuthButtonsInput): UseAuthBu
       const guestEntryIds = user?.isAnonymous ? await getGuestEntryIds(user.uid) : [];
 
       const result = await signInWithGoogle(user);
+
+      trackAuthMethodUsed("google");
 
       if (result.mergedFromGuestId) {
         const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(

@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 
 import { saveDiaryEntryFromInput } from "@/app/actions";
 import type { SaveDiaryEntryFromInputResult } from "@/app/actions";
+import { trackEntryCreated } from "@/lib/analytics";
 import { signInAnonymously } from "@/lib/auth";
 
 import { getDefaultEntryType } from "../utils/getDefaultEntryType";
@@ -62,6 +63,13 @@ export function useCoachChatPersistence({
           imageUrl: finalEntry.imageUrl,
           imagePublicId: finalEntry.imagePublicId,
         });
+
+        if (result.success && !entryId) {
+          trackEntryCreated({
+            entryType,
+            authState: activeUser.isAnonymous ? "guest" : "registered",
+          });
+        }
 
         return result;
       } catch (error) {

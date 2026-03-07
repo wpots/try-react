@@ -9,6 +9,7 @@ import { FileTrigger } from "react-aria-components";
 
 import { analyzeFoodImage } from "@/app/actions/analyze-food-image";
 import { useAuth } from "@/contexts/AuthContext";
+import { trackAiAnalysisTriggered, trackImageUploaded } from "@/lib/analytics";
 import { readAsBase64 } from "@/utils/readAsBase64";
 
 import { PhotoAnalyzerStatus } from "./partials/PhotoAnalyzerStatus";
@@ -54,12 +55,15 @@ export function FoodPhotoAnalyzer({ onPrefill }: Readonly<FoodPhotoAnalyzerProps
     setStatus("analyzing");
 
     try {
+      trackImageUploaded({ mimeType: file.type });
+
       // Compress image client-side, then convert to base64
       const compressed = await imageCompression(file, COMPRESSION_OPTIONS);
       const base64 = await readAsBase64(compressed);
 
       // Get ID token and call server action
       const idToken = await user.getIdToken();
+      trackAiAnalysisTriggered({ locale });
       const result = await analyzeFoodImage(idToken, base64, locale);
 
       if (!result.success && result.error === "DAILY_LIMIT_REACHED") {

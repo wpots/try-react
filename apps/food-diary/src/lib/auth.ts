@@ -1,9 +1,14 @@
 import {
   browserPopupRedirectResolver,
+  createUserWithEmailAndPassword,
   deleteUser,
   getRedirectResult,
   GoogleAuthProvider,
+  RecaptchaVerifier,
+  sendPasswordResetEmail as firebaseSendPasswordResetEmail,
   signInAnonymously as firebaseSignInAnonymously,
+  signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword,
+  signInWithPhoneNumber,
   signInWithRedirect,
   signInWithPopup,
   signOut as firebaseSignOut,
@@ -13,7 +18,7 @@ import { FirebaseError } from "firebase/app";
 
 import { auth } from "@/lib/firebase";
 
-import type { User } from "firebase/auth";
+import type { ConfirmationResult, User, UserCredential } from "firebase/auth";
 
 const googleProvider = new GoogleAuthProvider();
 const GOOGLE_REDIRECT_CONTEXT_KEY = "google-sign-in-redirect-context";
@@ -196,6 +201,45 @@ export async function deleteSignedInUser(user: User): Promise<void> {
     await deleteUser(user);
   } catch (err) {
     console.error("Error deleting account:", err);
+    throw err;
+  }
+}
+
+export async function sendPhoneVerificationSms(
+  phoneNumber: string,
+  recaptchaVerifier: RecaptchaVerifier,
+): Promise<ConfirmationResult> {
+  try {
+    return await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+  } catch (err) {
+    console.error("Error sending phone verification SMS:", err);
+    throw err;
+  }
+}
+
+export async function signUpWithEmailPassword(email: string, password: string): Promise<UserCredential> {
+  try {
+    return await createUserWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    console.error("Error signing up with email/password:", err);
+    throw err;
+  }
+}
+
+export async function signInWithEmailPassword(email: string, password: string): Promise<UserCredential> {
+  try {
+    return await firebaseSignInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    console.error("Error signing in with email/password:", err);
+    throw err;
+  }
+}
+
+export async function sendPasswordReset(email: string): Promise<void> {
+  try {
+    await firebaseSendPasswordResetEmail(auth, email);
+  } catch (err) {
+    console.error("Error sending password reset email:", err);
     throw err;
   }
 }

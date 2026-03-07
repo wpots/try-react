@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import { Allura, Merriweather, Nunito } from "next/font/google";
 import { getLocale } from "next-intl/server";
 
@@ -33,7 +34,10 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning className={fontVariables}>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

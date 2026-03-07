@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 
-import { AuthProvider } from "@/contexts/AuthContext";
-import { ReactAriaProvider } from "@/contexts/ReactAriaProvider/ReactAriaProvider";
 import { AnalyticsUserSync } from "@/components/Analytics/AnalyticsUserSync";
 import { GoogleAnalyticsWithConsent } from "@/components/Analytics/GoogleAnalyticsWithConsent";
 import { ConsentBanner } from "@/components/ConsentBanner/ConsentBanner";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ReactAriaProvider } from "@/contexts/ReactAriaProvider/ReactAriaProvider";
 import { locales } from "@/i18n/config";
 
 import type { Metadata } from "next";

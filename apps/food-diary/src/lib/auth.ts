@@ -39,9 +39,7 @@ function readGoogleRedirectContext(): GoogleRedirectContext | null {
     return null;
   }
 
-  const storedContext = globalThis.sessionStorage.getItem(
-    GOOGLE_REDIRECT_CONTEXT_KEY,
-  );
+  const storedContext = globalThis.sessionStorage.getItem(GOOGLE_REDIRECT_CONTEXT_KEY);
 
   if (!storedContext) {
     return null;
@@ -55,15 +53,10 @@ function readGoogleRedirectContext(): GoogleRedirectContext | null {
 
     return {
       guestEntryIds: Array.isArray(parsedContext.guestEntryIds)
-        ? parsedContext.guestEntryIds.filter(
-            (entryId): entryId is string => typeof entryId === "string",
-          )
+        ? parsedContext.guestEntryIds.filter((entryId): entryId is string => typeof entryId === "string")
         : [],
       guestUid:
-        typeof parsedContext.guestUid === "string" &&
-        parsedContext.guestUid.length > 0
-          ? parsedContext.guestUid
-          : null,
+        typeof parsedContext.guestUid === "string" && parsedContext.guestUid.length > 0 ? parsedContext.guestUid : null,
     };
   } catch {
     return null;
@@ -85,10 +78,7 @@ function persistGoogleRedirectContext(context: GoogleRedirectContext): void {
     return;
   }
 
-  globalThis.sessionStorage.setItem(
-    GOOGLE_REDIRECT_CONTEXT_KEY,
-    JSON.stringify(context),
-  );
+  globalThis.sessionStorage.setItem(GOOGLE_REDIRECT_CONTEXT_KEY, JSON.stringify(context));
 }
 
 function shouldPreferRedirectForGoogleSignIn(): boolean {
@@ -100,8 +90,7 @@ function shouldPreferRedirectForGoogleSignIn(): boolean {
   const isAndroid = /Android/i.test(userAgent);
   const isIPhone = /iPhone/i.test(userAgent);
   const isIPad = /iPad/i.test(userAgent);
-  const isIPadDesktopMode =
-    /Macintosh/i.test(userAgent) && navigator.maxTouchPoints > 1;
+  const isIPadDesktopMode = /Macintosh/i.test(userAgent) && navigator.maxTouchPoints > 1;
 
   return isAndroid || isIPhone || isIPad || isIPadDesktopMode;
 }
@@ -111,10 +100,7 @@ function shouldFallbackToRedirect(error: unknown): boolean {
     return false;
   }
 
-  return (
-    error.code === "auth/popup-blocked" ||
-    error.code === "auth/operation-not-supported-in-this-environment"
-  );
+  return error.code === "auth/popup-blocked" || error.code === "auth/operation-not-supported-in-this-environment";
 }
 
 async function startGoogleRedirectSignIn(
@@ -126,11 +112,7 @@ async function startGoogleRedirectSignIn(
     guestUid,
   });
 
-  await signInWithRedirect(
-    auth,
-    googleProvider,
-    browserPopupRedirectResolver,
-  );
+  await signInWithRedirect(auth, googleProvider, browserPopupRedirectResolver);
 
   return {
     guestEntryIds,
@@ -152,10 +134,7 @@ export async function signInAnonymously(): Promise<User> {
 
 export async function completeGoogleRedirectSignIn(): Promise<GoogleSignInResult | null> {
   const redirectContext = consumeGoogleRedirectContext();
-  const userCredential = await getRedirectResult(
-    auth,
-    browserPopupRedirectResolver,
-  );
+  const userCredential = await getRedirectResult(auth, browserPopupRedirectResolver);
 
   if (!userCredential) {
     return null;
@@ -177,10 +156,7 @@ export async function completeGoogleRedirectSignIn(): Promise<GoogleSignInResult
  * cookies/storage — this fixes "The requested action is invalid" on browsers
  * that block third-party storage (Safari ITP, Firefox ETP, Brave).
  */
-export async function signInWithGoogle(
-  user?: User | null,
-  guestEntryIds: string[] = [],
-): Promise<GoogleSignInResult> {
+export async function signInWithGoogle(user?: User | null, guestEntryIds: string[] = []): Promise<GoogleSignInResult> {
   const guestUid = user?.isAnonymous ? user.uid : null;
 
   if (shouldPreferRedirectForGoogleSignIn()) {
@@ -188,11 +164,7 @@ export async function signInWithGoogle(
   }
 
   try {
-    const userCredential = await signInWithPopup(
-      auth,
-      googleProvider,
-      browserPopupRedirectResolver,
-    );
+    const userCredential = await signInWithPopup(auth, googleProvider, browserPopupRedirectResolver);
 
     return {
       guestEntryIds,

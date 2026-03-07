@@ -9,9 +9,11 @@ import { sendPhoneVerificationSms } from "@/lib/auth";
 import { auth } from "@/lib/firebase";
 import { getGuestEntryIds } from "@/lib/firestore/helpers";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
-import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
+import { mergeGuestEntriesAfterGoogleSignIn as mergeGuestEntries } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
 
 import type { ConfirmationResult } from "firebase/auth";
+
+export const PHONE_RECAPTCHA_CONTAINER_ID = "phone-recaptcha-container";
 
 export type PhoneAuthView = "idle" | "phone-entry" | "sms-entry";
 
@@ -27,10 +29,9 @@ export interface UsePhoneAuthResult {
   onSendSms: () => Promise<void>;
   onVerifyCode: () => Promise<void>;
   onBack: () => void;
-  recaptchaContainerId: string;
 }
 
-const RECAPTCHA_CONTAINER_ID = "phone-recaptcha-container";
+const RECAPTCHA_CONTAINER_ID = PHONE_RECAPTCHA_CONTAINER_ID;
 
 export function usePhoneAuth({
   redirectPath,
@@ -118,7 +119,7 @@ export function usePhoneAuth({
       trackAuthMethodUsed("phone");
 
       if (guestUid && userCredential.user) {
-        const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(guestUid, userCredential.user, guestEntryIds);
+        const mergeResult = await mergeGuestEntries(guestUid, userCredential.user, guestEntryIds);
         if (!mergeResult.success) {
           console.error(mergeResult.error ?? t("mergeUnknownError"));
         }
@@ -145,6 +146,5 @@ export function usePhoneAuth({
     onSendSms,
     onVerifyCode,
     onBack,
-    recaptchaContainerId: RECAPTCHA_CONTAINER_ID,
   };
 }

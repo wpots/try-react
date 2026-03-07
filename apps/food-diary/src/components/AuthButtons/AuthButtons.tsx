@@ -5,7 +5,7 @@ import { ArrowLeft, Mail, Phone, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { useEmailPasswordAuth } from "@/hooks/useEmailPasswordAuth";
-import { usePhoneAuth } from "@/hooks/usePhoneAuth";
+import { PHONE_RECAPTCHA_CONTAINER_ID, usePhoneAuth } from "@/hooks/usePhoneAuth";
 
 import { useAuthButtons } from "./useAuthButtons";
 
@@ -42,7 +42,7 @@ export function AuthButtons({ redirectPath = "/dashboard" }: AuthButtonsProps): 
           value={phoneAuth.phoneNumber}
         />
 
-        <div id={phoneAuth.recaptchaContainerId} />
+        <div id={PHONE_RECAPTCHA_CONTAINER_ID} />
 
         <Button
           className="w-full"

@@ -7,7 +7,7 @@ import { trackAuthMethodUsed } from "@/lib/analytics";
 import { sendPasswordReset, signInWithEmailPassword, signUpWithEmailPassword } from "@/lib/auth";
 import { getGuestEntryIds } from "@/lib/firestore/helpers";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
-import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
+import { mergeGuestEntriesAfterGoogleSignIn as mergeGuestEntries } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
 
 import type { UserCredential } from "firebase/auth";
 
@@ -71,7 +71,7 @@ export function useEmailPasswordAuth({
     const guestUid = user?.isAnonymous ? user.uid : null;
 
     if (guestUid && userCredential.user) {
-      const mergeResult = await mergeGuestEntriesAfterGoogleSignIn(guestUid, userCredential.user, guestEntryIds);
+      const mergeResult = await mergeGuestEntries(guestUid, userCredential.user, guestEntryIds);
       if (!mergeResult.success) {
         console.error(mergeResult.error ?? t("mergeUnknownError"));
       }

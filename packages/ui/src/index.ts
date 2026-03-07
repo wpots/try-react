@@ -89,6 +89,9 @@ export type { ToggleButtonGroupOption, ToggleButtonGroupProps } from "./componen
 export { Select } from "./components/Select";
 export type { SelectProps, SelectOption } from "./components/Select";
 
+export { Tabs } from "./components/Tabs";
+export type { TabItem, TabsProps } from "./components/Tabs";
+
 export { useMotionEnabled } from "./hooks/useMotionEnabled";
 
 export { cn } from "./lib/utils";

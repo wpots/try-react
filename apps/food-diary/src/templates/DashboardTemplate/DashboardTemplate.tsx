@@ -1,9 +1,11 @@
 "use client";
 import { Container, Section, Typography } from "@repo/ui";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
+import { fetchCustomAffirmations } from "@/app/actions";
 import { DashboardHeader } from "@/components/DashboardHeader";
+import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import type { DiaryEntry } from "@/lib/diaryEntries";
 
@@ -39,6 +41,29 @@ export function DashboardTemplate(): React.JSX.Element {
   const tDashboard = useTranslations("dashboard");
   const tEntry = useTranslations("entry");
   const dashboardState = useDashboardContent();
+  const { user, isGuest } = useAuth();
+  const [customAffirmations, setCustomAffirmations] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!user || isGuest) return;
+    let isMounted = true;
+    user
+      .getIdToken()
+      .then(idToken => fetchCustomAffirmations(idToken))
+      .then(result => {
+        if (!isMounted) return;
+        if (result.success && result.affirmations?.length) {
+          setCustomAffirmations(result.affirmations);
+        }
+      })
+      .catch(() => {
+        // silently ignore — built-in affirmations will still be shown
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [user, isGuest]);
+
   function translateDashboard(key: string): string {
     return tDashboard(key);
   }
@@ -59,7 +84,7 @@ export function DashboardTemplate(): React.JSX.Element {
     return getEntryMoods(entry, resolveEmotionLabel);
   }
   const averageMood = getMoodSummary(getAverageMoodZone(dashboardState.dayEntries), translateDashboard);
-  const affirmationPool = getAffirmationPool(translateDashboard, getDashboardRawMessage);
+  const affirmationPool = getAffirmationPool(translateDashboard, getDashboardRawMessage, customAffirmations);
   const affirmation = pickAffirmation(toDateKey(dashboardState.selectedDate), affirmationPool);
   const heroDateLabel = getHeroDateLabel(dashboardState.selectedDate, locale);
   const periodLabel = getPeriodLabel(dashboardState.viewMode, dashboardState.selectedDate, locale);

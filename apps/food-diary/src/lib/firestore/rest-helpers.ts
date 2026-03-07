@@ -434,3 +434,20 @@ export async function restDeleteUserData(idToken: string, userId: string): Promi
 
   return docs.length;
 }
+
+export async function restGetUserCustomAffirmations(idToken: string, userId: string): Promise<string[]> {
+  const doc = await fsGet(idToken, `/users/${userId}`);
+  if (!doc) return [];
+  const { data } = fromFSDocument(doc);
+  const raw = data["customAffirmations"];
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((item): item is string => typeof item === "string");
+}
+
+export async function restSaveUserCustomAffirmations(
+  idToken: string,
+  userId: string,
+  affirmations: string[],
+): Promise<void> {
+  await fsPatchWithMask(idToken, `/users/${userId}`, { customAffirmations: affirmations }, ["customAffirmations"]);
+}

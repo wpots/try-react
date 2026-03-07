@@ -17,7 +17,16 @@
     "wipeData": "Gastgegevens wissen",
     "wipeDataLoading": "Gegevens wissen...",
     "close": "Sluiten",
-    "wipeUnknownError": "Gastgegevens konden niet worden gewist."
+    "wipeUnknownError": "Gastgegevens konden niet worden gewist.",
+    "tabs": {
+      "settings": "Instellingen",
+      "dataAccount": "Gegevens & account",
+      "affirmations": "Affirmaties"
+    },
+    "affirmations": {
+      "lockedTitle": "Persoonlijke affirmaties",
+      "lockedBody": "Persoonlijke affirmaties zijn beschikbaar voor geregistreerde gebruikers. Log in met Google om deze functie te ontgrendelen."
+    }
   },
   "profile": {
     "menuLabel": "Profiel",
@@ -41,7 +50,27 @@
     "deleteAccountConfirmCancel": "Annuleren",
     "deleteAccountUnknownError": "Je account kon niet worden verwijderd.",
     "close": "Sluiten",
-    "wipeUnknownError": "Je data kon niet worden verwijderd."
+    "wipeUnknownError": "Je data kon niet worden verwijderd.",
+    "tabs": {
+      "settings": "Instellingen",
+      "dataAccount": "Gegevens & account",
+      "affirmations": "Affirmaties"
+    },
+    "affirmations": {
+      "title": "Jouw affirmaties",
+      "description": "Voeg persoonlijke affirmaties toe die naast de ingebouwde affirmaties op je dashboard verschijnen.",
+      "placeholder": "Schrijf een affirmatie...",
+      "add": "Toevoegen",
+      "remove": "Verwijderen",
+      "loading": "Jouw affirmaties laden...",
+      "saving": "Opslaan...",
+      "saved": "Opgeslagen",
+      "empty": "Je hebt nog geen persoonlijke affirmaties toegevoegd.",
+      "limit": "Je kunt maximaal {max} affirmaties toevoegen.",
+      "tooLong": "Een affirmatie mag maximaal {max} tekens bevatten.",
+      "duplicate": "Deze affirmatie bestaat al.",
+      "saveError": "Je affirmaties konden niet worden opgeslagen. Probeer het opnieuw."
+    }
   },
   "view": {
     "day": "Dag",

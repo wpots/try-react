@@ -3,10 +3,10 @@
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
-import { exportUserData, wipeEntries } from "@/app/actions";
+import { deleteUserAccount, exportUserData, wipeEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import { deleteSignedInUser, signInWithGoogle, signOut } from "@/lib/auth";
+import { signInWithGoogle, signOut } from "@/lib/auth";
 import { getGuestEntryIds } from "@/lib/firestore/helpers";
 import { getFirebaseAuthErrorKey } from "@/lib/getFirebaseAuthErrorMessage";
 import { mergeGuestEntriesAfterGoogleSignIn } from "@/utils/mergeGuestEntriesAfterGoogleSignIn";
@@ -203,18 +203,19 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     setSubmittingAction("delete-account");
 
     try {
-      const idToken = await user.getIdToken();
-      await deleteSignedInUser(user);
+      const deleteResult = await deleteUserAccount(await user.getIdToken());
 
-      const wipeResult = await wipeEntries(idToken);
-      if (!wipeResult.success) {
-        console.error(wipeResult.error ?? tProfile("wipeUnknownError"));
+      if (!deleteResult.success) {
+        throw new Error(deleteResult.error ?? tAuth("deleteAccountUnknownError"));
       }
 
+      await signOut();
       setIsProfileDialogOpen(false);
-      router.push("/auth/login");
+      router.push("/auth/login?deleted=1");
     } catch (err) {
-      setError(tAuth(getFirebaseAuthErrorKey(err, "deleteAccountUnknownError")));
+      const message =
+        err instanceof Error ? err.message : tAuth(getFirebaseAuthErrorKey(err, "deleteAccountUnknownError"));
+      setError(message);
     } finally {
       setSubmittingAction(null);
     }

@@ -1,7 +1,7 @@
 export { Button } from "./components/Button";
 export type { ButtonProps } from "./components/Button";
 
-export { CookieConsentBanner, COOKIE_CONSENT_KEY } from "./components/CookieConsentBanner";
+export { CookieConsentBanner, COOKIE_CONSENT_EVENT, COOKIE_CONSENT_KEY } from "./components/CookieConsentBanner";
 export type { CookieConsentBannerProps, CookieConsent } from "./components/CookieConsentBanner";
 
 export { TextField } from "./components/TextField";

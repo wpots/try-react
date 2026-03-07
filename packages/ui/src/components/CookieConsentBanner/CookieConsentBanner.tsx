@@ -7,6 +7,7 @@ import { Button } from "../Button";
 import { Typography } from "../Typography";
 
 export const COOKIE_CONSENT_KEY = "cookie_consent";
+export const COOKIE_CONSENT_EVENT = "cookie-consent-changed";
 export type CookieConsent = "granted" | "denied";
 
 export interface CookieConsentBannerProps {
@@ -30,6 +31,14 @@ export function CookieConsentBanner({
 }: CookieConsentBannerProps): React.JSX.Element | null {
   const [visible, setVisible] = useState(false);
 
+  const dispatchConsentChange = (value: CookieConsent): void => {
+    window.dispatchEvent(
+      new CustomEvent(COOKIE_CONSENT_EVENT, {
+        detail: { value },
+      }),
+    );
+  };
+
   useEffect(() => {
     const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
     if (!stored) {
@@ -41,12 +50,14 @@ export function CookieConsentBanner({
 
   const handleAccept = (): void => {
     localStorage.setItem(COOKIE_CONSENT_KEY, "granted" satisfies CookieConsent);
+    dispatchConsentChange("granted");
     setVisible(false);
     onAccept?.();
   };
 
   const handleReject = (): void => {
     localStorage.setItem(COOKIE_CONSENT_KEY, "denied" satisfies CookieConsent);
+    dispatchConsentChange("denied");
     setVisible(false);
     onReject?.();
   };

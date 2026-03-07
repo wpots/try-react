@@ -94,12 +94,12 @@ This story covers the minimum viable GDPR surface for a public web app that:
    - Ensure both entry wipe and auth deletion occur atomically (best effort; log any partial failure).
 
 4. **QA checklist**
-   - [ ] Cookie consent persists across page reloads.
-   - [ ] GA4 does not fire before consent is granted.
-   - [ ] Data export produces valid JSON with all user entries.
-   - [ ] Account deletion removes auth record and all Firestore entries.
-   - [ ] Deletion flow works for both guest and Google users.
-   - [ ] All new UI strings are translated in `nl` and `en`.
+   - [x] Cookie consent persists across page reloads.
+   - [x] GA4 does not fire before consent is granted.
+   - [x] Data export produces valid JSON with all user entries.
+   - [x] Account deletion removes auth record and all Firestore entries.
+   - [x] Deletion flow works for both guest and Google users.
+   - [x] All new UI strings are translated in `nl` and `en`.
 
 ---
 

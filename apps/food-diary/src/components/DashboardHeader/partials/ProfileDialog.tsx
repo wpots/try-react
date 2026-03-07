@@ -136,6 +136,9 @@ export function ProfileDialog({
             <Typography variant="body" className="font-ds-label-sm text-danger">
               {t("wipeWarning")}
             </Typography>
+            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
+              {t("retentionBody")}
+            </Typography>
           </div>
 
           <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">

@@ -1,5 +1,4 @@
 import { Card, Container, Section, Typography } from "@repo/ui";
-import { useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { AuthButtons } from "@/components/AuthButtons";
@@ -16,9 +15,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function LoginPage(): React.JSX.Element {
-  const t = useTranslations("auth");
-  const tNav = useTranslations("nav");
+type LoginPageProps = {
+  searchParams: Promise<{ deleted?: string }>;
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps): Promise<React.JSX.Element> {
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: "auth" });
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+  const { deleted } = await searchParams;
+  const hasDeletedAccount = deleted === "1";
 
   return (
     <main id="main-content" className="flex min-h-dvh flex-col">
@@ -29,6 +35,11 @@ export default function LoginPage(): React.JSX.Element {
             {t("loginTitle")}
           </Typography>
           <Card variant="knockout" className="gap-ds-l">
+            {hasDeletedAccount ? (
+              <Typography variant="body" className="rounded-ds-sm bg-ds-success/15 p-ds-s text-ds-on-surface">
+                {t("accountDeletedSuccess")}
+              </Typography>
+            ) : null}
             <div className="grid gap-ds-s">
               <AuthButtons redirectPath="/dashboard" />
             </div>

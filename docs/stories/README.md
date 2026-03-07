@@ -1,6 +1,6 @@
 # User Story Alignment and Roadmap
 
-Last updated: February 28, 2026.
+Last updated: March 7, 2026.
 
 This file is the source of truth for story status against the current codebase.
 Original story files are kept as historical implementation specs.
@@ -38,7 +38,7 @@ Story files are organized into two subdirectories:
 | 013   | Diary entry overview            | partial     | Dashboard is richer than original overview spec, but not all original requirements (for example image thumbnail flow) are delivered.     |
 | 014   | Deploy to Vercel                | partial     | Story exists but deployment status/runbook evidence is not codified in repo docs.                                                        |
 | 015   | Cloudinary + Gemini end-to-end  | not-started | Blocked by 010 + 011 not being implemented end-to-end.                                                                                   |
-| 020   | GDPR compliance                 | not-started | Privacy policy page, cookie consent banner (tied to 016), data export, and complete account deletion flow.                               |
+| 020   | GDPR compliance                 | done        | Cookie consent gating, data export, server-side account deletion, and retention copy are implemented.                                    |
 
 ## Major Drift From Original Story Set
 
@@ -107,7 +107,7 @@ Impact on roadmap:
   - create/edit/delete entry,
   - dashboard rendering and state transitions,
   - media/AI edge cases.
-- Implement story 020 (GDPR compliance): privacy policy, cookie consent, data export, account deletion.
+- Story 020 is complete for MVP GDPR mechanics. Story 023 still owns privacy-page discoverability.
 
 ## Suggested Story Refactor
 

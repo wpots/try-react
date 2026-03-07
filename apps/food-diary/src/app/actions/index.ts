@@ -25,3 +25,6 @@ export type { AnalyzeFoodImageResult, AnalyzeFoodImageData, AnalysisErrorCode } 
 
 export { exportUserData } from "./exportUserData";
 export type { ExportUserDataResult } from "./exportUserData";
+
+export { deleteUserAccount } from "./deleteUserAccount";
+export type { DeleteUserAccountResult } from "./deleteUserAccount";

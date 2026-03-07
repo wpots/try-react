@@ -2,12 +2,7 @@
 
 import { Button, Typography } from "@repo/ui";
 import { useTranslations } from "next-intl";
-import {
-  Dialog,
-  Heading,
-  Modal,
-  ModalOverlay,
-} from "react-aria-components";
+import { Dialog, Heading, Modal, ModalOverlay } from "react-aria-components";
 
 interface GuestModeDialogProps {
   error: string | null;
@@ -50,10 +45,7 @@ export function GuestModeDialog({
       isDismissable
       isOpen={isOpen}
       onOpenChange={handleOpenChange}
-      className={
-        "fixed inset-0 z-50 flex items-center justify-center " +
-        "bg-ds-on-surface/40 p-ds-m"
-      }
+      className={"fixed inset-0 z-50 flex items-center justify-center " + "bg-ds-on-surface/40 p-ds-m"}
     >
       <Modal className="w-full max-w-xl rounded-ds-md border border-ds-border bg-ds-surface p-ds-l shadow-ds-lg outline-none">
         <Dialog className="grid gap-ds-m outline-none">
@@ -75,6 +67,9 @@ export function GuestModeDialog({
             <Typography variant="body" className="font-ds-label-sm text-danger">
               {t("wipeWarning")}
             </Typography>
+            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
+              {t("retentionBody")}
+            </Typography>
           </div>
 
           {error ? (
@@ -84,34 +79,15 @@ export function GuestModeDialog({
           ) : null}
 
           <div className="grid gap-ds-xs sm:grid-cols-2">
-            <Button
-              className="w-full"
-              disabled={isBusy}
-              onClick={handleLoginClick}
-              type="button"
-            >
-              {isSigningIn
-                ? t("loginWithGoogleLoading")
-                : t("loginWithGoogle")}
+            <Button className="w-full" disabled={isBusy} onClick={handleLoginClick} type="button">
+              {isSigningIn ? t("loginWithGoogleLoading") : t("loginWithGoogle")}
             </Button>
-            <Button
-              className="w-full"
-              disabled={isBusy}
-              onClick={handleWipeClick}
-              type="button"
-              variant="destructive"
-            >
+            <Button className="w-full" disabled={isBusy} onClick={handleWipeClick} type="button" variant="destructive">
               {isWiping ? t("wipeDataLoading") : t("wipeData")}
             </Button>
           </div>
 
-          <Button
-            disabled={isBusy}
-            onClick={onClose}
-            size="link"
-            type="button"
-            variant="link"
-          >
+          <Button disabled={isBusy} onClick={onClose} size="link" type="button" variant="link">
             {t("close")}
           </Button>
         </Dialog>

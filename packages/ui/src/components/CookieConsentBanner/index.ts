@@ -1,2 +1,2 @@
-export { CookieConsentBanner, COOKIE_CONSENT_KEY } from "./CookieConsentBanner";
+export { CookieConsentBanner, COOKIE_CONSENT_EVENT, COOKIE_CONSENT_KEY } from "./CookieConsentBanner";
 export type { CookieConsentBannerProps, CookieConsent } from "./CookieConsentBanner";

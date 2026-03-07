@@ -1,25 +1,24 @@
 "use server";
 
-import { extractUidFromIdToken, restGetDiaryEntriesByUser } from "@/lib/firestore/rest-helpers";
+import { getFirebaseAdminAuth } from "@/lib/firebaseAdmin";
+import { restGetDiaryEntriesByUser } from "@/lib/firestore/rest-helpers";
 
 import type { ExportUserDataResult } from "./index";
 
 export async function exportUserData(idToken: string): Promise<ExportUserDataResult> {
-  const userId = extractUidFromIdToken(idToken);
-
-  if (!userId) {
-    return {
-      success: false,
-      error: "User not authenticated.",
-    };
-  }
-
   try {
-    const entries = await restGetDiaryEntriesByUser(idToken, userId);
+    const decodedToken = await getFirebaseAdminAuth().verifyIdToken(idToken);
+    const entries = await restGetDiaryEntriesByUser(idToken, decodedToken.uid);
+    const userRecord = await getFirebaseAdminAuth().getUser(decodedToken.uid);
 
     const exportPayload = {
       exportedAt: new Date().toISOString(),
-      userId,
+      profile: {
+        uid: userRecord.uid,
+        displayName: userRecord.displayName ?? null,
+        email: userRecord.email ?? null,
+        createdAt: userRecord.metadata.creationTime ?? null,
+      },
       entryCount: entries.length,
       entries,
     };

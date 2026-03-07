@@ -2,7 +2,7 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-import { extractUidFromIdToken } from "@/lib/firestore/rest-helpers";
+import { extractUidFromIdToken, restGetUserContext } from "@/lib/firestore/rest-helpers";
 import { checkAnalysisQuota, incrementAnalysisQuota } from "@/lib/quota";
 
 function getGenAI() {
@@ -27,7 +27,18 @@ export interface AnalyzeFoodImageResult {
   remaining?: number;
 }
 
-function buildAnalysisPrompt(locale: string): string {
+function buildAnalysisPrompt(
+  locale: string,
+  userContext?: { company?: string; location?: string; behaviour?: string } | null,
+): string {
+  const contextLines: string[] = [];
+  if (userContext?.company) contextLines.push(`- Company / workplace type: ${userContext.company}`);
+  if (userContext?.location) contextLines.push(`- Location: ${userContext.location}`);
+  if (userContext?.behaviour) contextLines.push(`- Eating behaviour / dietary preferences: ${userContext.behaviour}`);
+
+  const contextSection =
+    contextLines.length > 0 ? `\nUser context:\n${contextLines.join("\n")}\n` : "";
+
   return `Analyze this food image and return a JSON object with:
 - foodName: name of the food item(s)
 - mealType: one of "breakfast", "lunch", "dinner", "snack"
@@ -38,7 +49,7 @@ Rules:
 - Keep the description factual and short (one sentence).
 - If multiple items are visible, list them by name without counting.
 - Return ALL text values (foodName, description) in the language with BCP 47 locale code "${locale}".
-
+${contextSection}
 Return only valid JSON, no markdown.`;
 }
 
@@ -65,12 +76,20 @@ export async function analyzeFoodImage(idToken: string, base64Image: string, loc
   }
 
   try {
-    // 3. Call Gemini Flash
+    // 3. Load user context (non-blocking; omit gracefully on error)
+    let userContext: { company?: string; location?: string; behaviour?: string } | null = null;
+    try {
+      userContext = await restGetUserContext(idToken, userId);
+    } catch {
+      // User context is optional — continue without it if the read fails
+    }
+
+    // 4. Call Gemini Flash
     const genAI = getGenAI();
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const result = await model.generateContent([
-      buildAnalysisPrompt(locale),
+      buildAnalysisPrompt(locale, userContext),
       { inlineData: { data: base64Image, mimeType: "image/jpeg" } },
     ]);
 
@@ -86,7 +105,7 @@ export async function analyzeFoodImage(idToken: string, base64Image: string, loc
         .trim();
       analysis = JSON.parse(stripped) as typeof analysis;
     }
-    // 4. Increment quota only on success
+    // 5. Increment quota only on success
     await incrementAnalysisQuota(idToken, userId);
 
     return {

@@ -10,6 +10,10 @@
 - `photoURL` (`string`, optional)
 - `createdAt` (`Timestamp`)
 - `lastLoginAt` (`Timestamp`)
+- `userContext` (`object`, optional): personalisation context for Gemini food analysis
+  - `company` (`string`, optional, max 100 chars): company or workplace type
+  - `location` (`string`, optional, max 100 chars): user's location (e.g. city/country)
+  - `behaviour` (`string`, optional, max 280 chars): eating behaviour or dietary preferences
 
 ### `/diaryEntries/{entryId}`
 

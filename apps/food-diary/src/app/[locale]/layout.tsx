@@ -5,6 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ReactAriaProvider } from "@/contexts/ReactAriaProvider/ReactAriaProvider";
+import { ConsentBanner } from "@/components/ConsentBanner/ConsentBanner";
 import { locales } from "@/i18n/config";
 
 import type { Metadata } from "next";
@@ -46,6 +47,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <AuthProvider>
           <SkipLink>{tCommon("skipToContent")}</SkipLink>
           {children}
+          <ConsentBanner />
         </AuthProvider>
       </ReactAriaProvider>
     </NextIntlClientProvider>

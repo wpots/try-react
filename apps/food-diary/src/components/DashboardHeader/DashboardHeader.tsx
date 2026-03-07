@@ -44,6 +44,7 @@ export function DashboardHeader({
     isProfileDialogOpen,
     onCloseGuestModeDialog,
     onCloseProfileDialog,
+    onExportData,
     onGuestGoogleLogin,
     onGuestWipeData,
     onMenuAction,
@@ -123,10 +124,12 @@ export function DashboardHeader({
       <ProfileDialog
         error={error}
         isDeletingAccount={submittingAction === "delete-account"}
+        isExportingData={submittingAction === "export"}
         isOpen={isProfileDialogOpen}
         isWipingData={submittingAction === "wipe-user"}
         onClose={onCloseProfileDialog}
         onDeleteAccount={onProfileDeleteAccount}
+        onExportData={onExportData}
         onWipeData={onProfileWipeData}
       />
     </>

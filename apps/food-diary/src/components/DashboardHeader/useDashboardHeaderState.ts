@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
-import { wipeEntries } from "@/app/actions";
+import { exportUserData, wipeEntries } from "@/app/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { deleteSignedInUser, signInWithGoogle, signOut } from "@/lib/auth";
@@ -18,7 +18,7 @@ export const loginActionKey = "login";
 export const logoutActionKey = "logout";
 export const profileActionKey = "profile";
 
-export type SubmitAction = "delete-account" | "google" | "logout" | "wipe-guest" | "wipe-user" | null;
+export type SubmitAction = "delete-account" | "export" | "google" | "logout" | "wipe-guest" | "wipe-user" | null;
 
 export interface UseDashboardHeaderStateResult {
   error: string | null;
@@ -28,6 +28,7 @@ export interface UseDashboardHeaderStateResult {
   isProfileDialogOpen: boolean;
   onCloseGuestModeDialog: () => void;
   onCloseProfileDialog: () => void;
+  onExportData: () => Promise<void>;
   onGuestGoogleLogin: () => Promise<void>;
   onGuestWipeData: () => Promise<void>;
   onMenuAction: (key: Key) => Promise<void>;
@@ -163,6 +164,36 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     }
   }, [isGuest, router, submittingAction, tProfile, user]);
 
+  const handleExportData = useCallback(async (): Promise<void> => {
+    if (!user || isGuest || submittingAction !== null) {
+      return;
+    }
+
+    setError(null);
+    setSubmittingAction("export");
+
+    try {
+      const result = await exportUserData(await user.getIdToken());
+
+      if (!result.success || !result.jsonData) {
+        throw new Error(result.error ?? tProfile("exportUnknownError"));
+      }
+
+      const blob = new Blob([result.jsonData], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = result.filename ?? "food-diary-export.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : tProfile("exportUnknownError");
+      setError(message);
+    } finally {
+      setSubmittingAction(null);
+    }
+  }, [isGuest, submittingAction, tProfile, user]);
+
   const handleProfileDeleteAccount = useCallback(async (): Promise<void> => {
     if (!user || isGuest || submittingAction !== null) {
       return;
@@ -240,6 +271,7 @@ export function useDashboardHeaderState(): UseDashboardHeaderStateResult {
     isProfileDialogOpen,
     onCloseGuestModeDialog: () => setIsGuestModeDialogOpen(false),
     onCloseProfileDialog: () => setIsProfileDialogOpen(false),
+    onExportData: handleExportData,
     onGuestGoogleLogin: handleGuestGoogleLogin,
     onGuestWipeData: handleGuestWipeData,
     onMenuAction: handleMenuAction,

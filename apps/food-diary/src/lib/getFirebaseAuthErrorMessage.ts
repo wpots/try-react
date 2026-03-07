@@ -30,6 +30,36 @@ export function getFirebaseAuthErrorKey(error: unknown, fallbackKey: string): st
       return "firebase.invalidApiKey";
     case "auth/invalid-action-code":
       return "firebase.invalidActionCode";
+    case "auth/invalid-phone-number":
+      return "firebase.invalidPhoneNumber";
+    case "auth/missing-phone-number":
+      return "firebase.missingPhoneNumber";
+    case "auth/quota-exceeded":
+      return "firebase.quotaExceeded";
+    case "auth/user-disabled":
+      return "firebase.userDisabled";
+    case "auth/invalid-verification-code":
+      return "firebase.invalidVerificationCode";
+    case "auth/missing-verification-code":
+      return "firebase.missingVerificationCode";
+    case "auth/code-expired":
+      return "firebase.sessionExpired";
+    case "auth/session-expired":
+      return "firebase.sessionExpired";
+    case "auth/email-already-in-use":
+      return "firebase.emailAlreadyInUse";
+    case "auth/invalid-email":
+      return "firebase.invalidEmail";
+    case "auth/wrong-password":
+      return "firebase.wrongPassword";
+    case "auth/user-not-found":
+      return "firebase.userNotFound";
+    case "auth/invalid-credential":
+      return "firebase.wrongPassword";
+    case "auth/weak-password":
+      return "firebase.weakPassword";
+    case "auth/too-many-requests":
+      return "firebase.tooManyRequests";
     default:
       return fallbackKey;
   }

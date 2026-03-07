@@ -13,6 +13,7 @@ import { getAuthButtonsDisabledState } from "./utils";
 
 interface UseAuthButtonsInput {
   redirectPath: string;
+  externalBusy?: boolean;
 }
 
 export interface UseAuthButtonsResult {
@@ -26,7 +27,7 @@ export interface UseAuthButtonsResult {
   userUid: string | null;
 }
 
-export function useAuthButtons({ redirectPath }: UseAuthButtonsInput): UseAuthButtonsResult {
+export function useAuthButtons({ redirectPath, externalBusy = false }: UseAuthButtonsInput): UseAuthButtonsResult {
   const t = useTranslations("auth");
   const router = useRouter();
   const { isGuest, loading, user } = useAuth();
@@ -147,6 +148,7 @@ export function useAuthButtons({ redirectPath }: UseAuthButtonsInput): UseAuthBu
     isLoading: loading,
     hasUser: Boolean(user),
     submittingMethod,
+    externalBusy,
   });
 
   return {

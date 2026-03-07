@@ -78,7 +78,7 @@ export function syncAnalyticsUser(userId: string | null): void {
   });
 }
 
-export function trackAuthMethodUsed(method: "google" | "guest"): void {
+export function trackAuthMethodUsed(method: "google" | "guest" | "phone" | "email"): void {
   trackEvent("auth_method_used", { method });
 }
 

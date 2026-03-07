@@ -3,6 +3,7 @@ interface AuthButtonsDisabledStateInput {
   isLoading: boolean;
   hasUser: boolean;
   submittingMethod: "guest" | "google" | null;
+  externalBusy?: boolean;
 }
 
 export interface AuthButtonsDisabledState {
@@ -15,8 +16,9 @@ export function getAuthButtonsDisabledState({
   isLoading,
   hasUser,
   submittingMethod,
+  externalBusy = false,
 }: AuthButtonsDisabledStateInput): AuthButtonsDisabledState {
-  const isBusy = isLoading || submittingMethod !== null;
+  const isBusy = isLoading || submittingMethod !== null || externalBusy;
 
   return {
     isGoogleDisabled: isBusy || (hasUser && !isGuest),

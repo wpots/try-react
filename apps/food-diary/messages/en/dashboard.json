@@ -17,7 +17,22 @@
     "wipeData": "Wipe guest data",
     "wipeDataLoading": "Wiping data...",
     "close": "Close",
-    "wipeUnknownError": "Could not wipe guest data."
+    "wipeUnknownError": "Could not wipe guest data.",
+    "tabs": {
+      "account": "Account",
+      "privacy": "Privacy",
+      "help": "Help"
+    },
+    "privacy": {
+      "summary": "We only collect data needed to make this app work for you. Your diary entries are stored securely and never shared with third parties.",
+      "cta": "Read our full privacy policy"
+    },
+    "help": {
+      "title": "Need help?",
+      "description": "Something not working, or want to support the project?",
+      "reportIssue": "Report an issue",
+      "buyCoffee": "Buy us a coffee"
+    }
   },
   "profile": {
     "menuLabel": "Profile",
@@ -41,7 +56,22 @@
     "deleteAccountConfirmCancel": "Cancel",
     "deleteAccountUnknownError": "Could not delete your account.",
     "close": "Close",
-    "wipeUnknownError": "Could not remove your data."
+    "wipeUnknownError": "Could not remove your data.",
+    "tabs": {
+      "account": "Account",
+      "privacy": "Privacy",
+      "help": "Help"
+    },
+    "privacy": {
+      "summary": "We only collect data needed to make this app work for you. Your diary entries are stored securely and never shared with third parties.",
+      "cta": "Read our full privacy policy"
+    },
+    "help": {
+      "title": "Need help?",
+      "description": "Something not working, or want to support the project?",
+      "reportIssue": "Report an issue",
+      "buyCoffee": "Buy us a coffee"
+    }
   },
   "view": {
     "day": "Day",

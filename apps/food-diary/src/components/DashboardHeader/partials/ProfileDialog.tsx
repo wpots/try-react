@@ -14,13 +14,23 @@ import {
   Popover,
   Select,
   SelectValue,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
   Button as AriaButton,
 } from "react-aria-components";
 
 import { useLanguageSwitcher, isLocale, localeLabels } from "@/components/LanguageSwitcher";
 import { locales } from "@/i18n/config";
 
+import { HelpTab } from "./HelpTab";
+import { PrivacyTab } from "./PrivacyTab";
+
 import type { Key } from "react";
+
+const TAB_CLASS =
+  "cursor-pointer border-b-2 border-transparent px-ds-s pb-ds-xs font-ds-label-sm text-ds-on-surface-secondary outline-none hover:text-ds-on-surface focus-visible:ring-2 focus-visible:ring-ds-primary selected:border-ds-primary selected:text-ds-on-surface";
 
 interface ProfileDialogProps {
   error: string | null;
@@ -97,128 +107,164 @@ export function ProfileDialog({
             {t("dialogTitle")}
           </Heading>
 
-          <Typography variant="body" className="font-ds-body-base text-ds-on-surface-secondary">
-            {t("dialogBody")}
-          </Typography>
-
-          <div className="rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
-            <Select
-              aria-label={t("languageLabel")}
-              className="grid gap-ds-xxs"
-              isDisabled={isPending}
-              onSelectionChange={handleSelectionChange}
-              selectedKey={locale}
+          <Tabs>
+            <TabList
+              aria-label={t("dialogTitle")}
+              className="flex gap-ds-xs border-b border-ds-border"
             >
-              <Label className="font-ds-label-sm text-ds-on-surface-secondary">{t("languageLabel")}</Label>
-              <AriaButton className="flex min-h-9 items-center justify-between rounded-ds-sm border border-ds-border bg-ds-surface px-ds-s py-ds-xxs font-ds-body-sm text-ds-on-surface">
-                <SelectValue />
-              </AriaButton>
-              <Popover className="rounded-ds-sm border border-ds-border bg-ds-surface shadow-ds-md">
-                <ListBox className="grid gap-1 p-1">
-                  {locales.map(option => (
-                    <ListBoxItem
-                      className="cursor-pointer rounded-ds-sm px-ds-s py-ds-xxs font-ds-body-sm text-ds-on-surface hover:bg-ds-surface-muted"
-                      id={option}
-                      key={option}
-                    >
-                      {localeLabels[option]}
-                    </ListBoxItem>
-                  ))}
-                </ListBox>
-              </Popover>
-            </Select>
-          </div>
+              <Tab
+                id="account"
+                className={TAB_CLASS}
+              >
+                {t("tabs.account")}
+              </Tab>
+              <Tab
+                id="privacy"
+                className={TAB_CLASS}
+              >
+                {t("tabs.privacy")}
+              </Tab>
+              <Tab
+                id="help"
+                className={TAB_CLASS}
+              >
+                {t("tabs.help")}
+              </Tab>
+            </TabList>
 
-          <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
-            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
-              {t("wipeBody")}
-            </Typography>
-            <Typography variant="body" className="font-ds-label-sm text-danger">
-              {t("wipeWarning")}
-            </Typography>
-            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
-              {t("retentionBody")}
-            </Typography>
-          </div>
+            <TabPanel id="account" className="grid gap-ds-m pt-ds-m outline-none">
+              <Typography variant="body" className="font-ds-body-base text-ds-on-surface-secondary">
+                {t("dialogBody")}
+              </Typography>
 
-          <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
-            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
-              {t("exportBody")}
-            </Typography>
-            <Button
-              className="w-full"
-              disabled={isBusy}
-              onClick={handleExportDataClick}
-              type="button"
-              variant="secondary"
-            >
-              {isExportingData ? t("exportDataLoading") : t("exportData")}
-            </Button>
-          </div>
+              <div className="rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
+                <Select
+                  aria-label={t("languageLabel")}
+                  className="grid gap-ds-xxs"
+                  isDisabled={isPending}
+                  onSelectionChange={handleSelectionChange}
+                  selectedKey={locale}
+                >
+                  <Label className="font-ds-label-sm text-ds-on-surface-secondary">{t("languageLabel")}</Label>
+                  <AriaButton className="flex min-h-9 items-center justify-between rounded-ds-sm border border-ds-border bg-ds-surface px-ds-s py-ds-xxs font-ds-body-sm text-ds-on-surface">
+                    <SelectValue />
+                  </AriaButton>
+                  <Popover className="rounded-ds-sm border border-ds-border bg-ds-surface shadow-ds-md">
+                    <ListBox className="grid gap-1 p-1">
+                      {locales.map(option => (
+                        <ListBoxItem
+                          className="cursor-pointer rounded-ds-sm px-ds-s py-ds-xxs font-ds-body-sm text-ds-on-surface hover:bg-ds-surface-muted"
+                          id={option}
+                          key={option}
+                        >
+                          {localeLabels[option]}
+                        </ListBoxItem>
+                      ))}
+                    </ListBox>
+                  </Popover>
+                </Select>
+              </div>
 
-          <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
-            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
-              {t("deleteBody")}
-            </Typography>
-            <Typography variant="body" className="font-ds-label-sm text-danger">
-              {t("deleteWarning")}
-            </Typography>
-          </div>
-
-          {error ? (
-            <Typography variant="body" className="font-ds-body-sm text-danger">
-              {error}
-            </Typography>
-          ) : null}
-
-          <div className="grid gap-ds-xs sm:grid-cols-2">
-            <Button
-              className="w-full"
-              disabled={isBusy}
-              onClick={handleWipeDataClick}
-              type="button"
-              variant="destructive"
-            >
-              {isWipingData ? t("wipeDataLoading") : t("wipeData")}
-            </Button>
-            {isConfirmingDelete ? (
-              <div className="col-span-full grid gap-ds-xs rounded-ds-sm border border-danger/30 bg-danger/5 p-ds-s">
-                <Typography variant="body" className="font-ds-label-sm text-danger">
-                  {t("deleteAccountConfirm")}
+              <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
+                <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
+                  {t("wipeBody")}
                 </Typography>
-                <div className="flex flex-wrap gap-ds-xs">
+                <Typography variant="body" className="font-ds-label-sm text-danger">
+                  {t("wipeWarning")}
+                </Typography>
+                <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
+                  {t("retentionBody")}
+                </Typography>
+              </div>
+
+              <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
+                <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
+                  {t("exportBody")}
+                </Typography>
+                <Button
+                  className="w-full"
+                  disabled={isBusy}
+                  onClick={handleExportDataClick}
+                  type="button"
+                  variant="secondary"
+                >
+                  {isExportingData ? t("exportDataLoading") : t("exportData")}
+                </Button>
+              </div>
+
+              <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
+                <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
+                  {t("deleteBody")}
+                </Typography>
+                <Typography variant="body" className="font-ds-label-sm text-danger">
+                  {t("deleteWarning")}
+                </Typography>
+              </div>
+
+              {error ? (
+                <Typography variant="body" className="font-ds-body-sm text-danger">
+                  {error}
+                </Typography>
+              ) : null}
+
+              <div className="grid gap-ds-xs sm:grid-cols-2">
+                <Button
+                  className="w-full"
+                  disabled={isBusy}
+                  onClick={handleWipeDataClick}
+                  type="button"
+                  variant="destructive"
+                >
+                  {isWipingData ? t("wipeDataLoading") : t("wipeData")}
+                </Button>
+                {isConfirmingDelete ? (
+                  <div className="col-span-full grid gap-ds-xs rounded-ds-sm border border-danger/30 bg-danger/5 p-ds-s">
+                    <Typography variant="body" className="font-ds-label-sm text-danger">
+                      {t("deleteAccountConfirm")}
+                    </Typography>
+                    <div className="flex flex-wrap gap-ds-xs">
+                      <Button
+                        className="flex-1"
+                        disabled={isDeletingAccount}
+                        onClick={handleConfirmDelete}
+                        type="button"
+                        variant="destructive"
+                      >
+                        {isDeletingAccount ? t("deleteAccountLoading") : t("deleteAccount")}
+                      </Button>
+                      <Button
+                        className="flex-1"
+                        disabled={isDeletingAccount}
+                        onClick={handleCancelDelete}
+                        type="button"
+                        variant="outline"
+                      >
+                        {t("deleteAccountConfirmCancel")}
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
                   <Button
-                    className="flex-1"
-                    disabled={isDeletingAccount}
-                    onClick={handleConfirmDelete}
+                    className="w-full"
+                    disabled={isBusy}
+                    onClick={handleDeleteAccountClick}
                     type="button"
                     variant="destructive"
                   >
-                    {isDeletingAccount ? t("deleteAccountLoading") : t("deleteAccount")}
+                    {t("deleteAccount")}
                   </Button>
-                  <Button
-                    className="flex-1"
-                    disabled={isDeletingAccount}
-                    onClick={handleCancelDelete}
-                    type="button"
-                    variant="outline"
-                  >
-                    {t("deleteAccountConfirmCancel")}
-                  </Button>
-                </div>
+                )}
               </div>
-            ) : (
-              <Button
-                className="w-full"
-                disabled={isBusy}
-                onClick={handleDeleteAccountClick}
-                type="button"
-                variant="destructive"
-              >
-                {t("deleteAccount")}
-              </Button>
-            )}
-          </div>
+            </TabPanel>
+
+            <TabPanel id="privacy" className="pt-ds-m outline-none">
+              <PrivacyTab namespace="dashboard.profile" />
+            </TabPanel>
+
+            <TabPanel id="help" className="pt-ds-m outline-none">
+              <HelpTab namespace="dashboard.profile" />
+            </TabPanel>
+          </Tabs>
 
           <Button disabled={isBusy} onClick={onClose} size="link" type="button" variant="link">
             {t("close")}

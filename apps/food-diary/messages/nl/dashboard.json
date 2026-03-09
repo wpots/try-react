@@ -17,7 +17,22 @@
     "wipeData": "Gastgegevens wissen",
     "wipeDataLoading": "Gegevens wissen...",
     "close": "Sluiten",
-    "wipeUnknownError": "Gastgegevens konden niet worden gewist."
+    "wipeUnknownError": "Gastgegevens konden niet worden gewist.",
+    "tabs": {
+      "account": "Account",
+      "privacy": "Privacy",
+      "help": "Help"
+    },
+    "privacy": {
+      "summary": "We verzamelen alleen gegevens die nodig zijn om deze app voor jou te laten werken. Je dagboekgegevens worden veilig opgeslagen en nooit gedeeld met derden.",
+      "cta": "Lees ons volledige privacybeleid"
+    },
+    "help": {
+      "title": "Hulp nodig?",
+      "description": "Werkt er iets niet, of wil je het project steunen?",
+      "reportIssue": "Meld een probleem",
+      "buyCoffee": "Trakteer ons op koffie"
+    }
   },
   "profile": {
     "menuLabel": "Profiel",
@@ -41,7 +56,22 @@
     "deleteAccountConfirmCancel": "Annuleren",
     "deleteAccountUnknownError": "Je account kon niet worden verwijderd.",
     "close": "Sluiten",
-    "wipeUnknownError": "Je data kon niet worden verwijderd."
+    "wipeUnknownError": "Je data kon niet worden verwijderd.",
+    "tabs": {
+      "account": "Account",
+      "privacy": "Privacy",
+      "help": "Help"
+    },
+    "privacy": {
+      "summary": "We verzamelen alleen gegevens die nodig zijn om deze app voor jou te laten werken. Je dagboekgegevens worden veilig opgeslagen en nooit gedeeld met derden.",
+      "cta": "Lees ons volledige privacybeleid"
+    },
+    "help": {
+      "title": "Hulp nodig?",
+      "description": "Werkt er iets niet, of wil je het project steunen?",
+      "reportIssue": "Meld een probleem",
+      "buyCoffee": "Trakteer ons op koffie"
+    }
   },
   "view": {
     "day": "Dag",

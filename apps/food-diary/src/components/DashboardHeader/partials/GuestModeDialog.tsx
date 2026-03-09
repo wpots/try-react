@@ -1,8 +1,10 @@
 "use client";
 
-import { Button, Typography } from "@repo/ui";
+import { Button, Tabs, Typography } from "@repo/ui";
 import { useTranslations } from "next-intl";
 import { Dialog, Heading, Modal, ModalOverlay } from "react-aria-components";
+
+import { ContextTab } from "./ContextTab";
 
 interface GuestModeDialogProps {
   error: string | null;
@@ -40,6 +42,49 @@ export function GuestModeDialog({
     }
   };
 
+  const dataContent = (
+    <div className="grid gap-ds-m">
+      <Typography variant="body" className="font-ds-body-base text-ds-on-surface-secondary">
+        {t("dialogBody")}
+      </Typography>
+      <Typography variant="body" className="font-ds-body-base text-ds-on-surface-secondary">
+        {t("mergeBody")}
+      </Typography>
+
+      <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
+        <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
+          {t("wipeBody")}
+        </Typography>
+        <Typography variant="body" className="font-ds-label-sm text-danger">
+          {t("wipeWarning")}
+        </Typography>
+        <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
+          {t("retentionBody")}
+        </Typography>
+      </div>
+
+      {error ? (
+        <Typography variant="body" className="font-ds-body-sm text-danger">
+          {error}
+        </Typography>
+      ) : null}
+
+      <div className="grid gap-ds-xs sm:grid-cols-2">
+        <Button className="w-full" disabled={isBusy} onClick={handleLoginClick} type="button">
+          {isSigningIn ? t("loginWithGoogleLoading") : t("loginWithGoogle")}
+        </Button>
+        <Button className="w-full" disabled={isBusy} onClick={handleWipeClick} type="button" variant="destructive">
+          {isWiping ? t("wipeDataLoading") : t("wipeData")}
+        </Button>
+      </div>
+    </div>
+  );
+
+  const tabs = [
+    { id: "data", label: t("tabs.data"), content: dataContent },
+    { id: "context", label: t("tabs.context"), content: <ContextTab isGuest={true} /> },
+  ];
+
   return (
     <ModalOverlay
       isDismissable
@@ -53,39 +98,7 @@ export function GuestModeDialog({
             {t("dialogTitle")}
           </Heading>
 
-          <Typography variant="body" className="font-ds-body-base text-ds-on-surface-secondary">
-            {t("dialogBody")}
-          </Typography>
-          <Typography variant="body" className="font-ds-body-base text-ds-on-surface-secondary">
-            {t("mergeBody")}
-          </Typography>
-
-          <div className="grid gap-ds-xs rounded-ds-sm border border-ds-border bg-ds-surface-muted p-ds-s">
-            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
-              {t("wipeBody")}
-            </Typography>
-            <Typography variant="body" className="font-ds-label-sm text-danger">
-              {t("wipeWarning")}
-            </Typography>
-            <Typography variant="body" className="font-ds-body-sm text-ds-on-surface-secondary">
-              {t("retentionBody")}
-            </Typography>
-          </div>
-
-          {error ? (
-            <Typography variant="body" className="font-ds-body-sm text-danger">
-              {error}
-            </Typography>
-          ) : null}
-
-          <div className="grid gap-ds-xs sm:grid-cols-2">
-            <Button className="w-full" disabled={isBusy} onClick={handleLoginClick} type="button">
-              {isSigningIn ? t("loginWithGoogleLoading") : t("loginWithGoogle")}
-            </Button>
-            <Button className="w-full" disabled={isBusy} onClick={handleWipeClick} type="button" variant="destructive">
-              {isWiping ? t("wipeDataLoading") : t("wipeData")}
-            </Button>
-          </div>
+          <Tabs tabs={tabs} />
 
           <Button disabled={isBusy} onClick={onClose} size="link" type="button" variant="link">
             {t("close")}

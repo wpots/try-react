@@ -434,3 +434,45 @@ export async function restDeleteUserData(idToken: string, userId: string): Promi
 
   return docs.length;
 }
+
+export interface UserContextData {
+  company?: string;
+  location?: string;
+  behaviour?: string;
+}
+
+/**
+ * Reads the `userContext` sub-document from the authenticated user's Firestore
+ * document.  Returns `null` when the document or field does not exist.
+ */
+export async function restGetUserContext(idToken: string, userId: string): Promise<UserContextData | null> {
+  const doc = await fsGet(idToken, `/users/${userId}`);
+  if (!doc) return null;
+  const { data } = fromFSDocument(doc);
+  const ctx = data.userContext;
+  if (!ctx || typeof ctx !== "object") return null;
+  const c = ctx as Record<string, unknown>;
+  return {
+    company: typeof c.company === "string" ? c.company : undefined,
+    location: typeof c.location === "string" ? c.location : undefined,
+    behaviour: typeof c.behaviour === "string" ? c.behaviour : undefined,
+  };
+}
+
+/**
+ * Writes (or clears) the `userContext` sub-document on the authenticated
+ * user's Firestore document using an explicit field mask so that all other
+ * fields (e.g. `createdAt`) are left untouched.
+ *
+ * Empty / whitespace-only strings are treated as absent; when all three
+ * fields are absent the `userContext` key is deleted from the document.
+ */
+export async function restSaveUserContext(idToken: string, userId: string, context: UserContextData): Promise<void> {
+  const trimmed: Record<string, string> = {};
+  if (context.company?.trim()) trimmed.company = context.company.trim();
+  if (context.location?.trim()) trimmed.location = context.location.trim();
+  if (context.behaviour?.trim()) trimmed.behaviour = context.behaviour.trim();
+
+  const data = Object.keys(trimmed).length > 0 ? { userContext: trimmed } : {};
+  await fsPatchWithMask(idToken, `/users/${userId}`, data, ["userContext"]);
+}

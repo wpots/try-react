@@ -26,6 +26,12 @@ function parseTimestamp(value: unknown): Timestamp {
   return Timestamp.now();
 }
 
+export const userContextSchema = z.object({
+  company: z.string().trim().max(100).optional(),
+  location: z.string().trim().max(100).optional(),
+  behaviour: z.string().trim().max(280).optional(),
+});
+
 export const firestoreUserSchema = z.object({
   userId: z.string().min(1),
   email: z.string().email().optional(),
@@ -33,6 +39,7 @@ export const firestoreUserSchema = z.object({
   photoURL: z.string().url().optional(),
   createdAt: z.instanceof(Timestamp),
   lastLoginAt: z.instanceof(Timestamp),
+  userContext: userContextSchema.optional(),
 });
 
 export const firestoreDiaryEntrySchema = z.object({
@@ -119,3 +126,4 @@ export type FirestoreDiaryEntrySchema = z.infer<typeof firestoreDiaryEntrySchema
 export type StoredDiaryEntrySchema = z.infer<typeof storedDiaryEntrySchema>;
 export type CreateDiaryEntrySchema = z.infer<typeof createDiaryEntrySchema>;
 export type UserAnalysisQuotaSchema = z.infer<typeof userAnalysisQuotaSchema>;
+export type UserContextSchema = z.infer<typeof userContextSchema>;

@@ -17,7 +17,16 @@
     "wipeData": "Wipe guest data",
     "wipeDataLoading": "Wiping data...",
     "close": "Close",
-    "wipeUnknownError": "Could not wipe guest data."
+    "wipeUnknownError": "Could not wipe guest data.",
+    "tabs": {
+      "settings": "Settings",
+      "dataAccount": "Data & Account",
+      "affirmations": "Affirmations"
+    },
+    "affirmations": {
+      "lockedTitle": "Personal affirmations",
+      "lockedBody": "Personal affirmations are available for registered users. Log in with Google to unlock this feature."
+    }
   },
   "profile": {
     "menuLabel": "Profile",
@@ -41,7 +50,27 @@
     "deleteAccountConfirmCancel": "Cancel",
     "deleteAccountUnknownError": "Could not delete your account.",
     "close": "Close",
-    "wipeUnknownError": "Could not remove your data."
+    "wipeUnknownError": "Could not remove your data.",
+    "tabs": {
+      "settings": "Settings",
+      "dataAccount": "Data & Account",
+      "affirmations": "Affirmations"
+    },
+    "affirmations": {
+      "title": "Your affirmations",
+      "description": "Add personal affirmations that will appear on your dashboard alongside the built-in ones.",
+      "placeholder": "Write an affirmation...",
+      "add": "Add",
+      "remove": "Remove",
+      "loading": "Loading your affirmations...",
+      "saving": "Saving...",
+      "saved": "Saved",
+      "empty": "You haven't added any personal affirmations yet.",
+      "limit": "You can add up to {max} affirmations.",
+      "tooLong": "Affirmation must be {max} characters or fewer.",
+      "duplicate": "This affirmation already exists.",
+      "saveError": "Could not save your affirmations. Please try again."
+    }
   },
   "view": {
     "day": "Day",

@@ -18,11 +18,12 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 export function getAffirmationPool(
   translate: (key: string) => string,
   getRawMessage: (key: string) => unknown,
+  customAffirmations?: string[],
 ): string[] {
   const rawAffirmations = getRawMessage("affirmations");
 
   if (!isRecord(rawAffirmations)) {
-    return [];
+    return customAffirmations?.length ? [...customAffirmations] : [];
   }
 
   const affirmationKeys = Object.keys(rawAffirmations)
@@ -38,5 +39,11 @@ export function getAffirmationPool(
     .filter((value): value is AffirmationKey => value != null)
     .sort((left, right) => left.order - right.order);
 
-  return affirmationKeys.map(({ key }) => translate(`affirmations.${key}`));
+  const builtIn = affirmationKeys.map(({ key }) => translate(`affirmations.${key}`));
+
+  if (customAffirmations?.length) {
+    return [...builtIn, ...customAffirmations];
+  }
+
+  return builtIn;
 }

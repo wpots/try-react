@@ -33,6 +33,7 @@ export const firestoreUserSchema = z.object({
   photoURL: z.string().url().optional(),
   createdAt: z.instanceof(Timestamp),
   lastLoginAt: z.instanceof(Timestamp),
+  customAffirmations: z.array(z.string().trim().min(1).max(280)).max(20).optional(),
 });
 
 export const firestoreDiaryEntrySchema = z.object({
